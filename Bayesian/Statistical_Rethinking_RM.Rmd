@@ -19,6 +19,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Chapter 1: The Golem of Prague
 
+$~$
+
 Chapter 1 urged us to rethink the "popular statistical and scientific philosophy" by pointing out the flaws in classical statistical tools and reasoning. 
 
 According to the author, "classical tools are not diverse enough to handle many common research questions...And if we keep adding new types of tools, soon there will be far too many to keep track of." I agree with these statements. The author also talked about how Fisher's exact test is used "whenever the cell counts are small" and he had "never seen it used appropriately" except Fisher's original use of the test. It would be nice if the author gave some examples and explanations of those inappropriate uses- I can't decide whether to accept without more information. 
@@ -31,19 +33,54 @@ The author mentioned why deductive falsification is impossible in scientific con
 
 For both of these reasons, deductive falsification never works. The scientific method cannot be reduced to a statistical procedure, and so our statistical methods should not pretend." 
 
-### ***Hypotheses are not models***
+## *Hypotheses are not models*
 
 He gave an example of the first statement in evolutionary context. His conclusion was:
 
 (1) "Any given statistical model (M) may correspond to more than one process model (P).
 
-(2) Any given hypothesis (H) may correspond to more than one process model (P). (3) Any given statistical model (M) may correspond to more than one hypothesis (H)."
+(2) Any given hypothesis (H) may correspond to more than one process model (P). 
+
+(3) Any given statistical model (M) may correspond to more than one hypothesis (H)."
 
 In other words, it doesn't matter whether we reject or fail to reject the null. It won't have "much inferential power" or give any useful insights due to possible existence of models- other than the ones under study- which can also align with the null or alternative hypotheses. The author gave a solution to this dilemma- "explicitly compare predictions of more than one model." This is a very nice solution, as I think it will allow analysis of hypothesis or whatever you want to study in real-world conditions. And that is much more powerful than any classical tests. 
 
-In that case, should we disregard all studies that rely on NHST? Should we reject all findings made by rejecting the null hypothesis as senseless? And are the multiple process models the only way to go? The frequentists' way to solve this problem is to control the conditions of the experiment/study. In nutrition studies, this can be in the form of inclusion or exclusion criteria and strict control of test subjects (and conditions) throughout the duration of the study. This is to ensure the observed effect (or lack of) is caused by the variables of interest and not by uncontrolled confounders. If a NHST research was done well with proper control, then we could 'more or less' have confidence in the research's findings. 
+In that case, should we disregard all studies that rely on NHST? Should we reject all findings made by rejecting the null hypothesis as senseless? And are the multiple process models the only way to go? The frequentists' way to solve this problem is to control the conditions of the experiment/study. In nutrition studies, this can be in the form of inclusion or exclusion criteria and strict control of test subjects (and conditions) throughout the duration of the study. This is to ensure the observed effect (or lack of) is caused by (or related to) the variables of interest and not by uncontrolled confounders. If a NHST research was done well with proper control, then we could 'more or less' have confidence in the research's findings. 
 
-### ***Measurement matters***
+$~$
+
+## *Measurement matters*
+
+In the section "measurement matters," the author reinforced the first statement, and explained the fallacy of falsification principle, stating two reasons:
+
+1. "Observations are prone to error, especially at the boundaries of scientific knowledge. 
+
+2. Most hypotheses are quantitative, concerning the degrees of existence, rather than discrete, concerning total presence or absence."
+
+### *Observation error*
+
+The author gave two examples of observation error. The first example pointed out possible bias or errors in observations, and potential type 1 and type 2 errors (false positives and false negatives) in classical frequentist researches. And the second example talked about errors in measurements (or studies/ experiments). Both are valid concerns and those errors are not uncommon in frequentist researches. 
+
+There are several ways to overcome these shortcomings, depending on research design. For example, we can increase sample size or run more tests to reduce type 1 and type 2 errors. Errors in measurements can be avoided by following protocols- taking at least two measurements for each sample, consistency in measurements, etc. However, there is no guarantee that any particular researcher or research group will follow a strict protocol without compromising, and that can lead to observation error. To prevent this, we usually avoid using finding from a single research, and wait till the findings are backed by systematic reviews and made into guidelines. 
+
+
+### *Continuous hypotheses*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
