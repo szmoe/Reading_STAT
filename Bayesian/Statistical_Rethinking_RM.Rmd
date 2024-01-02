@@ -33,6 +33,8 @@ The author mentioned why deductive falsification is impossible in scientific con
 
 For both of these reasons, deductive falsification never works. The scientific method cannot be reduced to a statistical procedure, and so our statistical methods should not pretend." 
 
+$~$
+
 ## *Hypotheses are not models*
 
 He gave an example of the first statement in evolutionary context. His conclusion was:
@@ -69,11 +71,29 @@ In both woodpecker and neutrino examples, the author's key concerns were "whethe
 
 The author noted "...it is a good practice to design experiments and observations that can differentiate competing hypotheses. But in many cases, the comparison must be probabilistic, a matter of degree, not kind." Two examples of null hypotheses that support the above statement were given: "80% of swans are white" and "Black swans are rare." The author pointed out the *modus tollens* swan story would not be applicable in this case, since the problem is not to prove or disprove the hypothesis but to estimate the distribution of swan coloration. He added "You might object that the hypothesis above is just not a good scientific hypothesis, because it isn’t easy to disprove. But if that’s the case, then most of the important questions about the world are not good scientific hypotheses."
 
-In my opinion, it is not difficult to disprove both hypotheses. The two hypothese are not good hypotheses simply because they are not specific and fail to form sensible research question or outcome- not because it is "a matter of degree." Let's break down the two hypotheses. First, we think about the possible research question for the hypothesis "80% of swan are white." The research question could be "Are 80% of swan white?" or "Do 80% of swan have white feathers?" In this case, this hypothesis would be disprove if survey found any percent of white swan other than 80%. It wouldn't matter if the actual percent was 90 or 95- we could stop the research once the number passed the threshold of 80%. Now it is clear that the problem with this hypothesis is the pointless outcome. What are we trying to achieve knowing whether 80% of swan are white, or 40% or any percentage of swan are white in color? A more sensible hypothesis would be "White coloration is the dominant trait in swan." We can falsify this hypothesis by conducting surveys- like the author suggested- or gene expression analysis, etc. Still, it is not a good hypothesis for an original research since the scope is too broad. The hypothesis only specify swan- not a particular speices or geographical location, meaning all swan species in the world are included in the research. That would be a hard task for any single researcher or research group. Hence, this hypothesis is more suitable at review level- not original research level. For original research, we can specify the species of swan and extent of study area based on the available funding.
+In my opinion, it is not difficult to disprove both hypotheses. The two hypothese are not good hypotheses simply because they are not specific and fail to form sensible research question or outcome- not because it is "a matter of degree." Let's break down the two hypotheses. First, we think about the possible research question for the hypothesis "80% of swan are white." The research question could be "Are 80% of swan white?" or "Do 80% of swan have white feathers?" In this case, this hypothesis would be disprove if survey found any percent of white swan other than 80%. It wouldn't matter if the actual percent was 90 or 95- we could stop the research once the number passed the threshold of 80%. Now it is clear that the problem with this hypothesis is the pointless outcome. What are we trying to achieve knowing whether 80% of swan are white, or 40% or any percentage of swan are white in color? A more sensible hypothesis would be "White coloration is the dominant trait in swan." We can falsify this hypothesis by conducting surveys- like the author suggested- or genetic analysis, etc. Still, it is not a good hypothesis for an original research since the scope is too broad. The hypothesis only specify swan- not a particular speices or geographical location, meaning all swan species in the world are included in the research. That would be a hard task for any single researcher or research group. Hence, this hypothesis is more suitable at review level- not original research level. For original research, we can specify the species of swan and extent of study area based on the available funding.
 
 The second hypothesis "Black swans are rare" has the similar problem- lack of specificity. We need to determine what is considered rare- 1 in 100 or 1 in a million? Once we have that specification, it is not difficult to tackle the second hypothesis. But we need to be aware that the second hypothesis also includes all swan species in the world- or even universe or parallel universes. 
 
 Another thing is the *modus tollens* swan story was merely to explain a theory- not a definitive example of how we should write hypothesis. I have yet to see a research with hypothesis written like the one in *modus tollens* swan story. All hypotheses that I have seen so far address "the degree, not kind"-like the author suggested. Hence, the author's concern over hypotheses is somehow invalid. 
+
+### *Falsification is consensual*
+
+The author said "falsification is always consensual, not logical," and "evidence often— but not always— has something to do with such falsification." He also highlighted the arguments towards "consensus about meaning of evidence" and the danger of "historical revisionism." I think the author is right. We hold such reverence towards the famous scientists in history, that their formulas are still widely applied to this day, without contesting their suitability in this age. Many researches were done following the same mould, that they gave similar results, which became our gold-standard- the guidelines. And those guidelines are not set in stone. They are regularly updated- albeit minor changes. Occasionally, some guidelines are completely proven false and replaced by new ones. These occasions are rare that they are called groundbreaking discovery. I remembered the day everyone at the department was talking about the guideline change on egg consumption- may seem insignificant to outsiders but we were really excited! It could be that such new discoveries are rare because we are doing the same thing over and over again, and are content when our findings (even vaguely) agree the current consensus- we seek validation from previous works by researchers more venerable than us. And that is dangerous to our patients and the public. We may be feeling relaxed because we think the worst that can happen from such findings is "the treatment is ineffective but not harmful." We pour scorn on some of the treatments given by the healthcare providers some hundred years ago as harmful and ineffective. We can do so because we now have the knowledge collected over time. It is very possible our best guidelines may seem 'folly' to the researchers in the next hundred years. Thus, I agree with the author that it's time we should do things differently. 
+
+$~$
+
+## Three tools for golem engineering 
+
+
+
+
+
+
+
+
+
+
 
 
 
