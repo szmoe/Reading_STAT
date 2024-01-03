@@ -111,13 +111,184 @@ According to Pearson, Fisher was "often tilting at views which those whom he att
 
 "...Since the telescope was primitive, it couldn’t really focus the image very well. Saturn always appeared blurred. This is a statistical problem, of a sort. There’s uncertainty about the planet’s shape, but notice that none of the uncertainty is a result of variation in repeat measurements. We could look through the telescope a thousand times, and it will always give the same blurred image (for any given position of the Earth and Saturn). So the sampling distribution of any measurement is constant, because the measurement is deterministic— there’s nothing “random” about it. Frequentist statistical inference has a lot of trouble getting started here..."
 
-I think, like Fisher, the author is also "tilting at views" which frequentists have never held. The problem with the telescope example is that repeated measurements were done on "ONE" sample only. That's why he made assumption that "...none of the uncertainty is a result of variation in repeat measurements...So the sampling distribution of any measurement is constant, because the measurement is deterministic— there’s nothing “random” about it." I have yet to see a research that only measures "one" sample repeatedly to solve a research question at population level or in real-world situations. It would be akin to asking a single child- using different sets of questions- repeatedly about what the child eats in a day to know the dietary pattern of all the children in the region. It makes no sense. Furthermore, sample representativeness play a major role in such researches. The author representation of a frequetist research has no place for sample representativeness- there is only one sample and nothing else. 
+I think, like Fisher, the author is also "tilting at views" which frequentists have never held. The problem with the telescope example is that repeated measurements were done on "ONE" sample only. That's why he made assumption that "...none of the uncertainty is a result of variation in repeat measurements...So the sampling distribution of any measurement is constant, because the measurement is deterministic— there’s nothing “random” about it." I have yet to see a research that only measures "one" sample repeatedly to solve a research question at population level or in real-world situations. It would be akin to asking a single child- using different sets of questions- repeatedly about what the child eats in a day to know the dietary pattern of all the children in the region. It makes no sense. Furthermore, sample representativeness play a major role in such researches. The author representation of a frequentist research has no place for sample representativeness- there is only one sample and nothing else. 
 
-The author also criticized about "imagined repeat sampling." If taken out of context, such idea can be quite preposterous. But, it can actually be logical if we explain it in terms of sample representativeness. We are not imagining repeated sampling- beyond our chosen sample sets- to justify the results from our samples are applicable to the population. For example, if we were to study the dietary pattern of an ethnic group reside in the mountain, we do not need to ask dietary-related questions to every individual in the group. We select a fraction of the group- chosen at random- to infer the dietary pattern of the whole group. Such fraction (samples) should be high enough in number and have similar traits to the whole group. If results obtained from samples said "fish constitutes only a small part of their diet," then we can assume that we will have the same result if we did the same survey repeatedly with different sample sets obtained from the group. In this case, the so-called "imagined repeat sampling" can work because samples are representative of the population.  
+The author also criticized about "imagined repeat sampling." If taken out of context, such idea can be quite preposterous. But, it can actually be logical if we explain it in terms of sample representativeness. We are not imagining repeated sampling- beyond our chosen sample sets- to justify the results from our samples are applicable to the population. For example, if we were to study the dietary pattern of an ethnic group reside in the mountain, we do not need to ask dietary-related questions to every individual in the group. We select a fraction of the group- chosen at random- to infer the dietary pattern of the whole group. Such fraction (samples) should be high enough in number and have traits similar to the whole group. If results obtained from samples said "fish constitutes only a small part of their diet," then we can assume that we will have the same result if we did the same survey repeatedly with different sample sets obtained from the group. In this case, the so-called "imagined repeat sampling" can work because samples are representative of the population.  
 
-The author continued in the next paragraph that "..even when a Bayesian procedure and frequentist procedure give exactly the same answer, our Bayesian golems aren’t justifying their inferences with imagined repeat sampling." Such narrative can give a result totally opposite of what the author wants. The author wants the readers to "rethinking statistics," by pointing out flaws in the classical statistic tests and research methodology. However, all the examples given by the author can be easily rebuked. More rebuttals will come if such narrative is introduced in a frequestist community- like academics in the nutrition field. But, these academics are not really protecting Karl Popper or E.S. Pearson. They are not defensive about the theories postulated years ago by scientists in the past. They are simply protecting their works- their findings. Majority- if not all- of these academics will not "rethink statistics" if Bayesian approach begins with denouncing the frequentist approach, especially when counter-arguments can easily be made. It will be similar to the author stabbing them with a knife first before offering a treatment. All or most of them will not accept the treatment. They will run away- either scared or hateful. Even if they were forced to accept it, the acceptance would be superficial. Instead, we should offer them beautiful roses with exquisite scent- meaning we should focus on what Bayesian analysis can offer which frequentist apporach can't, rather than attacking them. The thorns may still prick their fingers, but they will not be able to resist the charm of the roses. And we can offer them balm to soothe their fingers. They will be thankful, and meaningful collaborations will be made.   
+The author continued in the next paragraph that "..even when a Bayesian procedure and frequentist procedure give exactly the same answer, our Bayesian golems aren’t justifying their inferences with imagined repeat sampling." Such narrative can give a result totally opposite of what the author wants. The author wants the readers to "rethinking statistics," by pointing out flaws in the classical statistic tests and research methodology. However, all the examples given by the author can be easily rebuked. More rebuttals will come if such narrative is introduced in a frequestist community- like academics in the nutrition field. But, these academics are not really protecting Karl Popper or E.S. Pearson. They are not defensive about the theories postulated years ago by scientists in the past. They are simply protecting their works- their findings. Majority- if not all- of these academics will not "rethink statistics" if Bayesian approach begins with denouncing the frequentist approach, especially when counter-arguments can easily be made. It will be similar to the author stabbing them with a knife first before offering a treatment. All or most of them will not accept the treatment. They will run away- either scared or hateful. Some may even stab him back. Even if they were forced to accept it, the acceptance would be superficial. Instead, we should offer them beautiful roses with exquisite scent- meaning we should focus on what Bayesian analysis can offer which frequentist apporach can't, rather than attacking them. The thorns may still prick their fingers, but they will not be able to resist the charm of the roses. And we can offer them balm to soothe their fingers. They will be thankful, and meaningful collaborations will be made.   
 
 ### *Multilevel models*
+
+The author introduced the concept of multilevel model in this section. Statistical models "contain parameters. And parameters support inference. Upon what do parameters themselves stand? Sometimes, in some of the most powerful models, it’s parameters all the way down. What this means is that any particular parameter can be usefully regarded as a placeholder for a missing model. Given some model of how the parameter gets its value, it is simple enough to embed the new model inside the old one. This results in a model with multiple levels of uncertainty, each feeding into the next—a multilevel model."
+
+The author also mentioned "four typical and complementary reasons to sue multilevel models:"
+
+(1) ***To adjust estimates for repeat sampling.*** When more than one observation arises from the same individual, location, or time, then traditional, single-level models may mislead us.
+
+(2) ***To adjust estimates for imbalance in sampling.*** When some individuals,locations,or times are sampled more than others, we may also be misled by single-level models.
+
+(3) ***To study variation.*** If our research questions include variation among individuals or other groups within the data, then multilevel models are a big help, because they model variation explicitly.
+
+(4) ***To avoid averaging.*** Frequently, scholars pre-average some data to construct variables for a regression analysis. This can be dangerous, because averaging removes variation. It therefore manufactures false confidence. Multilevel models allow us to preserve the uncertainty in the original, pre-averaged values, while still using the average to make predictions.
+
+And there are also "diverse model types that turn out to be multilevel: models for missing data (imputation), measurement error, factor analysis, some time series models, types of spatial and network regression, and phylogenetic regressions all are special applications of the multilevel strategy."
+
+The author added "this is why grasping the concept of multilevel modeling may lead to a perspective shift. Suddenly single- level models end up looking like mere components of multilevel models. The multilevel strategy provides an engineering principle to help us to introduce these components into a particular analysis, exactly where we think we need them."
+
+Based on the author's explanation, multilevel models sound really promising, and I'm eager to learn more about them.
+
+### *Model comparison and information criteria*
+
+Information criteria were developed to compare "structurally different models based upon future predictive accuracy, using different approximations for different model types."
+
+Popular information criterion AIC, and related metrics- such as DIC and WAIC- "explicitly build a model of the prediction task and use that model to estimate performance of each model you might wish to compare. Because the prediction is modeled, it depends upon assumptions. So information criteria do not in fact achieve the impossible, by seeing the future. They are still golems." The author also mentioned that they are known as "information criteria, because they develop their measure of model accuracy from information theory."
+
+These criteria can help researchers with two common difficulties in model comparison:
+
+(1)  ***Overfitting.*** Future data will not be exactly like past data, and so any model that is unaware of this fact tends to make worse predictions than it could. So if we wish to make good predictions, we cannot judge our models simply on how well they fit our data. Information criteria provide estimates of predictive accuracy, rather than merely fit. So they compare models where it matters.
+
+(2) ***Comparison of multiple non-null models to the same data.*** Frequently, several plausible models of a phenomenon are known to us. In some empirical contexts, like social networks and evolutionary phylogenies, there are no reasonable or uniquely “null” models. This was also true of the neutral evolution example. In such cases, it’s not only a good idea to explicitly compare models. It’s also mandatory. Information criteria aren’t the only way to conduct the comparison. But they are an accessible and widely used way.
+
+$~$
+
+# Lecture 1: Golem of Prague
+
+$~$
+
+According to the lecture, 
+
+<span style="color:brown"><span style="text-decoration:underline">**Research requires:**</span>
+
+- Precise process model(s)
+
+- Statistical model (procedure, golem) justified by implications of process model(s) and question (estimand)
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Three modes to draw the Bayesian Owl:**</span>
+
+1. Understand what you are doing 
+
+2. Document your work, reduce error
+
+3. Respectable scientific workflow
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Outline of a scientific workflow**</span>
+
+1. Theoretical estimand
+    - to have a clear idea of what you are trying to do in the first place
+
+\n
+
+2. Scientific (causal) model(s)
+    - to precisely define theoretical estimand
+    - simulating model or logical model that generate synthetic observations (can produce data) &rarr; let us design statistical procedures
+    
+\n
+
+3. Use 1 & 2 to build statistical model(s)
+
+4. Simulate from 2 to validate 3 yields 1
+    - to justify or check our workflow to ensure the software works
+
+\n
+
+5. Analyze real data
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Advantages of Bayseian approach**</span>
+
+- Permissive, flexible
+
+- Express uncertainty at all levels
+
+- Direct solutions for measurement error, missing data
+
+- Focus on scientific modeling 
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Science before Statistics**</span>
+
+- For *statistical models* to produce scientific insights, they require additional *scientific (causal) models*
+
+- The *reasons* for a statistical analysis are not found in the data themselves, but rather in the *causes* of the data
+
+- The *causes* of the data cannot be extracted from the data alone. *No causes in; no causes out.*
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Causes are not optional**</span>
+
+- Even when goal is *descriptive*, need causal model
+
+- The *sample* differs from the *population*; describing the population requires causal thinking
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**What is Causal Inference?**</span>
+
+- More than *association* between variables
+
+- Causal inference is *prediction* of intervention
+
+- Causal inference is *imputation* of missing observations
+
+<span style="color:purple">***Causal Prediction***</span>
+
+- Knowing a *cause* means being able to predict the *consequences* of an *intervention*. *What if I do this?*
+
+<span style="color:purple">***Causal Imputation***</span>
+
+- Knowing a *cause* means being able to construct unobserved *counterfactual outcomes*. *What if I had done something else?*
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Directed Acyclic Graphs (DAGs)**</span> 
+
+- Heuristic causal models
+  - Transparent scientific assumptions to *justify* scientific effort, *expose* it to useful critique, and *connect* theories to golems- brainless, powerful statistical models
+
+\n
+
+- Clarify scientific thinking
+
+- Analyze to deduce appropriate statistical models
+
+<span style="color:purple">***Why DAGs?***</span>
+
+- Different queries, different models
+
+- Which control variables?
+
+- Absolute not safe to add everything- ***bad controls***
+
+- How to test the causal model?
+
+- With more scientific knowledge, can do more
+
+$~$
+
+# Chapter 2: Small Worlds and Large Worlds
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
 
 
 
