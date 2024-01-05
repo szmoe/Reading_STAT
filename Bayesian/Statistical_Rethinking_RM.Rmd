@@ -274,6 +274,50 @@ $~$
 
 # Chapter 2: Small Worlds and Large Worlds
 
+$~$
+
+## The garden of forking data
+
+
+"In order to make good inference about what actually happened, it helps to consider everything that could have happened. A Bayesian analysis is a garden of forking data, in which alternative sequences of events are cultivated. As we learn about what did happen, some of these alternative sequences are pruned. In the end, what remains is only what is logically consistent with our knowledge."
+
+### Counting possibilities
+
+<span style="color:green">***A bag of avocado and pear (total 8)***</span>
+
+- Conjectures: (a,a,a,a,a,a,a,a); (p,a,a,a,a,a,a,a); (p,p,a,a,a,a,a,a); (p,p,p,a,a,a,a,a); (p,p,p,p,a,a,a,a);
+               (p,p,p,p,p,a,a,a); (p,p,p,p,p,p,a,a); (p,p,p,p,p,p,p,a); (p,p,p,p,p,p,p,p)
+
+<span style="color:green">***Shake the bag to give equal chance and pick 4 fruits; replace the fruit after each pick***</span>
+
+- Data: (a,p,a,a)
+
+<span style="color:green">***Count the possible ways to have that exact data sequence for each conjecture***</span>
+
+- (a,a,a,a,a,a,a,a)       &rarr;    8 * 0 * 8 * 8 = 0
+
+- (p,a,a,a,a,a,a,a)       &rarr;    7 * 1 * 7 * 7 = 343         
+
+- (p,p,a,a,a,a,a,a)       &rarr;    6 * 2 * 6 * 6 = 432
+
+- (p,p,p,a,a,a,a,a)       &rarr;    5 * 3 * 5 * 5 = 375
+
+- (p,p,p,p,a,a,a,a)       &rarr;    4 * 4 * 4 * 4 = 256
+               
+- (p,p,p,p,p,a,a,a)       &rarr;    3 * 5 * 3 * 3 = 135
+
+- (p,p,p,p,p,p,a,a)       &rarr;    2 * 6 * 2 * 2 = 48
+
+- (p,p,p,p,p,p,p,a)       &rarr;    1 * 7 * 1 * 1 = 7
+
+- (p,p,p,p,p,p,p,p)       &rarr;    0 * 8 * 0 * 0 = 0
+
+
+"So what good are these counts? By comparing these counts, we have part of a solution for a way to rate the relative plausibility of each conjectured bag composition. But it’s only a part of a solution, because in order to compare these counts we first have to decide how many ways each conjecture could itself be realized. We might argue that when we have no reason to assume otherwise, we can just consider each conjecture equally plausible and compare the counts directly. But often we do have reason to assume otherwise."
+
+
+### Using prior information 
+
 
 
 

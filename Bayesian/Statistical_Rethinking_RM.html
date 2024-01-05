@@ -11,7 +11,7 @@
 
 <meta name="author" content="SM" />
 
-<meta name="date" content="2024-01-03" />
+<meta name="date" content="2024-01-04" />
 
 <title>Statistical_Rethinking_RM</title>
 
@@ -1445,7 +1445,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">Statistical_Rethinking_RM</h1>
 <h4 class="author">SM</h4>
-<h4 class="date">2024-01-03</h4>
+<h4 class="date">2024-01-04</h4>
 
 </div>
 
@@ -1649,7 +1649,40 @@ border-radius: 0px;
 </div>
 <div id="chapter-2-small-worlds-and-large-worlds" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Chapter 2: Small Worlds and Large Worlds</h1>
+<p><span class="math inline">\(~\)</span></p>
+<div id="the-garden-of-forking-data" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> The garden of forking data</h2>
+<p>“In order to make good inference about what actually happened, it helps to consider everything that could have happened. A Bayesian analysis is a garden of forking data, in which alternative sequences of events are cultivated. As we learn about what did happen, some of these alternative sequences are pruned. In the end, what remains is only what is logically consistent with our knowledge.”</p>
+<div id="counting-possibilities" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Counting possibilities</h3>
+<p><span style="color:green"><strong><em>A bag of avocado and pear (total 8)</em></strong></span></p>
+<ul>
+<li>Conjectures: (a,a,a,a,a,a,a,a); (p,a,a,a,a,a,a,a); (p,p,a,a,a,a,a,a); (p,p,p,a,a,a,a,a); (p,p,p,p,a,a,a,a);
+(p,p,p,p,p,a,a,a); (p,p,p,p,p,p,a,a); (p,p,p,p,p,p,p,a); (p,p,p,p,p,p,p,p)</li>
+</ul>
+<p><span style="color:green"><strong><em>Shake the bag to give equal chance and pick 4 fruits; replace the fruit after each pick</em></strong></span></p>
+<ul>
+<li>Data: (a,p,a,a)</li>
+</ul>
+<p><span style="color:green"><strong><em>Count the possible ways to have that exact data sequence for each conjecture</em></strong></span></p>
+<ul>
+<li><p>(a,a,a,a,a,a,a,a) → 8 * 0 * 8 * 8 = 0</p></li>
+<li><p>(p,a,a,a,a,a,a,a) → 7 * 1 * 7 * 7 = 343</p></li>
+<li><p>(p,p,a,a,a,a,a,a) → 6 * 2 * 6 * 6 = 432</p></li>
+<li><p>(p,p,p,a,a,a,a,a) → 5 * 3 * 5 * 5 = 375</p></li>
+<li><p>(p,p,p,p,a,a,a,a) → 4 * 4 * 4 * 4 = 256</p></li>
+<li><p>(p,p,p,p,p,a,a,a) → 3 * 5 * 3 * 3 = 135</p></li>
+<li><p>(p,p,p,p,p,p,a,a) → 2 * 6 * 2 * 2 = 48</p></li>
+<li><p>(p,p,p,p,p,p,p,a) → 1 * 7 * 1 * 1 = 7</p></li>
+<li><p>(p,p,p,p,p,p,p,p) → 0 * 8 * 0 * 0 = 0</p></li>
+</ul>
+<p>“So what good are these counts? By comparing these counts, we have part of a solution for a way to rate the relative plausibility of each conjectured bag composition. But it’s only a part of a solution, because in order to compare these counts we first have to decide how many ways each conjecture could itself be realized. We might argue that when we have no reason to assume otherwise, we can just consider each conjecture equally plausible and compare the counts directly. But often we do have reason to assume otherwise.”</p>
+</div>
+<div id="using-prior-information" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Using prior information</h3>
 <hr />
+</div>
+</div>
 </div>
 
 
