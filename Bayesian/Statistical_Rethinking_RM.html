@@ -11,7 +11,7 @@
 
 <meta name="author" content="SM" />
 
-<meta name="date" content="2024-01-04" />
+<meta name="date" content="2024-01-10" />
 
 <title>Statistical_Rethinking_RM</title>
 
@@ -1445,7 +1445,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">Statistical_Rethinking_RM</h1>
 <h4 class="author">SM</h4>
-<h4 class="date">2024-01-04</h4>
+<h4 class="date">2024-01-10</h4>
 
 </div>
 
@@ -1680,6 +1680,41 @@ border-radius: 0px;
 </div>
 <div id="using-prior-information" class="section level3" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> Using prior information</h3>
+<p>Two possible choices to incorporate prior information: add a new layer to the garden or multiply prior count by the new count. “It turns out that these two methods are mathematically identical, as long as the new observation is logically independent of the previous observations.”</p>
+<p>“First we count the numbers of ways each conjecture could produce the new observation. Then we multiply each of these new counts by the previous numbers of ways for each conjecture.”</p>
+<p>We select one more fruit from the bag. Now the data sequence is “a,p,a,a,p”</p>
+<ul>
+<li><p>(a,a,a,a,a,a,a,a) → 0 * 0 = 0</p></li>
+<li><p>(p,a,a,a,a,a,a,a) → 343 * 1 = 343</p></li>
+<li><p>(p,p,a,a,a,a,a,a) → 432 * 2 = 864</p></li>
+<li><p>(p,p,p,a,a,a,a,a) → 375 * 3 = 1125</p></li>
+<li><p>(p,p,p,p,a,a,a,a) → 256 * 4 = 1024</p></li>
+<li><p>(p,p,p,p,p,a,a,a) → 135 * 5 = 675</p></li>
+<li><p>(p,p,p,p,p,p,a,a) → 48 * 6 = 288</p></li>
+<li><p>(p,p,p,p,p,p,p,a) → 7 * 7 = 49</p></li>
+<li><p>(p,p,p,p,p,p,p,p) → 0 * 8 = 0</p></li>
+</ul>
+<p>“This updating approach amounts to nothing more than asserting that (1) when we have previous information suggesting there are W<sub>prior</sub> ways for a conjecture to produce a previous observation D<sub>prior</sub> and (2) we acquire new observations D<sub>new</sub> that the same conjecture can produce in W<sub>new</sub> ways, then (3) the number of ways the conjecture can account for both D<sub>prior</sub> as well as D<sub>new</sub> is just the product W<sub>prior</sub> × W<sub>new</sub>.”</p>
+<p><span class="math inline">\(~\)</span></p>
+<p><span style="color:brown"><span style="text-decoration:underline"><strong>Incorporating new data types different from prior data</strong></span></p>
+<p><em>New information: There are fewer pears than avocados. For every bag containing 5 pears and 3 avocados, there are two bags containing 4 pears and 4 avocados, three bags containing 5 avocados and 3 pears, and four bags containing 2 pears and 6 avocados. Each bag contains at least 2 pears and 2 avocados.</em></p>
+<ul>
+<li><p>(a,a,a,a,a,a,a,a) → 0 * 0 = 0</p></li>
+<li><p>(p,a,a,a,a,a,a,a) → 343 * 0 = 0</p></li>
+<li><p>(p,p,a,a,a,a,a,a) → 864 * 4 = 3456</p></li>
+<li><p>(p,p,p,a,a,a,a,a) → 1125 * 3 = 3375</p></li>
+<li><p>(p,p,p,p,a,a,a,a) → 1024 * 2 = 2048</p></li>
+<li><p>(p,p,p,p,p,a,a,a) → 675 * 1 = 675</p></li>
+<li><p>(p,p,p,p,p,p,a,a) → 288 * 0 = 0</p></li>
+<li><p>(p,p,p,p,p,p,p,a) → 49 * 0 = 0</p></li>
+<li><p>(p,p,p,p,p,p,p,p) → 0 * 0 = 0</p></li>
+</ul>
+<p>I made a mental note in the beginning that the bag contained 4 pears and 4 avocados. Now, using the counting method has gotten me nearer to the truth, but it makes no difference since I will get the wrong answer anyway. The author asked “Is there a threshold difference in these counts at which we can safely decide that one of the conjectures is the correct one?”, when one conjecture is barely more possible than the other. I think the answer is no (correct answer is in chapter 3).</p>
+<p>“Which assumption should we use, when there is no previous information about the conjectures? The most common solution is to assign an equal number of ways that each conjecture could be correct, before seeing any data. This is sometimes known as the <em>principle of indifference</em>: When there is no reason to say that one conjecture is more plausible than another, weigh all of the conjectures equally. The issue of choosing a representation of “ignorance” is surprisingly complicated. The issue will arise again in later chapters. For the sort of problems we examine in this book, the principle of indifference results in inferences very comparable to mainstream non- Bayesian approaches, most of which contain implicit equal weighting of possibilities. For example a typical non-Bayesian confidence interval weighs equally all of the possible values a parameter could take, regardless of how implausible some of them are. Many non-Bayesian procedures have moved away from this, through the use of penalized likelihood and other methods.”</p>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+<div id="from-counts-to-probability" class="section level3" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> From counts to probability</h3>
 <hr />
 </div>
 </div>

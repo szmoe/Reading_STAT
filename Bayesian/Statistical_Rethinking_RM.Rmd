@@ -318,6 +318,68 @@ $~$
 
 ### Using prior information 
 
+Two possible choices to incorporate prior information: add a new layer to the garden or multiply prior count by the new count. "It turns out that these two methods are mathematically identical, as long as the new observation is logically independent of the previous observations."
+
+"First we count the numbers of ways each conjecture could produce the new observation. Then we multiply each of these new counts by the previous numbers of ways for each conjecture."
+
+We select one more fruit from the bag. Now the data sequence is "a,p,a,a,p"
+
+- (a,a,a,a,a,a,a,a)       &rarr;       0 * 0 = 0
+
+- (p,a,a,a,a,a,a,a)       &rarr;     343 * 1 = 343            
+
+- (p,p,a,a,a,a,a,a)       &rarr;     432 * 2 = 864
+
+- (p,p,p,a,a,a,a,a)       &rarr;     375 * 3 = 1125
+
+- (p,p,p,p,a,a,a,a)       &rarr;     256 * 4 = 1024
+               
+- (p,p,p,p,p,a,a,a)       &rarr;     135 * 5 = 675
+
+- (p,p,p,p,p,p,a,a)       &rarr;      48 * 6 = 288
+
+- (p,p,p,p,p,p,p,a)       &rarr;       7 * 7 = 49
+
+- (p,p,p,p,p,p,p,p)       &rarr;       0 * 8 = 0
+
+"This updating approach amounts to nothing more than asserting that (1) when we have previous information suggesting there are W~prior~ ways for a conjecture to produce a previous observation D~prior~ and (2) we acquire new observations D~new~ that the same conjecture can produce in W~new~ ways, then (3) the number of ways the conjecture can account for both D~prior~ as well as D~new~ is just the product W~prior~ × W~new~."
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Incorporating new data types different from prior data**</span>
+
+*New information: There are fewer pears than avocados. For every bag containing 5 pears and 3 avocados, there are two bags containing 4 pears and 4 avocados, three bags containing 5 avocados and 3 pears, and four bags containing 2 pears and 6 avocados. Each bag contains at least 2 pears and 2 avocados.*
+
+- (a,a,a,a,a,a,a,a)       &rarr;       0 * 0 = 0
+
+- (p,a,a,a,a,a,a,a)       &rarr;     343 * 0 = 0            
+
+- (p,p,a,a,a,a,a,a)       &rarr;     864 * 4 = 3456
+
+- (p,p,p,a,a,a,a,a)       &rarr;    1125 * 3 = 3375
+
+- (p,p,p,p,a,a,a,a)       &rarr;    1024 * 2 = 2048
+               
+- (p,p,p,p,p,a,a,a)       &rarr;     675 * 1 = 675
+
+- (p,p,p,p,p,p,a,a)       &rarr;     288 * 0 = 0
+
+- (p,p,p,p,p,p,p,a)       &rarr;      49 * 0 = 0
+
+- (p,p,p,p,p,p,p,p)       &rarr;       0 * 0 = 0
+
+
+I made a mental note in the beginning that the bag contained 4 pears and 4 avocados. Now, using the counting method has gotten me nearer to the truth, but it makes no difference since I will get the wrong answer anyway. The author asked "Is there a threshold difference in these counts at which we can safely decide that one of the conjectures is the correct one?", when one conjecture is barely more possible than the other. I think the answer is no (correct answer is in chapter 3). 
+
+"Which assumption should we use, when there is no previous information about the conjectures? The most common solution is to assign an equal number of ways that each conjecture could be correct, before seeing any data. This is sometimes known as the *principle of indifference*: When there is no reason to say that one conjecture is more plausible than another, weigh all of the conjectures equally. The issue of choosing a representation of “ignorance” is surprisingly complicated. The issue will arise again in later chapters. For the sort of problems we examine in this book, the principle of indifference results in inferences very comparable to mainstream non- Bayesian approaches, most of which contain implicit equal weighting of possibilities. For example a typical non-Bayesian confidence interval weighs equally all of the possible values a parameter could take, regardless of how implausible some of them are. Many non-Bayesian procedures have moved away from this, through the use of penalized likelihood and other methods."
+
+$~$
+
+### From counts to probability
+
+
+
+
 
 
 
