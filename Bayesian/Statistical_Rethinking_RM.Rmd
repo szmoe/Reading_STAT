@@ -377,9 +377,153 @@ $~$
 
 ### From counts to probability
 
+*If p is the proportion of pear and D~new~ = {a,p,a,a}*
+
+plausibility of p after D~new~ $∝$ ways p can produce D~new~ × prior plausibility of p
+
+"The above just means that for any value p can take, we judge the plausibility of that value p as proportional to the number of ways it can get through the garden of forking data. This expression just summarizes the calculations you did in the tables of the previous section.
+
+Finally, we construct probabilities by standardizing the plausibility so that the sum of the plausibilities for all possible conjectures will be one. All you need to do in order to standardize is to add up all of the products, one for each value p can take, and then divide each product by the sum of products:"
+
+plausibility of p after D~new~ = $\frac{ways~p~can~produce~D~new~ x~ prior~plausibility~p}{sum~of~products}$
 
 
+```{r table, tidy=FALSE, include=TRUE, echo=FALSE}
+data2 <- read.table(stringsAsFactors = FALSE, header = TRUE, sep="/", text =
+'Possible_composition/ p/ Ways_to_produce_data/ Plausibility
+ (a,a,a,a,a,a,a,a)/ 0.00/ 0.00/ 0.00
+ (p,a,a,a,a,a,a,a)/ 0.125/ 343/ 0.21         
+ (p,p,a,a,a,a,a,a)/ 0.25/ 432/ 0.27
+ (p,p,p,a,a,a,a,a)/ 0.375/ 375/ 0.23
+ (p,p,p,p,a,a,a,a)/ 0.5/ 256/ 0.16
+ (p,p,p,p,p,a,a,a)/ 0.625/ 135/ 0.08
+ (p,p,p,p,p,p,a,a)/ 0.75/ 48/ 0.03
+ (p,p,p,p,p,p,p,a)/ 0.875/ 7/ 0.004
+ (p,p,p,p,p,p,p,p)/ 1/ 0/ 0'
+)
+knitr::kable((data2), booktabs = TRUE)
+```
 
+OR
+
+```{r}
+
+ways <- c(0, 343, 432, 375, 256, 135, 48, 7, 0)
+ways/sum(ways)
+
+```
+
+"These plausibilities are also probabilities— they are non-negative (zero or positive) real numbers that sum to one. And all of the mathematical things you can do with probabilities you can also do with these values. Specifically, each piece of the calculation has a direct partner in applied probability theory. These partners have stereotyped names, so it’s worth learning them, as you’ll see them again and again.
+
+• A conjectured proportion of pears, p, is usually called a parameter value. It’s just a way of indexing possible explanations of the data.
+
+• The relative number of ways that a value p can produce the data is usually called a likelihood. It is derived by enumerating all the possible data sequences that could have happened and then eliminating those sequences inconsistent with the data.
+
+• The prior plausibility of any specific p is usually called the prior probability.
+
+• The new, updated plausibility of any specific p is usually called the posterior
+probability.
+
+*If we really have shuffled a deck of cards enough to erase any prior knowledge of the ordering- in randomization process-, then the order the cards end up in is very likely to be one of the many orderings with high information entropy.*"
+
+$~$
+
+## Building a model
+
+"Designing a simple Bayesian model benefits from a design loop with three steps.
+
+(1) Data story: Motivate the model by narrating how the data might arise.
+
+(2) Update: Educate your model by feeding it the data.
+
+(3) Evaluate: All statistical models require supervision, leading possibly to model revision."
+
+$~$
+
+### A data story
+
+"Bayesian data analysis usually means producing a story for how the data came to be. This story may be descriptive, specifying associations that can be used to predict outcomes, given observations. Or it may be causal, a theory of how some events produce other events. Typically, any story you intend to be causal may also be descriptive. But many descriptive stories are hard to interpret causally. But all data stories are complete, in the sense that they are sufficient for specifying an algorithm for simulating new data. 
+
+You can motivate your data story by trying to explain how each piece of data is born. This usually means describing aspects of the underlying reality as well as the sampling process.
+
+The data story is then translated into a formal probability model. This probability model is easy to build, because the construction process can be usefully broken down into a series of component decisions."
+
+$~$
+
+### Bayesian updating
+
+"A Bayesian model begins with one set of plausibilities assigned to each of these possibilities. These are the prior plausibilities. Then it updates them in light of the data, to produce the posterior plausibilities. This updating process is a kind of learning, called Bayesian updating.
+
+Notice that every updated set of plausibilities becomes the initial plausibilities for the next observation. Every conclusion is the starting point for future inference. However, this updating process works backwards, as well as forwards. Knowing the final observation, it is possible to mathematically divide out the observation, to infer the previous plausibility curve. So the data could be presented to your model in any order, or all at once even. In most cases, you will present the data all at once, for the sake of convenience. But it’s important to realize that this merely represents abbreviation of an iterated learning process.
+
+Bayesian estimates are valid for any sample size. This does not mean that more data isn’t helpful—it certainly is. Rather, the estimates have a clear and valid interpretation, no matter the sample size. But the price for this power is dependency upon the initial estimates, the prior. If the prior is a bad one, then the resulting inference will be misleading."
+
+$~$
+
+### Evaluate
+
+"If there are important differences between the model and reality, then there is no logical guarantee of large world performance. And even if the two worlds did match, any particular sample of data could still be misleading. So it’s worth keeping in mind at least two cautious principles: (1) the model’s certainty is no guarantee that the model is a good one and (2) it is important to supervise and critique your model’s work.
+
+Note that the goal is not to test the truth value of the model’s assumptions. All manner of small world assumptions about error distributions and the like can be violated in the large world, but a model may still produce a perfectly useful estimate. Instead, the objective is to check the model’s adequacy for some purpose. This usually means asking and answering additional questions, beyond those that originally constructed the model."
+
+$~$
+
+## Components of the model
+
+"The usual way we build a statistical model involves choosing distributions and devices for each that represent the relative numbers of ways things can happen. These distributions and devices are 
+
+(1) a likelihood function- the number of ways each conjecture could produce an observation
+
+(2) one or more parameters- the accumulated number of ways each conjecture could produce the entire data
+
+(3) a prior- the initial plausibility of each conjectured cause of the data"
+
+$~$
+
+### Likelihood
+
+"The likelihood is a mathematical formula that specifies the plausibility of the data. What this means is that the likelihood maps each conjecture onto the relative number of ways the data could occur, given that possibility."
+
+<span style="color:brown"><span style="text-decoration:underline">**Binomial distribution**</span>
+
+- each event is independent of other events
+
+- the probability of "an observation" is the same on every event
+
+- the common "coin tossing" distribution where there is only two possible answers (e.g., land or water in globe example; failure or success, etc.)
+
+In the given globe example, there are two possible outcomes: either land or water. Out of 9 tosses (n), 6 tosses land on water. The probability of getting water (p) is the same (0.5%) on every toss. Then, we can use binomial distribution formula in R to compute the "likelihood of data w (water)- 6 W's in 9 tosses- under any value of p with":
+
+```{r}
+
+dbinom( 6, size = 9, prob = 0.5)
+
+```
+
+
+If probability for getting water is 0.2,
+
+``` {r}
+
+dbinom(6, size = 9, prob = 0.2)
+
+```
+
+*"The job of the likelihood is to tell us the relative number of ways to see the data w, given values for p and n."*
+
+$~$
+
+### Parameters
+
+"It is typical to conceive of data and parameters as completely different kinds of entities. Data are measured and known; parameters are unknown and must be estimated from data. Usefully, in the Bayesian framework the distinction between a datum and a parameter is fuzzy. A datum can be recast as a very narrow probability density for a parameter, and a parameter as a datum with uncertainty. This continuity between certainty (data) and uncertainty (parameters) can be exploited (Ch 14) to incorporate measurement error and missing data into your modeling.
+
+In globe tossing example, n and w are data, and p is unknown parameter. Your Bayesian machine can tell you what the data say about any parameter, once you tell it the likelihood and which bits have been observed. In some cases, the golem will just tell you that not much can be learned—Bayesian data analysis isn’t magic, after all. But it is usually an advance to learn that our data don’t discriminate among the possibilities."
+
+$~$
+
+### Prior
+
+A Bayesian machine must have an initial plausibility assignment for each possible value of the parameter. The prior is this initial set of plausibilities.
 
 
 

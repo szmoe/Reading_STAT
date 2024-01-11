@@ -11,7 +11,7 @@
 
 <meta name="author" content="SM" />
 
-<meta name="date" content="2024-01-10" />
+<meta name="date" content="2024-01-11" />
 
 <title>Statistical_Rethinking_RM</title>
 
@@ -1282,6 +1282,106 @@ ul.task-list{list-style: none;}
 
 
 
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } 
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.at { color: #204a87; } 
+code span.bn { color: #0000cf; } 
+code span.cf { color: #204a87; font-weight: bold; } 
+code span.ch { color: #4e9a06; } 
+code span.cn { color: #8f5902; } 
+code span.co { color: #8f5902; font-style: italic; } 
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.dt { color: #204a87; } 
+code span.dv { color: #0000cf; } 
+code span.er { color: #a40000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #0000cf; } 
+code span.fu { color: #204a87; font-weight: bold; } 
+code span.im { } 
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.kw { color: #204a87; font-weight: bold; } 
+code span.op { color: #ce5c00; font-weight: bold; } 
+code span.ot { color: #8f5902; } 
+code span.pp { color: #8f5902; font-style: italic; } 
+code span.sc { color: #ce5c00; font-weight: bold; } 
+code span.ss { color: #4e9a06; } 
+code span.st { color: #4e9a06; } 
+code span.va { color: #000000; } 
+code span.vs { color: #4e9a06; } 
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
@@ -1445,7 +1545,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">Statistical_Rethinking_RM</h1>
 <h4 class="author">SM</h4>
-<h4 class="date">2024-01-10</h4>
+<h4 class="date">2024-01-11</h4>
 
 </div>
 
@@ -1715,6 +1815,158 @@ border-radius: 0px;
 </div>
 <div id="from-counts-to-probability" class="section level3" number="3.1.3">
 <h3><span class="header-section-number">3.1.3</span> From counts to probability</h3>
+<p><em>If p is the proportion of pear and D<sub>new</sub> = {a,p,a,a}</em></p>
+<p>plausibility of p after D<sub>new</sub> <span class="math inline">\(∝\)</span> ways p can produce D<sub>new</sub> × prior plausibility of p</p>
+<p>“The above just means that for any value p can take, we judge the plausibility of that value p as proportional to the number of ways it can get through the garden of forking data. This expression just summarizes the calculations you did in the tables of the previous section.</p>
+<p>Finally, we construct probabilities by standardizing the plausibility so that the sum of the plausibilities for all possible conjectures will be one. All you need to do in order to standardize is to add up all of the products, one for each value p can take, and then divide each product by the sum of products:”</p>
+<p>plausibility of p after D<sub>new</sub> = <span class="math inline">\(\frac{ways~p~can~produce~D~new~ x~ prior~plausibility~p}{sum~of~products}\)</span></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Possible_composition</th>
+<th align="right">p</th>
+<th align="right">Ways_to_produce_data</th>
+<th align="right">Plausibility</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(a,a,a,a,a,a,a,a)</td>
+<td align="right">0.000</td>
+<td align="right">0</td>
+<td align="right">0.000</td>
+</tr>
+<tr class="even">
+<td align="left">(p,a,a,a,a,a,a,a)</td>
+<td align="right">0.125</td>
+<td align="right">343</td>
+<td align="right">0.210</td>
+</tr>
+<tr class="odd">
+<td align="left">(p,p,a,a,a,a,a,a)</td>
+<td align="right">0.250</td>
+<td align="right">432</td>
+<td align="right">0.270</td>
+</tr>
+<tr class="even">
+<td align="left">(p,p,p,a,a,a,a,a)</td>
+<td align="right">0.375</td>
+<td align="right">375</td>
+<td align="right">0.230</td>
+</tr>
+<tr class="odd">
+<td align="left">(p,p,p,p,a,a,a,a)</td>
+<td align="right">0.500</td>
+<td align="right">256</td>
+<td align="right">0.160</td>
+</tr>
+<tr class="even">
+<td align="left">(p,p,p,p,p,a,a,a)</td>
+<td align="right">0.625</td>
+<td align="right">135</td>
+<td align="right">0.080</td>
+</tr>
+<tr class="odd">
+<td align="left">(p,p,p,p,p,p,a,a)</td>
+<td align="right">0.750</td>
+<td align="right">48</td>
+<td align="right">0.030</td>
+</tr>
+<tr class="even">
+<td align="left">(p,p,p,p,p,p,p,a)</td>
+<td align="right">0.875</td>
+<td align="right">7</td>
+<td align="right">0.004</td>
+</tr>
+<tr class="odd">
+<td align="left">(p,p,p,p,p,p,p,p)</td>
+<td align="right">1.000</td>
+<td align="right">0</td>
+<td align="right">0.000</td>
+</tr>
+</tbody>
+</table>
+<p>OR</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>ways <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">343</span>, <span class="dv">432</span>, <span class="dv">375</span>, <span class="dv">256</span>, <span class="dv">135</span>, <span class="dv">48</span>, <span class="dv">7</span>, <span class="dv">0</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>ways<span class="sc">/</span><span class="fu">sum</span>(ways)</span></code></pre></div>
+<pre><code>## [1] 0.000000000 0.214912281 0.270676692 0.234962406 0.160401003 0.084586466
+## [7] 0.030075188 0.004385965 0.000000000</code></pre>
+<p>“These plausibilities are also probabilities— they are non-negative (zero or positive) real numbers that sum to one. And all of the mathematical things you can do with probabilities you can also do with these values. Specifically, each piece of the calculation has a direct partner in applied probability theory. These partners have stereotyped names, so it’s worth learning them, as you’ll see them again and again.</p>
+<p>• A conjectured proportion of pears, p, is usually called a parameter value. It’s just a way of indexing possible explanations of the data.</p>
+<p>• The relative number of ways that a value p can produce the data is usually called a likelihood. It is derived by enumerating all the possible data sequences that could have happened and then eliminating those sequences inconsistent with the data.</p>
+<p>• The prior plausibility of any specific p is usually called the prior probability.</p>
+<p>• The new, updated plausibility of any specific p is usually called the posterior
+probability.</p>
+<p><em>If we really have shuffled a deck of cards enough to erase any prior knowledge of the ordering- in randomization process-, then the order the cards end up in is very likely to be one of the many orderings with high information entropy.</em>”</p>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+</div>
+<div id="building-a-model" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Building a model</h2>
+<p>“Designing a simple Bayesian model benefits from a design loop with three steps.</p>
+<ol style="list-style-type: decimal">
+<li><p>Data story: Motivate the model by narrating how the data might arise.</p></li>
+<li><p>Update: Educate your model by feeding it the data.</p></li>
+<li><p>Evaluate: All statistical models require supervision, leading possibly to model revision.”</p></li>
+</ol>
+<p><span class="math inline">\(~\)</span></p>
+<div id="a-data-story" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> A data story</h3>
+<p>“Bayesian data analysis usually means producing a story for how the data came to be. This story may be descriptive, specifying associations that can be used to predict outcomes, given observations. Or it may be causal, a theory of how some events produce other events. Typically, any story you intend to be causal may also be descriptive. But many descriptive stories are hard to interpret causally. But all data stories are complete, in the sense that they are sufficient for specifying an algorithm for simulating new data.</p>
+<p>You can motivate your data story by trying to explain how each piece of data is born. This usually means describing aspects of the underlying reality as well as the sampling process.</p>
+<p>The data story is then translated into a formal probability model. This probability model is easy to build, because the construction process can be usefully broken down into a series of component decisions.”</p>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+<div id="bayesian-updating" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Bayesian updating</h3>
+<p>“A Bayesian model begins with one set of plausibilities assigned to each of these possibilities. These are the prior plausibilities. Then it updates them in light of the data, to produce the posterior plausibilities. This updating process is a kind of learning, called Bayesian updating.</p>
+<p>Notice that every updated set of plausibilities becomes the initial plausibilities for the next observation. Every conclusion is the starting point for future inference. However, this updating process works backwards, as well as forwards. Knowing the final observation, it is possible to mathematically divide out the observation, to infer the previous plausibility curve. So the data could be presented to your model in any order, or all at once even. In most cases, you will present the data all at once, for the sake of convenience. But it’s important to realize that this merely represents abbreviation of an iterated learning process.</p>
+<p>Bayesian estimates are valid for any sample size. This does not mean that more data isn’t helpful—it certainly is. Rather, the estimates have a clear and valid interpretation, no matter the sample size. But the price for this power is dependency upon the initial estimates, the prior. If the prior is a bad one, then the resulting inference will be misleading.”</p>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+<div id="evaluate" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Evaluate</h3>
+<p>“If there are important differences between the model and reality, then there is no logical guarantee of large world performance. And even if the two worlds did match, any particular sample of data could still be misleading. So it’s worth keeping in mind at least two cautious principles: (1) the model’s certainty is no guarantee that the model is a good one and (2) it is important to supervise and critique your model’s work.</p>
+<p>Note that the goal is not to test the truth value of the model’s assumptions. All manner of small world assumptions about error distributions and the like can be violated in the large world, but a model may still produce a perfectly useful estimate. Instead, the objective is to check the model’s adequacy for some purpose. This usually means asking and answering additional questions, beyond those that originally constructed the model.”</p>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+</div>
+<div id="components-of-the-model" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Components of the model</h2>
+<p>“The usual way we build a statistical model involves choosing distributions and devices for each that represent the relative numbers of ways things can happen. These distributions and devices are</p>
+<ol style="list-style-type: decimal">
+<li><p>a likelihood function- the number of ways each conjecture could produce an observation</p></li>
+<li><p>one or more parameters- the accumulated number of ways each conjecture could produce the entire data</p></li>
+<li><p>a prior- the initial plausibility of each conjectured cause of the data”</p></li>
+</ol>
+<p><span class="math inline">\(~\)</span></p>
+<div id="likelihood" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Likelihood</h3>
+<p>“The likelihood is a mathematical formula that specifies the plausibility of the data. What this means is that the likelihood maps each conjecture onto the relative number of ways the data could occur, given that possibility.”</p>
+<p><span style="color:brown"><span style="text-decoration:underline"><strong>Binomial distribution</strong></span></p>
+<ul>
+<li><p>each event is independent of other events</p></li>
+<li><p>the probability of “an observation” is the same on every event</p></li>
+<li><p>the common “coin tossing” distribution where there is only two possible answers (e.g., land or water in globe example; failure or success, etc.)</p></li>
+</ul>
+<p>In the given globe example, there are two possible outcomes: either land or water. Out of 9 tosses (n), 6 tosses land on water. The probability of getting water (p) is the same (0.5%) on every toss. Then, we can use binomial distribution formula in R to compute the “likelihood of data w (water)- 6 W’s in 9 tosses- under any value of p with”:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">dbinom</span>( <span class="dv">6</span>, <span class="at">size =</span> <span class="dv">9</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>## [1] 0.1640625</code></pre>
+<p>If probability for getting water is 0.2,</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="dv">6</span>, <span class="at">size =</span> <span class="dv">9</span>, <span class="at">prob =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<pre><code>## [1] 0.002752512</code></pre>
+<p><em>“The job of the likelihood is to tell us the relative number of ways to see the data w, given values for p and n.”</em></p>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+<div id="parameters" class="section level3" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Parameters</h3>
+<p>“It is typical to conceive of data and parameters as completely different kinds of entities. Data are measured and known; parameters are unknown and must be estimated from data. Usefully, in the Bayesian framework the distinction between a datum and a parameter is fuzzy. A datum can be recast as a very narrow probability density for a parameter, and a parameter as a datum with uncertainty. This continuity between certainty (data) and uncertainty (parameters) can be exploited (Ch 14) to incorporate measurement error and missing data into your modeling.</p>
+<p>In globe tossing example, n and w are data, and p is unknown parameter. Your Bayesian machine can tell you what the data say about any parameter, once you tell it the likelihood and which bits have been observed. In some cases, the golem will just tell you that not much can be learned—Bayesian data analysis isn’t magic, after all. But it is usually an advance to learn that our data don’t discriminate among the possibilities.”</p>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+<div id="prior" class="section level3" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Prior</h3>
+<p>A Bayesian machine must have an initial plausibility assignment for each possible value of the parameter. The prior is this initial set of plausibilities.</p>
 <hr />
 </div>
 </div>
