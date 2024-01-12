@@ -15,6 +15,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(rethinking)
 ```
 
 # Chapter 1: The Golem of Prague
@@ -523,12 +524,367 @@ $~$
 
 ### Prior
 
-A Bayesian machine must have an initial plausibility assignment for each possible value of the parameter. The prior is this initial set of plausibilities.
+"A Bayesian machine must have an initial plausibility assignment for each possible value of the parameter. The prior is this initial set of plausibilities. Priors are useful for constraining parameters to reasonable ranges, as well as for expressing any knowledge we have about the parameter, before any data are observed.
+
+Within Bayesian data analysis in the natural and social sciences, the prior is considered to be just part of the model. As such it should be chosen, evaluated, and revised just like all of the other components of the model. In practice, the subjectivist and the non-subjectivist will often analyze data in nearly the same way.
+
+If you don’t have a strong argument for any particular prior, then try different ones. Because the prior is an assumption, it should be interrogated like other assumptions: by altering it and checking how sensitive inference is to the assumption."
+
+$~$
+
+### Posterior
+
+"Once you have chosen a likelihood, which parameters are to be estimated, and a prior for each parameter, a Bayesian model treats the estimates as a purely logical consequence of those assumptions. For every unique combination of data, likelihood, parameters, and prior, there is a unique set of estimates. The resulting estimates—the relative plausibility of different parameter values, conditional on the data—are known as the posterior distribution. The posterior distribution takes the form of the probability of the parameters, conditional on the data: `Pr(p|n, w).`
+
+<span style="color:brown"><span style="text-decoration:underline">**Bayes Theorem**</span>
+
+The mathematical procedure that defines the logic of the posterior distribution is Bayes’ theorem. The joint probability of the data w and any particular value of p is: `Pr(w, p) = Pr(w|p) Pr(p)`- the probability of w and p is the product of likelihood Pr(w|p) and the prior probability Pr(p)."
+
+Example- the probability of mango both sweet and yellow is equal to the probability that mango is sweet given that it is yellow, multiplies by the probability that it is yellow: `Pr(s, y) = Pr(s|y) Pr(y)`
+
+OR the probability of mango both sweet and yellow is equal to the probability that mango is yellow given that it is sweet, multiplies by the probability that it is sweet: `Pr(s, y) = Pr(y|s) Pr(s)`
+
+Now since both right-hand sides are equal to the same thing, we can set them equal to one another and solve for the posterior probability: Pr(s|y) = $\frac{Pr(y|s)~Pr(s)}{Pr(y)}$
+
+<span style="color:brown">***Bayes' theorem***</span>: the probability of any particular value of p, considering the data, is equal to the product of the likelihood and prior, divided by this thing Pr(w), which I’ll call the *average likelihood*. In word form:
+
+$$\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}$$
+
+<span style="color:brown">***Average Likelihood:***</span>
+
+- commonly called "evidence" or "probability of the data"
+
+- Likelihood of the data averaged over the prior
+
+- To standardize the posterior, to ensure it sums (integrates) to one 
+
+$~$
+
+## Making the model go 
+
+"Bayesian model is a machine, a figurative golem. It has built-in definitions for the likelihood, the parameters, and the prior. And then at its heart lies a motor that processes data, producing a posterior distribution. The action of this motor can be thought of as conditioning the prior on the data.
+
+Three different conditioning engines, numerical techniques for computing posterior distributions, that can accommodate whichever prior is most useful for inference:
+
+(1) Grid approximation
+
+(2) Quadratic approximation
+
+(3) Markov chain Monte Carlo (MCMC)"
+
+$~$
+
+### Grid approximation
+
+While most parameters are continuous, capable of taking on an infinite number of values, it turns out that we can achieve an excellent approximation of the continuous posterior distribution by considering only a finite grid of parameter values. At any particular value of a parameter, p′, it’s a simple matter to compute the posterior probability: just multiply the prior probability of p′ by the likelihood at p′. Repeating this procedure for each value in the grid generates an approximate picture of the exact posterior distribution. This procedure is called grid approximation. 
+
+But in most of your real modeling, grid approximation isn’t practical. The reason is that it scales very poorly, as the number of parameters increases. 
+
+<span style="color:brown"><span style="text-decoration:underline">**Building a grid approximation**</span>
+
+1. Define the grid- decide how many points to use in estimating the posterior, and then make a list of the parameter values on the grid. 
+
+2. Compute the value of the prior at each parameter value on the grid.
+
+3. Compute the likelihood at each parameter value.
+
+4. Compute the unstandardized posterior at each parameter value, by multiplying the prior by the likelihood.
+
+5. Finally, standardize the posterior, by dividing each value by the sum of all values.
+
+$~$
+
+<span style="color:gray">***Building a grid approximation for globe tossing example***</span>
+
+``` {r globe tossing example}
+# define grid
+p_grid <- seq( from=0 , to=1 , length.out=20 )
+
+# define prior
+prior <- rep( 1 , 20 )
+
+# compute likelihood at each value in grid
+likelihood <- dbinom( 6 , size=9 , prob=p_grid )
+
+# compute product of likelihood and prior
+unstd.posterior <- likelihood * prior
+
+# standardize the posterior, so it sums to 1
+posterior <- unstd.posterior / sum(unstd.posterior)
+
+# Display the posterior distribution 
+
+plot( p_grid , posterior , type="b" ,
+    xlab="probability of water" , ylab="posterior probability" )
+mtext( "20 points" )
+
+```
+
+$~$
+
+<span style="color:gray">***Try with a 5-point grid***</span>
+
+``` {r 5-point grid}
+
+# define grid
+
+p_grid <- seq(from = 0, to = 1, length.out = 5)
+
+# define prior
+
+prior <- rep(1, 5) # 1 form a uniform prior distribution, assigning equal probability to each value in the grid. Using a decimal here will mean the same but may assume less degree of uncertainty?
+
+# compute likelihood at each value in the grid
+
+likelihood <- dbinom(6, size = 9, prob = p_grid)
+
+# compute product of likelihood and prior
+
+unstd.posterior <- likelihood * prior
+
+# standardize the posterior, so it sums to 1
+
+std.posterior <- unstd.posterior / sum(unstd.posterior)
+
+# plot the posterior distribution
+
+plot(p_grid, std.posterior, type = "b",
+     xlab = "probability of water", ylab = "posterior probability")
+mtext("5 points")
+
+```
 
 
+$~$
+
+<span style="color:gray">***Try with a 100-point grid***</span>
+
+```{r 100-point grid}
+
+# define a grid
+
+p_grid <- seq(from = 0, to = 1, length.out = 100)
+
+# define a prior
+
+prior <- rep(1, 100)
+
+# compute likelihood at each value in grid
+
+likelihood <- dbinom(6, size = 9, prob = p_grid)
+
+# compute the unstandardized posterior
+
+unstd.posterior <- likelihood * prior
+
+# standardize the posterior 
+
+posterior <- unstd.posterior / sum(unstd.posterior)
+
+# plot the posterior
+
+plot(p_grid, posterior, type = "b",
+     xlab = "probability of water", ylab = "posterior distribution")
+mtext("100 points")
+
+```
+
+*In this simple example, you can go crazy and use 100,000 points, but there won’t be much change in inference after the first 100.*
+
+$~$
+
+<span style="color:gray">***Try with a step prior***</span>
+
+```{r step prior}
+
+# define a grid
+
+p_grid <- seq(from = 0, to = 1, length.out = 40)
+
+# define a prior
+
+prior <- ifelse(p_grid < 0.5, 0, 1) #ifelse(test, yes, no)
+
+# calculate the likelihood
+
+likelihood <- dbinom(6, size = 9, prob = p_grid)
+
+# calculate unstandardized posterior
+
+unstd.posterior <- likelihood * prior
+
+# standardize the posterior
+
+posterior <- unstd.posterior / sum(unstd.posterior)
+
+# plot the posterior
+
+plot(p_grid, posterior, type = "o",
+     xlab = "probability of water", ylab = "posterior distribution")
+mtext("40 points")
+
+```
+
+$~$
+
+<span style="color:gray">***Try with a peaked prior***</span>
+
+```{r peaked prior}
+
+# define a grid
+
+p_grid <- seq(from = 0, to = 1, length.out = 40)
+
+# define a prior
+
+prior <- exp(-5*abs(p_grid - 0.5))
+
+# calculate the likelihood
+
+likelihood <- dbinom(6, size = 9, prob = p_grid)
+
+# calculate unstandardised posterior
+
+unstd.posterior <- likelihood * prior
+
+# standardize the posterior
+
+posterior <- unstd.posterior / sum(unstd.posterior)
+
+# plot the posterior distribution
+
+plot(p_grid, posterior, type = "b",
+     xlab = "probability of water", ylab = "posterior distribution")
+mtext("40 points")
+
+```
+
+$~$
+
+### Quadratic approximation
+
+Under quite general conditions, the region near the peak of the posterior distribution will be nearly Gaussian—or “normal”—in shape. This means the posterior distribution can be usefully approximated by a Gaussian distribution. A Gaussian distribution is convenient, because it can be completely described by only two numbers: the location of its center (mean) and its spread (variance).
+
+A Gaussian approximation is called “quadratic approximation” because the logarithm of a Gaussian distribution forms a parabola. And a parabola is a quadratic function. So this approximation essentially represents any log-posterior with a parabola.
+
+The procedure to carry out quadratic approximation in R contains two steps:
+
+(1) Find the posterior mode. This is usually accomplished by some optimization algorithm, a procedure that virtually “climbs” the posterior distribution, as if it were a mountain. The golem doesn’t know where the peak is, but it does know the slope under its feet. There are many well-developed optimization procedures, most of them more clever than simple hill climbing. But all of them try to find peaks.
+
+(2) Once you find the peak of the posterior, you must estimate the curvature near the peak. This curvature is sufficient to compute a quadratic approximation of the entire posterior distribution. In some cases, these calculations can be done analytically, but usually your computer uses some numerical technique instead.
 
 
+<span style="color:gray">***Compute the quadratic approximation to the globe tossing data***</span>
 
+```{r quadratic approximation}
+
+library(rethinking)
+
+globe.qa <- map(           #  map is maximum a posteriori- the mode of the posterior distribution
+    alist(
+        w ~ dbinom(9,p) ,  # binomial likelihood
+        p ~ dunif(0,1)     # uniform prior
+), data=list(w=6) )
+
+# display summary of quadratic approximation
+precis( globe.qa )
+
+```
+
+*To use map, you provide a formula, a list of data, and a list of start values for the parameters. The formula defines the likelihood and prior.*
+
+The function precis presents a brief summary of the quadratic approximation. In this case, it shows a MAP value of p = 0.67, which it calls the “Mean.” The curvature is labeled “Std- Dev” This stands for standard deviation. This value is the standard deviation of the posterior distribution, while the mean value is its peak. Finally, the last two values in the precis output show the 89% percentile interval. You can read this kind of approximation like: Assuming the posterior is Gaussian, it is maximized at 0.67, and its standard deviation is 0.16.
+
+Since we already know the posterior, let’s compare to see how good the approximation is. I’ll use the analytical approach here, which uses dbeta.
+
+```{r dbeta}
+
+# analytical calculation
+w <- 6
+n <- 9
+curve( dbeta( x , w+1 , n-w+1 ) , from=0 , to=1 ) 
+# Use Laplace's rule of succession- add one to both w and n-w to avoid assigning zero probability, ensure at least there's one w and one n-w, even if none have been observed yet
+
+# quadratic approximation
+curve( dnorm( x , 0.67 , 0.16 ) , lty=2 , add=TRUE )
+
+```
+
+
+<span style="color:gray">***Double the sample size***</span>
+
+```{r quadratic approximation1}
+
+library(rethinking)
+
+globe.qa1 <- map(           #  map is maximum a posteriori- the mode of the posterior distribution
+    alist(
+        w ~ dbinom(18,p) ,  # binomial likelihood
+        p ~ dunif(0,1)     # uniform prior
+), data=list(w=12) )
+
+# display summary of quadratic approximation
+precis( globe.qa1 )
+
+```
+
+```{r increase tosses1}
+
+# analytical calculation
+w <- 12
+n <- 18
+curve( dbeta( x , w+1 , n-w+1 ) , from=0 , to=1 )
+
+# quadratic approximation
+curve( dnorm( x , 0.67 , 0.11 ) , lty=2 , add=TRUE )
+
+```
+
+<span style="color:gray">***Quadruple the sample size***</span>
+
+```{r quadratic approximation2}
+
+library(rethinking)
+
+globe.qa2 <- map(           #  map is maximum a posteriori- the mode of the posterior distribution
+    alist(
+        w ~ dbinom(36,p) ,  # binomial likelihood
+        p ~ dunif(0,1)     # uniform prior
+), data=list(w=24) )
+
+# display summary of quadratic approximation
+precis( globe.qa2 )
+
+```
+
+```{r increase tosses2}
+
+# analytical calculation
+w <- 24
+n <- 36
+curve( dbeta( x , w+1 , n-w+1 ) , from=0 , to=1 )
+
+# quadratic approximation
+curve( dnorm( x , 0.67 , 0.08 ) , lty=2 , add=TRUE )
+
+```
+
+
+This phenomenon, where the quadratic approximation improves with the amount of data, is very common. It’s one of the reasons that so many classical statistical procedures are nervous about small samples: Those procedures use quadratic (or other) approximations that are only known to be safe with infinite data. Often, these approximations are useful with less than infinite data, obviously. But the rate of improvement as sample size increases varies greatly depending upon the details. In some model types, the quadratic approximation can remain terrible even with thousands of samples.
+
+***Maximum likelihood estimation:*** The quadratic approximation, either with a uniform prior or with a lot of data, is usually equivalent to a maximum likelihood estimate (MLE) and its standard error. The MLE is a very common non-Bayesian parameter estimate. This equivalence between a Bayesian approximation and a common non-Bayesian estimator is both a blessing and a curse. It is a blessing, because it allows us to re-interpret a wide range of published non-Bayesian model fits in Bayesian terms. It is a curse, because maximum likelihood estimates have some curious drawbacks.
+
+$~$
+
+### Markov chain Monte Carlo
+
+The conceptual challenge with MCMC lies in its highly non-obvious strategy. Instead of attempting to compute or approximate the posterior distribution directly, MCMC techniques merely draw samples from the posterior. You end up with a collection of parameter values, and the frequencies of these values correspond to the posterior plausibilities. You can then build a picture of the posterior from the histogram of these samples.
+
+We nearly always work directly with these samples, rather than first constructing some mathematical estimate from them. And the samples are in many ways more convenient than having the posterior, because they are easier to think with.
+
+$~$
+
+## Practice
 
 
     
