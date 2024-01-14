@@ -11,7 +11,7 @@
 
 <meta name="author" content="SM" />
 
-<meta name="date" content="2024-01-13" />
+<meta name="date" content="2024-01-14" />
 
 <title>Statistical_Rethinking_RM</title>
 
@@ -1545,7 +1545,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">Statistical_Rethinking_RM</h1>
 <h4 class="author">SM</h4>
-<h4 class="date">2024-01-13</h4>
+<h4 class="date">2024-01-14</h4>
 
 </div>
 
@@ -2171,7 +2171,7 @@ probability.</p>
 <span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co"># display summary of quadratic approximation</span></span>
 <span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="fu">precis</span>( globe.qa )</span></code></pre></div>
 <pre><code>##        mean        sd      5.5%     94.5%
-## p 0.6666666 0.1571338 0.4155365 0.9177968</code></pre>
+## p 0.6666664 0.1571339 0.4155361 0.9177966</code></pre>
 <p><em>To use map, you provide a formula, a list of data, and a list of start values for the parameters. The formula defines the likelihood and prior.</em></p>
 <p>The function precis presents a brief summary of the quadratic approximation. In this case, it shows a MAP value of p = 0.67, which it calls the “Mean.” The curvature is labeled “Std- Dev” This stands for standard deviation. This value is the standard deviation of the posterior distribution, while the mean value is its peak. Finally, the last two values in the precis output show the 89% percentile interval. You can read this kind of approximation like: Assuming the posterior is Gaussian, it is maximized at 0.67, and its standard deviation is 0.16.</p>
 <p>Since we already know the posterior, let’s compare to see how good the approximation is. I’ll use the analytical approach here, which uses dbeta.</p>
@@ -2197,7 +2197,7 @@ probability.</p>
 <span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co"># display summary of quadratic approximation</span></span>
 <span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="fu">precis</span>( globe.qa1 )</span></code></pre></div>
 <pre><code>##        mean        sd      5.5%     94.5%
-## p 0.6666663 0.1111104 0.4890904 0.8442423</code></pre>
+## p 0.6666666 0.1111104 0.4890908 0.8442425</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># analytical calculation</span></span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="dv">12</span></span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">18</span></span>
@@ -2217,8 +2217,8 @@ probability.</p>
 <span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a></span>
 <span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co"># display summary of quadratic approximation</span></span>
 <span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="fu">precis</span>( globe.qa2 )</span></code></pre></div>
-<pre><code>##        mean         sd      5.5%     94.5%
-## p 0.6666671 0.07856684 0.5411021 0.7922321</code></pre>
+<pre><code>##        mean        sd      5.5%     94.5%
+## p 0.6666666 0.0785669 0.5411015 0.7922317</code></pre>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co"># analytical calculation</span></span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="dv">24</span></span>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">36</span></span>
@@ -2529,9 +2529,225 @@ Total ways to get another black side -&gt; 4
 
 Hence, the probability of getting a card with both sides black by counting method is 4/5. 
 </code></pre>
+<p><span class="math inline">\(~\)</span></p>
+<p>2M6. Imagine that black ink is heavy, and so cards with black sides are heavier than cards with white sides. As a result, it’s less likely that a card with black sides is pulled from the bag. So again assume there are three cards: B/B, B/W, and W/W. After experimenting a number of times, you conclude that for every way to pull the B/B card from the bag, there are 2 ways to pull the B/W card and 3 ways to pull the W/W card. Again suppose that a card is pulled and a black side appears face up. Show that the probability the other side is black is now 0.5. Use the counting method, as before.</p>
+<pre><code># Possible conjectures
+conjectures : (B/B), (B/W), (W/W)
+
+# New information
+Pr(B/B) &lt; Pr(B/W) &lt; Pr(W/W)
+1 (B/B) = 2 (B/W) + 3 (W/W)
+
+# Likelihood of drawing each card
+(B/B) -&gt; 1
+(B/W) -&gt; 2
+(W/W) -&gt; 3
+
+# Count the possible ways to get data (B)
+(B/B) -&gt; 2 x 1 = 2
+(B/W) -&gt; 1 x 2 = 2
+(W/W) -&gt; 0 x 3 = 0
+Total counts of way to get initial B = 4
+
+# Count the possible ways to get data (B/B)
+(B/B) -&gt; 2 x 1 = 2
+(B/W) -&gt; 2 x 0 = 0
+(W/W) -&gt; 0 x 0 = 0
+Total counts of way to get B/B = 2
+
+Probability the other side is also black = 2/4 = 0.5
+</code></pre>
+<p><span class="math inline">\(~\)</span></p>
+<p>2M7. Assume again the original card problem, with a single card showing a black side face up.Before looking at the other side, we draw another card from the bag and lay it face up on the table. The face that is shown on the new card is white. Show that the probability that the first card, the one showing a black side, has black on its other side is now 0.75. Use the counting method, if you can. Hint: Treat this like the sequence of globe tosses, counting all the ways to see each observation, for each possible first card.</p>
+<pre><code># Possible conjectures
+conjectures: (B/B), (B/W), (W/W)
+
+# Count the possible ways to get data (B)
+(B/B) -&gt; 2 
+(B/W) -&gt; 1 
+(W/W) -&gt; 0 
+
+# Count the possible ways to get data (W)
+(B/B) -&gt; 0
+(B/W) -&gt; 1 
+(W/W) -&gt; 2 
+
+# Count the possible ways to get data (B/x, W/x)
+(B/B) , (B/W) -&gt; 2 x 1 = 2
+(B/B) , (W/W) -&gt; 2 x 2 = 4
+(B/W) , (B/B) -&gt; 1 x 0 = 0
+(B/W) , (W/W) -&gt; 1 x 2 = 2
+Total counts of ways to get data (B/x, W/x) = 8
+
+# Count the possible ways to get data (B/B, W/x)
+(B/B) , (B/W) -&gt; 2 x 1 = 2
+(B/B) , (W/W) -&gt; 4 x 1 = 4
+(B/W) , (B/B) -&gt; 0 x 0 = 0
+(B/W) , (W/W) -&gt; 2 x 0 = 0
+Total counts of ways to get data (B/B, W/x) = 6
+
+Probability that the first card has both black sides = 6/8 = 0.75
+</code></pre>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+<div id="hard" class="section level3" number="3.5.3">
+<h3><span class="header-section-number">3.5.3</span> Hard</h3>
+<p>2H1. Suppose there are two species of panda bear. Both are equally common in the wild and live in the same places. They look exactly alike and eat the same food, and there is yet no genetic assay capable of telling them apart. They differ however in their family sizes. Species A gives birth to twins 10% of the time, otherwise birthing a single infant. Species B births twins 20% of the time, otherwise birthing singleton infants. Assume these numbers are known with certainty, from many years of field research.
+Now suppose you are managing a captive panda breeding program. You have a new female panda of unknown species, and she has just given birth to twins. What is the probability that her next birth will also be twins?</p>
+<pre><code># Probability of species A gives birth to twins
+Pr(twin|SpA) = 0.1
+
+# Probability of species B gives birth to twins
+Pr(twin|SpB) = 0.2
+
+# Probability that the new female panda belongs to species A or species B
+Pr(SpA) = 0.5
+Pr(SpB) = 0.5
+
+# Total probability of having twins (average likelihood)
+Pr(twins) = (Pr(twins|SpA) * Pr(SpA)) + (Pr(twins|SpB) * Pr(SpB))
+          = (0.1 * 0.5) + (0.2 * 0.5)
+          = 0.15
+          
+# Total probability of having two set of twins (average likelihood)
+Pr(2twins) = (Pr(2twins|SpA) * Pr(SpA)) + (Pr(2twins|SpB) * Pr(SpB))
+          = (0.01 * 0.5) + (0.04 * 0.5)
+          = 0.025
+
+# Probability of having another set of twins given that the first set is twin, regardless of species
+Pr (second_twins|first_twins) = Pr(first_twins, second_twins)/ Pr(twins)
+                              = Pr(2twins)/ Pr(twins)
+                              = 0.025/ 0.15 
+                              = 0.1666667
+</code></pre>
+<p><span class="math inline">\(~\)</span></p>
+<p>2H2. Recall all the facts from the problem above. Now compute the probability that the panda we have is from species A, assuming we have observed only the first birth and that it was twins.</p>
+<pre><code># Probability of panda from species A giving birth to twins
+Pr(twins|SpA) = 0.1
+Pr(twin|SpB)  = 0.2
+
+# Probability that the new female panda belongs to species A or species B
+Pr(SpA) = 0.5
+Pr(SpB) = 0.5
+
+# Total probability of having twins (average likelihood)
+Pr(twins) = (Pr(twins|SpA) * Pr(SpA)) + (Pr(twins|SpB) * Pr(SpB))
+          = (0.1 * 0.5) + (0.2 * 0.5)
+          = 0.15
+
+# Probability that panda is from species A after observing first birth of twins
+Pr(SpA|twins) = (Pr(twins|SpA) * Pr(SpA))/ Pr(twins)
+              = (0.1 * 0.5)/ 0.15
+              = 0.3333333
+</code></pre>
+<p><span class="math inline">\(~\)</span></p>
+<p>2H3. Continuing on from the previous problem, suppose the same panda mother has a second birth and that it is not twins, but a singleton infant. Compute the posterior probability that this panda is species A.</p>
+<pre><code># Probability that the new female panda belongs to species A or species B
+Pr(SpA) = 0.5
+Pr(SpB) = 0.5
+
+# Probability of panda from species A and B giving birth to twins
+Pr(twins|SpA) = 0.1
+Pr(twin|SpB)  = 0.2
+
+# Probability of panda from species A and B giving birth to singleton
+Pr(singleton|SpA) = 0.9
+Pr(singleton|SpB) = 0.8
+
+# Probability of panda from species A and B having a twin and a singleton 
+Pr(singleton, twins|SpA) = 0.1 * 0.9 = 0.09
+Pr(singleton, twins|SpB) = 0.2 * 0.8 = 0.16
+
+# Total probability of having a twin and a singleton (average likelihood)
+Pr(singleton, twins) = (Pr(singleton, twins|SpA) * Pr(SpA)) + (Pr(singleton, twins|SpB) * Pr(SpB))
+                     = (0.09 * 0.5) + (0.16 * 0.5)
+                     = 0.125
+
+# Probability that the new panda is from species A given the birth of a singleton and a twins
+Pr(SpA|sigleton, twins) = (Pr(singleton, twins|SpA) * Pr(SpA))/ Pr(singleton, twins)
+                        = (0.09 * 0.5)/ 0.125
+                        = 0.36
+
+OR
+
+# Probability of the new panda is from species A or B after the first birth of twins
+Pr(SpA) = 0.33
+Pr(SpB) = 0.67
+
+# Probability of panda from species A and B giving birth to singleton
+Pr(singleton|SpA) = 0.9
+Pr(singleton|SpB) = 0.8
+
+# Total probability of having singleton after the first birth of twins (average likelihood)
+Pr(singleton) = (Pr(singleton|SpA) * Pr(SpA)) + (Pr(singleton|SpB) * Pr(SpB))
+              = (0.9 * 0.33) + (0.8 * 0.67)
+              = 0.833
+
+# Probability that the new panda is from species A given the second birth of a singleton
+Pr(SpA|singleton) = (Pr(singleton|SpA) * Pr(SpA))/ Pr(singleton)
+                  = (0.9 * 0.33)/ 0.833
+                  = 0.3565426
+</code></pre>
+<p><span class="math inline">\(~\)</span></p>
+<p>2H4. A common boast of Bayesian statisticians is that Bayesian inference makes it easy to use all of the data, even if the data are of different types.
+So suppose now that a veterinarian comes along who has a new genetic test that she claims can identify the species of our mother panda. But the test, like all tests, is imperfect. This is the information you have about the test:
+• The probability it correctly identifies a species A panda is 0.8.
+• The probability it correctly identifies a species B panda is 0.65.
+The vet administers the test to your panda and tells you that the test is positive for species A. First ignore your previous information from the births and compute the posterior probability that your panda is species A. Then redo your calculation, now using the birth data as well.</p>
+<pre><code>
+# Without using birth data
+# Initital probability of speacies A and B
+Pr(SpA) = 0.5
+Pr(SpB) = 0.5
+
+# Probability that the test correctly identifies a species A or B panda
+Pr(correct_A|SpA) = 0.8
+Pr(correct_B|SpB) = 0.65
+
+# Probability that the test wrongly identifies a species A or B panda
+Pr(wrong_A|SpA) = 0.2
+Pr(wrong_B|SpB) = 0.35
+
+# Total probability that the test correctly identifies species A (average likelihood)
+Pr(correct_A) = (Pr(correct_A|SpA) * Pr(SpA)) + (Pr(wrong_B|SpB) * Pr(SpB))
+              = (0.8 * 0.5) + (0.35 * 0.5)
+              = 0.575
+              
+# Probability that the panda is from species A, given the correct test result
+Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
+                  = (0.8 * 0.5)/ 0.575
+                  = 0.6956522
+
+# Using birth data
+# Probability that the test correctly identifies a species A or B panda
+Pr(correct_A|SpA) = 0.8
+Pr(correct_B|SpB) = 0.65
+
+# Probability that the test wrongly identifies a species A or B panda
+Pr(wrong_A|SpA) = 0.2
+Pr(wrong_B|SpB) = 0.35
+
+# Prior probability of species A and B
+Pr(SpA) = 0.36
+Pr(SpB) = 0.64
+
+# Total probability that the test correctly identifies species A (average likelihood)
+Pr(correct_A) = (Pr(correct_A|SpA) * Pr(SpA)) + (Pr(wrong_B|SpB) * Pr(SpB))
+              = (0.8 * 0.36) + (0.35 * 0.64)
+              = 0.512
+
+# Probability that the panda is from species A, given the test result
+Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
+                  = (0.8 * 0.36)/ 0.512
+                  = 0.5625
+</code></pre>
+<p><span class="math inline">\(~\)</span></p>
+</div>
+</div>
+</div>
+<div id="chapter-3-sampling-the-imaginary" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Chapter 3: Sampling the Imaginary</h1>
 <hr />
-</div>
-</div>
 </div>
 
 
