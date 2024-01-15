@@ -1475,9 +1475,119 @@ $~$
 
 # Chapter 3: Sampling the Imaginary
 
+$~$
 
+## Sampling from a grid-approximate posterior
 
+<span style="color:brown"><span style="text-decoration:underline">**Compute the posterior for the globe tossing model, using grid approximation**</span>
 
+```{r sampling_from_grid}
+
+p_grid <- seq(from = 0, to = 1, length.out = 1000)
+
+prior <- rep(1, 1000)
+
+likelihood <- dbinom(6, size = 9, prob = p_grid)
+
+posterior <- likelihood * prior
+
+posterior <- posterior/ sum(posterior)
+
+plot(posterior)
+
+```
+
+<span style="color:brown"><span style="text-decoration:underline">**Draw the samples**</span>
+
+Now we wish to draw 10,000 samples from this posterior. Imagine the posterior is a bucket full of parameter values, numbers such as 0.1, 0.7, 0.5, 1, etc. Within the bucket, each value exists in proportion to its posterior probability, such that values near the peak are much more common than those in the tails. We’re going to scoop out 10,000 values from the bucket. Provided the bucket is well mixed, the resulting samples will have the same proportions as the exact posterior density. Therefore the individual values of p will appear in our samples in proportion to the posterior plausibility of each value.
+
+```{r create_sample}
+
+samples <- sample(p_grid, prob = posterior, size = 1e4, replace = TRUE)
+plot(samples, xlab="sample number", ylab="proportion of water(p)")
+# The workhorse here is sample, which randomly pulls values from a vector. 
+# The vector in this case is p_grid, the grid of parameter values. 
+# The probability of each value is given by posterior, which you computed just above.
+
+dens(samples, xlab= "proportion of water(p)", ylab= "Density") 
+# show density estimate computed from the samples
+# You can see that the estimated density is very similar to ideal posterior you computed 
+# via grid approximation.
+
+# Draw more samples
+samples <- sample(p_grid, prob = posterior, size = 1e6, replace = TRUE)
+plot(samples, xlab="sample number", ylab="proportion of water(p)")
+dens(samples, xlab= "proportion of water(p)", ylab= "Density") 
+# If you draw even more samples, maybe 1e5 or 1e6, the density estimate will get more 
+# and more similar to the ideal.
+# All you’ve done so far is crudely replicate the posterior density you had already computed.
+
+```
+
+$~$
+
+## Sampling to summarize
+
+It is necessary to summarize and interpret the posterior distribution. Exactly how it is summarized depends upon your purpose. But common questions include:
+
+• How much posterior probability lies below some parameter value?
+
+• How much posterior probability lies between two parameter values?
+
+• Which parameter value marks the lower 5% of the posterior probability?
+
+• Which range of parameter values contains 90% of the posterior probability? 
+
+• Which parameter value has highest posterior probability?
+
+These simple questions can be usefully divided into questions about:
+
+(1) intervals of defined boundaries, 
+
+(2) intervals of defined probability mass, and 
+
+(3) point estimates.
+
+$~$
+
+### Intervals of defined boundaries
+
+Suppose I ask you for the posterior probability that the proportion of water is less than 0.5. Using the grid-approximate posterior, you can just add up all of the probabilities, where the corresponding parameter value is less than 0.5:
+
+```{r intervals}
+
+# add up posterior probability where p < 0.5
+sum( posterior[ p_grid < 0.5 ] )
+
+```
+
+So let’s see how to perform the same calculation, using samples from the posterior. This approach does generalize to complex models with many parameters, and so you can use it everywhere. All you have to do is similarly add up all of the samples below 0.5, but also divide the resulting count by the total number of samples. In other words, find the frequency of parameter values below 0.5:
+
+```{r samples}
+
+sum(samples < 0.5)/ 1e4
+
+```
+
+And that’s nearly the same answer as the grid approximation provided, although your answer will not be exactly the same, because the exact samples you drew from the posterior will be different.
+
+Using the same approach, you can ask how much posterior probability lies between 0.5 and 0.75:
+
+```{r samples1}
+
+sum(samples > 0.5 & samples < 0.75)/ 1e4
+
+# So about 61% of the posterior probability lies between 0.5 and 0.75.
+
+```
+
+<span style="color:brown">***Counting with sum***</span>
+
+In the R code examples just above, I used the function sum to effectively count up how many samples fulfill a logical criterion. Why does this work? It works because R internally converts a logical expression, like samples < 0.5, to a vector of TRUE and FALSE results, one for each element of samples, saying whether or not each element matches the criterion.Go ahead and enter samples < 0.5 on the R prompt, to see this for yourself. Then when you sum this vector of TRUE and FALSE, R counts each TRUE as 1 and each FALSE as 0. So it ends up counting how many TRUE values are in the vector, which is the same as the number of elements in samples that match the logical criterion.
+
+$~$
+
+### Intervals of defined mass
 
 
 
