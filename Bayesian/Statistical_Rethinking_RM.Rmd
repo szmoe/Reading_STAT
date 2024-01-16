@@ -1567,6 +1567,8 @@ So let’s see how to perform the same calculation, using samples from the poste
 
 sum(samples < 0.5)/ 1e4
 
+# The answer is the posterior probability below a parameter value of 0.5.
+
 ```
 
 And that’s nearly the same answer as the grid approximation provided, although your answer will not be exactly the same, because the exact samples you drew from the posterior will be different.
@@ -1589,7 +1591,127 @@ $~$
 
 ### Intervals of defined mass
 
+It is more common to see scientific journals reporting an interval of defined mass, usually known as a confidence interval. An interval of posterior probability, such as the ones we are working with, may instead be called a credible interval, although the terms may also be used interchangeably.
 
+These posterior intervals report two parameter values that contain between them a specified amount of posterior probability, a probability mass. For this type of interval, it is easier to find the answer by using samples from the posterior than by using a grid approximation.
+
+```{r example}
+
+# Suppose for example you want to know the boundaries of the lower 80% posterior probability. 
+# You know this interval starts at p = 0. To find out where it stops, think of the samples as data 
+# and ask where the 80th percentile lies:
+quantile(samples, 0.8)
+# Lower 80% posterior probability exists below a parameter value of about 0.75. 
+
+# For the middle 80% interval lies between the 10th percentile and the 90th percentile.
+quantile(samples, c(0.1, 0.9))
+
+# Intervals of this sort are called percentile intervals (PI).
+
+```
+
+<span style="color:brown"><span style="text-decoration:underline">**Percentile Intervals (PI)**</span>
+
+- Intervals which assign equal probability mass to each tail
+
+- Do a good job of communicating the shape of a distribution, as long as the distribution isn't too asymmetrical
+
+- Not perfect for supporting inferences about which parameters are consistent with the data, see the figure and computation below:
+
+![**Figure:50% Percentile interval**- *The posterior density here corresponds to a flat prior and observing three water samples in three total tosses of the globe. This interval assigns equal mass (25%) to both the left and right tail. As a result, it omits the most probable parameter value, p = 1.*](./Png/RM_1.png){width=50%}
+
+```{r creat_sample2}
+
+# This posterior is consistent with observing three waters in three tosses and a uniform (flat) prior. 
+# It is highly skewed, having its maximum value at the boundary, p = 1. 
+# You can compute it, via grid approximation, with:
+
+# Create sample using grid approximation
+p_grid <- seq(from = 0, to = 1, length.out = 1000)
+prior <- rep(1, 1000)
+likelihood <- dbinom(3, size = 3, prob = p_grid)
+unstd.posterior <- prior * likelihood
+posterior <- unstd.posterior/ sum(unstd.posterior)
+samples2 <- sample(p_grid, size = 1e4, replace = TRUE, prob = posterior) # sample from posterior
+
+```
+
+
+```{r 50%PI}
+
+# Compute the 50% percentile confidence interval from the samples with PI (part of rethinking)
+PI(samples2, prob = 0.5)
+# This interval assigns 25% of the probability mass above and below the interval. 
+# So it provides the central 50% probability. But in this example, it ends up excluding 
+# the most probable parameter values, near p = 1. So in terms of describing 
+# the shape of the posterior distribution—which is really all these intervals are asked to do—
+# the percentile interval can be misleading.
+
+```
+
+
+<span style="color:brown"><span style="text-decoration:underline">**Highest Posterior Density Interval (HPDI)**</span>
+
+- The narrowest interval containing the specified probability mass
+
+- If you think about it, there must be an infinite number of posterior intervals with the same mass. But if you want an interval that best represents the parameter values most consistent with the data, then you want the densest of these intervals- the HPDI.
+
+``` {r 50%HPDI}
+
+# Compute it from the samples with HPDI (part of rethinking)
+HPDI(samples2, prob = 0.5)
+# This interval captures the parameters with highest posterior probability, 
+# as well as being noticeably narrower: 
+# 0.16 in width rather than 0.23 for the percentile interval.
+
+```
+
+
+![**Figure: 50% highest posterior density interval, HPDI**-*This interval finds the narrowest region with 50% of the posterior probability. Such a region always includes the most probable parameter value.*](./Png/RM_2.png){width=50%}
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**HPDI vs. PI**</span>
+
+- The two types of intervals are very similar
+
+- HPDI has some advantages over the PI
+  - only look so different if the posterior distribution is highly skewed, otherwise nearly identical:
+
+```{r HPDI,PI}
+
+# Compare HPDI and PI
+
+#Create samples using observation six waters in nine tosses
+p_grid <- seq(from = 0, to = 1, length.out = 1000)
+prior <- rep(1, 1000)
+likelihood <- dbinom(6, size = 9, prob = p_grid)
+posterior <- prior * likelihood
+posterior <- posterior/ sum(posterior)
+samples3 <- sample(p_grid, size = 1e4, replace = TRUE, prob = posterior)
+
+# Compute 80% HPDI and PI from samples 
+ HPDI(samples3, prob = 0.8)
+ PI(samples3, prob = 0.8)
+ 
+ # Compute 95% HPDI and PI from samples
+ HPDI(samples3, prob = 0.95)
+ PI(samples3, prob = 0.95)
+ 
+ # When the posterior is bell shaped, it hardly matters which type of interval you use.
+
+```
+
+- HPDI also has some disadvantages
+  - HPDI is more computationally intensive than PI
+  - HPDI suffers from greater simulation variance (it is sensitive to how many samples you draw from the posterior.)
+  
+```
+Overall, if the choice of interval type makes a big difference, then you shouldn’t be using intervals to summarize the posterior. Remember, the entire posterior distribution is the Bayesian estimate. It summarizes the relative plausibilities of each possible value of the parameter. Intervals of the 
+distribution are just helpful for summarizing it. If choice of interval leads to different 
+inferences, then you’d be better off just plotting the entire posterior distribution.
+
+```
+$~$
 
 
 
