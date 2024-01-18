@@ -16,6 +16,9 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(rethinking)
+library(ggplot2)
+library(dplyr)
+library(patchwork)
 ```
 
 # Chapter 1: The Golem of Prague
@@ -1618,8 +1621,6 @@ quantile(samples, c(0.1, 0.9))
 
 - Not perfect for supporting inferences about which parameters are consistent with the data, see the figure and computation below:
 
-![**Figure:50% Percentile interval**- *The posterior density here corresponds to a flat prior and observing three water samples in three total tosses of the globe. This interval assigns equal mass (25%) to both the left and right tail. As a result, it omits the most probable parameter value, p = 1.*](./Png/RM_1.png){width=50%}
-
 ```{r creat_sample2}
 
 # This posterior is consistent with observing three waters in three tosses and a uniform (flat) prior. 
@@ -1634,11 +1635,6 @@ unstd.posterior <- prior * likelihood
 posterior <- unstd.posterior/ sum(unstd.posterior)
 samples2 <- sample(p_grid, size = 1e4, replace = TRUE, prob = posterior) # sample from posterior
 
-```
-
-
-```{r 50%PI}
-
 # Compute the 50% percentile confidence interval from the samples with PI (part of rethinking)
 PI(samples2, prob = 0.5)
 # This interval assigns 25% of the probability mass above and below the interval. 
@@ -1646,6 +1642,26 @@ PI(samples2, prob = 0.5)
 # the most probable parameter values, near p = 1. So in terms of describing 
 # the shape of the posterior distribution—which is really all these intervals are asked to do—
 # the percentile interval can be misleading.
+pi_50 <- PI(samples2, prob = 0.5)
+
+# Create a data frame for plotting
+df <- tibble(p_grid, posterior)
+
+# Plot 50% PI 
+df %>%
+  ggplot(aes(x = p_grid, y = posterior)) +
+  geom_ribbon(data = df %>% filter(p_grid > pi_50[1] & p_grid < pi_50[2]),
+              aes(ymin = 0, ymax = posterior),
+              fill = "purple", alpha = 0.5) +
+  geom_line(color = "brown") +
+  labs(subtitle = '50% Percentile interval',
+       x = 'proportion of water (p)',
+       y = 'density') +
+  theme_bw()
+# The posterior density here corresponds to a flat prior and observing 
+# three water samples in three total tosses of the globe. 
+# This interval assigns equal mass (25%) to both the left and right tail. 
+# As a result, it omits the most probable parameter value, p = 1.
 
 ```
 
@@ -1656,18 +1672,42 @@ PI(samples2, prob = 0.5)
 
 - If you think about it, there must be an infinite number of posterior intervals with the same mass. But if you want an interval that best represents the parameter values most consistent with the data, then you want the densest of these intervals- the HPDI.
 
-``` {r 50%HPDI}
+``` {r HPDI_50}
+
+# Create sample using grid approximation
+p_grid <- seq(from = 0, to = 1, length.out = 1000)
+prior <- rep(1, 1000)
+likelihood <- dbinom(3, size = 3, prob = p_grid)
+unstd.posterior <- prior * likelihood
+posterior <- unstd.posterior/ sum(unstd.posterior)
+samples2 <- sample(p_grid, size = 1e4, replace = TRUE, prob = posterior)
 
 # Compute it from the samples with HPDI (part of rethinking)
 HPDI(samples2, prob = 0.5)
 # This interval captures the parameters with highest posterior probability, 
 # as well as being noticeably narrower: 
 # 0.16 in width rather than 0.23 for the percentile interval.
+hpdi_50 <- HPDI(samples2, prob = 0.5)
+
+# Create a data frame for plotting
+df <- tibble(p_grid, posterior)
+
+# Plot 50% PI 
+df %>%
+  ggplot(aes(x = p_grid, y = posterior)) +
+  geom_ribbon(data = df %>% filter(p_grid > hpdi_50[1] & p_grid < hpdi_50[2]),
+              aes(ymin = 0, ymax = posterior),
+              fill = "purple", alpha = 0.5) +
+  geom_line(color = "brown") +
+  labs(subtitle = '50% Percentile interval',
+       x = 'proportion of water (p)',
+       y = 'density') +
+  theme_bw()
+# This interval finds the narrowest region with 50% of the posterior probability. 
+# Such a region always includes the most probable parameter value.
 
 ```
 
-
-![**Figure: 50% highest posterior density interval, HPDI**-*This interval finds the narrowest region with 50% of the posterior probability. Such a region always includes the most probable parameter value.*](./Png/RM_2.png){width=50%}
 $~$
 
 <span style="color:brown"><span style="text-decoration:underline">**HPDI vs. PI**</span>
@@ -1681,21 +1721,62 @@ $~$
 
 # Compare HPDI and PI
 
-#Create samples using observation six waters in nine tosses
+# Create samples using observation six waters in nine tosses
 p_grid <- seq(from = 0, to = 1, length.out = 1000)
 prior <- rep(1, 1000)
 likelihood <- dbinom(6, size = 9, prob = p_grid)
 posterior <- prior * likelihood
-posterior <- posterior/ sum(posterior)
+posterior <- posterior/sum(posterior)
 samples3 <- sample(p_grid, size = 1e4, replace = TRUE, prob = posterior)
 
-# Compute 80% HPDI and PI from samples 
- HPDI(samples3, prob = 0.8)
- PI(samples3, prob = 0.8)
- 
- # Compute 95% HPDI and PI from samples
- HPDI(samples3, prob = 0.95)
- PI(samples3, prob = 0.95)
+# Compute 80% HPDI and PI from samples
+HPDI(samples3, prob = 0.8)
+PI(samples3, prob = 0.8)
+
+# Compute 95% HPDI and PI from samples
+HPDI(samples3, prob = 0.95)
+PI(samples3, prob = 0.95)
+
+# Add name for 80% HPDI and PI
+hpdi_80 <- HPDI(samples3, prob = 0.8)
+pi_80 <- PI(samples3, prob = 0.8)
+
+# Create a data frame for plotting
+df <- tibble(p_grid, posterior)
+
+# Plot 80% HPDI and PI on the same graph
+df %>%
+  ggplot(aes(x = p_grid, y = posterior)) +
+  geom_ribbon(data = df %>% filter(p_grid > hpdi_80[1] & p_grid < hpdi_80[2]),
+              aes(ymin = 0, ymax = posterior),
+              fill = "blue", alpha = 0.5) +
+  geom_ribbon(data = df %>% filter(p_grid > pi_80[1] & p_grid < pi_80[2]),
+              aes(ymin = 0, ymax = posterior),
+              fill = "green", alpha = 0.5) +
+  geom_line(color = "red") +
+  labs(subtitle = '80% HPDI and 80% PI',
+       x = 'proportion of water (p)',
+       y = 'density') +
+  theme_bw() 
+
+# Add name for 95% HPDI and PI 
+hpdi_95 <- HPDI(samples3, prob = 0.95)
+pi_95 <- PI(samples3, prob = 0.95)
+
+# Plot 95% HPDI and PI on the same graph
+df %>%
+  ggplot(aes(x = p_grid, y = posterior)) +
+  geom_ribbon(data = df %>% filter(p_grid > hpdi_95[1] & p_grid < hpdi_95[2]),
+              aes(ymin = 0, ymax = posterior),
+              fill = "brown", alpha = 0.5) +
+  geom_ribbon(data = df %>% filter(p_grid > pi_95[1] & p_grid < pi_95[2]),
+              aes(ymin = 0, ymax = posterior),
+              fill = "yellow", alpha = 0.5) +
+  geom_line(color = "grey") +
+  labs(subtitle = '95% HPDI and 95% PI',
+       x = 'proportion of water (p)',
+       y = 'density') +
+  theme_bw() 
  
  # When the posterior is bell shaped, it hardly matters which type of interval you use.
 
@@ -1712,6 +1793,148 @@ inferences, then you’d be better off just plotting the entire posterior distri
 
 ```
 $~$
+
+### Point estimates
+
+The Bayesian parameter estimate is precisely the entire posterior distribution, which is not a single number, but instead a function that maps each unique parameter value onto a plausibility value. So really the most important thing to note is that you don’t have to choose a point estimate. It’s hardly ever necessary.
+
+<span style="color:brown">***Which point estimate to choose if we must report: Mean, Median or Mode (MAP)?***</span>
+
+```{r point_estimate}
+
+# Use the globe tossing example where 3 water observations out of 3 tosses
+p_grid <- seq(from = 0, to = 1, length.out = 1000)
+prior <- rep(1, 1000)
+likelihood <- dbinom(3, size = 3, prob = p_grid)
+unstd.posterior <- prior * likelihood
+posterior <- unstd.posterior/ sum(unstd.posterior)
+samples2 <- sample(p_grid, size = 1e4, replace = TRUE, prob = posterior)
+
+# Compute the MAP from posterior
+# It is very common for scientists to report the parameter value with highest 
+# posterior probability, a maximum a posteriori (MAP) estimate.
+p_grid[ which.max(posterior) ]
+
+# Compute MAP using samples from posterior
+chainmode( samples2, adj = 0.01) # rethinking
+
+map_value <- p_grid[ which.max(posterior) ]
+
+# mean of the samples
+mean(samples2)
+mean_value <- mean(samples2)
+
+# median of the samples
+median(samples2)
+median_value <- median(samples2)
+
+# Create a data frame for plotting
+df <- tibble(p_grid, posterior)
+
+# Plot with lines for mean, median, and mode
+df %>%
+  ggplot(aes(x = p_grid, y = posterior)) +
+  geom_line(color = "brown") +
+  geom_ribbon(aes(ymin = 0, ymax = posterior), fill = "yellow") +
+  geom_vline(xintercept = map_value, linetype = "dashed", color = "black") +
+  geom_vline(xintercept = mean_value, linetype = "dashed", color = "black") +
+  geom_vline(xintercept = median_value, linetype = "dashed", color = "black") +
+  annotate("text", x = map_value, y = max(df$posterior), label = round(map_value, 2), vjust = -0.5, hjust = 0, color = "black") +
+  annotate("text", x = mean_value, y = max(df$posterior), label = round(mean_value, 2), vjust = -0.5, hjust = 0, color = "black") +
+  annotate("text", x = median_value, y = max(df$posterior), label = round(median_value, 2), vjust = -0.5, hjust = 0, color = "black") +
+  annotate("text", x = map_value, y = max(df$posterior), label = "mode", vjust = -0.5, hjust = 2, color = "black", angle = 90) +
+  annotate("text", x = mean_value, y = max(df$posterior), label = "mean", vjust = -0.5, hjust = 2, color = "black", angle = 90) +
+  annotate("text", x = median_value, y = max(df$posterior), label = "median", vjust = -0.5, hjust = 2, color = "black", angle = 90) +
+  labs(subtitle = 'Posterior with Mean, Median, and Mode (MAP)',
+       x = 'proportion of water (p)',
+       y = 'density') +
+  theme_bw() 
+
+```
+
+The value for median, mean, and mode (MAP) are different. In this case, ***use a loss function to estimate the cost associated with using any particular point estimate.*** 
+
+<span style="color:brown"><span style="text-decoration:underline">**Using loss function**</span>
+
+- Different loss functions imply different point estimates
+
+- The loss is proportional to the distance of your decision from the true value
+  - Loss $\propto$ d - p, where d is the decision and p is the correct answer or true value 
+
+\n
+
+-  The parameter value that maximizes expected winnings (minimizes expected loss) is the median of the posterior distribution
+
+- Calculating expected loss for any given decision means using the posterior to average over our uncertainty in the true value (unknown in most cases)
+
+``` 
+In order to decide upon a point estimate, a single-value summary of the posterior distribution, we need to pick a loss function. Different loss functions nominate different point estimates. The two most common examples are the absolute loss (d - p), which leads to the median as the point estimate, and the quadratic loss (d − p)2, which leads to the posterior mean (mean(samples)) as the point estimate. When the posterior distribution is symmetrical and normal-looking, then the median and mean converge to the same point.
+
+```
+
+```{r loss}
+# If our decision is p = 0.5,
+# compute the weighted average loss, where each loss is weighted by its 
+# corresponding posterior probability
+sum(posterior * abs(0.5 - p_grid))
+
+# repeating this calculation for every possible decision, using the function sapply
+loss <- sapply( p_grid , function(d) sum( posterior*abs( d - p_grid ) ) )
+# Now the symbol loss contains a list of loss values, one for each possible 
+# decision, corresponding the values in p_grid
+
+# Find the parameter value that minimizes the loss
+p_grid[ which.min(loss)]
+# And this is actually the posterior median, the parameter value that splits 
+# the posterior density such that half of the mass is above it 
+# and half below it
+
+# Check with posterior median
+median(samples2)
+# The answer match with the value that minimizes the loss
+
+# Plot the loss function
+# Find x, y values for minimum loss
+min_loss_x <- p_grid[which.min(loss)]
+min_loss_y <- loss[which.min(loss)]
+
+# Create data frame and plot 
+df <- tibble(p_grid, loss, posterior)
+
+df %>% 
+  ggplot(aes(x = p_grid)) +
+  geom_ribbon(aes(ymin = 0, ymax = loss), fill = 'grey75') +
+  geom_point(aes(x = min_loss_x, y = min_loss_y), size = 3, shape = 21, color = 'black') +
+  geom_vline(xintercept = map_value, linetype = "dashed", color = "grey") +
+  geom_vline(xintercept = mean_value, linetype = "dashed", color = "grey") +
+  geom_vline(xintercept = median_value, linetype = "dashed", color = "grey") +
+   annotate("text", x = map_value, y = max(df$posterior), label = "mode", vjust = -0.5, hjust = -5, color = "black", angle = 90) +
+  annotate("text", x = mean_value, y = max(df$posterior), label = "mean", vjust = -0.5, hjust = -5, color = "black", angle = 90) +
+  annotate("text", x = median_value, y = max(df$posterior), label = "median", vjust = -0.5, hjust = -5, color = "black", angle = 90) +
+  annotate("text", x = min_loss_x, y = min_loss_y, label = "value that \nminimizes loss", vjust = 1.2, hjust = 0.5, color = "black") +
+  labs(x = 'decision',
+       y = 'expected proportional loss') +
+  theme(panel.grid = element_blank())
+
+# Expected loss under the rule that loss is proportional to absolute distance 
+# of decision (horizontal axis) from the true value. The point marks the value 
+# of p that minimizes the expected loss, the posterior median.
+
+```
+
+$~$
+
+## Sampling to simulate prediction
+
+
+
+
+
+
+
+
+
+
 
 
 
