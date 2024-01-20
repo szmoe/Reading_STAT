@@ -2251,11 +2251,11 @@ $~$
 par(mfrow = c(1, 2))
 
 # First plot
-p_grids <- seq(from = 0, to = 1, length.out = 10000)
-priors <- rep(1, 10000)
-likelihood <- dbinom(8, size = 15, prob = p_grids)
-unstd.posterior1 <- likelihood * priors
-posterior <- unstd.posterior1 / sum(unstd.posterior1)
+p_grid <- seq(from = 0, to = 1, length.out = 10000)
+prior <- rep(1, 10000)
+likelihood <- dbinom(8, size = 15, prob = p_grid)
+unstd.posterior <- likelihood * prior
+posterior <- unstd.posterior / sum(unstd.posterior)
 plot(posterior ~ p_grid, type = "l", col = "blue", lty = 1, 
      xlab = "Probability of water", ylab = "Posterior distribution",
      main = "Prior = 1")
@@ -2274,9 +2274,9 @@ p_grid <- seq(from = 0, to = 1, length.out = 10000)
 prior <- ifelse(p_grid < 0.5, 0, 1)
 likelihood <- dbinom(8, size = 15, prob = p_grid)
 unstd.posterior <- likelihood * prior
-posterior1 <- unstd.posterior / sum(unstd.posterior)
+posterior <- unstd.posterior / sum(unstd.posterior)
 set.seed(102)
-sample3m5 <- sample(p_grid, prob = posterior1, size = 1e4, replace = TRUE)
+sample3m5 <- sample(p_grid, prob = posterior, size = 1e4, replace = TRUE)
 plot(posterior ~ p_grid, type = "l", col = "red", lty = 1, 
      xlab = "Probability of water", ylab = "Posterior distribution",
      main = "Prior = 0 or 1")
