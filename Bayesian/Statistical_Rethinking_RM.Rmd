@@ -1187,27 +1187,14 @@ total ways to see another side also black -> 2
 (b,b) -> total ways to see another side also black / total ways to see a black side up
       -> 2/3
       
-But, the question asks to "show that the probability that the other side is also black is 2/3."
-So, we need to find the probability. The question asks for a card with both sides black.
-Only one out of the three cards is black on both sides. In this case, the probability of getting
-a card that is black on both sides is 1/3. But, the question mentions we already have a black 
-side up. So, the probability of having the other black side after having one black side is 1/2, 
-because two cards can give an initial black side but only one card can give another black side. 
-
-Thus, it is impossible to have 2/3 as a probability of having a card with both black sides.
-Or Does the question ask for the probability of counts, that isn't equal to the probability of having 
-another black side after initial black side?
 
 ```
 <span style="color:blue">***If we calculate probability as shown in chapter 2***</span>
 
 ```{r 2M4}
 
-ways <- c(2, 0, 0)
+ways <- c(2, 1, 0)
 ways/ sum(ways)
-
-# In this case, the probability is 1 (100%) for the first card, while the other 
-# two cards are impossible to give a card that is black on both sides. 
 
 ```
 
@@ -1787,7 +1774,8 @@ df %>%
   - HPDI suffers from greater simulation variance (it is sensitive to how many samples you draw from the posterior.)
   
 ```
-Overall, if the choice of interval type makes a big difference, then you shouldn’t be using intervals to summarize the posterior. Remember, the entire posterior distribution is the Bayesian estimate. It summarizes the relative plausibilities of each possible value of the parameter. Intervals of the 
+Overall, if the choice of interval type makes a big difference, then you shouldn’t be using intervals 
+to summarize the posterior. Remember, the entire posterior distribution is the Bayesian estimate. It summarizes the relative plausibilities of each possible value of the parameter. Intervals of the 
 distribution are just helpful for summarizing it. If choice of interval leads to different 
 inferences, then you’d be better off just plotting the entire posterior distribution.
 
@@ -1839,12 +1827,18 @@ df %>%
   geom_vline(xintercept = map_value, linetype = "dashed", color = "black") +
   geom_vline(xintercept = mean_value, linetype = "dashed", color = "black") +
   geom_vline(xintercept = median_value, linetype = "dashed", color = "black") +
-  annotate("text", x = map_value, y = max(df$posterior), label = round(map_value, 2), vjust = -0.5, hjust = 0, color = "black") +
-  annotate("text", x = mean_value, y = max(df$posterior), label = round(mean_value, 2), vjust = -0.5, hjust = 0, color = "black") +
-  annotate("text", x = median_value, y = max(df$posterior), label = round(median_value, 2), vjust = -0.5, hjust = 0, color = "black") +
-  annotate("text", x = map_value, y = max(df$posterior), label = "mode", vjust = -0.5, hjust = 2, color = "black", angle = 90) +
-  annotate("text", x = mean_value, y = max(df$posterior), label = "mean", vjust = -0.5, hjust = 2, color = "black", angle = 90) +
-  annotate("text", x = median_value, y = max(df$posterior), label = "median", vjust = -0.5, hjust = 2, color = "black", angle = 90) +
+  annotate("text", x = map_value, y = max(df$posterior), label = round(map_value, 2), 
+           vjust = -0.5, hjust = 0, color = "black") +
+  annotate("text", x = mean_value, y = max(df$posterior), label = round(mean_value, 2), 
+           vjust = -0.5, hjust = 0, color = "black") +
+  annotate("text", x = median_value, y = max(df$posterior), label = round(median_value, 2), 
+           vjust = -0.5, hjust = 0, color = "black") +
+  annotate("text", x = map_value, y = max(df$posterior), label = "mode", 
+           vjust = -0.5, hjust = 2, color = "black", angle = 90) +
+  annotate("text", x = mean_value, y = max(df$posterior), label = "mean", 
+           vjust = -0.5, hjust = 2, color = "black", angle = 90) +
+  annotate("text", x = median_value, y = max(df$posterior), label = "median",
+           vjust = -0.5, hjust = 2, color = "black", angle = 90) +
   labs(subtitle = 'Posterior with Mean, Median, and Mode (MAP)',
        x = 'proportion of water (p)',
        y = 'density') +
@@ -1868,7 +1862,10 @@ The value for median, mean, and mode (MAP) are different. In this case, ***use a
 - Calculating expected loss for any given decision means using the posterior to average over our uncertainty in the true value (unknown in most cases)
 
 ``` 
-In order to decide upon a point estimate, a single-value summary of the posterior distribution, we need to pick a loss function. Different loss functions nominate different point estimates. The two most common examples are the absolute loss (d - p), which leads to the median as the point estimate, and the quadratic loss (d − p)2, which leads to the posterior mean (mean(samples)) as the point estimate. When the posterior distribution is symmetrical and normal-looking, then the median and mean converge to the same point.
+In order to decide upon a point estimate, a single-value summary of the posterior distribution, we need 
+to pick a loss function. Different loss functions nominate different point estimates. The two most 
+common examples are the absolute loss (d - p), which leads to the median as the point estimate, and the quadratic loss (d − p)2, which leads to the posterior mean (mean(samples)) as the point estimate. When 
+the posterior distribution is symmetrical and normal-looking, then the median and mean converge to the same point.
 
 ```
 
@@ -1908,10 +1905,14 @@ df %>%
   geom_vline(xintercept = map_value, linetype = "dashed", color = "grey") +
   geom_vline(xintercept = mean_value, linetype = "dashed", color = "grey") +
   geom_vline(xintercept = median_value, linetype = "dashed", color = "grey") +
-   annotate("text", x = map_value, y = max(df$posterior), label = "mode", vjust = -0.5, hjust = -5, color = "black", angle = 90) +
-  annotate("text", x = mean_value, y = max(df$posterior), label = "mean", vjust = -0.5, hjust = -5, color = "black", angle = 90) +
-  annotate("text", x = median_value, y = max(df$posterior), label = "median", vjust = -0.5, hjust = -5, color = "black", angle = 90) +
-  annotate("text", x = min_loss_x, y = min_loss_y, label = "value that \nminimizes loss", vjust = 1.2, hjust = 0.5, color = "black") +
+   annotate("text", x = map_value, y = max(df$posterior), label = "mode", 
+            vjust = -0.5, hjust = -5, color = "black", angle = 90) +
+  annotate("text", x = mean_value, y = max(df$posterior), label = "mean", 
+           vjust = -0.5, hjust = -5, color = "black", angle = 90) +
+  annotate("text", x = median_value, y = max(df$posterior), label = "median", 
+           vjust = -0.5, hjust = -5, color = "black", angle = 90) +
+  annotate("text", x = min_loss_x, y = min_loss_y, label = "value that \nminimizes loss", 
+           vjust = 1.2, hjust = 0.5, color = "black") +
   labs(x = 'decision',
        y = 'expected proportional loss') +
   theme(panel.grid = element_blank())
@@ -1925,6 +1926,407 @@ df %>%
 $~$
 
 ## Sampling to simulate prediction
+
+Samples from posterior ease simulation of the model’s implied observations. Generating implied observations from a model is useful for at least four distinct reasons.
+
+(1) Model checking- to check whether the fit worked correctly and to investigate model behavior
+
+(2) Software validation- simulate observations under a known model and then attempt to recover the values of the parameters the data were simulated under
+
+(3) Research design- simulate observations from hypothesis to evaluate whether the research design can be effective
+
+(4) Forecasting- can be useful as applied prediction, but also for model criticism and revision
+
+$~$
+
+### Dummy data (simulated data)
+
+Likelihood functions work in both directions. Given a realized observation, the likelihood function says how plausible the observation is. And given only the parameters, the likelihood defines a distribution of possible observations that we can sample from, to simulate observation. In this way, Bayesian models are always generative, capable of simulating predictions. 
+
+With the globe tossing model, the dummy data arises from a binomial likelihood:
+
+Pr(w|n,p) = $\frac{n!}{w!(n - w)!}$p^w^ (1 - p)^n-w^
+
+where w is an observed count of “water” and n is the number of tosses. Suppose n = 2, two tosses of the globe. Then there are only three possible observations: 0 water, 1 water, 2 water. You can quickly compute the likelihood of each, for any given value of p. Let’s use p = 0.7, which is just about the true proportion of water on the Earth:
+
+```{r likelihood}
+
+dbinom(0:2, size = 2, prob = 0.7)
+# 9% chance of observing w = 0, a 42% chance of w = 1, and a 49% chance of w = 2
+
+```
+
+Now we’re going to simulate observations, using these likelihoods. So a single dummy data observation of w can be sampled with:
+
+```{r rbinom}
+
+rbinom(1, size = 2, prob = 0.7)
+
+```
+
+The “r” in rbinom stands for “random.” It can also generate more than one simulation at a
+time. A set of 10 simulations can be made by:
+
+```{r rbinom1}
+
+rbinom(10, size = 2, prob = 0.7)
+
+```
+
+Let’s generate 100,000 dummy observations, just to verify that each value (0, 1, or 2) appears in proportion to its likelihood:
+
+```{r check}
+
+dummy_w <- rbinom(1e5, size = 2, prob = 0.7)
+
+table(dummy_w) /1e5
+
+# values are very close to the likelihood values calculated above
+
+```
+
+Now let’s simulate the same sample size as before, 9 tosses.
+
+```{r 9tosses}
+
+dummy_w_9 <- rbinom(1e5, size = 9, prob = 0.7)
+table(dummy_w_9)/ 1e5
+simplehist(dummy_w_9, xlab = "dummy water count")
+# Distribution of simulated sample observations from 9 tosses of the globe. 
+# These samples assume the proportion of water is 0.7.
+# Notice that most of the time the expected observation does not contain water 
+# in its true proportion, 0.7. That’s the nature of observation: There is a 
+# one-to-many relationship between data and data-generating processes.
+
+```
+
+Test with sample size = 40 and probability p = 0.5
+
+```{r 40tosses}
+
+dummy_w_40 <- rbinom(1e5, size = 40, prob = 0.5)
+simplehist(dummy_w_40, xlab = "dummy water count")
+
+```
+
+<span style="color:brown"><span style="text-decoration:underline">**Sampling distribution**</span>
+
+In this book, inference about parameters is never done directly through a sampling distribution. The posterior distribution is not sampled, but deduced logically. Then samples can be drawn from the posterior, to aid in inference. In neither case is “sampling” a physical act. In both cases, it’s just a mathematical device and produces only small world numbers.
+
+$~$
+
+### Model checking
+
+- Ensures the model fitting worked correctly
+
+- Evaluate the adequacy of a model for some purpose
+
+$~$
+
+#### Did the software work?
+
+- Use retrodictions (implied predictions) to check whether the software worked- by checking for correspondence between implied predictions and the data used to fit the model
+
+- An exact match is neither expected nor desired, but when there is no correspondence at all, it probably means the software did something wrong.
+
+- There is no way to really be sure that software works correctly. Even when the retrodictions correspond to the observed data, there may be subtle mistakes.
+
+$~$
+
+#### Is the model adequate?
+
+- Look for aspects of the data that are not well described by the model’s expectations
+
+- The goal is not to test whether the model’s assumptions are “true,” because all models are false
+
+- The goal is to assess exactly how the model fails to describe the data, as a path towards model comprehension, revision, and improvement
+
+<span style="color:brown">***Basic model checks using simulated observations for the globe tossing model***</span>
+
+The implied predictions of the model are uncertain in two ways, and we’d like to propagate the parameter uncertainty as we evaluate the implied predictions, i.e. get a posterior predictive distribution.
+
+- Observation uncertainty
+  - There is uncertainty in the predicted observations, because even if you know p with certainty, you won’t know the next globe toss with certainty (unless p = 0 or p = 1).
+  
+\n
+
+- Uncertainty about p 
+  - Since there is uncertainty about p, there is uncertainty about everything that depends upon p.
+  - The uncertainty in p will interact with the sampling variation, when we try to assess what the model tells us about outcomes.
+  
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Posterior predictive distribution**</span>
+
+For each possible value of the parameter p, there is an implied distribution of outcomes. So if you were to compute the sampling distribution of outcomes at each value of p, then you could average all of these prediction distributions together, using the posterior probabilities of each value of p, to get a posterior predictive distribution.
+
+- The sampling distributions for all values of p are combined, using the posterior probabilities to compute the weighted average frequency of each possible observation.
+
+- It incorporates all of the uncertainty embodied in the posterior distribution for the parameter p. As a result, it is honest- the distribution may be narrower (overconfidence) if we discard uncertainty about the parameters. 
+
+<span style="color:purple">***Calculate posterior predictive distribution***</span>
+
+```{r PPD}
+
+# To simulate predicted observations for a single value of p, say p = 0.6, 
+# you can use rbinom to generate random binomial samples:
+w <- rbinom(1e4, size = 9, prob = 0.6)
+simplehist(w, xlab = "number of water samples")
+
+# All you need to propagate parameter uncertainty into these predictions is 
+# replace the value 0.6 with samples from the posterior:
+w <- rbinom(1e4, size = 9, prob = samples)
+simplehist(w, xlab = "number of water samples", main = "PPD")
+# For each sampled value, a random binomial observation is generated. 
+# Since the sampled values appear in proportion to their posterior probabilities,
+# the resulting simulated observations are averaged over the posterior. 
+
+```
+
+```
+In your own modeling, you’ll have to imagine aspects of the data that are relevant in your context, for your purposes, i.e. inspect the data in new ways, e.g. correlation between samples that may be bias. 
+
+```
+
+$~$
+
+## Practice
+
+### Easy
+
+```{r practice_sample}
+
+p_grid <- seq( from=0 , to=1 , length.out=10000 )
+prior <- rep( 1 , 10000 )
+likelihood <- dbinom( 6 , size=9 , prob=p_grid )
+posterior <- likelihood * prior
+posterior <- posterior / sum(posterior)
+set.seed(100)
+samples <- sample( p_grid , prob=posterior , size=1e4 , replace=TRUE )
+
+```
+
+3E1. How much posterior probability lies below p = 0.2?
+
+```{r 3E1}
+
+sum(samples < 0.2)/ 1e4
+# 5 x 10^-4^ % of posterior probability lies below p = 0.2.
+
+```
+
+$~$
+
+3E2. How much posterior probability lies above p = 0.8?
+
+```{r 3E2}
+
+sum(samples > 0.8)/ 1e4
+# 12% of posterior probability lies between p = 0.2 and p = 0.8
+
+```
+
+$~$
+
+3E3. How much posterior probability lies between p = 0.2 and p = 0.8? 
+
+```{r 3E3}
+
+sum(samples > 0.2 & samples < 0.8)/ 1e4
+# 88% of posterior probability lies between p = 0.2 and p = 0.8
+
+```
+
+$~$
+  
+3E4. 20% of the posterior probability lies below which value of p?
+
+``` {r 3E4}
+
+quantile(samples, 0.2)
+# 20% of the posterior probability lies below p = 0.51
+
+```
+
+3E5. 20% of the posterior probability lies above which value of p?
+
+```{r 3E5}
+# 20% is the quantile in the upper end of distribution,
+# hence we find quantile value below 80%
+quantile(samples, 0.8)
+# 20% of the posterior probability lies above p = 0.76
+
+```
+
+$~$
+
+3E6. Which values of p contain the narrowest interval equal to 66% of the posterior probability?
+
+``` {r 3E6}
+HPDI(samples, 0.66)
+# p interval of 0.5-0.8 contain the narrowest interval equal to 66% of 
+# the posterior probability
+
+```
+
+$~$
+
+3E7. Which values of p contain 66% of the posterior probability, assuming equal posterior probability both below and above the interval?
+
+```{r 3E7}
+PI(samples, 0.66)
+
+```
+
+$~$
+
+### Medium
+
+3M1. Suppose the globe tossing data had turned out to be 8 water in 15 tosses. Construct the posterior distribution, using grid approximation. Use the same flat prior as before.
+
+```{r 3M1}
+p_grid <- seq(from = 0, to = 1, length.out = 10000)
+prior <- rep(1, 10000)
+likelihood <- dbinom(8, size = 15, prob = p_grid)
+unstd.posterior <- likelihood * prior
+posterior <- unstd.posterior/ sum(unstd.posterior)
+
+plot(posterior~p_grid, type ="l")
+
+```
+
+$~$
+
+3M2. Draw 10,000 samples from the grid approximation from above. Then use the samples to calculate the 90% HPDI for p.
+
+```{r 3M2}
+
+p_grid <- seq(from = 0, to = 1, length.out = 10000)
+prior <- rep(1, 10000)
+likelihood <- dbinom(8, size = 15, prob = p_grid)
+unstd.posterior <- likelihood * prior
+posterior <- unstd.posterior/ sum(unstd.posterior)
+set.seed(101)
+sample3m2 <- sample(p_grid, size = 1e4, replace = TRUE, prob = posterior)
+
+# Calculate 90% HPDI for p 
+HPDI(sample3m2, 0.9)
+
+```
+
+$~$
+
+3M3. Construct a posterior predictive check for this model and data. This means simulate the distribution of samples, averaging over the posterior uncertainty in p. What is the probability of observing 8 water in 15 tosses?
+
+```{r 3M3}
+
+w <- rbinom(1e4, size = 15, prob = sample3m2)
+simplehist(w, xlab= "number of water observations")
+
+```
+
+$~$
+
+3M4. Using the posterior distribution constructed from the new (8/15) data,now calculate the probability of observing 6 water in 9 tosses.
+
+```{r 3M4}
+
+w <- rbinom(1e4, size = 9, prob = sample3m2)
+table(w)/ 1e4
+# Probability of 6w in 9n is 18%
+
+# Generate the answer only
+table(w == 6)/ 1e4
+
+```
+
+$~$
+
+3M5. Start over at 3M1, but now use a prior that is zero below p = 0.5 and a constant above p = 0.5. This corresponds to prior information that a majority of the Earth’s surface is water. Repeat each problem above and compare the inferences. What difference does the better prior make? If it helps, compare inferences (using both priors) to the true value p = 0.7.
+
+*For 3M1 and 3M3*
+```{r 3M51}
+
+# Set up a 1x2 layout for side-by-side plots
+par(mfrow = c(1, 2))
+
+# First plot
+p_grids <- seq(from = 0, to = 1, length.out = 10000)
+priors <- rep(1, 10000)
+likelihood <- dbinom(8, size = 15, prob = p_grids)
+unstd.posterior1 <- likelihood * priors
+posterior <- unstd.posterior1 / sum(unstd.posterior1)
+plot(posterior ~ p_grid, type = "l", col = "blue", lty = 1, 
+     xlab = "Probability of water", ylab = "Posterior distribution",
+     main = "Prior = 1")
+
+# Second plot
+w <- rbinom(1e4, size = 15, prob = sample3m2)
+simplehist(w, col = "black", lty = 1,
+     xlab = "Count of observations", ylab = "Frequency",
+     main = "Prior = 1")
+
+# Set up a 1x2 layout for side-by-side plots
+par(mfrow = c(1, 2))
+
+# Third plot
+p_grid <- seq(from = 0, to = 1, length.out = 10000)
+prior <- ifelse(p_grid < 0.5, 0, 1)
+likelihood <- dbinom(8, size = 15, prob = p_grid)
+unstd.posterior <- likelihood * prior
+posterior1 <- unstd.posterior / sum(unstd.posterior)
+set.seed(102)
+sample3m5 <- sample(p_grid, prob = posterior1, size = 1e4, replace = TRUE)
+plot(posterior ~ p_grid, type = "l", col = "red", lty = 1, 
+     xlab = "Probability of water", ylab = "Posterior distribution",
+     main = "Prior = 0 or 1")
+
+# Fourth plot
+w <- rbinom(1e4, size = 15, prob = sample3m5)
+simplehist(w, col = "black", lty = 1,
+     xlab = "Count of observations", ylab = "Frequency",
+     main = "Prior = 0 or 1")
+
+# When the prior becomes more informative, there is a mismatch between prediction and observed data
+
+```
+
+$~$
+
+*For 3M2*
+```{r 3M52}
+
+# Calculate 90% HPDI for p when prior = 1
+HPDI(sample3m2, 0.9)
+
+# Calculate 90% HPDI for p when prior = 0 or 1
+HPDI(sample3m5, 0.9)
+# narrower interval for 90% HPDI when prior is more informative
+
+```
+$~$
+
+*For 3M4*
+
+```{r 3M54}
+
+# % Probability of 6w in 9n when prior = 1
+w <- rbinom(1e4, size = 9, prob = sample3m2)
+table(w == 6)/ 1e4
+
+# % Probability of 6w in 9n when prior = 0 or 1
+x <- rbinom(1e4, size = 9, prob = sample3m5)
+table(w ==6)/ 1e4
+# No difference in probability percentage 
+
+```
+$~$
+
+### Hard
+
+
+
+
 
 
 
