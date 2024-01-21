@@ -2263,7 +2263,7 @@ plot(posterior ~ p_grid, type = "l", col = "blue", lty = 1,
 # Second plot
 w <- rbinom(1e4, size = 15, prob = sample3m2)
 simplehist(w, col = "black", lty = 1,
-     xlab = "Count of observations", ylab = "Frequency",
+     xlab = "Count of water observations", ylab = "Frequency",
      main = "Prior = 1")
 
 # Set up a 1x2 layout for side-by-side plots
@@ -2284,7 +2284,7 @@ plot(posterior ~ p_grid, type = "l", col = "red", lty = 1,
 # Fourth plot
 w <- rbinom(1e4, size = 15, prob = sample3m5)
 simplehist(w, col = "black", lty = 1,
-     xlab = "Count of observations", ylab = "Frequency",
+     xlab = "Count of water observations", ylab = "Frequency",
      main = "Prior = 0 or 1")
 
 # When the prior becomes more informative, there is a mismatch between prediction and observed data
@@ -2323,6 +2323,298 @@ table(w ==6)/ 1e4
 $~$
 
 ### Hard
+
+3H1. Using grid approximation, compute the posterior distribution for the probability of a birth being a boy. Assume a uniform prior probability. Which parameter value maximizes the posterior probability?
+
+```{r 3H1}
+
+# Load homework data
+data(homeworkch3)
+
+# Total number of boys born across all this birth
+sum(birth1) + sum(birth2)
+
+# Compute posterior distribution for a birth being a boy
+p_grid <- seq(from = 0, to = 1, length.out = 200)
+prior <- rep(1, 200)
+likelihood <- dbinom(111, size = 200, prob = p_grid)
+unstd.posterior <- prior * likelihood
+posterior <- unstd.posterior/ sum(unstd.posterior)
+
+# Plot posterior with abline
+plot(posterior~p_grid, type = "l")
+abline(v = 0.5, lty = 2, col = "red")
+
+# Find parameter value that maximizes posterior probability
+p_grid[which.max(posterior)]
+
+# Show parameter with max posterior probability in plot
+v <- p_grid[which.max(posterior)]
+plot(posterior~p_grid, type = "l")
+abline(v = 0.5, lty = 2, col = "red")
+abline(v = v, lty = 2, col = "blue")
+legend("topright", legend = c("p = 0.5", "p = 0.553"), 
+       col = c("red", "blue"), lty = c(2, 2))
+
+# OR
+# Use loss function to calculate parameter value that maximizes posterior probability
+# Add sample
+set.seed(102)
+sample3h1 <- sample(p_grid, size = 1e4, prob = posterior, replace = TRUE)
+
+# Calculate mode (MAP) value
+map_value <- p_grid[which.max(posterior)]
+map_value
+
+# Calculate mean value
+mean_value <- mean(sample3h1)
+mean_value
+
+# Calculate median value
+median_value <- median(sample3h1)
+median_value
+
+# Calculate loss
+loss <- sapply(p_grid , function(d) sum(posterior * abs(d - p_grid)))
+
+# Plot the loss function
+# Find x, y values for minimum loss
+min_loss_x <- p_grid[which.min(loss)]
+min_loss_y <- loss[which.min(loss)]
+
+# Create data frame and plot 
+df <- tibble(p_grid, loss, posterior)
+
+df %>% 
+  ggplot(aes(x = p_grid)) +
+  geom_ribbon(aes(ymin = 0, ymax = loss), fill = 'lightblue') +
+  geom_point(aes(x = min_loss_x, y = min_loss_y), size = 3, shape = 21, color = 'black') +
+  geom_vline(xintercept = map_value, linetype = "dashed", color = "grey") +
+  geom_vline(xintercept = mean_value, linetype = "dashed", color = "grey") +
+  geom_vline(xintercept = median_value, linetype = "dashed", color = "grey") +
+   annotate("text", x = map_value, y = max(df$posterior), label = "mode", 
+            vjust = -0.5, hjust = -3, color = "black", angle = 90) +
+  annotate("text", x = mean_value, y = max(df$posterior), label = "mean", 
+           vjust = -0.5, hjust = -5, color = "black", angle = 90) +
+  annotate("text", x = median_value, y = max(df$posterior), label = "median", 
+           vjust = -0.5, hjust = -5, color = "black", angle = 90) +
+  annotate("text", x = min_loss_x, y = min_loss_y, label = "value that minimizes loss", 
+           vjust = 1.6, hjust = 0.5, color = "black") +
+  labs(x = 'parameter value',
+       y = 'expected proportional loss') +
+  theme(panel.grid = element_blank())
+
+# The parameter value that maximizes probability is 0.553 
+
+```
+
+$~$
+
+3H2. Using the sample function, draw 10,000 random parameter values from the posterior distribution you calculated above. Use these samples to estimate the 50%, 89%, and 97% highest posterior density intervals.
+
+```{r 3H2}
+
+# Calculate 50% HPDI
+HPDI(sample3h1, prob = 0.5)
+
+# Calculate 89% HPDI
+HPDI(sample3h1, prob = 0.89)
+
+# Calculate 97% HPDI
+HPDI(sample3h1, prob = 0.97)
+
+```
+$~$
+
+3H3. Use rbinom to simulate 10,000 replicates of 200 births. You should end up with 10,000 numbers, each one a count of boys out of 200 births. Compare the distribution of predicted numbers of boys to the actual count in the data (111 boys out of 200 births). There are many good ways to visualize the simulations, but the dens command (part of the rethinking package) is probably the easiest way in this case. Does it look like the model fits the data well? That is, does the distribution of predictions include the actual observation as a central, likely outcome?
+
+```{r 3H3}
+# Use rbinom to simulate 10,000 replicates of 200 births
+replicate_w <- rbinom(10000, size = 200, prob = sample3h1)
+
+# Compare predictive posterior distribution and actual count using dens function
+dens(replicate_w, adj = 0.1, col = "darkgreen", 
+     main = "PPD with 200 grids, 1e4 samples, 1e4 observations")
+abline(v = 111, col = "red")
+# PPD is not an exact fit- is that because i used 200 grids only?
+
+# Try increasing grid size
+p_grid <- seq(from = 0, to = 1, length.out = 10000)
+prior <- rep(1, 10000)
+likelihood <- dbinom(111, size = 200, prob = p_grid)
+unstd.posterior <- likelihood * prior
+posterior_w <- unstd.posterior/ sum(unstd.posterior)
+set.seed(103)
+sample_grid <- sample(p_grid, size = 10000, replace = TRUE, prob = posterior_w)
+replicate_w1 <- rbinom(10000, size = 200, prob = sample_grid)
+dens(replicate_w1, adj = 0.1, col = "darkgreen", 
+     main = "PPD with 1e4 grids, 1e4 samples, 1e4 observations")
+abline(v = 111, col = "red")
+
+# Try with codes from answer key
+data(homeworkch3)
+boys <- sum(birth1) + sum(birth2)
+p <- seq( from=0 , to=1 , length.out=1000 )
+prior <- rep(1,length(p))
+likelihood <- dbinom( boys , size=200 , prob=p )
+posterior <- likelihood * prior
+posterior <- posterior / sum(posterior)
+p.samples <- sample( p , size=10000 , replace=TRUE , prob=posterior )
+bsim <- rbinom( 10000 , size=200 , prob=p.samples )
+dens( bsim , adj=0.1, main = "Given answer: 1000 grids, 1e4 samples, 1e4 observations")
+abline( v=sum(birth1)+sum(birth2) , col="red" )
+# Can't get the exact fit like the graph in answer key even when I just c/p the codes.
+
+# Try increasing sample with 1e5 grids
+p_grid <- seq(from = 0, to = 1, length.out = 1e5)
+prior <- rep(1, 1e5)
+likelihood <- dbinom(111, size = 200, prob = p_grid)
+unstd.posterior <- likelihood * prior
+posterior_w <- unstd.posterior/ sum(unstd.posterior)
+set.seed(10)
+sample_grid <- sample(p_grid, size = 1e5, replace = TRUE, prob = posterior_w)
+replicate_w1 <- rbinom(1e5, size = 200, prob = sample_grid)
+dens(replicate_w1, adj = 0.1, col = "darkgreen", 
+     main = "PPD with 1e5 grids, 1e5 samples, 1e5 observations")
+abline(v = 111, col = "red")
+
+# Try with 1e4 observations to see difference
+p_grid <- seq(from = 0, to = 1, length.out = 1e5)
+prior <- rep(1, 1e5)
+likelihood <- dbinom(111, size = 200, prob = p_grid)
+unstd.posterior <- likelihood * prior
+posterior_w <- unstd.posterior/ sum(unstd.posterior)
+set.seed(10)
+sample_grid <- sample(p_grid, size = 1e5, replace = TRUE, prob = posterior_w)
+replicate_w1 <- rbinom(1e4, size = 200, prob = sample_grid)
+dens(replicate_w1, adj = 0.1, col = "darkgreen", 
+     main = "PPD with 1e5 grids, 1e5 samples, 1e4 observations")
+abline(v = 111, col = "red")
+
+# All graphs have slightly different peaks. Is it because of variations in 
+# grid size/ sample size/ observation size or variations in draw?
+# But PPDs' peaks are within ± 3 of actual counts. This only shows the fit of data-shows model works
+# Doesn't show if a model is good or not- whether reflect the real world. 
+# So, it doesn't matter if slightly different fit, I think. 
+
+```
+
+$~$
+
+3H4. Now compare 10,000 counts of boys from 100 simulated first borns only to the number of boys in the first births, birth1. How does the model look in this light?
+
+```{r 3H4}
+# Calculate posterior for first born boys
+first_born_boy <- sum(birth1)
+p_grid_3h4 <- seq(from = 0, to = 1, length.out = 1000)
+prior_3h4 <- rep(1, 1000)
+likelihood_3h4 <- dbinom(first_born_boy, size = 100, prob = p_grid_3h4)
+unstd.posterior_3h4 <- prior_3h4 * likelihood_3h4
+posterior_3h4 <- unstd.posterior_3h4/ sum(unstd.posterior_3h4)
+
+# Create samples
+set.seed(111)
+sample_3h4 <- sample(p_grid_3h4, size = 1e4, replace = TRUE, prob = posterior_3h4)
+
+# Create observations
+w_3h4 <- rbinom(1e4, size = 100, prob = sample_3h4)
+
+# Compare PPD with actual count
+dens(w_3h4, adj = 0.1, col = "black")
+abline(v = first_born_boy, col = "green")
+
+# Let's try increasing the grid to 1e5
+p_grid_3h4 <- seq(from = 0, to = 1, length.out = 1e5)
+prior_3h4 <- rep(1, 1e5)
+likelihood_3h4 <- dbinom(first_born_boy, size = 100, prob = p_grid_3h4)
+unstd.posterior_3h4 <- prior_3h4 * likelihood_3h4
+posterior_3h4 <- unstd.posterior_3h4/ sum(unstd.posterior_3h4)
+
+# Create samples
+set.seed(111)
+sample_3h4 <- sample(p_grid_3h4, size = 1e4, replace = TRUE, prob = posterior_3h4)
+
+# Create observations
+w_3h4 <- rbinom(1e4, size = 100, prob = sample_3h4)
+
+# Compare PPD with actual count
+dens(w_3h4, adj = 0.1, col = "black")
+abline(v = first_born_boy, col = "green")
+# Better fit with increased grid size. 
+
+# If we use the same posterior distribution (given answer)
+w_3h4 <- rbinom(1e4, size = 100, prob = sample3h1)
+dens(w_3h4, adj = 0.1, col = "black")
+abline(v = first_born_boy, col = "red")
+# So, a new posterior with new conditions- changes in number of actual 
+# counts and total counts- will make the model fit the data. I think this is
+# caused by simulation not exactly halving the observations, i.e., we gave
+# no command that the observation is 51 for 100.
+# Given answer: Not bad, but not right on center now. The frequency of boys 
+# among first borns is a little less than the model tends to predict. 
+# The model doesn’t have a problem accounting for this variation though, 
+# as the red line is well within density of simulated data.
+
+```
+
+$~$
+
+3H5. The model assumes that sex of first and second births are independent. To check this assumption, focus now on second births that followed female first borns. Compare 10,000 simulated counts of boys to only those second births that followed girls. To do this correctly, you need to count the number of first borns who were girls and simulate that many births, 10,000 times. Compare the counts of boys in your simulations to the actual observed count of boys following girls. How does the model look in this light? Any guesses what is going on in these data?
+
+```{r 3H5}
+
+# Count number of second born boys when first borns are girl
+second_boy_first_girl <- sum(birth1 == 0 & birth2 == 1)
+
+# Count the number of first born girls
+first_girl <- sum(birth1 == 0)
+
+# Simulate observations for total number of second births when first births are girls
+w_3h5 <- rbinom( 10000 , size = first_girl , prob = sample3h1 )
+dens(w_3h5, adj = 0.1, col = "black")
+abline(v = second_boy_first_girl , col = "green" )
+# The sex of first and second birth may not be independent. 
+
+# Run codes in given answer
+# Create a new vector of birth 2 when birth 1 is 0
+b01 <- birth2[birth1==0]
+
+# Simulate 1e4 observations for new vector size using samples from model posterior
+b01sim <- rbinom( 10000 , size=length(b01) , prob=p.samples )
+dens(b01sim,adj=0.1)
+
+# Add a line for actual count of second born boys when first borns are girls
+abline( v=sum(b01) , col="red" )
+
+```
+
+$~$
+
+# Lecture 2: The Garden of Forking Data
+
+<span style="color:brown"><span style="text-decoration:underline">**Workflow**</span>
+
+(1) Define generative model of the sample- tossing the globe
+      - Begin conceptually: How do the variables influence one another? (DAGs)
+      - Generative assumptions: What do the arrows mean exactly? (W,L = 𝒇(p,N))
+      
+\n
+
+(2) Define a specific estimand- proportion of globe covered in water
+
+(3) Design a statistical way to produce estimand
+
+(4) Test (3) using (1)
+
+(5) Analyze sample, summarize 
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Bayesian data analysis**</span>
+
+- For each possible explanations of the sample, count all the ways the sample could happen.
+
+- Explanations with more ways to produce the sample are more plausible. 
 
 
 
