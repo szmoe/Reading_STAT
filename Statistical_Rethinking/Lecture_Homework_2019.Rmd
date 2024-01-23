@@ -174,7 +174,7 @@ p_grid <- seq(from = 0, to = 1, length.out = 1000)
 prior <- rep(0.7, 1000)
 
 # Calculate likelihood
-likelihood <- dbinom(700, size = 1000, prob = p_grid)
+likelihood <- dbinom(1400, size = 2000, prob = p_grid)
 
 # Calculate unstandardized posterior
 unstd.posterior <- prior * likelihood
@@ -184,10 +184,10 @@ posterior <- unstd.posterior/ sum(unstd.posterior)
 
 # Plot the posterior
 plot(posterior~p_grid, type = "l", xlab = "proportion of water")
-abline(v = 0.75, col = "blue")
-abline(v = 0.65, col = "red")
+abline(v = 0.725, col = "blue")
+abline(v = 0.675, col = "red")
 
-# The answer is 1,000 tosses if we know true value of p = 0.7. 
+# The answer is 2,000 tosses if we know true value of p = 0.7. 
 
 ```
 
