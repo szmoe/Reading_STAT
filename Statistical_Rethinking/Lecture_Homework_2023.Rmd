@@ -1,0 +1,966 @@
+---
+title: "Statistical_Rethinking_Lecture_Homework_2023"
+author: "SM"
+date: "`r Sys.Date()`"
+output: 
+  bookdown::html_document2:
+    toc: true 
+    toc_float: true
+    toc_depth: 3  
+    number_sections: true  
+    theme: united  
+    highlight: tango  
+    fig_caption: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rethinking)
+library(ggplot2)
+library(dplyr)
+```
+
+# Lecture 1: Golem of Prague
+
+$~$
+
+According to the lecture, 
+
+<span style="color:brown"><span style="text-decoration:underline">**Research requires:**</span>
+
+- Precise process model(s)
+
+- Statistical model (procedure, golem) justified by implications of process model(s) and question (estimand)
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Three modes to draw the Bayesian Owl:**</span>
+
+1. Understand what you are doing 
+
+2. Document your work, reduce error
+
+3. Respectable scientific workflow
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Outline of a scientific workflow**</span>
+
+1. Theoretical estimand
+    - to have a clear idea of what you are trying to do in the first place
+
+\n
+
+2. Scientific (causal) model(s)
+    - to precisely define theoretical estimand
+    - simulating model or logical model that generate synthetic observations (can produce data) &rarr; let us design statistical procedures
+    
+\n
+
+3. Use 1 & 2 to build statistical model(s)
+
+4. Simulate from 2 to validate 3 yields 1
+    - to justify or check our workflow to ensure the software works
+
+\n
+
+5. Analyze real data
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Advantages of Bayseian approach**</span>
+
+- Permissive, flexible
+
+- Express uncertainty at all levels
+
+- Direct solutions for measurement error, missing data
+
+- Focus on scientific modeling 
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Science before Statistics**</span>
+
+- For *statistical models* to produce scientific insights, they require additional *scientific (causal) models*
+
+- The *reasons* for a statistical analysis are not found in the data themselves, but rather in the *causes* of the data
+
+- The *causes* of the data cannot be extracted from the data alone. *No causes in; no causes out.*
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Causes are not optional**</span>
+
+- Even when goal is *descriptive*, need causal model
+
+- The *sample* differs from the *population*; describing the population requires causal thinking
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**What is Causal Inference?**</span>
+
+- More than *association* between variables
+
+- Causal inference is *prediction* of intervention
+
+- Causal inference is *imputation* of missing observations
+
+<span style="color:purple">***Causal Prediction***</span>
+
+- Knowing a *cause* means being able to predict the *consequences* of an *intervention*. *What if I do this?*
+
+<span style="color:purple">***Causal Imputation***</span>
+
+- Knowing a *cause* means being able to construct unobserved *counterfactual outcomes*. *What if I had done something else?*
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Directed Acyclic Graphs (DAGs)**</span> 
+
+- Heuristic causal models
+  - Transparent scientific assumptions to *justify* scientific effort, *expose* it to useful critique, and *connect* theories to golems- brainless, powerful statistical models
+
+\n
+
+- Clarify scientific thinking
+
+- Analyze to deduce appropriate statistical models
+
+<span style="color:purple">***Why DAGs?***</span>
+
+- Different queries, different models
+
+- Which control variables?
+
+- Absolute not safe to add everything- ***bad controls***
+
+- How to test the causal model?
+
+- With more scientific knowledge, can do more
+
+$~$
+
+# Lecture 2: The Garden of Forking Data
+
+<span style="color:brown"><span style="text-decoration:underline">**Workflow**</span>
+
+(1) Define generative model of the sample- tossing the globe
+      - Begin conceptually: How do the variables influence one another? (DAGs)
+      - Generative assumptions: What do the arrows mean exactly? *(W,L = 𝒇(p,N))*
+      
+\n
+
+(2) Define a specific estimand- proportion of globe covered in water
+
+(3) Design a statistical way to produce estimand
+
+(4) Test (3) using (1)
+
+(5) Analyze sample, summarize 
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Bayesian data analysis**</span>
+
+- For each possible explanations of the sample, count all the ways the sample could happen.
+
+- Explanations with more ways to produce the sample are more plausible. 
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Test before you est(imate)**</span>
+
+(1) Code a generative simulation
+
+(2) Code an estimator
+
+(3) Test (2) with (1)
+
+$~$
+
+<span style="color:purple">***(1) Code a generative simulation***</span>
+
+The code version of function *W,L = 𝒇(p, N):* 
+
+```{r l2}
+
+# function to toss a globe covered p by water N times
+sim_globe <- function(p = 0.7, N = 9) { # simulate globe toss
+  sample(c("W", "L"), size = N, prob = c(p, 1-p), replace = TRUE)
+}
+
+sim_globe()
+
+replicate(sim_globe(p = 0.5, N = 9), n = 10)
+
+```
+
+$~$
+
+<span style="color:green">***Test the simulation on extreme settings***</span>
+
+```{r l2a}
+
+# Assume the extreme conditions to test your code- if a L shows up when all is W,
+# there's a bug in your code
+sim_globe(p = 1, N = 11)
+
+# For larger samples, the proportion of W should be very close to p- test and see
+sum(sim_globe(p = 0.5, N = 1e4) == "W")/ 1e4
+
+```
+
+$~$
+
+<span style="color:purple">***(2) Code an estimator***</span>
+
+Ways for *p* to produce *W,L = (4p)^W^ x (4-4p)^L^*
+
+```{r l2b}
+
+# function to compute posterior distribution
+# function head
+compute_posterior <- function(the_sample, poss = c(0, 0.25, 0.5, 0.75, 1)) {
+  
+  # Count the number of W and L samples
+  W <- sum(the_sample == "W") # number of W observed
+  L <- sum(the_sample == "L") # number of L observed
+  
+  # Compute the ways for each possibility to observe the sample
+  ways <- sapply(poss, function(q) (q * 4)^W * ((1 - q) * 4)^L)
+  
+  # Normalize the ways into probabilities
+  post <- ways/ sum(ways)
+  
+  # Create a bar representation for each probability, using make_bar function
+  bars <- sapply(post, function(q) make_bar(q))
+  
+  # Summarize result in a data frame
+  data.frame(poss, ways, post = round(post, 3), bars)
+}
+
+compute_posterior(sim_globe())
+
+```
+
+(1) Test the estimator where the answer is known
+      - sampling variation across experiments- how that changes with sample size and the assumptions about the generative process 
+      - when the sample size increases, it converges to the right answer 
+      - when the sample size is small, it correctly characterizes the uncertainty
+      
+\n
+
+(2) Explore different sampling designs, for example:
+      - want answer within certain precision
+      - want certain amount of confidence about the range of plausible values for p- how many times you need to toss the globe in case of proportion of water on earth
+      
+\n
+
+(3) Develop intuition for sampling and estimation 
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**More possibilities**</span>
+
+A 4-sided globe: 5 possibilities
+
+```{r g4}
+
+# Probability ####
+sample <- c("W", "L", "W", "W", "W", "L", "W", "L", "W")
+W <- sum(sample == "W") # number of W observed
+L <- sum(sample == "L") # number of L observed
+p <- c(0, 0.25, 0.5, 0.75, 1) # proportions of W
+ways <- sapply(p, function(q) (q * 4)^W * ((1 - q) * 4)^L)
+prob <- ways/ sum(ways)
+cbind(p, ways, prob)
+
+# Plot the probability
+barplot(prob, names.arg = p, col = "black", xlab = "Proportion of Water (p)",
+        ylab = "Probability", main = "4-sided globe: 5 possibilities",
+        ylim = c(0, max(prob) + 0.1), width = 0.5)
+
+```
+$~$
+
+A 10-sided globe: 11 possibilities
+
+```{r g10}
+
+# Probability ####
+sample <- c("W", "L", "W", "W", "W", "L", "W", "L", "W")
+W <- sum(sample == "W") # number of W observed
+L <- sum(sample == "L") # number of L observed
+p <- c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1) # proportions of W
+ways <- sapply(p, function(q) (q * 4)^W * ((1 - q) * 4)^L)
+prob <- ways/ sum(ways)
+cbind(p, ways, prob)
+
+# Plot the probability
+barplot(prob, names.arg = p, col = "black", xlab = "Proportion of Water (p)",
+        ylab = "Probability", main = "10-sided globe: 11 possibilities",
+        ylim = c(0, max(prob) + 0.1), width = 0.5)
+
+```
+
+$~$
+
+A 20-sided globe: 21 possibilities
+
+```{r g20}
+
+# Probability ####
+sample <- c("W", "L", "W", "W", "W", "L", "W", "L", "W")
+W <- sum(sample == "W") # number of W observed
+L <- sum(sample == "L") # number of L observed
+p <- c(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55,
+       0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1) # proportions of W
+ways <- sapply(p, function(q) (q * 4)^W * ((1 - q) * 4)^L)
+prob <- ways/ sum(ways)
+cbind(p, ways, prob)
+
+# Plot the probability
+barplot(prob, names.arg = p, col = "black", xlab = "Proportion of Water (p)",
+        ylab = "Probability", main = "20-sided globe: 21 possibilities",
+        ylim = c(0, max(prob) + 0.1), width = 0.5)
+
+# The bars get shorter as we move from left to right, because the total probabilities
+# in each bar plot is always 1- the posterior distribution. As you have more 
+# possibilities, each bar gets shorter as it contains less probabilities. 
+
+```
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Infinite possibilities**</span>
+
+- The globe is a polyhedron with an infinite number of sides
+
+- The posterior probability of any "side" p is proportional to:
+$$p^W (1 - p)^L$$
+
+\n
+
+- Only trick is normalizing to probability. After a little calculus:
+$$Posterior~probability~of~p = \frac{(W + L + 1)!}{W!L!} p^W (1 - p)^L$$
+\n
+
+    - This is the beta distribution
+    - normalizing constant = $\frac{(W + L + 1)!}{W!L!}$- to get total prob sum to 1
+    - relative number of ways to observe sample = $p^W (1 - p)^L$
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Rules of Bayesian inference**</span>
+
+(1) No minimum sample size
+      - The minimum sample size for a Bayesian inference is 1. 
+      
+\n
+
+(2) Shape embodies sample size- the exact structure of the samples completely
+      - As we collect more data, we don't need to go back to the original sample set. Just take the distribution and update it directly by multiplying with the number of ways the new data could produce the new observation. 
+      
+\n
+
+(3) No point estimate
+      - The estimate is the whole posterior distribution. 
+      - Always use the entire distribution- never a point from the distribution.
+
+\n
+
+(4) No one true interval
+      - Intervals communicate shape of posterior- merely to summarize shape of the distribution. 
+
+      - 95% is obvious superstition. Nothing magical happens at the boundary. 
+      
+```
+(He's tilting at views again! He says the "robustness" of the study is the property 
+of estimator, not the interval. Interval can impact robustness of study in non-Bayesian 
+research as it correlates with sample size, and sample size can influence estimators;
+hence, inferences. So, it's not about magical things at the boundary. Let's say 
+you use 50% interval. Then, your sample size will be significantly smaller compared 
+to the sample size you will need if you use 95% interval. That means your samples 
+at 50% interval may not be enough to represent the whole population. In that way, 
+the result will be skewed (type 2 error). And it is not a rule to use 95% religiously. 
+95% is most commonly used because (I think) it is less tedious without compromising 
+research quality much. And people tend to accept it. But then, none of this is 
+important in Bayesian. Like he says, posterior distribution don't do type 1 error
+control and sample size is not important in Bayesian. So, intervals are meaningless here.)
+
+```
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**From posterior to prediction**</span>
+
+- Implications of model depend upon ***entire*** posterior
+
+- ***Must*** average any inference over the entire posterior
+
+- This usually requires integral calculus OR we can just take samples from the posterior
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Sampling the posterior**</span>
+
+```{r pos}
+
+# Draw 1000 samples from beta distribution, using rbeta function
+post_samples <- rbeta(1e3, 6 + 1, 3 + 1) # w+1 , n-w+1 (Laplace's rule of succession)
+
+# post_samples is a vector of 1000 numbers (the proportion of water)
+dens(post_samples, lwd = 4, col = 2, xlab = "proportion water", adj = 0.1)
+
+curve(dbeta(x, 6 + 1, 3 + 1), add = TRUE, lty = 2, lwd = 3)
+
+legend("topright", legend = c("samples", "beta distribution"), 
+       col = c("red", "black"), lty = c(1, 2), lwd = c(4, 3))
+
+# Draw more samples for a better approximation.
+# But 1000 is enough for most things. 
+
+```
+
+$~$
+
+- We want posterior predictive distribution from these samples. 
+
+- Posterior prediction is a prediction for a future experiment or observation that is made from existing estimate.
+    - Given what we learned (about the globe) so far, what would happen if we draw more samples from it?- get predictions about the future samples
+    
+\n
+
+- The posterior predictive distribution is flatter or more spread out than the predictive distribution (based on posterior distribution and simulate probabilities of p if more observations are made- toss the globe 9 more times), because it contains samples from all of the predictive distributions- contains samples in proportion to how plausible they are/ contains samples from predictive distributions that are more plausible.
+
+- The posterior predictive distribution accurately characterizes all the uncertainty in our estimates- the posterior distributions- about what would happen if we do the experiment again. 
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Simulate the posterior predictive distribution**</span>
+
+```{r ppd}
+
+# now simulate posterior predictive distribution
+post_samples <- rbeta(1e4, 6+1, 3+1)
+pred_post <- sapply(post_samples, function(p) sum(sim_globe(p, 10) == "W")) # toss 10 times
+tab_post <- table(pred_post)
+
+# Create an empty plot
+plot(tab_post, xlab = "number of W", ylab = "count", ylim = c(0, max(tab_post) + 1))
+
+# Plot PPD
+for(i in 0:10) lines(c(i, i), c(0, tab_post[i + 1]), lwd = 4, col = 4)
+
+
+```
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Sampling is fun & easy**</span>
+
+- Sample from posterior, compute desired quantity for each sample, profit
+
+- Much easier than doing integrals
+
+- Turn a *calculus problem* into a *data summary problem*
+
+- MCMC produces only samples anyway
+
+- Things we'll compute with sampling:
+    - Model-based forecasts
+    - Causal effects
+    - Counterfactuals
+    - Prior predictions
+    
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Bayesian modesty**</span>
+
+- No guarantees except *logical*
+
+- Probability theory is a method of logically deducing *implications of data* under assumptions that you must choose
+
+- Any framework selling you more is hiding assumptions 
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Misclassification**</span>
+
+In the globe tossing example, L and W are the function of p and N. 
+
+- Unobserved *p*- don't know the *p*- the proportion of the time something is detected 
+
+- Unobserved *N*- population size unobserved
+  - some population of N entities producing observations W, but we don't know the total population size N- we just have detections W
+  - can estimate N if detection probability p is known- there are ways to do this. (Estimating population size from detections)
+
+\n
+
+- Misclassfication or measurement error problem 
+    - True samples unobserved- true number of water samples W is not recorded correctly due to measurement error, e.g., assistant tossing the globe is sloppy- finger slip at times or write down wrong letter. So, what we observed is not the true W that is influenced only by p and N but included some contaminated W*- the misclassified samples
+    - W* is also influenced by the measurement process M. If we know the measurement process within some range of precision, then we can use that knowledge to construct as it were true values W and can still estimate p which is our estimand. This is the misclassification or measurement error in non-categorical data set. 
+    - It is nice to drow these errors into DAGs because the DAGs should represent everything you believe about how the sample is caused- aspects of natural process (e.g. the globe), aspects of research design, and how the entities in your research respond to that design. 
+    
+$~$
+
+<span style="color:purple"><span style="text-decoration:underline">***Misclassification simulation***</span>
+
+Obey the workflow! Code a generative model: 
+
+```{r misclass}
+
+# x is the misclassification rate. x = 0.1 means 10% of the times, your research assistant 
+# writes down the wrong letter- write land when the true toss is water, and vice versa. 
+# They get the letter right 90% of the times.  
+sim_globe2 <- function(p = 0.7, N = 9, x = 0.1) { 
+
+# First, we generate true samples
+  true_sample <- sample(c("W", "L"), size = N, prob = c(p, 1 - p), replace = TRUE)
+
+# Then, the samples that we actually observed. 
+# 'ifesle' function generates a bunch of random number between 0 and 1, and 
+# compare each to x. So, for every observation in the true sample, we generate 
+# a random number, and if the number is less than x, there is a misclassification event
+  obs_sample <- ifelse( runif(N) < x,
+
+# ifelse true sample = W, just flip W to L or L to W
+                        ifelse(true_sample == "W", "L", "W"), # error 
+
+# The observed sample contains the true sample 
+                        true_sample) # no error
+  
+# All these functions returns is the observed sample 
+  return(obs_sample)
+}
+
+```
+
+$~$
+
+<span style="color:purple">***Develop a Bayesian Estimator***</span>
+
+- Use the intuition from the generative model to draw out the Garden of Forking Data, build a Bayesian estimator. 
+
+- Two stages: 
+
+(1) true samples
+    - Draw all possible true samples in the proportion that they could happen- plant the garden
+
+\n
+
+(2) misclassification 
+    - Do the misclassification paths that branch out from the true samples 
+
+<span style="color:green">*Example*</span>
+
+A four sided globe, p = 0.7, Three out of four paths produce water
+
+Conjectures: (W, W, W, W), (W, W, W, L), (W, W, L, L), (W, L, L, L), (L, L, L, L)
+
+(1) True sample when p = 0.7: (W, W, W, L) *(This is the root of the garden)*
+
+(2) Observed samples 1-in-3 misclassified: *(Draw as outer rings branching out from each true sample)*
+
+      W &rarr;     W, W, L
+
+      W &rarr;     W, W, L
+
+      W &rarr;     W, W, L
+
+      L &rarr;     L, L, W
+
+<span style="color:gold">*Count paths given observation*</span>
+
+- Observe W - How many ways can this happen?
+    - 6 ways to observe water, when true sample is water
+    
+      W   &rarr;    W, W, L    &rarr;   2
+
+      W   &rarr;    W, W, L    &rarr;   2
+
+      W   &rarr;    W, W, L    &rarr;   2
+
+      L   &rarr;    L, L, W   &rarr;    0
+      
+    - 1 way to observe water, when the true sample is land
+    
+      W   &rarr;    W, W, L    &rarr;   0
+
+      W   &rarr;    W, W, L    &rarr;   0
+
+      W   &rarr;    W, W, L    &rarr;   0
+
+      L   &rarr;    L, L, W   &rarr;    1
+      
+    - A total of 7 ways to observe W (3x2 + 1x1 = 7)
+    
+$~$
+
+<span style="color:purple">***Misclassificiation estimator***</span>
+
+<span style="color:grey">*Probability of water, conditional on p and x:*</span>
+
+
+$$Pr(water|p,x) = p(1 - x) + (1 - p)x$$
+```
+
+p               = number of ways for the true state to arise (3)
+
+(1 - x)         = the correct classification rate (2 out 3 since 1-in-3 is missclassified)
+
++               = OR
+
+(1 - p)x        = the number of ways for land to happen * the misclassification rate
+
+Pr(water|p,x)   = Water happened, when it was reported correctly OR Land happened, 
+                  when it was misreported 
+
+```
+
+$~$
+
+<span style= "color:grey">*Probability of land, conditional on p and x:*</span>
+
+$$Pr(land|p,x) = (1 - p) (1 - x) + px$$
+```
+(1 - p)   = the probability of land
+
+(1 - x)   = the probability that it was classified correctly (the correct classification rate)
+
++         = OR
+
+px        = the probability of water * the probability that it was misreported
+
+```
+
+$~$
+
+<span style="color:grey">*Substitute for p and (1 - p) to get posterior distribution for misclassification problem*</span>
+
+Posterior distribution for *p* given *W, L, x:*
+$$Pr(p|W,L,x) = \frac{[p(1 - x) + (1 - p)x]^W * [(1 - p)(1 - x) + px]^L}{Z}$$
+```
+
+[p(1 - x) + (1 - p)x]   = probability of each water observation (not the Pr of W)
+
+[(1 - p)(1 - x) + px]   = probability of each land  observation (not the Pr of L)
+
+[]^W or []^L            = exponentiated by W or L to count how many W/L there are 
+
+Z                       = the normalizing constant
+
+```
+
+```
+The misclassification posterior is more spread out than the previous posterior (beta 
+distribution generated by assuming all samples as true), because it honestly communicates
+the uncertainty that is induced by missclassification, but it also moves the center-
+the point of highest posterior probability. The higher the misclassification rate, it 
+tends to push sample towards the middle. As the sample size increases, the missclassification
+posterior gets the estimates right- the right proportion of water on globe- even though
+there is misclassification.
+
+```
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Measurement matters**</span>
+
+- When there is measurement error, better to model it than to ignore it
+
+- Same goes for: missing data, compliance, inclusion, etc. 
+
+- Good news: Samples do not need to be *representative* of the population in order to provide good estimates of the population
+    - Sometimes they are unrepresentative in ways you can't recover from, but sometimes in ways that you can
+    - The way to figure out which situation you are in is by modeling the source of non-representativeness
+    
+\n
+
+- What matters is *why* the sample differs
+    - Model the sampling process and how the sample arises- how it causally differ from the population, and then you can develop an estimator that can possibly re-weight the samples to get a good estimate of the population
+    
+$~$
+
+# Week 1: Homework
+
+1. Suppose the globe tossing data had turned out to be 4 water and 11 land. Construct the posterior distribution.
+
+```{r h1}
+
+# Create data frame
+p_grid <- seq(from = 0, to = 1, length.out = 1000)
+
+# Create priors
+prior <- rep(1, 1000)
+
+# Calculate likelihood
+likelihood <- dbinom(4, size = 15, prob = p_grid)
+
+# Compute unstandardized posterior
+unstd.posterior <- prior * likelihood
+
+# Standardize the posterior
+posterior <- unstd.posterior/ sum(unstd.posterior)
+
+# Plot the posterior distribution
+plot(posterior~p_grid, type = "l", xlab = "probability of water")
+
+# Find the index where the maximum posterior occurs
+peak_index <- which.max(posterior)
+
+# Find the corresponding value of p_grid for the peak
+peak_p <- p_grid[peak_index]
+
+# Plot the posterior distribution
+plot(posterior ~ p_grid, type = "l", xlab = "Probability of water")
+
+# Add an abline for the peak
+abline(v = peak_p, col = "red", lty = 2)
+
+# Annotate the value of the abline using mtext
+mtext(sprintf("%.2f", peak_p), side = 3, line = 0.1, at = peak_p, col = "red")
+
+```
+
+<span style="color:grey">***Given Answer***</span>
+
+```{r h1a}
+# Run given answer ####
+compute_posterior <- function(W, L, poss = c(0, 0.25, 0.5, 0.75, 1)){
+  ways <- sapply(poss, function(q) q^W * (1-q)^L)
+  post <- ways/ sum(ways)
+  data.frame(poss, ways, post = round(post, 3))
+}
+
+compute_posterior(4, 11, poss = seq(from = 0, to = 1, len = 11))
+curve(dbeta(x, 4 + 1, 11 +1), from = 0, to = 1, xlab = "p")
+
+# Compare with the peak from my answer
+abline(v = 0.27, col = "red")
+
+
+```
+
+$~$
+
+2. Using the posterior distribution from 1, compute the posterior predictive distribution for the next 5 tosses of the same globe. I recommend you use the sampling method. 
+
+```{r h2}
+
+# Create sample
+samples <- sample(p_grid, size = 1e4, replace = TRUE, prob = posterior)
+
+# Create observations from samples
+w <- rbinom(1e4, size = 5, prob = samples)
+
+# Plot the PPD
+dens(w, adj = 0.1, lwd = 2, xlab = "Counts of water observation")
+
+```
+
+
+<span style="color:grey">***Given Answer***</span>
+
+```{r h2a}
+
+# Run given answer ####
+p_samples <- rbeta(1e4, 4 + 1, 11 + 1)
+W_sim <- rbinom(1e4, size = 5, p = p_samples)
+plot(table(W_sim))
+
+```
+
+$~$
+
+3. Use the posterior predictive distribution from 2 to calculate the probability of 3 or more water samples in the next 5 tosses. 
+
+```{r h3}
+
+# Create sample
+samples <- sample(p_grid, size = 1e4, replace = TRUE, prob = posterior)
+
+# Create observations from samples
+w <- rbinom(1e4, size = 5, prob = samples)
+
+# Probability of 3 or more water in the next 5 tosses
+sum(w >= 3)/ 1e4
+
+```
+
+
+<span style="color:grey">***Given Answer***</span>
+
+```{r h3a}
+
+# Count how many samples in W_sim is 3 or more water
+
+sum(W_sim >= 3)
+
+# Divide by number of observation to get probability
+sum(W_sim >= 3)/ 1e4
+
+
+```
+
+$~$
+
+4. Suppose you observe W = 5 water points, but you forgot to write down how many times the globe was tossed, so you don't know the number of land points L. Assume that p = 0.7 and compute the posterior distribution of the number of tosses N. Hint: Use the binomial distribution. 
+
+<span style="color:grey">***Given answer***</span>
+
+```{r h4a}
+
+# The first insight needed here is to define a sequence for N rather than for p.
+# Then the same code almost works. Only almost because N has a known lower bound—
+# it is at least W. And it has no defined upper bound. The globe could in principle 
+# be tossed an infinite number of times. Not practically but mathematically. 
+# So our posterior function needs to know how large an N we’d like to consider.
+
+# The second insight is that unlike the book example, the sequence of W and
+# L isn’t known here. So we have to consider how many different sequences
+# could produce any particular mix of W and L. Luckily the binomial distribution 
+# does this for us. I’ll make the calculation explicit, but you could just use
+# dbinom().
+
+compute_posterior_N <- function( W , p , N_max ) {
+ways <- sapply( W:N_max ,
+function(n) choose(n,W) * p^W * (1-p)^(n-W) )
+post <- ways/sum(ways)
+data.frame( N=W:N_max , ways , post=round(post,3) )
+}
+compute_posterior_N( W=5 , p=0.7 , N_max=30 )
+
+# Since p is greater than 0.5, we expect most tosses to be W, so the posterior
+# distribution for N assigns most of the probability to values close to the observed 
+# W = 5. If we make p small, we’ll get the opposite:
+
+compute_posterior_N( W=5 , p=0.2 , N_max=30 )
+
+# If you had any prior information about N, you could add that to the function 
+# as well. Just multiply. For example, suppose you recall that you always
+# toss the globe an even number of times. Then we could just zero out the odd
+# numbers and renormalize.
+
+
+```
+
+
+```{r h4}
+
+# Solve using dbinom
+
+# Create a sequence of possible values for N
+N_values <- seq(5, 10, by = 1) 
+
+# Compute the likelihood for each value of N
+likelihood_N <- dbinom(5, size = N_values, prob = 0.7)
+
+# Assume a uniform prior for N
+prior_N <- rep(1, length(N_values))
+
+# Compute the unstandardized posterior
+unstd.posterior_N <- prior_N * likelihood_N
+
+# Standardize the posterior
+posterior_N <- unstd.posterior_N / sum(unstd.posterior_N)
+
+# Plot the posterior distribution
+plot(N_values, posterior_N, type = "l", col = "black", lwd = 2,
+     xlab = "Number of tosses (N)", ylab = "Posterior Probability",
+     main = "Posterior Distribution of N")
+
+# Add peak line
+peak_N <- N_values[which.max(posterior_N)]
+abline(v = peak_N, col = "grey", lty = 2)
+
+# Test with small p value = 0.2
+
+# Create a sequence of possible values for N
+N_values <- seq(5, 50, by = 1) 
+
+# Compute the likelihood for each value of N
+likelihood_N <- dbinom(5, size = N_values, prob = 0.2)
+
+# Assume a uniform prior for N
+prior_N <- rep(1, length(N_values))
+
+# Compute the unstandardized posterior
+unstd.posterior_N <- prior_N * likelihood_N
+
+# Standardize the posterior
+posterior_N <- unstd.posterior_N / sum(unstd.posterior_N)
+
+# Plot the posterior distribution
+plot(N_values, posterior_N, type = "l", col = "black", lwd = 2,
+     xlab = "Number of tosses (N)", ylab = "Posterior Probability",
+     main = "Posterior Distribution of N")
+
+# Add peak line
+peak_N <- N_values[which.max(posterior_N)]
+abline(v = peak_N, col = "grey", lty = 2)
+text(peak_N + 1, max(posterior_N), round(peak_N, 2), pos = 1, col = "black")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---

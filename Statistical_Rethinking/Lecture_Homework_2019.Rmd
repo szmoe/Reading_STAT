@@ -1,0 +1,271 @@
+---
+title: "Statistical_Rethinking_Lecture_Homework_2019"
+author: "SM"
+date: "`r Sys.Date()`"
+output: 
+  bookdown::html_document2:
+    toc: true 
+    toc_float: true
+    toc_depth: 3  
+    number_sections: true  
+    theme: united  
+    highlight: tango  
+    fig_caption: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rethinking)
+library(ggplot2)
+library(dplyr)
+```
+
+$~$
+
+# Lecture 1: The Golem of Prague
+
+
+
+# Lecture 2
+
+
+
+# Week 1: Homework
+
+$~$
+
+1. Suppose the globe tossing data had turned out to be 8 water in 15 tosses. Construct the prior distribution, using grid approximation. Use the same flat prior as before. 
+
+```{r h1}
+
+# Create data frame
+p_grid <- seq(from = 0, to = 1, length.out = 1000)
+
+# Create prior
+prior <- rep(1, 1000)
+
+# Calculate likelihood
+likelihood <- dbinom(8, size = 15, prob = p_grid)
+
+# Calculate unstandardized posterior
+unstd.posterior <- prior * likelihood
+
+# Standardise the posterior
+posterior <- unstd.posterior/ sum(unstd.posterior)
+
+# Plot the posterior
+plot(posterior~p_grid, type = "l", xlab = "proportion of water")
+
+```
+
+$~$
+
+<span style="color:grey">***Given answer***</span>
+
+```{r h1a}
+
+p_grid <- seq( from=0 , to=1 , length.out=1000 )
+prior <- rep( 1 , 1000 )
+prob_data <- dbinom( 8 , size=15 , prob=p_grid )
+posterior <- prob_data * prior
+posterior <- posterior / sum(posterior)
+set.seed(100)
+samples <- sample( p_grid , prob=posterior , size=1e4 , replace=TRUE )
+
+# The posterior mean should be about 0.53 and the 99% percentile interval
+# from 0.24 to 0.81.
+
+```
+
+$~$
+
+2. Start over in 1, but now use a prior that is zero below p = 0.5 and a constant above p = 0.5. This corresponds to prior information that a majority of the Earth's surface is water. What difference does the better prior make? If it helps, compare posterior distributions (using both priors) to the true value p = 0.7.
+
+```{r h2}
+
+# For step prior 
+# Create data frame
+p_grid <- seq(from = 0, to = 1, length.out = 1000)
+
+# Create prior
+prior1 <- ifelse(p_grid < 0.5, 0, 1)
+
+# Calculate likelihood
+likelihood <- dbinom(8, size = 15, prob = p_grid)
+
+# Calculate unstandardized posterior
+unstd.posterior1 <- prior1 * likelihood
+
+# Standardise the posterior
+posterior1 <- unstd.posterior1/ sum(unstd.posterior1)
+
+# Plot the posterior
+plot(posterior1~p_grid, type = "l", xlab = "proportion of water")
+
+# For original
+# Create data frame
+p_grid <- seq(from = 0, to = 1, length.out = 1000)
+
+# Create prior
+prior <- rep(1, 1000)
+
+# Calculate likelihood
+likelihood <- dbinom(8, size = 15, prob = p_grid)
+
+# Calculate unstandardized posterior
+unstd.posterior <- prior * likelihood
+
+# Standardise the posterior
+posterior <- unstd.posterior/ sum(unstd.posterior)
+
+# Overlay the second curve
+lines(posterior  ~ p_grid, col = "red", type = "l")
+
+# Add the true p = 0.7
+abline(v = 0.7, col = "blue")
+
+# Add legend
+legend("topleft", legend = c("p from step prior", "p from flat  prior", "true p value"), 
+       col = c("black", "red", "blue"), lty = c(1, 1, 1))
+
+# With the better prior, the interval of p is narrower with higher peak than the flat prior.
+
+```
+
+$~$
+
+<span style="color:grey">***Given answer***</span>
+
+```{r h2a}
+
+p_grid <- seq( from=0 , to=1 , length.out=1000 )
+prior <- c( rep( 0 , 500 ) , rep( 1 , 500 ) )
+prob_data <- dbinom( 8 , size=15 , prob=p_grid )
+posterior <- prob_data * prior
+posterior <- posterior / sum(posterior)
+set.seed(100)
+samples2 <- sample( p_grid , prob=posterior , size=1e4 , replace=TRUE )
+
+# The posterior mean should be about 0.61 and the 99% interval 0.50 to 0.82.
+# This prior yields a posterior with more mass around the true value of 0.7.
+
+dens( samples , xlab="p" , xlim=c(0,1) , ylim=c(0,6) )
+dens( samples2 , add=TRUE , lty=2 )
+abline( v=0.7 , col="red" )
+
+# With the impossible values less than 0.5 ruled out, the second model piles
+# up more plausibility on the higher values near the true value. The data are
+# still misleading it to think that values just above 0.5 are the most plausible.
+# But the posterior mean of 0.63 is much better than 0.53 from the previous
+# problem.
+
+```
+
+$~$
+
+3. This problem is more open-ended than the others. Feel free to collaborate on the solution. Suppose you want to estimate the Earth’s proportion of water very precisely. Specifically, you want the 99% percentile interval of the posterior distribution of p to be only 0.05 wide. This means the distance between the upper and lower bound of the interval should be 0.05. How many times will you have to toss the globe to do this? I won’t require a precise answer. I’m honestly more interested in your approach
+
+```{r h3}
+
+# Create data frame
+p_grid <- seq(from = 0, to = 1, length.out = 1000)
+
+# Create prior
+prior <- rep(0.7, 1000)
+
+# Calculate likelihood
+likelihood <- dbinom(700, size = 1000, prob = p_grid)
+
+# Calculate unstandardized posterior
+unstd.posterior <- prior * likelihood
+
+# Standardise the posterior
+posterior <- unstd.posterior/ sum(unstd.posterior)
+
+# Plot the posterior
+plot(posterior~p_grid, type = "l", xlab = "proportion of water")
+abline(v = 0.75, col = "blue")
+abline(v = 0.65, col = "red")
+
+# The answer is 1,000 tosses if we know true value of p = 0.7. 
+
+```
+
+$~$
+
+<span style="color:grey">***Given answer***</span>
+
+```{r h3a}
+
+# One way to approach this problem is to try a range of sample sizes and to
+# plot the interval width of each. Here’s some code to compute the posterior
+# and get the interval width:
+
+set.seed(100)
+N <- 20
+p_true <- 0.7
+W <- rbinom( 1 , size=N , prob=p_true )
+p_grid <- seq( from=0 , to=1 , length.out=1000 )
+prior <- rep( 1 , 1000 )
+prob_data <- dbinom( W , size=N , prob=p_grid )
+posterior <- prob_data * prior
+posterior <- posterior / sum(posterior)
+samples <- sample( p_grid , prob=posterior , size=1e4 , replace=TRUE )
+PI99 <- PI( samples , 0.99 )
+as.numeric( PI99[2] - PI99[1] )
+
+# Now since we want to do this for different values of N, 
+# it’s nice to make this into a function:
+f <- function( N ) {
+p_true <- 0.7
+W <- rbinom( 1 , size=N , prob=p_true )
+p_grid <- seq( from=0 , to=1 , length.out=1000 )
+prior <- rep( 1 , 1000 )
+prob_data <- dbinom( W , size=N , prob=p_grid )
+posterior <- prob_data * prior
+posterior <- posterior / sum(posterior)
+samples <- sample( p_grid , prob=posterior , size=1e4 , replace=TRUE )
+PI99 <- PI( samples , 0.99 )
+as.numeric( PI99[2] - PI99[1] )
+}
+
+# Now if you enter f(20), you get an interval width for 20 globe tosses.
+# Now notice that the interval width varies across simulations. Try f(20) a
+# few times to see what I mean. But as you increase N, this variation shrinks
+# rapidly. This is because as the sample size increases, the differences between
+# samples shrink. So if you ignore the sample to sample variation in interval
+# width, that’s okay in this example. But in the code below, I’ll account for it.
+
+#Now we need to run simulations across a bunch of different sample size to
+# find where the interval shrinks to 0.05 in width. I’ll use sapply to run 100
+# simulations at each of 7 sample sizes:
+Nlist <- c( 20 , 50 , 100 , 200 , 500 , 1000 , 2000 )
+Nlist <- rep( Nlist , each=100 )
+width <- sapply( Nlist , f )
+plot( Nlist , width )
+abline( h=0.05 , col="red" )
+
+# The horizontal is sample size. The points are individual interval widths, 
+# one for each simulation. The red line is drawn at a width of 0.05. 
+# Looks like we need more than 2000 tosses of the globe to get the interval to be that precise.
+
+# The above is a general feature of learning from data: The greatest returns
+# on learning come early on. Each additional observation contributes less and
+# less. So it takes very much effort to progressively reduce our uncertainty. So
+# if your application requires a very precise estimate, be prepared to collect a
+# lot of data. Or to change your approach
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+---
