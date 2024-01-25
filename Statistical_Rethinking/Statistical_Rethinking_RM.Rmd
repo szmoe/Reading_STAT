@@ -2599,11 +2599,84 @@ The justifications for using the Gaussian distribution- as a skeleton for hypoth
 \n
 
 (2) epistemological justification
-      - Gaussian distribution is the most natural expression of our state of ignorance, because if all we are willing to assume is that a measure has finite variance, the Gaussian distribution is the shape that can be realized in the largest number of ways and does not introduce any new assumptions. It is the least surprising and least informative assumption to make. In this way, the Gaussian is the distribution most consistent with our assumptions.
-
-
+      - Gaussian distribution is the most natural expression of our state of ignorance, because if all we are willing to assume is that a measure has finite variance, the Gaussian distribution is the shape that can be realized in the largest number of ways and does not introduce any new assumptions. It is the least surprising and least informative assumption to make. In this way, the Gaussian is the distribution most consistent with our assumptions. Or rather, it is the most consistent with our golem’s assumptions.
 
 $~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Gaussian distribution**</span>
+
+- The probability density of some value y, given a Gaussian (normal) distribution with mean $\mu$ and standard deviation $\sigma$, is:
+
+$$p(y|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(- \frac{(y-\mu)^2}{2\sigma^2}\right)$$
+
+- (y − $\mu$)^2^ gives the normal distribution its fundamental shape, a quadratic shape. Once you exponentiate the quadratic shape, you get the classic bell curve. The rest of it just scales and standardizes the distribution so that it sums to one, as all probability distributions must. But an expression as simple as exp(−y^2^) yields the Gaussian prototype.
+
+- The value y in the Gaussian distribution can be any continuous value, as Gussian is a continuous distribution. 
+
+- The binomial, in contrast, requires integers. Probability distributions with only discrete outcomes, like the binomial, are usually called *probability mass functions* and denoted *Pr*. Continuous ones like the Gaussian are called *probability density functions*, denoted with *p* or just plain old *f*. 
+
+- For mathematical reasons, probability densities, but not masses, can be greater than 1. For example:
+
+```{r c44}
+
+# Calculate p(0|0, 0.1)
+dnorm(0, 0, 0.1)
+
+# Probability density is the rate of change in cumulative probability. 
+# So where cumulative probability is increasing rapidly, density can easily exceed 1. 
+# But if we calculate the area under the density function, it will never exceed 1. 
+# Such areas are also called probability mass.
+
+```
+
+- The Gaussian distribution is routinely seen without $\sigma$ but with another parameter, $\tau$ . The parameter $\tau$ in this context is usually called precision and defined as $\tau$ = 1/$\sigma$^2^. This change of parameters gives us the equivalent formula (just substitute $\sigma$ = 1/ $\sqrt\tau$):
+
+$$p(y|\mu, \tau) = \sqrt\frac{\tau}{{2\pi}} \exp\left(- \frac{1}{2}\tau(y - \mu)^2 \right)$$
+
+$~$
+
+## A language for describing models
+
+(1) First, we recognize a set of measurements that we hope to predict or understand, the *outcome* variable or variables.
+
+(2) For each of these outcome variables, we define a likelihood distribution that defines the plausibility of individual observations. In linear regression, this distribution is always Gaussian.
+
+(3) Then we recognize a set of other measurements that we hope to use to predict or understand the outcome. Call these *predictor* variables.
+
+(4) We relate the exact shape of the likelihood distribution—its precise location and variance and other aspects of its shape, if it has them—to the predictor variables. In choosing a way to relate the predictors to the outcomes, we are forced to name and define all of the parameters of the model.
+
+(5) Finally, we choose priors for all of the parameters in the model. These priors define the initial information state of the model, before seeing the data.
+
+- After all these decisions are made, summarize the model: 
+
+
+$$
+\text{outcome}_i \sim \text{Normal}(\mu_i, \sigma) \\
+\mu_i = \beta \times \text{predictor}_i \\
+\beta \sim \text{Normal}(0, 10) \\
+\sigma \sim \text{HalfCauchy}(0, 1)
+$$
+
+<div style="border: 1px solid #999; padding: 10px; background-color: #f9f9f9; margin: 10px 0;">
+
+outcome~i~                    = outcome variable for the i^th^ observation
+
+Normal($\mu$~i~, $\sigma$)    = normal distribution with mean $\mu$~i~ and standard deviation $\sigma$
+
+$\mu$~i~    = mean ($\mu$~i~) of the normal distribution for the i^th^ observation
+
+$\beta\times\text{predictor}$ = the product of a coefficient ($\beta$) and a predictor variable (predictor~i~)
+
+
+
+
+
+
+</div>
+
+
+
+
 
 
 
