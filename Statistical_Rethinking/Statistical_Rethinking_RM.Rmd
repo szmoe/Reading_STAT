@@ -2668,11 +2668,127 @@ $\mu$~i~    = mean ($\mu$~i~) of the normal distribution for the i^th^ observati
 $\beta\times\text{predictor}$ = the product of a coefficient ($\beta$) and a predictor variable (predictor~i~)
 
 
-
-
-
-
 </div>
+
+$~$
+
+### Re-describing the globe tossing model
+
+The model:
+
+$$\text{w} \sim \text{Binomial(n, p)}$$
+$$\text{p} \sim \text{Uniform(0, 1)}$$
+
+```
+w   = observed count of water samples
+n   = total number of samples
+p   = proportion of water on actual globe
+
+The count w is distributed binomially with sample size n and probability p. 
+The prior for p is assumed to be uniform between zero and one. 
+
+In these models, the first line defines the likelihood function used in Bayes’ theorem. 
+The other line defines priors. Both of the lines in this model are stochastic, as 
+indicated by the ∼ symbol. A stochastic relationship is just a mapping of a variable 
+or parameter onto a distribution. It is stochastic because no single instance of the 
+variable on the left is known with certainty. Instead, the mapping is probabilistic: 
+Some values are more plausible than others, but very many different values are 
+plausible under any model. 
+
+```
+
+$~$
+
+<span style="color:purple">***From model definition to Bayes' theorem***</span>
+
+To relate the mathematical format above to Bayes’ theorem, you could use the model definition to define the posterior distribution:
+
+$$\text{Pr(p|w,n)} = \frac{\text{Binomial(w|n,p) Uniform(p|0,1)}}{\int \text{Binomial(w|n,p) Uniform(p|0,1)dp}}$$
+
+$~$
+
+$$\text{posterior probability of any particular value of p} = \frac{likelihood \times prior}{\text{average likelihood}}$$
+
+In R code form:
+```{r c45}
+w <- 6; n <- 9;
+p_grid <- seq(from = 0, to = 1, length.out = 100)
+posterior <- dbinom(w, n, p_grid) * dunif(p_grid, 0, 1)
+posterior <- posterior/ sum(posterior)
+plot(posterior~p_grid, type = "l")
+```
+
+$~$
+
+## A Gaussian model of height
+
+There are an infinite number of possible Gaussian distributions. Some have small means. Others have large means. Some are wide, with a large $\sigma$. Others are narrow. We want our Bayesian machine to consider every possible distribution, each defined by a combination of $\mu$ and $\sigma$, and rank them by posterior plausibility. Posterior plausibility provides a measure of the logical compatibility of each possible distribution with the data and model.
+
+In practice we’ll use approximations to the formal analysis. So we won’t really consider every possible value of $\mu$ and $\sigma$.  The “estimate” here will be the entire posterior distribution, not any point within it. And as a result, the posterior distribution will be a distribution of Gaussian distributions. Yes, a distribution of distributions.
+
+$~$
+
+### The data
+
+A data frame is a special kind of list in R. So you access the individual variables with the usual list “double bracket” notation, like d[[1]] for the first variable or d[['x']] for the variable named x. Unlike regular lists, however, data frames force all variables to have the same length. That isn’t always a good thing. And that’s why some statistical packages, like the powerful Stan Markov chain sampler (mc-stan.org), accept plain lists of data, rather than proper data frames.
+
+```{r c46}
+
+# Load the data
+data("Howell1")
+
+# name the data frame as "d"
+d <- Howell1
+
+# Inspect the structure of the data frame
+str(d)
+
+# Select the height column
+ d0 <- d$height
+ 
+# Filter the data frame down to individuals of age 18 or greater 
+ d2 <- d[d$age >= 18, ]
+# You can access any value in the matrix with d[row,col], replacing row and col 
+# with row and column numbers. If row or col are lists of numbers, then you get
+# more than one row or column. If you leave the spot for row or col blank, then 
+# you get all of whatever you leave blank. For example,d[ 3 , ]gives all columns 
+# at row 3. Typing d[,] just gives you the entire matrix, because it returns all 
+# rows and all columns.
+ 
+# d[ d$age >= 18 , ] gives you all of the rows in which d$age is greater-than- 
+# or-equal-to 18. It also gives you all of the columns, because the spot after 
+# the comma is blank.
+
+```
+$~$
+
+### The model
+
+Our goal is to model these values using a Gaussian distribution.
+
+```{r c47}
+
+# First, plot the distribution of heights
+dens(d2$height)
+
+```
+
+
+Whatever the reason, adult heights are nearly always approximately normal. So it’s reasonable for the moment to adopt the stance that the model’s likelihood should be Gaussian. But be careful about choosing the Gaussian distribution only when the plotted outcome variable looks Gaussian to you. Gawking at the raw data, to try to decide how to model them, is usually not a good idea. The data could be a mixture of different Gaussian distributions, for example, and in that case you won’t be able to detect the underlying normality just by eyeballing the outcome distribution. Furthermore, the empirical distribution needn’t be actually Gaussian in order to justify using a Gaussian likelihood.
+
+There are an infinite number of Gaussain distributions , with an infinite number of different means and standard deviations. We’re ready to write down the general model and compute the plausibility of each combination of $\mu$ and $\sigma$. To define the heights as normally distributed with a mean $\mu$ and standard deviation $\sigma$, we write:
+
+$$\text{h}_i \sim \text{Normal}(\mu, \sigma)$$
+
+```
+h             = the list of heights
+subscript i   = index- each individual element of this list (row numbers)
+
+```
+
+
+
+
 
 
 
