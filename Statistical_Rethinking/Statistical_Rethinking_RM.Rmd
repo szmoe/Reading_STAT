@@ -19,6 +19,7 @@ library(rethinking)
 library(ggplot2)
 library(dplyr)
 library(patchwork)
+library(MASS)
 ```
 
 # Chapter 1: The Golem of Prague
@@ -2778,7 +2779,7 @@ Whatever the reason, adult heights are nearly always approximately normal. So it
 
 There are an infinite number of Gaussain distributions , with an infinite number of different means and standard deviations. We’re ready to write down the general model and compute the plausibility of each combination of $\mu$ and $\sigma$. To define the heights as normally distributed with a mean $\mu$ and standard deviation $\sigma$, we write:
 
-$$\text{h}_i \sim \text{Normal}(\mu, \sigma)$$
+$$\text{h}_i \sim \text{Normal}(\mu, \sigma)$$                                  
 
 ```
 h             = the list of heights
@@ -2786,7 +2787,461 @@ subscript i   = index- each individual element of this list (row numbers)
 
 ```
 
+$~$
 
+Then, we add priors assuming Pr($\mu$, $\sigma$) = Pr($\mu$) Pr($\sigma$):
+
+\begin{align*}
+\text{h}_i &\sim \text{Normal}(\mu, \sigma) \ &&& [\text{Likelihood}]\\
+
+\mu &\sim \text{Normal}(178, 20) \ &&& [\mu \text{ prior}]\\
+
+\sigma &\sim \text{Uniform}(0, 50) \ &&& [\sigma \text{ prior}]
+\end{align*}
+
+$~$
+
+Plot the priors to have a sense of the assumption they build into the model:
+
+```{r c48}
+
+curve(dnorm(x, 178, 20), from = 100, to = 250)
+
+# golem is assuming that the average height (not each individual height) is almost certainly 
+# between 140 cm and 220 cm. So this prior carries a little information, but not a lot. 
+# The σ prior is a truly flat prior, a uniform one, that functions just to constrain σ 
+# to have positive probability between zero and 50cm. 
+
+```
+
+$~$
+
+```{r c49}
+
+curve(dunif(x, 0, 50), from = -10, to = 60)
+
+# A standard deviation like σ must be positive, so bounding it at zero makes sense. 
+# How should we pick the upper bound? In this case, a standard deviation of 50cm would 
+# imply that 95% of individual heights lie within 100cm of the average height. 
+# That’s a very large range.
+
+```
+
+$~$
+
+Simulate heights by sampling from priors (every posterior is also potentially a prior for a subsequent analysis, so you can process priors just like posteriors.):
+
+```{r c50}
+
+sample_mu <- rnorm(1e4, 178, 20)
+
+sample_sigma <- runif(1e4, 0, 50)
+
+prior_h <- rnorm(1e4, sample_mu, sample_sigma)
+
+dens(prior_h)
+
+# The density plot you get shows a vaguely bell-shaped density with thick tails. 
+# It is the expected distribution of heights, averaged over the prior. Notice that 
+# the prior probability distribution of height is not itself Gaussian. This is okay. 
+# The distribution you see is not an empirical expectation, but rather the distribution 
+# of relative plausibilities of different heights, before seeing the data.
+
+```
+
+$~$
+
+### Grid approximation of the posterior distribution
+
+The guts of the golem:
+
+```{r c51}
+
+# Create a grid of mu and sigma values
+mu.list <- seq( from=140, to=160 , length.out=200 )
+sigma.list <- seq( from=4 , to=9 , length.out=200 )
+post <- expand.grid( mu=mu.list , sigma=sigma.list )
+
+# Calculate log-likelihood
+post$LL <- sapply( 1:nrow(post) , function(i) sum( dnorm( #calculate PDF of normal distribution
+                d2$height , # sum to add up all log-likelihoods
+                mean=post$mu[i] ,
+                sd=post$sigma[i] ,
+                log=TRUE ) ) ) # return log-likelihoods
+
+# Calculate probabilities from log-likelihoods
+post$prod <- post$LL + dnorm( post$mu , 178 , 20 , TRUE ) +
+    dunif( post$sigma , 0 , 50 , TRUE )
+# sum of all log-likelihoods + the log-likelihood of a normal distribution 
+# with a fixed mean of 178 and standard deviation of 20 + he log-likelihood of 
+# a uniform distribution for sigma values between 0 and 50
+
+# Taking the sum effectively combines the contributions from the likelihood and the priors.
+# This is constructing the unnormalized log-posterior distribution by summing up the 
+# log-likelihood and the log-prior terms. The final step of the analysis involves 
+# normalizing these probabilities to obtain a proper probability distribution.
+
+# Use exp function to exponentiate the log-likelihoods, transforming them back to probabilities
+post$prob <- exp( post$prod - max(post$prod) )
+# subtracting helps with numerical stability by preventing very large or small values
+
+# Simple contour plot
+contour_xyz( post$mu , post$sigma , post$prob )
+
+# Simple heat map
+image_xyz( post$mu , post$sigma , post$prob )
+```
+
+$~$
+
+### Sampling from the posterior
+
+Since there are two parameters, and we want to sample combinations of them, we first randomly sample row numbers in post in proportion to the values in post$prob. Then we pull out the parameter values on those randomly sampled rows. 
+
+```{r 4.17}
+
+# First randomly sample row numbers in post in proportion to the values in post$prob
+sample.rows <- sample( 1:nrow(post) , size=1e4 , replace=TRUE ,
+    prob=post$prob )
+
+# Pull out the parameter values on those randomly sampled rows
+sample.mu <- post$mu[ sample.rows ]
+sample.sigma <- post$sigma[ sample.rows ]
+# You end up with 10,000 samples, with replacement, from the posterior for the height data.
+
+# Plot the samples
+plot( sample.mu , sample.sigma , cex=0.5 , pch=16 , col=col.alpha(rangi2,0.1) )
+# Samples from the posterior distribution for the heights data. The density of 
+# points is highest in the center, reflecting the most plausible combinations of μ and σ.
+# There are many more ways for these parameter values to produce the data, conditional on the model.
+
+# Describe the distribution of confidence in each combination of μ and σ by summarizing the samples
+# Characterize the shapes of the marginal posterior densities of μ and σ
+# The jargon “marginal” here means “averaging over the other parameters.” 
+dens(sample.mu, main = "sample.mu")
+dens(sample.sigma, main = "sample.sigma")
+# As sample size increases, posterior densities approach the normal distribution. 
+# If you look closely, though, you’ll notice that the density for σ has a longer right-hand tail.
+# This condition is very common for standard deviation parameters.
+
+# Summarize the widths of these densities with highest posterior density intervals
+HPDI(sample.mu)
+HPDI(sample.sigma)
+# Since these samples are just vectors of numbers, you can compute any statistic 
+# from them that you could from ordinary data. If you want the mean or median, 
+# just use the corresponding R functions.
+
+```
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Sample size and the normality of $\sigma$'s posterior**</span>
+
+- Repeat the above analysis using only a fraction of the original data to demonstrate the posterior is not always so Gaussian in shape
+
+- For a Gaussian likelihood and a Gaussian prior on μ, the posterior distribution is always Gaussian as well, regardless of sample size.
+
+- There’s no trouble with the mean, μ. It is the standard deviation σ that causes problems- need to be careful of abusing the quadratic approximation.
+
+- The deep reasons for the posterior of σ tending to have a long right-hand tail are complex. But a useful way to conceive of the problem is that variances must be positive. As a result, there must be more uncertainty about how big the variance (or standard deviation) is than about how small it is. For example, if the variance is estimated to be near zero, then you know for sure that it can’t be much smaller. But it could be a lot bigger.
+
+```{r 4.21}
+
+# Take only 20 samples from height data
+d3 <- sample(d2$height, size = 20)
+
+# Create a grid from mean and SD values
+mu.list <- seq( from=150, to=170 , length.out=200 )
+sigma.list <- seq( from=4 , to=20 , length.out=200 )
+post2 <- expand.grid( mu=mu.list , sigma=sigma.list )
+
+# Calculate log-likelihoods
+post2$LL <- sapply( 1:nrow(post2) , function(i)
+    sum( dnorm( d3 , mean=post2$mu[i] , sd=post2$sigma[i] ,
+    log=TRUE ) ) )
+
+# Calculate probabilities from log-likelihood values
+post2$prod <- post2$LL + dnorm( post2$mu , 178 , 20 , TRUE ) +
+    dunif( post2$sigma , 0 , 50 , TRUE )
+
+# Exponentiate the log-likelihoods back to probability
+post2$prob <- exp( post2$prod - max(post2$prod) )
+
+# Randomly sample row numbers in post2 in proportion to probability
+sample2.rows <- sample( 1:nrow(post2) , size=1e4 , replace=TRUE ,
+    prob=post2$prob )
+
+# Draw the parameter values from randomly sampled row numbers
+sample2.mu <- post2$mu[ sample2.rows ]
+sample2.sigma <- post2$sigma[ sample2.rows ]
+
+# Plot the samples
+plot( sample2.mu , sample2.sigma , cex=0.5 ,
+    col=col.alpha(rangi2,0.1) ,
+    xlab="mu" , ylab="sigma" , pch=16 )
+# Notice a distinctly longer tail at the top of the cloud of points
+
+# Inspect the marginal posterior density for σ, averaging over μ
+dens( sample2.sigma , norm.comp=TRUE, col = "purple" )
+# Now you can see that the posterior for σ is not Gaussian, but rather has a long tail of
+# uncertainty towards higher values.
+
+```
+
+$~$
+
+### Fitting the model with `map`
+
+- Quadratic approximation is as a handy way to quickly make inferences about the shape of the posterior.
+
+- The posterior’s peak will lie at the maximum a posteriori estimate (MAP), and we can get a useful image of the posterior’s shape by using the quadratic approximation of the posterior distribution at this peak.
+
+$~$
+
+<span style="color:brown; text-decoration:underline">**Use `map` to find the values of $\mu$ and $\sigma$ that maximize the posterior probability:**</span>
+
+```{r 4.24}
+
+# Load Howell1 data and select out the adults
+data(Howell1)
+d <- Howell1
+d2 <- d[ d$age >= 18 , ]
+
+```
+
+- Define the model, using R's formula syntax:
+
+\begin{align*}
+\text{h}_i & \sim \text{Normal}(\mu, \sigma) \ &&& \text{[height} & \sim \text{dnorm(mu, sigma)}\text{]}\\
+
+\mu &\sim \text{Normal}(178, 20) \ &&& [\text{mu} &\sim \text{dnorm}(156, 10)]\\
+
+\sigma &\sim \text{Uniform}(0, 50) \ &&& [\text{sigma} &\sim \text{dunif}(0, 50)]
+\end{align*}
+
+$~$
+
+- Now, place the R code equivalents into `alist`. 
+
+```{r 4.25}
+
+flist <- alist(
+    height ~ dnorm( mu , sigma ) ,
+    mu ~ dnorm( 178 , 20 ) ,
+    sigma ~ dunif( 0 , 50 )
+)
+# Note the commas at the end of each line, except the last. 
+# These commas separate each line of the model definition.
+```
+
+$~$
+
+- Fit the model to the data in the data frame d2 with: 
+
+```{r 4.26}
+
+m4.1 <- map( flist , data=d2 )
+
+# After executing this code, you’ll have a fit model stored in the symbol m4.1.
+
+```
+
+$~$
+
+- Now take a look at the fit maximum a posteriori model:
+
+```{r 4.27}
+
+precis(m4.1)
+
+# These numbers provide Gaussian approximations for each parameter’s marginal distribution. 
+# This means the plausibility of each value of μ, after averaging over the plausibilities 
+# of each value of σ, is given by a Gaussian distribution with mean 154.6 and standard deviation 0.4.
+# The 5.5% and 94.5% quantiles are percentile interval boundaries, corresponding to an 89% interval.
+# They are almost identical with the HPDIs from the grid approximation earlier.
+# When the posterior is approximately Gaussian, then this is what you should expect.
+
+```
+
+$~$
+
+<span style="color:brown; text-decoration:underline">**Start values for `map`**</span>
+
+`map` estimates the posterior by climbing it like a hill. To do this, it has to start climbing someplace, at some combination of parameter values. Unless you tell it otherwise, map starts at random values sampled from the prior. But it’s also possible to specify a starting value for any parameter in the model.
+
+```{r 4.28}
+
+# Use parameters μ and σ as starting values- good guesses of the rough location of the MAP values
+start <- list(
+    mu=mean(d2$height),
+    sigma=sd(d2$height)
+)
+
+```
+
+```
+Note that the list of start values is a regular list, not an alist like the formula list is. 
+The two functions alist and list do the same basic thing: allow you to make a collection of arbitrary R objects. They differ in one important respect: list evaluates the code you embed inside it, while
+alist does not. So when you define a list of formulas, you should use alist, so the code isn’t 
+executed. But when you define a list of start values for parameters, you should use list, so 
+that code like mean(d2$height) will be evaluated to a numeric value.
+
+```
+
+$~$
+
+See the effect of a more information prior for $\mu$:
+
+```{r 4.29}
+
+# Change the standard deviation of the prior to 0.1, so it’s a very narrow prior
+m4.2 <- map(
+        alist(
+            height ~ dnorm( mu , sigma ) ,
+            mu ~ dnorm( 178 , 0.1 ) ,
+            sigma ~ dunif( 0 , 50 )
+),
+        data=d2 )
+
+precis( m4.2 )
+
+# Notice that the estimate for μ has hardly moved off the prior. 
+# The prior was very concentrated around 178. Also notice that the estimate for 
+# σ has changed quite a lot, even though we didn’t change its prior at all.
+# Once the golem is certain that the mean is near 178—as the prior insists—then 
+# the golem has to estimate σ conditional on that fact. This results in a different
+# posterior for σ, even though all we changed is prior information about the other parameter.
+
+```
+
+$~$
+
+### Sampling from a `map` fit
+
+Getting samples from the quadratic approximate posterior distribution requires recognizing that a quadratic approximation to a posterior distribution with more than one parameter dimension— μ and σ each contribute one dimension— is just a multi-dimensional Gaussian distribution.
+
+As a consequence, when R constructs a quadratic approximation, it calculates not only standard deviations for all parameters, but also the covariances among all pairs of parameters.
+
+```{r 4.30}
+
+#  A multi-dimensional Gaussian distribution requires a list of means and 
+# a matrix of variances and covariances
+vcov( m4.1 )
+
+# The above is a variance-covariance matrix- it tells us how each parameter relates 
+# to every other param- eter in the posterior distribution.
+
+```
+
+A variance-covariance matrix can be factored into two elements: 
+
+(1) a vector of variances for the parameters 
+
+(2) a correlation matrix that tells us how changes in any parameter lead to correlated changes in the others.
+
+```{r 4.31}
+
+diag( vcov( m4.1 ) )
+# The two-element vector in the output is the list of variances. 
+# If you take the square root of this vector, you get the standard deviations that 
+# are shown in precis output.
+
+cov2cor( vcov( m4.1 ) )
+# The two-by-two matrix in the output is the correlation matrix. Each entry shows 
+# the correlation, bounded between −1 and +1, for each pair of parameters. The 1’s 
+# indicate a parameter’s correlation with itself. If these values were anything 
+# except 1, we would be worried. The other entries are typically closer to zero, 
+# and they are very close to zero in this example. This indicates that learning 
+# μ tells us nothing about σ and likewise that learning σ tells us nothing about μ.
+
+```
+$~$
+
+To get samples from this multi-dimensional posterior, we sample vectors of values from a multi-dimensional Gaussian distribution- instead of sampling single values from a simple Gaussian distribution.
+
+```{r 4.32}
+
+post <- extract.samples( m4.1 , n=1e4 )
+head(post)
+# You end up with a data frame, post, with 10,000 (1e4) rows and two columns, 
+# one column for μ and one for σ. Each value is a sample from the posterior, 
+# so the mean and standard deviation of each column will be very close to the
+# MAP values from before.
+
+# Confirm this by summarizing the samples
+precis(post)
+
+# Compare with values from quadratic approximate posterior distribution
+precis(m4.1)
+
+# Compare with the samples from the grid approximation
+par(mfrow = c(1, 2))
+plot(post, cex=0.5 , pch=16 , col=col.alpha(rangi2,0.1))
+plot( sample.mu , sample.sigma , cex=0.5 , pch=16 , col=col.alpha(rangi2,0.1) )
+# There is resembalance with the grid approximation
+# These samples also preserve the covariance between μ and σ. This hardly matters right now, 
+# because μ and σ don’t covary at all in this model. But once you add a predictor variable 
+# to your model, covariance will matter a lot.
+
+```
+
+$~$
+
+<span style="color:purple">***Under the hood with multivariate sampling***</span>
+
+The function extract.samples is for convenience. The work is done by a multi-dimensional version of rnorm, mvrnorm. The function rnorm simulates random Gaussian values, while mvrnorm simulates random vectors of multivariate Gaussian values. Here’s how to use it directly to do what extract.samples does:
+
+```{r 4.34}
+
+# library(MASS)
+post <- mvrnorm( n=1e4 , mu=coef(m4.1) , Sigma=vcov(m4.1) )
+
+# You don’t usually need to use mvrnorm directly like this, but sometimes you want to
+# simulate multi-variate Gaussian outcomes. In that case, you’ll need to access mvrnorm directly.
+
+```
+
+$~$
+
+<span style="color:purple">***Getting $\sigma$ right***</span>
+
+- The quadratic assumption for σ can be problematic- more uncertainty at higher values. 
+
+- A conventional way to improve the situation is the estimate log(σ) instead- while the posterior distribution of σ will often not be Gaussian, the distribution of its logarithm can be much closer to Gaussian.
+
+- So if we impose the quadratic approximation on the logarithm, rather than the standard deviation itself, we can often get a better approximation of the uncertainty.
+
+```{r 4.35}
+set.seed(435)
+# Estimate log(σ) using map
+m4.1_logsigma <- map(
+        alist(
+          # the exp inside the likelihood converts a continuous parameter, log_sigma, 
+          # to be strictly positive, because exp(x) > 0 for any real value x.
+            height ~ dnorm( mu , exp(log_sigma) ) ,
+            mu ~ dnorm( 178 , 20 ) ,
+            log_sigma ~ dnorm( 2 , 10 )   
+            # Since log_sigma is continuous now, it can have a Gaussian prior.
+) , data=d2 )
+
+# When you extract samples, it is log_sigma that has a Gaussian distribution. 
+# To get the distribution of sigma, you just need to use the same exp as in the 
+# model definition, to get back on the natural scale:
+post <- extract.samples( m4.1_logsigma )
+sigma <- exp( post$log_sigma )
+
+# Compare the two samples of sigma
+par(mfrow = c(1, 3))
+dens(sigma, main ="log.sigma")
+dens(sample.sigma, main ="sample.sigma")
+dens( sample2.sigma , main = "smaller.sample.sigma")
+# log.sima and sample.sigma have same sample sizes, while smaller.sample.sigma has
+# significantly smaller sample size of 20. 
+# When you have a lot of data, this won’t make any noticeable difference. 
+# But the use of exp to effectively constrain a parameter to be positive is a 
+# robust and useful one. And it relates to link functions.
+
+```
 
 
 
