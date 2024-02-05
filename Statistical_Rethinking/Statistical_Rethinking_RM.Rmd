@@ -3014,7 +3014,7 @@ d2 <- d[ d$age >= 18 , ]
 \begin{align*}
 \text{h}_i & \sim \text{Normal}(\mu, \sigma) \ &&& \text{[height} & \sim \text{dnorm(mu, sigma)}\text{]}\\
 
-\mu &\sim \text{Normal}(178, 20) \ &&& [\text{mu} &\sim \text{dnorm}(156, 10)]\\
+\mu &\sim \text{Normal}(178, 20) \ &&& [\text{mu} &\sim \text{dnorm}(178, 20)]\\
 
 \sigma &\sim \text{Uniform}(0, 50) \ &&& [\text{sigma} &\sim \text{dunif}(0, 50)]
 \end{align*}
@@ -3230,7 +3230,7 @@ m4.1_logsigma <- map(
 post <- extract.samples( m4.1_logsigma )
 sigma <- exp( post$log_sigma )
 
-# Compare the two samples of sigma
+# Compare the three samples of sigma
 par(mfrow = c(1, 3))
 dens(sigma, main ="log.sigma")
 dens(sample.sigma, main ="sample.sigma")
@@ -3242,6 +3242,226 @@ dens( sample2.sigma , main = "smaller.sample.sigma")
 # robust and useful one. And it relates to link functions.
 
 ```
+
+$~$
+
+## Adding a predictor
+
+Typically, we are interested in modeling how an outcome is related to some predictor variable. And by including a predictor variable in a particular way, we’ll have linear regression.
+
+```{r c4.37}
+
+# See how height covaries with weight
+plot(d2$height ~ d2$weight)
+
+# there’s obviously a relationship: Knowing a person’s weight helps you predict height.
+# Incorporate predictor variables to Gaussian model to make this vague observation into
+# a more precise quantitative model that relates values of weight to plausible values of height
+
+```
+
+$~$
+
+## Fitting the model
+
+All we have to do is incorporate our new model for the mean into the model specification inside map and be sure to add our new parameters to the start list.
+
+Repeat model definition, with corresponding R code:
+
+\begin{align*}
+\text{h}_i & \sim \text{Normal}(\mu_i, \sigma) \ &&& \text{height} & \sim \text{dnorm(mu, sigma)} \\
+
+\mu_i & = \alpha + \beta x_i \ &&& \text{mu} & \leftarrow \text{a + b*weight} \\
+
+\alpha &\sim \text{Normal}(178, 100) \ &&& a &\sim \text{dnorm}(178, 100)\\
+
+\beta &\sim \text{Normal}(0, 10) \ &&& b &\sim \text{dnorm}(0, 10)\\
+
+\sigma &\sim \text{Uniform}(0, 50) \ &&& \text{sigma} &\sim \text{dunif}(0, 50)
+
+\end{align*}
+
+$~$
+
+Build the MAP model fit using the above formulas:
+
+```{r 4.38}
+
+# Load data Howell1
+data(Howell1)
+d <- Howell1
+d2 <- d[d$age >= 18, ]
+
+# fit model
+m4.3 <- map(
+  alist(
+    height ~ dnorm(mu, sigma),
+    mu <- a + b*weight,
+    a ~ dnorm(178, 100),
+    b ~ dnorm(0, 10),
+    sigma ~ dunif(0, 50)
+  ),
+  data = d2
+)
+
+# Note that starting b at zero is not the same as having β’s prior with mean zero. 
+# The values in the start list don’t alter the posterior probabilities, while priors definitely do.
+
+precis(m4.3)
+
+# Another way to fit the same model without a separate line for linear model
+# Merge the linear model into likelihood function
+m4.3 <- map(
+  alist(
+    height ~ dnorm(a + b*weight, sigma),
+    a ~ dnorm(178, 100),
+    b ~ dnorm(0, 10),
+    sigma ~ dunif(0, 50)
+  ),
+  data = d2
+)
+
+precis(m4.3)
+
+
+
+
+```
+
+$~$
+
+## Interpreting the model fit
+
+Two broad categories of processing:
+
+(1) reading tables
+
+(2) plotting
+
+Plotting the implications of your estimates will allow you to inquire about several things that are sometimes hard to read from tables:
+
+- Whether or not the model fitting procedure worked correctly
+
+- The absolute magnitude, rather than merely relative magnitude, of a relationship between outcome and predictor
+
+- The uncertainty surrounding an average relationship
+
+- The uncertainty surrounding the implied predictions of the model, as these are distinct from mere parameter uncertainty
+
+$~$
+
+<span style="color:purple">***What do parameters mean?***</span>
+
+Posterior probabilities of parameter values describe the relative compatibility of different states of the world with the data, ac- cording to the model.
+
+$~$
+
+### Tables of estimates
+
+With the new linear regression fit to the Kalahari data, we inspect the estimates:
+
+```{r 4.40}
+
+precis(m4.3)
+
+# The first row gives the quadratic approximation for α, the second the approximation 
+# for β, and the third approximation for σ.
+# Since β is a slope, the value 0.90 can be read as a person 1 kg heavier is expected 
+# to be 0.90 cm taller. 89% of the posterior probability lies between 0.84 and 0.97. 
+# The estimate of α, a in the precis table, indicates that a person of weight 0 should be 114cm tall.
+# The estimate for σ, sigma, informs us of the width of the distribution of heights around the mean.
+# The estimate tells us that 95% of plausible heights lie within 10cm (2σ) of the mean height. 
+# But there is also uncertainty about this, as indicated by the 89% percentile interval
+
+```
+
+$~$
+
+The numbers in the default precis output aren’t sufficient to describe the quadratic posterior completely. For that, we also require the variance-covariance matrix. We’re interested in correlations among parameters—we already have their variance in the table above—so let’s go straight to the correlation matrix:
+
+```{r 4.41}
+
+# Correlation matrix
+precis( m4.3 , corr=TRUE )# This code not working
+
+cov2cor(vcov(m4.3))
+
+# Notice that α and β are almost perfectly negatively correlated. Right now, 
+# this is harmless. It just means that these two parameters carry the same information—
+# as you change the slope of the line, the best intercept changes to match it. 
+# But in more complex models, strong correlations like this can make it difficult 
+# to fit the model to the data. One of the tricks to avoid it is centering.
+```
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Centering**</span>
+
+Centering is the procedure of subtracting the mean of a variable from each value. 
+
+```{r 4.42}
+
+# Create a centered version of the weight variable
+d2$weight.c <- d2$weight - mean(d2$weight)
+
+# Confirm that the average value of weight.c is zero
+mean(d2$weight.c)
+
+# Refit the model and see the changes
+
+m4.4 <- map(
+    alist(
+        height ~ dnorm( mu , sigma ) ,
+        mu <- a + b*weight.c ,
+        a ~ dnorm( 178 , 100 ) ,
+        b ~ dnorm( 0 , 10 ) ,
+sigma ~ dunif( 0 , 50 ) ),
+data=d2,
+start = list(a = 178, b = 0, sigma = 1))
+# I got error "Start values for parameters may be too far from MAP." if specify start value.
+
+precis(m4.4, corr = TRUE) 
+cov2cor(vcov(m4.4))
+
+# The estimates for β and σ are unchanged (within rounding error), but the estimate for
+# α (a) is now the same as the average height value in the raw data. 
+# And the correlations among parameters are now all zero
+mean(d2$height)
+
+# The estimate for the intercept, α, still means the same thing it did before: 
+# the expected value of the outcome variable, when the predictor variable is equal to zero. 
+# But now the mean value of the predictor is also zero. So the intercept also means: 
+# the expected value of the outcome, when the predictor is at its average value. 
+# This makes interpreting the intercept a lot easier.
+
+```
+
+$~$
+
+### Plotting posterior inference aganist the data
+
+Not only does plotting help in interpreting the posterior, but it also provides an informal check on model assumptions. When the model’s predictions don’t come close to key observations or patterns in the plotted data, then you might suspect the model either did not fit correctly or is rather badly specified.
+
+We’re going to start with a simple version of that task, superimposing just the MAP values over the height and weight data.
+
+```{r 4.45}
+
+# superimpose the MAP values for mean height over the actual data
+plot(height ~ weight, data = d2, col = "blue")
+abline(a = coef(m4.3)["a"], b = coef(m4.3)["b"])
+# Height in centimeters (vertical) plotted against weight in kilograms (horizontal), 
+# with the maximum a posteriori (MAP) line for the mean height at each weight plotted in black.
+
+```
+
+$~$
+
+### Adding uncertainty around the mean
+
+
+
+
+
 
 
 
