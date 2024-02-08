@@ -3458,6 +3458,171 @@ $~$
 
 ### Adding uncertainty around the mean
 
+The posterior distribution considers every possible regression line connecting height to weight. It assigns a relative plausibility to each. This means that each combination of α and β has a posterior probability. It could be that there are many lines with nearly the same posterior probability as the MAP line. Or it could be instead that the posterior distribution is rather narrow near the MAP line.
+
+So how can we get that uncertainty onto the plot? Together, a combination of α and β define a line. And so we could sample a bunch of lines from the posterior distribution. Then we could display those lines on the plot, to visualize the uncertainty in the regression relationship.
+
+```{r 4.46}
+
+# To better appreciate how the posterior distribution contains lines, extract some samples from the model
+post <- extract.samples(m4.3)
+
+# Inspect the first 5 rows of the samples
+post[1:5,]
+
+```
+
+$~$
+
+Each row is a correlated random sample from the joint posterior of all three parameters, using the covariances provided by vcov(m4.3). The paired values of a and b on each row define a line. The average of very many of these lines is the MAP line. But the scatter around that average is meaningful, because it alters our confidence in the relationship between the predictor and the outcome.
+
+```{r 4.48}
+
+# extracts the first 10 cases and re-estimates the model
+N <- 10
+dN <- d2[1:N, ]
+mN <- map(
+  alist(
+    height ~ dnorm(mu, sigma),
+    mu <- a + b*weight,
+    a ~ dnorm(178, 100),
+    b ~ dnorm(0, 10),
+    sigma ~ dunif(0, 50)
+  ), data = dN
+)
+
+# plot 20 of these lines, to see what the uncertainty looks like
+# extract 20 samples from the posterior
+post <- extract.samples(mN, n = 20)
+
+# display raw data and sample size
+plot(dN$weight, dN$height,
+     xlim = range(d2$weight), ylim = range(d2$height),
+     col = rangi2, xlab = "weight", ylab = "height")
+mtext(concat("N = ", N)) # add text to the plot indicating sample size
+
+# plot the lines with transparency
+# i-th sample is a set of random parameter values sampled from posterior distribution
+for (i in 1:20) # loops over all 20 lines, using abline to display each
+  abline(a = post$a[i], b = post$b[i], col = col.alpha("black", 0.3))
+
+# The cloud of regression lines displays greater uncertainty at extreme values for weight. 
+# This is very common.
+
+```
+
+$~$
+
+```{r 4.48.1}
+
+# compare higher N values (bigger sample size)
+
+par(mfrow = c(2,2))
+
+# 20 samples
+## show error in knitting if I use 10 sample here, although it works above with warning
+## 10 samples is too low to reach stable estimates
+N <- 20
+dN <- d2[1:N, ]
+mN <- map(
+  alist(
+    height ~ dnorm(mu, sigma),
+    mu <- a + b*weight,
+    a ~ dnorm(178, 100),
+    b ~ dnorm(0, 10),
+    sigma ~ dunif(0, 50)
+  ), data = dN
+)
+
+post <- extract.samples(mN, n = 20)
+
+plot(dN$weight, dN$height,
+     xlim = range(d2$weight), ylim = range(d2$height),
+     col = rangi2, xlab = "weight", ylab = "height")
+mtext(concat("N = ", N)) 
+
+for (i in 1:20) 
+  abline(a = post$a[i], b = post$b[i], col = col.alpha("black", 0.3))
+
+
+# 50 samples
+N1 = 50
+dN1 <- d2[1:N1, ]
+mN1 <- map(
+  alist(
+    height ~ dnorm( mu , sigma ) ,
+        mu <- a + b*weight ,
+        a ~ dnorm( 178 , 100 ) ,
+        b ~ dnorm( 0 , 10 ) ,
+        sigma ~ dunif( 0 , 50 )
+  ), data = dN1
+)
+
+post1 <- extract.samples( mN1, n=20)
+
+plot( dN1$weight , dN1$height ,
+    xlim=range(d2$weight) , ylim=range(d2$height) ,
+    col=rangi2 , xlab="weight" , ylab="height" )
+mtext(concat("N = ",N1))
+
+for ( i in 1:20 )
+    abline( a=post1$a[i] , b=post1$b[i] , col=col.alpha("black",0.3) )
+
+# 150 samples
+N2 = 150
+dN2 <- d2[1:N2, ]
+mN2 <- map(
+  alist(
+    height ~ dnorm( mu , sigma ) ,
+        mu <- a + b*weight ,
+        a ~ dnorm( 178 , 100 ) ,
+        b ~ dnorm( 0 , 10 ) ,
+        sigma ~ dunif( 0 , 50 )
+  ), data = dN2
+)
+
+post2 <- extract.samples( mN2, n=20 )
+
+plot( dN2$weight , dN2$height ,
+    xlim=range(d2$weight) , ylim=range(d2$height) ,
+    col=rangi2 , xlab="weight" , ylab="height" )
+mtext(concat("N = ",N2))
+
+for ( i in 1:20 )
+    abline( a=post2$a[i] , b=post2$b[i] , col=col.alpha("black",0.3) )
+
+# 352 samples
+N3 = 352
+dN3 <- d2[1:N3, ]
+mN3 <- map(
+  alist(
+    height ~ dnorm( mu , sigma ) ,
+        mu <- a + b*weight ,
+        a ~ dnorm( 178 , 100 ) ,
+        b ~ dnorm( 0 , 10 ) ,
+        sigma ~ dunif( 0 , 50 )
+  ), data = dN3
+)
+
+post3 <- extract.samples( mN3, n=20 )
+
+plot( dN3$weight , dN3$height ,
+    xlim=range(d2$weight) , ylim=range(d2$height) ,
+    col=rangi2 , xlab="weight" , ylab="height" )
+mtext(concat("N = ",N3))
+
+for ( i in 1:20 )
+    abline( a=post3$a[i] , b=post3$b[i] , col=col.alpha("black",0.3) )
+
+# The cloud of regression lines grows more compact as the sample size increases. 
+# This is a result of the model growing more confident about the location of the mean.
+
+```
+
+$~$
+
+### Plotting regression intervals and contours
+
 
 
 
