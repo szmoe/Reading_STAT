@@ -3,7 +3,7 @@
       html_document:
               
         toc: true
-        toc_float: true
+        toc_float: false
         toc_depth: 3
         number_sections: true
         highlight: pygments
@@ -14,23 +14,40 @@
     subtitle: "All about cats"
     author: "SM"
 ---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
 
+
+
 # cat
 
-## happy cat
+## happy cat {.tabset .tabset-fade .tabset-pills}
 
 happy cats are happy.
 
+### green cat {-} 
+
+green cats are green
+
+### white cat {-}
+
+white cats are white
+
+### blue cat {-}
+
+blue cats are blue
+
+### red cat {-}
+
+red cats are red
+
 # cat
 
-## hungry cat
+## hungry cat {-}
 
 hungry cats are hungry.
-
-
----
 
