@@ -1,36 +1,23 @@
 ---
-title: "Statistical_Rethinking_RM"
-author: "SM"
-date: "`r Sys.Date()`"
-output: 
-  bookdown::html_document2:
-    toc: true 
-    toc_float: true
-    toc_depth: 5  
-    number_sections: true  
-    theme: united  
+    output:
+      html_document:
+              
+        toc: true
+        toc_float: true
+        toc_depth: 5
+        number_sections: true
+        
+        code_folding: hide
+        code_download: true
+        
+        theme: united  
     highlight: tango  
     fig_caption: true
+
+    title: "Statistical_Rethinking_RM"
+    author: "SM"
+
 ---
-
-```{css, echo = FALSE}
-#TOC {
-  position: fixed;
-  top: 10px; 
-  left: 20px;
-  width: 250px; 
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  padding: 10px;
-  max-height: calc(100vh - 100px); 
-
-$(document).ready(function() {
-  $('#TOC').attr('id', 'TOC'); // 
-  $('#TOC').wrap('<div id="toc-container"></div>'); // 
-});
-
-```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
