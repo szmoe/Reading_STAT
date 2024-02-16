@@ -1,17 +1,19 @@
 ---
-title: "Statistics_BS"
-author: "SM"
-date: "`r Sys.Date()`"
-output:
+    output:
       html_document:
+              
         toc: true
-        toc_float: false
+        toc_float: true
         toc_depth: 3
         number_sections: true
         highlight: pygments
         theme: cerulean
----
 
+        
+    title: "Cats"
+    subtitle: "All about cats"
+    author: "SM"
+---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
