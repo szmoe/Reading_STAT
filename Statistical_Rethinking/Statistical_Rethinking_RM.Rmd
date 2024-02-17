@@ -1,22 +1,16 @@
 ---
-    output:
-      html_document:
-              
-        toc: true
-        toc_float: true
-        toc_depth: 5
-        number_sections: true
-        
-        code_folding: hide
-        code_download: true
-        
-        theme: united  
+title: "Statistical_Rethinking_RM"
+author: "SM"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: 
+  bookdown::html_document2:
+    toc: true 
+    toc_float: true
+    toc_depth: 5  
+    number_sections: true  
+    theme: united  
     highlight: tango  
     fig_caption: true
-
-    title: "Statistical_Rethinking_RM"
-    author: "SM"
-
 ---
 
 ```{r setup, include=FALSE}
@@ -5046,6 +5040,445 @@ plot(precis(m5.3)) # same as plot(m5.3)
 $~$
 
 ### Plotting multivariate posteriors
+
+Three types of interpretive plots:
+
+(1) ***Predictor residual plots.*** These plots show the outcome against residual predictor values.
+
+(2) ***Counterfactual plots.*** These show the implied predictions for imaginary experiments in which the different predictor variables can be changed independently of one another.
+
+(3) ***Posterior prediction plots.*** These show model-based predictions against raw data, or otherwise display the error in prediction.
+
+$~$
+
+#### Predictor residual plots
+
+A predictor variable residual is the average prediction error when we use all of the other predictor variables to model a predictor of interest. The benefit of computing these things is that, once plotted against the outcome, we have a bivariate regression of sorts that has already “controlled” for all of the other predictor variables. It just leaves in the variation that is not expected by the model of the mean, $\mu$, as a function of the other predictors.
+
+In our multivariate model of divorce rate, we have two predictors: 
+
+(1) marriage rate (Marriage.s) 
+
+(2) median age at marriage (MedianAgeMarriage.s) 
+
+To compute predictor residuals for either, we just use the other predictor to model it. The model for marraige rate:
+
+\[
+\begin{align*}
+\text{R}_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta \text{A}_i\\
+\alpha &\sim \text{Normal}(0, 10)\\
+\beta &\sim \text{Normal}(0, 1)\\
+\sigma &\sim \text{Uniform}(0, 10)
+\end{align*}
+\]
+
+```{r 5.4a}
+
+# Fit the model using standardized variables
+m5.4 <- map(
+    alist(
+        Marriage.s ~ dnorm( mu , sigma ) ,
+        mu <- a + b*MedianAgeMarriage.s ,
+        a ~ dnorm( 0 , 10 ) ,
+        b ~ dnorm( 0 , 1 ) ,
+sigma ~ dunif( 0 , 10 ) ),
+data = d )
+
+## Compute the residuals by subtracting the observed marriage rate in each State from 
+## the predicted rate, based upon median age at marriage
+# compute expected value at MAP, for each State
+mu <- coef(m5.4)['a'] + coef(m5.4)['b']*d$MedianAgeMarriage.s
+
+# compute residual for each State
+m.resid <- d$Marriage.s - mu
+m.resid
+# States with positive residuals marry fast for their age of marriage, 
+# while States with negative residuals marry slow for their age of marriage. 
+
+# plot the relationship between these two variables, and show the residuals
+plot( Marriage.s ~ MedianAgeMarriage.s , d , col=rangi2 )
+abline( m5.4 )
+
+# loop over States
+for ( i in 1:length(m.resid) ) {
+    x <- d$MedianAgeMarriage.s[i] # x location of line segment
+    y <- d$Marriage.s[i] # observed endpoint of line segment
+    # draw the line segment
+    lines( c(x,x) , c(mu[i],y) , lwd=0.5 , col=col.alpha("black",0.7) )
+}
+# Residual marriage rate in each State, after accounting for the linear association 
+# with median age at marriage. Each gray line segment is a residual, the distance of 
+# each observed marriage rate from the expected value, attempting to predict marriage 
+# rate with median age at marriage alone. So States that lie above the black regression 
+# line have higher rates of marriage than expected, according to age at marriage. 
+# Those below the line have lower rates than expected.
+# Notice that the residuals are variation in marriage rate that is left over, 
+# after taking out the purely linear relationship between the two variables.
+```
+$~$
+
+<span style="color:purple">***Residual plots for the divorce rate***</span>
+
+```{r divorce}
+
+## Compute the predicted divorce rate value at MAP based on marriage rate
+# Fit the model using standardized variables
+
+m5.41 <- map(
+    alist(
+        Divorce ~ dnorm( mu , sigma ) ,
+        mu <- a + b*Marriage.s ,
+        a ~ dnorm( 0 , 10 ) ,
+        b ~ dnorm( 0 , 1 ) ,
+sigma ~ dunif( 0 , 10 ) ),
+data = d )
+
+m5.41
+
+# compute expected value at MAP, for each State
+mu <- coef(m5.41)['a'] + coef(m5.41)['b']*d$Marriage.s
+
+# compute residual for each State
+d.resid <- d$Divorce - mu
+d.resid
+
+# plot the relationship between these two variables, and show the residuals
+plot( Divorce ~ Marriage.s , d , col="brown" , pch = 16)
+abline( m5.41, col = "brown")
+
+# loop over States
+for ( i in 1:length(d.resid) ) {
+    x <- d$Marriage.s[i] # x location of line segment
+    y <- d$Divorce[i] # observed endpoint of line segment
+    # draw the line segment
+    lines( c(x,x) , c(mu[i],y) , lwd=0.5 , col=col.alpha("brown",0.7) )
+}
+
+# To add PI shade
+# compute percentile interval of mean
+MAM.seq <- seq( from=-2 , to=3 , length.out=30 )
+mu <- link( m5.41 , data=data.frame(Marriage.s=MAM.seq) )
+mu.PI <- apply( mu , 2 , PI )
+shade(mu.PI, MAM.seq, col = col.alpha("brown", alpha = 0.2))
+
+```
+
+$~$
+
+```{r divorce1}
+
+## Compute the predicted divorce rate value at MAP based on median age of marriage
+# Fit the model using standardized variables
+
+m5.42 <- map(
+    alist(
+        Divorce ~ dnorm( mu , sigma ) ,
+        mu <- a + b*MedianAgeMarriage.s ,
+        a ~ dnorm( 0 , 10 ) ,
+        b ~ dnorm( 0 , 1 ) ,
+sigma ~ dunif( 0 , 10 ) ),
+data = d )
+
+m5.42
+
+# compute expected value at MAP, for each State
+mu <- coef(m5.42)['a'] + coef(m5.42)['b']*d$MedianAgeMarriage.s
+
+# compute residual for each State
+d.resid <- d$Divorce - mu
+d.resid
+# States with positive residuals marry fast for their age of marriage, 
+# while States with negative residuals marry slow for their age of marriage. 
+
+# plot the relationship between these two variables, and show the residuals
+plot( Divorce ~ MedianAgeMarriage.s , d , col="brown" , pch = 16)
+abline( m5.42, col = "brown")
+
+# loop over States
+for ( i in 1:length(d.resid) ) {
+    x <- d$MedianAgeMarriage.s[i] # x location of line segment
+    y <- d$Divorce[i] # observed endpoint of line segment
+    # draw the line segment
+    lines( c(x,x) , c(mu[i],y) , lwd=0.5 , col=col.alpha("brown",0.7) )
+}
+
+# To add PI shade
+# compute percentile interval of mean
+MAM.seq <- seq( from=-3 , to=4 , length.out=30 )
+mu <- link( m5.42 , data=data.frame(MedianAgeMarriage.s=MAM.seq) )
+mu.PI <- apply( mu , 2 , PI )
+shade(mu.PI, MAM.seq, col = col.alpha("brown", alpha = 0.2))
+
+```
+
+$~$
+
+<span style="color:purple">***Predictor residual plots for the divorce data***</span>
+
+```{r divorce2}
+
+par(mfrow = c(1,2))
+
+## Divorce rate vs. marriage rate residuals
+# Fit a map model for divorce rate based on marriage rate residuals
+m5.43 <- map(
+  alist(
+    Divorce ~ dnorm(mu, sigma),
+    mu <- a + b*m.resid,
+    a ~ dnorm(0, 10),
+    b ~ dnorm(0, 1),
+    sigma ~ dunif(0, 10)
+  ), 
+  data = d
+)
+
+m5.43
+
+# Plot the data
+plot(Divorce ~ m.resid, d, col = rangi2, ylim = c(6, 16),
+     xlab = "Marriage rate residuals", ylab = "Divorce rate")
+abline(m5.43)
+abline(v = 0, lty = 2)
+text(0.05, 15, "faster", pos = 4)  
+text(-0.05, 15, "slower", pos = 2)
+
+# Shade PI 
+mar.seq <- seq(from = -2, to = 2, length.out = 30)
+mu <- link(m5.43, data = data.frame(m.resid = mar.seq))
+mu.PI <- apply(mu, 2, PI)
+shade(mu.PI, mar.seq)
+
+## Divorce rate Vs. Age of marriage residuals
+# Fit the model using standardized variables
+m5.44 <- map(
+    alist(
+        MedianAgeMarriage.s ~ dnorm( mu , sigma ) ,
+        mu <- a + b*Marriage.s ,
+        a ~ dnorm( 0 , 10 ) ,
+        b ~ dnorm( 0 , 1 ) ,
+sigma ~ dunif( 0 , 10 ) ),
+data = d )
+
+m5.44
+
+# compute expected value at MAP, for each State
+mu <- coef(m5.44)['a'] + coef(m5.44)['b']*d$Marriage.s
+
+# compute residual for each State
+
+ma.resid <- d$MedianAgeMarriage.s - mu
+ma.resid
+
+# Calculate residual for median age of marriage
+# Fit a map model of divorce rate based on median age of marriage
+m5.45 <- map(
+  alist(
+    Divorce ~ dnorm(mu, sigma),
+    mu <- a + b*ma.resid,
+    a ~ dnorm(0, 10),
+    b ~ dnorm(0, 1),
+    sigma ~ dunif(0, 10)
+  ),
+  data = d
+)
+
+m5.45
+
+# Plot the data
+plot(Divorce ~ ma.resid, d, col = rangi2, ylim = c(6, 16),
+     xlab = "Age of marriage residuals", ylab = "Divorce rate")
+abline(m5.45)
+abline(v = 0, lty = 2)
+text(0.05, 15, "older", pos = 4)  
+text(-0.05, 15, "younger", pos = 2)
+
+# Shade PI 
+mar.seq <- seq(from = -3, to = 3, length.out = 30)
+mu <- link(m5.45, data = data.frame(ma.resid = mar.seq))
+mu.PI <- apply(mu, 2, PI)
+shade(mu.PI, mar.seq)
+# Left: States with fast marriage rates for their median age of marriage have about 
+# the same divorce rates as do States with slow marriage rates. This plot displays the 
+# linear relationship between divorce and marriage rates, having statistically 
+# “controlled” for median age of marriage. The vertical dashed line indicates marriage 
+# rate that exactly matches the expectation from median age at marriage. The slope of 
+# the regression line is −0.13, exactly what we found in the multivariate model, m5.3.
+## I got -0.17 for residual plot here.
+
+# Right: States with old median age of marriage for their marriage rate have lower 
+# divorce rates, while States with young median age of marriage have higher divorce rates.
+# This plot displays linear relationship between divorce and median age at marriage, 
+# “controlling” for marriage rate. The slope of the regression line 
+# here is −1.13, again the same as in the multivariate model, m5.3.
+
+# There’s direct value in seeing the model-based predictions displayed against the outcome, 
+# after subtracting out the influence of other predictors.
+
+```
+
+$~$
+
+#### Counterfactual plots
+
+A second sort of inferential plot displays the implied predictions of the model. The counterfactual plots can be produced for any values of the predictor variables you like, even unobserved or impossible combinations. 
+
+The simplest use of a counterfactual plot is to see how the predictions change as you change only one predictor at a time. This means holding the values of all predictors constant, except for a single predictor of interest. Such predictions will not necessarily look like your raw data— they are counterfactual after all— but they will help you understand the implications of the model.
+
+$~$
+
+</span style="color:purple">***Counterfactual plots for the multivariate divorce model, m5.3***<span>
+
+```{r 5.9}
+
+par(mfrow = c(1,2))
+
+## Begin with a plot showing the impact of changes in Marriage.s on predictions
+
+# prepare new counterfactual data
+A.avg <- mean( d$MedianAgeMarriage.s ) 
+R.seq <- seq( from=-3 , to=3 , length.out=30 )
+pred.data <- data.frame(
+    Marriage.s=R.seq,
+    MedianAgeMarriage.s=A.avg
+) # Marriage.s changes across the values in MR.seq, while the other predictor is held 
+  # constant at its mean, MAM.avg
+
+# compute counterfactual mean divorce (mu)
+mu <- link( m5.3 , data=pred.data ) #m5.3: divorce based on marriage.s & MedianAgemarriage.s
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+
+# simulate counterfactual divorce outcomes
+R.sim <- sim( m5.3 , data=pred.data , n=1e4 )
+
+R.PI <- apply( R.sim , 2 , PI )
+
+# display predictions, hiding raw data with type="n"
+plot( Divorce ~ Marriage.s , data=d , type="n" )
+mtext( "MedianAgeMarriage.s = 0" )
+lines( R.seq , mu.mean )
+shade( mu.PI , R.seq )
+shade( R.PI , R.seq )
+
+## Now with Marriage.s set to its average and MedianAgeMarriage.s allowed to vary
+
+# Prepare new counterfactual data
+R.avg <- mean( d$Marriage.s )
+A.seq <- seq( from=-3 , to=3.5 , length.out=30 )
+pred.data2 <- data.frame(
+    Marriage.s=R.avg,
+    MedianAgeMarriage.s=A.seq
+)
+
+# Calculate counterfactual mean divorce (mu)
+mu <- link( m5.3 , data=pred.data2 )
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+
+# simulate counterfactual divorce outcomes
+A.sim <- sim( m5.3 , data=pred.data2 , n=1e4 )
+
+A.PI <- apply( A.sim , 2 , PI )
+
+# display predictions, hiding raw data with type="n"
+plot( Divorce ~ MedianAgeMarriage.s , data=d , type="n" )
+mtext( "Marriage.s = 0" )
+lines( A.seq , mu.mean )
+shade( mu.PI , A.seq )
+shade( A.PI , A.seq )
+
+# Each plot shows the change in predicted mean across values of a single predictor, 
+# holding the other predictor constant at its mean value (zero in both cases). 
+# Shaded regions show 89% percentile intervals of the mean (dark, narrow) and 
+# 89% prediction intervals (light, wide).
+
+```
+
+$~$
+
+In this example, the difficulty of separately manipulating marriage rate and marriage age doesn’t impede inference much, only because marriage rate has almost no effect on prediction, once median age of marriage is taken into account. But in many problems, more than one predictor variable has a sizable impact on the outcome. In that case, while these counterfactual plots always help in understanding the model, they may also mislead by displaying predictions for impossible combinations of predictor values. If our goal is to intervene in the world, there may not be any realistic way to manipulate each predictor without also manipulating the others. 
+
+$~$
+
+#### Posterior prediction plots
+
+Checking the model fit against the observed data is useful in many ways. Two uses among them are:
+
+(1) Did the model fit correctly?
+    - Many common software and user errors can be more easily diagnosed by comparing implied predictions to the raw data. Some caution is required, because not all models try to exactly match the sample.
+    
+(2) How does the model fail?
+    - Sometimes, the model fits correctly but is still so poor for our purposes that it must be discarded. More often, a model predicts well in some respects, but not in others. By inspecting the individual cases where the model makes poor predictions, you might get an idea of how to improve the model.
+    
+$~$
+
+<span style="color:purple">***Posterior predictive plots for the multivariate divorce model, m5.3***</span>
+
+```{r 5.11}
+
+## begin by simulating predictions, averaging over the posterior
+
+# call link without specifying new data
+# so it uses original data
+mu <- link( m5.3 )
+
+# summarize samples across cases
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+
+# simulate observations
+# again no new data, so uses original data
+divorce.sim <- sim( m5.3 , n=1e4 )
+divorce.PI <- apply( divorce.sim , 2 , PI )
+
+# plot predictions against observed
+plot( mu.mean ~ d$Divorce , col=rangi2 , ylim=range(mu.PI) ,
+    xlab="Observed divorce" , ylab="Predicted divorce")
+
+#  add a line to show perfect prediction and 
+# line segments for the confidence interval of each prediction
+abline( a=0 , b=1 , lty=2 )
+for ( i in 1:nrow(d) )
+    lines( rep(d$Divorce[i],2) , c(mu.PI[1,i],mu.PI[2,i]) ,
+        col=rangi2 )
+
+# label a few select points using 'identify' (only work in R Script)
+# identify( x=d$Divorce , y=mu.mean , labels=d$Loc , cex=0.8 )
+# rmarkdown doesn't allow to select data points 
+
+# Define the indices of the points to label
+indices <- c(13, 44)  
+
+# Add text labels to specific points
+text(x = d$Divorce[indices], y = mu.mean[indices], labels = d$Loc[indices], cex = 0.8, pos = 2)
+
+```
+
+
+```{r 5.14}
+# compute residuals
+divorce.resid <- d$Divorce - mu.mean
+
+# get ordering by divorce rate
+o <- order(divorce.resid)
+
+# make the plot
+dotchart( divorce.resid[o] , labels=d$Loc[o] , xlim=c(-6,5) , cex=0.55)
+abline( v=0 , col=col.alpha("black",0.2) )
+for ( i in 1:nrow(d) ) {
+    j <- o[i] # which State in order
+    lines( d$Divorce[j]-c(mu.PI[1,j],mu.PI[2,j]) , rep(i,2) )
+    points( d$Divorce[j]-c(divorce.PI[1,j],divorce.PI[2,j]) , rep(i,2),
+            pch=3 , cex=0.6 , col="gray" )
+}
+
+
+```
+
+
+
+
 
 
 
