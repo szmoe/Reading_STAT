@@ -23,6 +23,8 @@
     author: "SM"
 ---
 
+
+
 ```{r}
 knitr::opts_chunk$set(
     echo = TRUE, # show all code
@@ -36,6 +38,13 @@ knitr::opts_chunk$set(
     warning = FALSE
     )
 
+#create a colour pallete for our analysis
+col_1 <- "#00AFBB"
+col_2 <- "#E69F00"
+col_3 <- "blueviolet"
+#colour-blind friendly red/green
+col_red <- "#DC3220"
+col_green <- "#40B0A6"
 ```
 
 # cat
@@ -75,23 +84,6 @@ red cats are red
 
 hungry cats are hungry.
 
-```{r}
-
-x <- seq(-4, 4, length.out = 100)
-
-y <- dnorm(x)
-
-plot(x, y, type = "l", lwd = 2, col = "orange")
-
-```
-
-<details><summary>click here</summary>
-More cat
-
-```{r code}
-# print
-print("orange cat")
-```
 
 
 <script>
@@ -170,8 +162,5 @@ summary(cars)
 </div>
 
 enter image description here
-</details>
-
-
 
 
