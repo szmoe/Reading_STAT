@@ -25,9 +25,26 @@
 ---
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+knitr::opts_chunk$set(
+    echo = TRUE, # show all code
+    tidy = FALSE, # cleaner code printing
+    size = "small", # smaller code
+    
+    fig.path = "figures/", #graphics location
+    out.width = "100%",
 
+    message = FALSE,
+    warning = FALSE
+    )
+
+#create a colour pallete for our analysis
+col_1 <- "#00AFBB"
+col_2 <- "#E69F00"
+col_3 <- "blueviolet"
+#colour-blind friendly red/green
+col_red <- "#DC3220"
+col_green <- "#40B0A6"
 ```
 
 
