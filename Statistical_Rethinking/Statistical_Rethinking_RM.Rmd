@@ -20,6 +20,7 @@ library(ggplot2)
 library(dplyr)
 library(patchwork)
 library(MASS)
+library(tidyr)
 ```
 
 # Chapter 1: The Golem of Prague
@@ -5452,8 +5453,15 @@ indices <- c(13, 44)
 
 # Add text labels to specific points
 text(x = d$Divorce[indices], y = mu.mean[indices], labels = d$Loc[indices], cex = 0.8, pos = 2)
-
+# Predicted divorce rate against observed, with 89% confidence in- tervals of the average prediction. 
+# The dashed line shows perfect prediction. The model under-predicts for States with very high divorce 
+# rates while it over-predicts for States with very low divorce rates- e.g., Idaho (ID) and Utah (UT), 
+# both of which have much lower divorce rates than the model expects them to have.
 ```
+
+$~$
+
+The plot above makes it hard to see the amount of prediction error, in many cases. For this reason, lots of people also use residual plots that show the mean prediction error for each row. 
 
 
 ```{r 5.14}
@@ -5473,9 +5481,895 @@ for ( i in 1:nrow(d) ) {
             pch=3 , cex=0.6 , col="gray" )
 }
 
+# Average prediction error for each State, with 89% interval of the mean (black line) 
+# and 89% prediction interval (gray +). 
 
 ```
 
+$~$
+
+Yet another common use for these simulations is to construct novel predictor residual plots. Once you’ve computed the divorce residuals, as you did just above, you can plot those residuals against new predictor variables. This is a quick way to see if remaining variation in the outcome is associated with another predictor.
+
+```{r 5.14a}
+
+# Calculate waffle houses per capita
+d$Wafflehouse_per_capita <- d$WaffleHouses/d$Population
+
+# Fit the map model 
+m5.6c <- map(
+  alist(
+    divorce.resid ~ dnorm(mu, sigma),
+    mu <- a + b*d$Wafflehouse_per_capita,
+    a ~ dnorm(0, 10),
+    b ~ dnorm(0, 1),
+    sigma ~ dunif(0, 10)
+  ), 
+  data = d
+)
+
+m5.6c
+
+# Plot divorce residue against waffle house per capita
+plot(divorce.resid ~ Wafflehouse_per_capita, data = d, col = rangi2,
+     xlab = "Waffles per capita", ylab = "Divorce error", ylim = c(-5, 4))
+
+# Add the regression line
+abline(coef(m5.6c)[1], coef(m5.6c)[2])
+
+# Define the indices of the points to label
+indices <- c(20, 4, 1, 25, 11, 40, 13)  
+
+# Add text labels to specific points
+text(x = d$Wafflehouse_per_capita[indices], y = divorce.resid[indices], 
+     labels = d$Loc[indices], cex = 0.8, pos = 3)
+# I couldn't use PI function to get the CI of the abline. I think it is because the calculation
+# of PI  considers divorce.resid as samples and treat them as such, while in reality, they are
+# prediction error of each sample. 
+
+## So, I will use lm function and ggplot to recreate the plot in textbook
+ggplot(d, aes(x = Wafflehouse_per_capita, y = divorce.resid)) +
+  geom_point(color = col.alpha(rangi2, 0.8), size = 2) +
+  geom_smooth(method = "lm", fullrange = T,
+              color  = "black", size = 1/2, 
+              fill   = "gray", alpha = 1/3) +
+ 
+  geom_text(aes(label=ifelse(divorce.resid > 2.33022867,as.character(Loc),'')), 
+            hjust = 0, vjust = -0.5) +
+  
+  geom_text(aes(label = ifelse(divorce.resid > 1.73858361 & divorce.resid <= 1.8, 
+                               as.character(Loc), "")), hjust = 1, vjust = 1.2) +
+  
+  geom_text(aes(label = ifelse(divorce.resid > 1 & divorce.resid <= 1.15377608, 
+                               as.character(Loc), "")), hjust = 1, vjust = -0.5) +
+  
+  geom_text(aes(label = ifelse(divorce.resid > -1.34199783 & divorce.resid <= -1.3, 
+                               as.character(Loc), "")), hjust = 1, vjust = -0.5) +
+  
+  geom_text(aes(label = ifelse(divorce.resid > 1.15 & divorce.resid <= 1.16, 
+                               as.character(Loc), "")), hjust = 1, vjust = -0.5) +
+  
+  geom_text(aes(label=ifelse(divorce.resid < -4.38753672,as.character(Loc),'')), 
+            hjust = 0, vjust = -0.5) +
+  
+  labs(x = "Waffles per capita", y = "Divorce error") +
+  theme_minimal() 
+# Average prediction error (residuals) against number of Waffle Houses per capita, with 
+# superimposed regression of the two variables.
+# A small positive correlation remains between divorce rate and Waffle House, despite already 
+# “controlling” for marriage rate and median age at marriage in each State. This does not mean 
+# that the correlation is real. No matter how many predictors you’ve already included in a 
+# regression, it’s still possible to find spurious correlations with the remaining variation.
+
+```
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Simulating spurious association**</span>
+
+One way that spurious associations between a predictor and outcome can arise is when a truly causal predictor, call it x~real~, influences both the outcome, y, and a spurious predictor, x~spur~.
+
+
+```{r paired_plot}
+
+N <- 100                                          # number of cases                       
+
+x_real <- rnorm(N)                                # x_real as Gaussian with mean 0 and stddev 1
+
+x_spur <- rnorm(N, x_real)                        # x_spur as Gaussian with mean = x_real
+
+y <- rnorm(N, x_real)                             # y as Gaussian with mean = x_real
+
+d <- data.frame(y, x_real, x_spur)                # bind all together in data frame
+
+pairs(d)
+
+# The data frame d has 100 simulated cases. Because x_real influences both y and x_spur, 
+# you can think of x_spur as another outcome of x_real, but one which we mistake as a 
+# potential predictor of y. As a result, both x_real and x_spur are correlated with y. 
+# You can see this in the scatterplots from pairs(d). But when you include both x variables 
+# in a linear regression predicting y, the posterior mean for the association between y and
+# x_spur will be close to zero, while the comparable mean for xreal will be closer to 1.
+
+```
+
+$~$
+
+## Masked relationship
+
+A second reason to use more than one predictor variable is to measure the direct influences of multiple factors on an outcome, when none of those influences is apparent from bivariate relationships. This kind of problem tends to arise when there are two predictor variables that are correlated with one another. However, one of these is positively correlated with the outcome and the other is negatively correlated with it.
+
+```{r 5.16}
+
+# Load data on composition of milk across primate species
+data(milk)
+d <- milk
+str(d) #  29 rows (cases) for 8 variables (columns)
+
+## First, simple bivariate regression between kilocalories and neocortex percent
+# Check the neocortex column to see any missing (NA) values
+d$neocortex.perc
+# If you pass a vector like this to a likelihood function like dnorm, it doesn’t know what to do.
+# After all, what’s the probability of a missing value? Whatever the answer, it isn’t a number, 
+# and so dnorm returns a NaN. 
+
+# Manually drop all the cases with missing values
+dcc <- d[complete.cases(d), ] # gives new data frame with 17 rows
+
+m5.5 <- map(
+  alist(
+    kcal.per.g ~ dnorm(mu, sigma),
+    mu <- a + bn*neocortex.perc,
+    a ~ dnorm(0, 100),
+    bn ~ dnorm(0, 1),
+    sigma ~ dunif(0, 1)
+  ),
+  data = dcc
+)
+
+# Check precis and add digits=3 to the precis call. The reason is that the posterior mean for 
+# bn is very small. Need more digits to see that it’s not exactly zero—a change from the smallest
+# neocortex percent in the data, 55%, to the largest, 76%, would result in an expected change of
+# only: less than 0.1 kilocalories (0.09008296 kcal)
+precis(m5.5, digits = 3)
+coef(m5.5)["bn"] * (75 - 55)
+
+```
+
+$~$
+
+The kilocalories in the data range from less than 0.5 to more than 0.9 per gram, so this association isn’t so impressive. More importantly, it isn’t very precise. The 89% interval of the parameter extends a good distance on both sides of zero.
+
+```{r 5.23}
+
+## Plot the predicted mean and 89% interval for the mean to see this more easily
+
+np.seq <- 0:100
+pred.data <- data.frame( neocortex.perc=np.seq )
+mu <- link( m5.5 , data=pred.data , n=1e4 )
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+plot( kcal.per.g ~ neocortex.perc , data=dcc , col=rangi2 )
+lines( np.seq , mu.mean )
+lines( np.seq , mu.PI[1,] , lty=2 )
+lines( np.seq , mu.PI[2,] , lty=2 )
+# The MAP line is weakly positive, but it is highly imprecise. A lot of mildly positive 
+# and negative slopes are plausible, given this model and these data.
+
+```
+
+$~$
+
+Now consider another predictor variable, adult female body mass, mass in the data frame.
+
+```{r 5.24}
+
+## Use logarithm of mass, log(mass), as a predictor instead of the raw mass in kilograms
+# Taking the log of a measure translates the measure into magnitudes. So by using the 
+# logarithm of body mass here, we’re saying that we suspect that the magnitude of a 
+# mother’s body mass is related to milk energy, in a linear fashion.
+
+# Transforms mass first to make a new column in the data
+dcc$log.mass <- log(dcc$mass)
+
+# Fit the model
+m5.6 <- map(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + bm*log.mass ,
+        a ~ dnorm( 0 , 100 ) ,
+        bm ~ dnorm( 0 , 1 ) ,
+sigma ~ dunif( 0 , 1 ) ),
+    data=dcc )
+
+precis(m5.6)
+
+# Plot the data
+np.seq <- -4:5
+pred.data <- data.frame( log.mass=np.seq )
+mu <- link( m5.6 , data=pred.data , n=1e4 )
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+plot( kcal.per.g ~ log.mass , data=dcc , col=rangi2 )
+lines( np.seq , mu.mean )
+lines( np.seq , mu.PI[1,] , lty=2 )
+lines( np.seq , mu.PI[2,] , lty=2 )
+# log-mass is negatively correlated with kilocalories. This influence does seem stronger than 
+# that of neocortex percent, although in the opposite direction. It is quite uncertain though, 
+# with a wide confidence interval that is consistent with a wide range of both weak and 
+# stronger relationships.
+
+```
+
+$~$
+
+Now let’s see what happens when we add both predictor variables at the same time to the regression. This is the multivariate model, in math form:
+
+\[
+\begin{align*}
+\text{k}_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_n \text{n}_i + \beta_m \text{log}(\text{m}_i)\\
+\alpha &\sim \text{Normal}(0, 100)\\
+\beta_n &\sim \text{Normal}(0, 1)\\
+\beta_m &\sim \text{Normal}(0, 1)\\
+\sigma &\sim \text{Uniform}(0, 10)
+\end{align*}
+\]
+
+\n
+
+```
+k   = kcal.per.g
+
+n   = neocortex.perc
+
+m   = mass
+
+```
+
+```{r 5.26}
+
+# Fit the joint model
+m5.7 <- map(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + bn*neocortex.perc + bm*log.mass ,
+        a ~ dnorm( 0 , 100 ) ,
+        bn ~ dnorm( 0 , 1 ) ,
+        bm ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 1 )
+),
+data=dcc )
+
+precis(m5.7)
+# By incorporating both predictor variables in the regression, the estimated association 
+# of both with the outcome has increased. The posterior mean for the association of 
+# neocortex percent has increased more than sixfold, and its 89% interval is now entirely 
+# above zero. The posterior mean for log body mass is more strongly negative.
+
+## Plot the the intervals for the predicted mean kilocalories
+## For necortex.perc
+# Use mean log body mass because they are counterfactual plots showing only how predicted 
+# energy varies as a function of neocortex percent
+mean.log.mass <- mean( log(dcc$mass) ) 
+np.seq <- 0:100
+pred.data <- data.frame(
+    neocortex.perc=np.seq,
+    log.mass=mean.log.mass
+)
+mu <- link( m5.7 , data=pred.data , n=1e4 )
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+plot( kcal.per.g ~ neocortex.perc , data=dcc , type="n" )
+lines( np.seq , mu.mean )
+lines( np.seq , mu.PI[1,] , lty=2 )
+lines( np.seq , mu.PI[2,] , lty=2 )
+
+## For log(mass)
+mean.neocortex.perc <- mean(dcc$neocortex.perc)
+np.seq <- -3:5
+pred.data <- data.frame(
+    neocortex.perc=mean.neocortex.perc,
+    log.mass=np.seq
+)
+mu <- link( m5.7 , data=pred.data , n=1e4 )
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+plot( kcal.per.g ~ log.mass , data=dcc , type="n" )
+lines( np.seq , mu.mean )
+lines( np.seq , mu.PI[1,] , lty=2 )
+lines( np.seq , mu.PI[2,] , lty=2 )
+
+```
+
+$~$
+
+<span style="color:purple">***Why did adding neocortex and body mass to the same model lead to larger estimated effects of both?***</span> 
+
+- There are two variables correlated with the outcome, but one is positively correlated with it and the other is negatively correlated with it. 
+
+- Both of the explanatory variables are positively correlated with one another. As a result, they tend to cancel one another out.
+
+- This is another case in which regression automatically finds the most revealing cases and uses them to produce estimates. What the regression model does is ask if species that have high neocortex percent for their body mass have higher milk energy.
+
+- Likewise, the model asks if species with high body mass for their neocortex percent have higher milk energy. Bigger species, like apes, have milk with less energy. But species with more neocortex tend to have richer milk. 
+
+- The fact that these two variables, body size and neocortex, are correlated across species makes it hard to see these relationships, unless we statistically account for both.
+
+$~$
+
+<span style="color:green">***Compound figure for milk energy and neocortex among primates***</span>
+
+In the top two plots, simple bivariate regressions of kilocalories per gram of milk on (left) neocortex percent and (right) log female body mass show weak and uncertain associations. 
+
+However, on the bottom, a single regression with both neocortex percent and log body mass suggests strong association with both variables. Both neocortex and body mass are associated with milk energy, but in opposite directions. This masks each variable’s relationship with the outcome, unless both are considered simultaneously.
+
+```{r 5.7cf, echo=FALSE}
+
+par(mfrow = c(2,2), mar = c(4,4,4,4))
+# Fig 1
+np.seq <- 0:100
+pred.data <- data.frame( neocortex.perc=np.seq )
+mu <- link( m5.5 , data=pred.data , n=1e4 )
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+plot( kcal.per.g ~ neocortex.perc , data=dcc , col=rangi2 )
+lines( np.seq , mu.mean )
+lines( np.seq , mu.PI[1,] , lty=2 )
+lines( np.seq , mu.PI[2,] , lty=2 )
+
+# Fig 2
+dcc$log.mass <- log(dcc$mass)
+m5.6 <- map(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + bm*log.mass ,
+        a ~ dnorm( 0 , 100 ) ,
+        bm ~ dnorm( 0 , 1 ) ,
+sigma ~ dunif( 0 , 1 ) ),
+    data=dcc )
+np.seq <- -4:5
+pred.data <- data.frame( log.mass=np.seq )
+mu <- link( m5.6 , data=pred.data , n=1e4 )
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+plot( kcal.per.g ~ log.mass , data=dcc , col=rangi2 )
+lines( np.seq , mu.mean )
+lines( np.seq , mu.PI[1,] , lty=2 )
+lines( np.seq , mu.PI[2,] , lty=2 )
+
+# Fig 3
+mean.log.mass <- mean( log(dcc$mass) ) 
+np.seq <- 0:100
+pred.data <- data.frame(
+    neocortex.perc=np.seq,
+    log.mass=mean.log.mass
+)
+mu <- link( m5.7 , data=pred.data , n=1e4 )
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+plot( kcal.per.g ~ neocortex.perc , data=dcc , type="n" )
+lines( np.seq , mu.mean )
+lines( np.seq , mu.PI[1,] , lty=2 )
+lines( np.seq , mu.PI[2,] , lty=2 )
+
+# Fig 4
+mean.neocortex.perc <- mean(dcc$neocortex.perc)
+np.seq <- -3:5
+pred.data <- data.frame(
+    neocortex.perc=mean.neocortex.perc,
+    log.mass=np.seq
+)
+mu <- link( m5.7 , data=pred.data , n=1e4 )
+mu.mean <- apply( mu , 2 , mean )
+mu.PI <- apply( mu , 2 , PI )
+plot( kcal.per.g ~ log.mass , data=dcc , type="n" )
+lines( np.seq , mu.mean )
+lines( np.seq , mu.PI[1,] , lty=2 )
+lines( np.seq , mu.PI[2,] , lty=2 )
+
+```
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Simulating a masking relationship**</span>
+
+It may help to simulate data in which two meaningful predictors act to mask one another. Suppose again a single outcome, y, and two predictors, x~pos~ and x~neg~. The predictor x~pos~ is positively associated with y, while x~neg~ is negatively associated with y. Furthermore, the two predictors are positively correlated with one another. 
+
+```{r 5.28}
+
+N <- 100                              # number of cases
+
+rho <- 0.7                            # correlation btw x_pos and x_neg
+
+x_pos <- rnorm(N)                     # x_pos Gaussian
+
+x_neg <- rnorm(N, rho*x_pos,          # x_neg correlated with x_pos
+               sqrt(1-rho^2))
+
+y <- rnorm(N, x_pos - x_neg)          # y equally associated with x_pos, x_neg
+
+d <- data.frame(y, x_pos, x_neg)      # bind all together in data frame
+
+pairs(d, main = "(a) Rho = 0.7")
+# Predicting y using either x_pos or x_neg gives posterior distributions that underestimate 
+# the true association (which should be about 1 or −1, respectively). 
+# Fitting a model predicting y using both predictors gives a posterior distribution that 
+# better matches the underlying truth.
+
+## Move rho closer to 0
+N <- 100                              
+rho <- 0.1                          
+x_pos <- rnorm(N)                    
+x_neg <- rnorm(N, rho*x_pos,          
+               sqrt(1-rho^2))
+y <- rnorm(N, x_pos - x_neg)         
+d <- data.frame(y, x_pos, x_neg)  
+pairs(d, main = "(b) Rho closer to zero")
+# If you move the value of rho closer to zero, this masking phenomenon will diminish.
+
+## Make rho closer to 1
+N <- 100                              
+rho <- 0.99                         
+x_pos <- rnorm(N)                    
+x_neg <- rnorm(N, rho*x_pos,          
+               sqrt(1-rho^2))
+y <- rnorm(N, x_pos - x_neg)         
+d <- data.frame(y, x_pos, x_neg)  
+pairs(d, main = "(c) Rho closer to 1")
+
+## Make rho closer to -1
+N <- 100                              
+rho <- -0.99                         
+x_pos <- rnorm(N)                    
+x_neg <- rnorm(N, rho*x_pos,          
+               sqrt(1-rho^2))
+y <- rnorm(N, x_pos - x_neg)         
+d <- data.frame(y, x_pos, x_neg)  
+pairs(d, main = "(d) Rho closer to -1")
+# If you make rho closer to 1 or −1, the masking relationship will magnify. 
+# But if rho gets very close to 1 or −1, then the two predictors contain exactly 
+# the same information, and there’s no hope for any statistical model to tease out 
+# the true underlying association used in the simulation.
+
+```
+
+$~$
+
+<span style="color:purple">***Why should two predictors be correlated in this way?***</span>
+
+- They might both be influenced by another, unmeasured variable. 
+
+- Or one of them, say x~neg~, is influenced partly by x~pos~, but also by its own unique processes. 
+
+- They might both partly influence one another, in a case of reciprocal causation.
+
+$~$
+
+## When adding variables hurts
+
+It is commonly true that there are many potential predictor variables to add to a regression model. Why not just fit a model that includes all potential predictor variables? There are several good, purely statistical reasons to avoid doing this. Three of them are:
+
+- Multicollinearity
+    - very strong correlation between two or more predictor variables. 
+    - The consequence of it is that the posterior distribution will say that a very large range of parameter values are plausible, from tiny associations to massive ones, even if all of the variables are in reality strongly associated with the outcome variable.
+    
+\n
+
+- Post-treatment bias
+    - statistically controlling for consequences of a causal factor.
+    
+\n
+
+- Overfitting
+    - a huge and perspective-changing problem
+    
+$~$
+
+### Multicollinear legs
+
+The simulation example is predicting an individual’s height using the length of his or her legs as predictor variables. Surely height is positively associated with leg length, or at least the simulation will assume it is. Nevertheless, once you put both leg lengths into the model, something vexing will happen.
+
+```{r 5.29}
+
+set.seed(4)
+
+## Simulate the heights and leg lengths of 100 individuals
+
+N <- 100                           # number of individuals
+
+# For each, first a height is simulated from a Gaussian distribution
+height <- rnorm(N, 10, 2)         # sim total height of each
+
+# Each individual gets a simulated proportion of height for their legs, ranging from 0.4 to 0.5
+leg_prop <- runif(N, 0.4, 0.5)    # leg as proportion of height
+
+# Each leg is salted with a little measurement or developmental error, so the left and right legs 
+# are not exactly the same length, as is typical in real populations
+leg_left <- leg_prop*height +     # sim left leg as proportion + error
+  rnorm(N, 0, 0.02)
+
+leg_right <- leg_prop*height +    # sim right leg as proportion + error 
+  rnorm(N, 0, 0.02)
+
+d <- data.frame(height, leg_left, # combine into data frame
+                leg_right)
+
+pairs(d, col = "pink")
+```
+
+On average, an individual’s legs are 45% of his or her height (in these simulated data). So we should expect the beta coefficient that measures the association of a leg with height to end up around the average height (10) divided by 45% of the average height (4.5). This is 10/4.5 ≈ 2.2. Now let’s see what happens instead:
+
+```{r 5.30}
+
+m5.8 <- map(
+    alist(
+        height ~ dnorm( mu , sigma ) ,
+        mu <- a + bl*leg_left + br*leg_right ,
+        a ~ dnorm( 10 , 100 ) ,
+        bl ~ dnorm( 2 , 10 ) ,
+        br ~ dnorm( 2 , 10 ) ,
+        sigma ~ dunif( 0 , 10 )
+),
+    data=d )
+
+precis(m5.8)
+
+plot(precis(m5.8))
+
+```
+
+If both legs have almost identical lengths, and height is so strongly associated with leg length, then why is this posterior distribution so weird? Did the model fitting work correctly? The question for the model to answer is: *What is the value of knowing each leg’s length, after already knowing the other leg’s length?* 
+
+The model did fit correctly. The posterior distribution is the answer to this question, considering every possible combination of the parameters and assigning relative plausibilities to every combination, conditional on this model and these data.
+
+```{r 5.32}
+set.seed(35)
+# Take a look at the bivariate posterior distribution for bl and br
+post <- extract.samples(m5.8)
+plot( bl ~ br , post , col=col.alpha(rangi2,0.1) , pch=16 )
+# Posterior distribution of the association of each leg with height, from model m5.8. 
+# Since both variables contain almost identical information, the posterior is a narrow 
+# ridge of negatively correlated values.
+
+```
+
+$~$
+
+One way to think of this phenomenon is that you have approximated this likelihood:
+
+\[
+\begin{align*}
+\text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i
+\end{align*}
+\]
+
+```
+y   = outcome (height)
+
+x   = single predictor (leg lengths)
+
+```
+
+Here x is used twice, which is a perfect example of the problem caused by using the almost-identical leg lengths. From the computer’s perspective, this likelihood is really:
+
+\[
+\begin{align*}
+\text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + (\beta_1 + \beta_2) \text{x}_i
+\end{align*}
+\]
+
+This means the posterior distribution ends up reporting the practically infinite combinations of $\beta_1$ and $\beta_2$ that make their sum close to the actual association of x with y.
+
+```{r 5.33}
+
+# Compute the posterior distribution of the sum of bl and br
+sum_blbr <- post$bl + post$br
+
+precis(sum_blbr)
+# The posterior mean is in the right neighborhood, around 2, and the standard deviation 
+# is much smaller than it is for either component of the sum, bl or br.
+
+# Plot the posterior distribution 
+dens( sum_blbr , col=rangi2 , lwd=2 , xlab="sum of bl and br" )
+# The posterior distribution of the sum of the two parameters is centered on the 
+# proper association of either leg with height.
+
+```
+
+If you fit a regression with only one of the leg length variables, you’ll get approximately the same posterior mean:
+
+```{r 5.34}
+par(mfrow = c(1,2))
+set.seed(36)
+m5.9 <- map(
+    alist(
+        height ~ dnorm( mu , sigma ) ,
+        mu <- a + bl*leg_left,
+        a ~ dnorm( 10 , 100 ) ,
+        bl ~ dnorm( 2 , 10 ) ,
+sigma ~ dunif( 0 , 10 ) ),
+    data=d )
+
+precis(m5.9)
+# 1.94 is almost identical to the mean value of sum_blbr.
+
+plot(precis(m5.9), main = "Left leg")
+
+## For right leg
+m5.9b <- map(
+    alist(
+        height ~ dnorm( mu , sigma ) ,
+        mu <- a + br*leg_right,
+        a ~ dnorm( 10 , 100 ) ,
+        br ~ dnorm( 2 , 10 ) ,
+sigma ~ dunif( 0 , 10 ) ),
+    data=d )
+
+precis(m5.9b)
+plot(precis(m5.9b), main = "Right leg")
+
+```
+
+***When two predictor variables are very strongly correlated, including both in a model may lead to confusion.***
+
+The posterior distribution isn’t wrong, in such cases. It’s telling you that the question you asked cannot be answered with these data. And that’s a great thing for a model to say, that it cannot answer your question. And if you are just interested in prediction, you’ll find that this leg model makes fine predictions. It just doesn’t make any claims about which leg is more important.
+
+$~$
+
+### Multicollinear milk
+
+In the leg length example, it’s easy to see that including both legs in the model is a little silly. But the problem that arises in real data sets is that we may not anticipate a clash between highly correlated predictors. And therefore we may mistakenly read the posterior distribution to say that neither predictor is important.
+
+```{r 5.35}
+
+### Look at the issue with real data
+
+# Load milk data
+data(milk)
+d <- milk
+
+## Start by modeling kcal.per.g as a function of perc.fat and perc.lactose, 
+## but in two bivariate regressions
+# kcal.per.g regressed on perc.fat
+m5.10 <- map(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + bf*perc.fat ,
+        a ~ dnorm( 0.6 , 10 ) ,
+        bf ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+),
+data=d )
+
+# kcal.per.g regressed on perc.lactose
+m5.11 <- map(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + bl*perc.lactose ,
+        a ~ dnorm( 0.6 , 10 ) ,
+        bl ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+), data=d )
+
+precis( m5.10 , digits=3 )
+# The posterior mean for bf, the association of percent fat with milk energy, is 0.01, 
+# with 89% interval [0.008, 0.012].
+
+precis( m5.11 , digits=3 )
+# The posterior mean in the second model for percent lactose is −0.01, 
+# with 89% interval [−0.012, −0.009].
+
+# These posterior means are essentially mirror images of one another, with the posterior mean 
+# of bf being as positive as the mean of bl is negative. Both are narrow posterior 
+# distributions that lie almost entirely on one side or the other of zero.
+
+# Note the parameter values for the slopes bf and bl are small in absolute value.
+# Both predictors are percents, so are potentially large numbers- these associations really 
+# have much influence on the outcome, milk energy. Given the strong association of each 
+# predictor with the outcome, we might conclude that both variables are reliable predictors 
+# of total energy in milk, across species. 
+
+## Place both predictor variables in the same regression model
+m5.12 <- map(
+    alist(
+      kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + bf*perc.fat + bl*perc.lactose ,
+        a ~ dnorm( 0.6 , 10 ) ,
+        bf ~ dnorm( 0 , 1 ) ,
+        bl ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+),
+    data=d )
+
+precis( m5.12 , digits=3 )
+# Now the posterior means of both bf and bl are closer to zero. And the standard deviations 
+# for both parameters are twice as large as in the bivariate models (m5.10 and m5.11). 
+# In the case of percent fat, the posterior mean is essentially zero.
+
+# What has happened is that the variables perc.fat and perc.lactose contain much of the 
+# same information. They are substitutes for one another. As a result, when you include both 
+# in a regression, the posterior distribution ends up describing a long ridge of combinations 
+# of bf and bl that are equally plausible.
+
+# See results with pairs plot
+pairs( ~ kcal.per.g + perc.fat + perc.lactose ,
+    data=d , col=rangi2 )
+# A pairs plot of the total energy, percent fat, and percent lactose variables from the primate 
+# milk data. Percent fat and percent lactose are strongly negatively correlated with one another, 
+# providing mostly the same information- these two variables form essentially a single axis of variation.
+# These two variables are negatively correlated, and so strongly so that they are nearly redundant. 
+# Either helps in predicting kcal.per.g, but neither helps much once you already know the other.
+
+# Compute the correlation between the two variables with cor
+cor( d$perc.fat , d$perc.lactose )
+
+
+```
+
+$~$
+
+Correlations do have to get pretty high before this problem interferes with your analysis. But, ***what matters isn’t just the correlation between a pair of variables. Rather, what matters is the correlation that remains after accounting for any other predictors.***
+
+But with only two predictors here, we can address the correlation question directly. Suppose we have only kcal.per.g and perc.fat:
+
+```{r 5.10a}
+
+# Construct a random predictor variable, call it x, that is correlated with perc.fat 
+# at some predetermined level
+N <- nrow(milk)
+rho <- 0.6
+x <- rnorm(N, rho*milk$perc.fat, sqrt(1 - rho^2))
+kcal.per.g <- rnorm(N, milk$perc.fat - x)
+d <- data.frame(kcal.per.g, milk$perc.fat, x)
+
+pairs(d, col = "red")
+
+# Fit the regression model that tries to predict kcal.per.g using both perc.fat 
+# and our random fake variable x
+m5.10a <- map(
+  alist(
+    kcal.per.g ~ dnorm(mu, sigma),
+    mu <- a + bf*milk$perc.fat + bx*x,
+    a ~ dnorm(0.4, 10),
+    bf ~ dnorm(0, 1),
+    bx ~ dnorm(0, 1),
+    sigma ~ dunif(0, 10)
+  ),
+  data = d
+)
+
+precis(m5.10a, digits = 3)
+
+```
+
+Now repeat this procedure many times, at different levels of correlation between perc.fat and x:
+
+```{r 5.40}
+
+data(milk)
+d <- milk
+sim.coll <- function( r=0.9 ) {
+    d$x <- rnorm( nrow(d) , mean=r*d$perc.fat ,
+        sd=sqrt( (1-r^2)*var(d$perc.fat) ) )
+    m <- lm( kcal.per.g ~ perc.fat + x , data=d )
+    sqrt( diag( vcov(m) ) )[2] # stddev of parameter
+}
+rep.sim.coll <- function( r=0.9 , n=100 ) { # 100 regressions
+    stddev <- replicate( n , sim.coll(r) )
+    mean(stddev)
+}
+r.seq <- seq(from=0,to=0.99,by=0.01)
+stddev <- sapply( r.seq , function(z) rep.sim.coll(r=z,n=100) )
+plot( stddev ~ r.seq , type="l" , col=rangi2, lwd=2 , xlab="correlation" )
+# The effect of correlated predictor variables on the narrowness of the posterior distribution. 
+# The vertical axis shows the standard deviation of the posterior distribution of the slope. 
+# The horizontal axis is the correlation between the predictor of interest (perc.fat) and another
+# predictor (x) added to the model. As the correlation increases, the standard deviation inflates.
+
+```
+
+$~$
+
+<span style="color:purple">***What can be done about multicollinearity***</span>
+
+- Be aware of it.
+
+- Check the predictor variables against one another in a pairs plot.
+    - Any pair or cluster of variables with very large correlations, over about 0.9, may be problematic, once included as main effects in the same model.
+    - However, it isn’t always true that highly correlated variables are completely redundant— other predictors might be correlated with only one of the pair, and so help extract the unique information each predictor provides.
+    - So, you can’t know just from a table of correlations nor from a matrix of scatterplots whether multicollinearity will prevent you from including sets of variables in the same model.
+    - Still, you can usually diagnose the problem by looking for a big inflation of standard deviation, when both variables are included in the same model.
+    
+\n
+
+- Principle components or Factor analysis
+    - A data reduction procedure, and then to use the components/factors as predictor variables
+    - may be considered voodoo
+    
+\n
+
+- ***It’s usually helpful to check the covariation among parameters, especially when intervals are extremely wide, so you don’t misinterpret what the model is trying to tell you.***
+
+$~$
+
+### Post-treatment bias
+
+- Omitted variable bias
+    - mistaken inferences that arise from omitting predictor variables
+    
+\n
+
+- Post-treatment bias
+    - mistaken inferences arising from including variables that are consequences of other variables
+    
+$~$
+
+Simulate post-treatment bias in plant growth vs. different anti-fungal soil treatments model. There are four variables of interest here: initial height, final height, treatment, and presence of fungus. Final height is the outcome of interest. But which of the other variables should be in the model? If your goal is to make a causal inference about the treatment, you shouldn’t include the presence of fungus, because it is a post-treatment effect.
+
+```{r 5.41}
+
+set.seed(54)
+# number of plants
+N <- 100
+
+# simulate initial heights
+h0 <- rnorm(N,10,2)
+
+# assign treatments and simulate fungus and growth
+treatment <- rep( 0:1 , each=N/2 )
+fungus <- rbinom( N , size=1 , prob=0.5 - treatment*0.4 )
+h1 <- h0 + rnorm(N, 5 - 3*fungus)
+
+# compose a clean data frame
+d <- data.frame( h0=h0 , h1=h1 , treatment=treatment , fungus=fungus )
+str(d)
+
+# fit the model that includes all of the available variables
+m5.13 <- map(
+    alist(
+        h1 ~ dnorm(mu,sigma),
+        mu <- a + bh*h0 + bt*treatment + bf*fungus,
+        a ~ dnorm(0,100),
+        c(bh,bt,bf) ~ dnorm(0,10),
+        sigma ~ dunif(0,10)
+),
+    data=d )
+
+precis(m5.13)
+
+```
+
+The marginal posterior for bt, the effect of treatment, is actually negative here. But it mainly had very little effect. The other two predictors, h0 and fungus, have important effects. Given that we know the treatment matters, because we built the simulation that way, what happened here? The problem is that fungus is mostly a consequence of treatment- fungus is a post-treatment variable. When we control for fungus, the soil treatment doesn't matter because soil treatment has its effects on growth through reducing fungus. 
+
+*Model m5.13 misleads because it asks the wrong question, not because it would make poor predictions- the model that includes fungus both fits the sample better and would make better out-of-sample predictions. No statistical procedure can substitute for scientific knowledge and attention to it.*
+    
+What we actually want to know, based on the design of the experiment, is the impact of treatment on growth. To measure this properly, we should omit the post-treatment variable fungus. 
+
+```{r 5.43}
+set.seed(43)
+m5.14 <- map(
+    alist(
+        h1 ~ dnorm(mu,sigma),
+        mu <- a + bh*h0 + bt*treatment,
+        a ~ dnorm(0,100),
+        c(bh,bt) ~ dnorm(0,10),
+        sigma ~ dunif(0,10)
+),
+    data=d )
+
+precis(m5.14)
+# Now the impact of treatment is strong and positive, as it should be. It makes sense to 
+# control for pre-treatment differences, like the initial height h0, that might mask the 
+# causal influence of treatment. But including post-treatment variables can actually mask 
+# the treatment itself.
+
+```
+
+$~$
+
+## Categorical variables
 
 
 
@@ -5498,7 +6392,7 @@ for ( i in 1:nrow(d) ) {
 
 
 
-tte
+
 
 
 
