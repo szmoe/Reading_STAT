@@ -6371,6 +6371,477 @@ $~$
 
 ## Categorical variables
 
+A common question for statistical methods is to what extent an outcome changes as a result of presence or absence of a category. Common examples of categorical variables (factors) include:
+
+- Sex: male, female
+
+- Developmental status: infant, juvenile, adult
+
+- Geographic region: Africa, Europe, Melanesia
+
+- Taxonomic group: Ape, Monkeys
+
+$~$
+
+### Binary categories
+
+In the simplest case, the variable of interest has only two categories, like male and female. 
+
+```{r 5.44}
+
+# Load data Howell1
+data(Howell1)
+d <- Howell1
+str(d)
+# The male variable is our new predictor, an example of a dummy variable.
+# Dummy variables are devices for encoding categories into quantitative models.
+# e.g. 1 for male, 0 for female
+
+```
+
+The effect of a dummy variable is to turn a parameter on for those cases in the category. Simultaneously, the variable turns the same parameter off for those cases in another category. The model to fit is:
+
+\[
+\begin{align*}
+\text{h}_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_m \text{m}_i\\
+\alpha &\sim \text{Normal}(178, 100)\\
+\beta_m &\sim \text{Normal}(0, 10)\\
+\sigma &\sim \text{Uniform}(0, 50)
+\end{align*}
+\]
+
+```
+h   = height
+
+m   = dummy variable indicating a male individual
+
+```
+
+The parameter $\beta_m$ influences prediction only for those cases where $\text{m}_i$ = 1. When $\text{m}_i$ = 0, it has no effect on prediction, because it is multiplied by zero inside the linear model, $\alpha + \beta_m \text{m}_i$, canceling it out, whatever its value.
+
+```{r 5.45}
+
+# Fit the model
+m5.15 <- map(
+    alist(
+        height ~ dnorm( mu , sigma ) ,
+        mu <- a + bm*male , 
+        a ~ dnorm( 178 , 100 ) ,
+        bm ~ dnorm( 0 , 10 ) ,
+sigma ~ dunif( 0 , 50 ) ),
+    data=d )
+
+precis(m5.15)
+# The parameter α (a) is now the average height among females. Because when mi = 0, 
+# indicating a female, the predicted mean height is just μi = α + βm(0) = α. 
+# So the estimate says that the expected average female height is 135 cm. 
+# The parameter βm then tells us the average difference between males and females, 7.3 cm. 
+# So to compute the average male height, you just add these two estimates: 135 + 7.3 = 142.3.
+
+# You’ll also need to consider the width of the posterior distribution. And because the 
+# parameters α and βm are correlated with one another, you can’t just add together 
+# the boundaries in the precis output and get correct boundaries for their sum. 
+
+# Sample from the posterior to derive a percentile interval for average male height
+post <- extract.samples(m5.15)
+
+# Add samples of a and bm together to get the posterior distribution of their sum
+mu.male <- post$a + post$bm
+PI(mu.male)
+
+```
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**Re-parameterizing the model**</span></span>
+
+Instead of using a parameter for the difference between males and females, we can make parameters specific to males and females:
+
+\[
+\begin{align*}
+\text{h}_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha_f(1 - \text{m}_i) + \alpha_m \text{m}_i\\
+\end{align*}
+\]
+
+```
+alpha_f   = average female height
+
+alpha_m   = average male height
+
+```
+
+Plug in $\text{m}_i$ = 0 and $\text{m}_i$ = 1 to verify that either $\alpha_f$ or $\alpha_m$, but never both, is turned on for any individual case i. 
+
+```{r 5.47}
+
+# Fit the model
+m5.15b <- map(
+    alist(
+        height ~ dnorm( mu , sigma ) ,
+        mu <- af*(1-male) + am*male ,
+        af ~ dnorm( 178 , 100 ) ,
+        am ~ dnorm( 178 , 100 ) ,
+        sigma ~ dunif( 0 , 50 )
+), data=d )
+
+precis(m5.15b)
+# The results are inferentially equivalent to the original m5.15.
+
+```
+
+The mathematical model can be rearranged where the old $\beta_m$ as the difference between the average male and female, $\alpha_m - \alpha_f$:
+
+$$\mu_i = \alpha_f + (\alpha_m - \alpha_f) \text{m}_i $$
+
+$~$
+
+### Many categories
+
+When there are more than two categories, you’ll need more than one dummy variable. To include k categories in a linear model, you require k − 1 dummy variables. Each dummy variable indicates, with the value 1, a unique category. The category with no dummy variable assigned to it ends up again as the “intercept” category.
+
+```{r 5.48}
+
+# Load milk data and extract clade variable
+data(milk)
+d <- milk
+unique(d$clade)
+# There are more than two categories and none of them have yet been coded into dummy variables.
+
+# Create a dummy for the New World Monkey category
+( d$clade.NWM <- ifelse( d$clade=="New World Monkey" , 1 , 0 ) )
+# Only those rows (cases) where clade is New World Monkey get a 1 for this new variable.
+
+# Make two more dummy variables with the same strategy
+d$clade.OWM <- ifelse( d$clade=="Old World Monkey" , 1 , 0 )
+d$clade.S <- ifelse( d$clade=="Strepsirrhine" , 1 , 0 )
+
+```
+
+$~$
+
+The category `Ape` will be the default "intercept" category. In fact, if you try to include a dummy variable for apes, you’ll up with a non-identifiable model. 
+
+The model we aim to fit to the data is kcal.per.g regressed on the dummy variables for clade:
+
+\[
+\begin{align*}
+\text{k}_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_{NWM} \text{NWM}_i + \beta_{OWM} \text{OWM}_i + \beta_S \text{S}_i\\
+\alpha &\sim \text{Normal}(0.6, 10)\\
+\beta_{NWM} &\sim \text{Normal}(0, 1)\\
+\beta_{OWM} &\sim \text{Normal}(0, 1)\\
+\beta_S &\sim \text{Normal}(0, 1)\\
+\sigma &\sim \text{Uniform}(0, 10)
+\end{align*}
+\]
+
+A linear model like this really defines four different linear models, each corresponding to a different category.
+
+```{r 5.51}
+
+## Fit the model
+m5.16 <- map(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a + b.NWM*clade.NWM + b.OWM*clade.OWM + b.S*clade.S ,
+        a ~ dnorm( 0.6 , 10 ) ,
+        b.NWM ~ dnorm( 0 , 1 ) ,
+        b.OWM ~ dnorm( 0 , 1 ) ,
+        b.S ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+),
+    data=d )
+
+precis(m5.16)
+# The estimate a is the average milk energy for apes, and the estimates for the other 
+# categories are differences from apes.
+
+## Use samples to get posterior distributions of the average milk energy in each category
+# sample posterior
+post <- extract.samples(m5.16)
+
+# compute averages for each category
+mu.ape <- post$a
+mu.NWM <- post$a + post$b.NWM
+mu.OWM <- post$a + post$b.OWM
+mu.S <- post$a + post$b.S
+
+# summarize using precis
+precis( data.frame(mu.ape,mu.NWM,mu.OWM,mu.S) )
+# The most plausible (conditional on data and model) average milk energies in each category 
+# are 0.55, 0.71, 0.79, and 0.51.
+
+## Re-parameterize model after fitting it to data to know the estimate difference between
+## two monkey groups- rather than a difference from apes. 
+# Substract the estimated means to get a difference
+diff.NWM.OWM <- mu.NWM - mu.OWM
+quantile( diff.NWM.OWM , probs=c(0.025,0.5,0.975) )
+# The values are the posterior lower 95% boundary, the median, and the upper 95% boundary 
+# for the difference between New World and Old World monkeys.
+
+```
+
+$~$
+
+### Adding regular predictor variables
+
+Just add the predictor variables to the equation for the mean, as you normally would. For example, to add the influence of perc.fat to the model with dummies for the clades:
+
+$$\mu_i = \alpha + \beta_{NWM} \text{NWM}_i + \beta_{OWM} \text{OWM}_i + \beta_S \text{S}_i + \beta_F \text{F}_i$$
+
+```
+Fi    = the percent fat for the i-th case in the data 
+
+βF    = the slope that measures the influence of F on predictions about the mean milk energy.
+
+```
+
+$~$
+
+### Another approach: Unique intercepts
+
+Another way to conceptualize categorical variables is to construct a vector of intercept parameters, one parameter for each category. Then you can create an ***index variable*** in your data frame that says which parameter goes with each case.
+
+```{r 5.54}
+
+# Make an index variable for clade in the primate milk data
+( d$clade_id <- coerce_index(d$clade) )
+# This variable just gives the number of each unique clade value. There are four different clades, 
+# and it doesn’t matter which is “1” or “4,” because they are unordered.
+
+# Use map to make a vector of intercepts, one intercept for each unique value in clade_id
+m5.16_alt <- map(
+    alist(
+        kcal.per.g ~ dnorm( mu , sigma ) ,
+        mu <- a[clade_id] ,
+        a[clade_id] ~ dnorm( 0.6 , 10 ) ,
+        sigma ~ dunif( 0 , 10 )
+),
+    data=d )
+
+precis( m5.16_alt , depth=2 )
+# Same averages for each clade as earlier (m5.16), but this time directly from the fit model.
+# Need to add depth=2 to the precis call in order to print out vector parameters like these.
+
+```
+
+$~$
+
+## Ordinary least squares and `lm`
+
+Gaussian regression models or ordinary least squares regression (OLS) is a way of estimating the parameters of a linear regression. Instead of searching for the combination of parameter values that maximizes the posterior probability, OLS instead solves for the parameter values that minimize the sum of the squared residuals. This procedure is often functionally equivalent to maximizing the posterior probability or maximizing the likelihood. *Provided you are happy with flat priors, you’ll get the same estimates with `lm` that you got with `map`.*
+
+$~$
+
+### Design formulas
+
+Design formulas (input format for models) take the expression for $\mu_i$ in the detailed mathematical form of a model and strip out the parameters, leaving only a series of predictor names, separated by + signs. These formulas are sufficient to describe the model’s design, provided all priors are flat.
+
+The linear regression model:
+
+\[
+\begin{align*}
+\text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta \text{x}_i
+\end{align*}
+\]
+
+$~$
+
+The corresponding design formula with the leading 1 on the right-hand side indicates the intercept, $\alpha$:
+
+\[
+\begin{align*}
+\text{y} \sim 1 + \text{x}
+\end{align*}
+\]
+
+$~$ 
+
+The linear regression model with three predictors:
+
+\[
+\begin{align*}
+\text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_x \text{x}_i + \beta_z \text{Z}_i + \beta_w \text{W}_i
+\end{align*}
+\]
+
+$~$
+
+The corresponding design formula:
+
+\[
+\begin{align*}
+\text{y} \sim 1 + \text{x} + \text{z} + \text{w}
+\end{align*}
+\]
+
+$~$
+
+### Using `lm`
+
+To fit a linear regression using OLS, just provide the design formula and the name of the data frame.
+
+```{r 5.56}
+
+y <- c(1,2,2,3)
+x <- c(2,1,1,1)
+z <- c(4,4,4,4)
+w <- c(2,2,2,2)
+d <- data.frame(y, x, z, w)
+# For first example above
+m5.17 <- lm( y ~ 1 + x , data=d ) # assume data are in a frame named d
+
+# For second example above
+m5.18 <- lm( y ~ 1 + x + z + w , data=d )
+# The parameter estimates will be named after the predictors, since you didn’t provide any 
+# explicit parameter names. You can sample from the posterior and process estimates as usual.
+
+```
+
+$~$
+
+#### Intercepts are optional
+
+These two model fits return exactly the same estimates:
+
+```{r 5.57}
+
+m5.17 <- lm( y ~ 1 + x , data=d )
+m5.19 <- lm( y ~ x , data=d )
+
+# Test with milk data
+data(milk)
+d <- milk
+m5.17a <- lm(milk$kcal.per.g ~ 1 + milk$perc.protein, data = d)
+m5.18a <- lm(milk$kcal.per.g ~  milk$perc.protein, data = d)
+
+precis(m5.17a)
+precis(m5.18a)
+
+```
+
+When you omit the explicit intercept, `lm` assumes you wanted one. If you really do not want an intercept— equivalent to fixing $\alpha = 0$— then you can use one of these forms:
+
+```{r 5.58}
+
+m5.20 <- lm( y ~ 0 + x , data=d )
+m5.21 <- lm( y ~ x - 1 , data=d )
+
+# Test with milk data
+m5.20a <- lm(milk$kcal.per.g ~ 0 + milk$perc.protein)
+m5.21a <- lm(milk$kcal.per.g ~ milk$perc.protein - 1)
+
+precis(m5.20a)
+precis(m5.21a)
+
+```
+
+$~$
+
+#### Categorical variables
+
+Black-box functions like `lm` will automatically expand categorical factors into the necessary number of dummy variables. But R is not a mind reader, and sometimes the same variable can be treated as categories or rather as continuous. To prevent R from getting confused, and therefore confusing yourself, best to get into the habit of explicitly telling lm when you mean to use a variable as categories.
+
+```{r 5.59}
+
+# R can think seasons (1,2,3,4) as categorical (different seasons) or 
+# continuous variable marking the passage of time
+season <- c(1,2,3,4)
+
+# Tell R to use variable as categories
+m5.22 <- lm( y ~ 1 + as.factor(season) , data=d )
+# The function as.factor makes sure that lm knows to treat the values in season 
+# as unordered categories.
+
+```
+
+$~$
+
+#### Transform variables first
+
+Black-box functions like `lm` sometimes have problems understanding the transformations(logarithms, squares, cubes, centering, standardizing), when they are included in the design formula. So it’s best to make new variables that hold the transformed values. Then include those new variables instead.
+
+```{r 5.60}
+
+# Make up a data frame d to run the code
+d <- data.frame(x = seq(-5, 5, by = 1), y =seq(-5, 5, by =1))
+
+# Fit a cubic regression of y on x
+d$x2 <- d$x^2
+d$x3 <- d$x^3
+m5.23 <- lm( y ~ 1 + x + x2 + x3 , data=d )
+
+# Use 'as is' function I() to fit the same cubic model
+# Note that I() can't be used inside map 
+m5.24 <- lm( y ~ 1 + x + I(x^2) + I(x^3) , data=d )
+
+```
+
+$~$
+
+#### No estimate for $\sigma$
+
+Using `lm` will not provide a posterior distribution for the standard deviation $\sigma$— it won’t be reported in the table of estimates. If you ask for a summary of the model fit, `lm` will report the “residual standard error,” which is a slightly different estimate of $\sigma$, but without any uncertainty information like a standard deviation (or standard error).
+
+Use `map` if you need $\sigma$- get some sense of the uncertainty of the estimate. As a bonus, you can use informative priors then, as well.
+
+$~$
+
+### Building `map` formulas from `lm` formulas
+
+The `rethinking` package provides a function, `glimmer`, that translates design formulas into `map`-style model formulas.
+
+```{r 5.62}
+
+data(cars)
+glimmer( dist ~ speed , data=cars )
+
+# The function glimmer automatically adds default priors. You can change these to suit your 
+# tastes, or remove them all together, if you just want maximum likelihood estimation. 
+
+```
+
+$~$
+
+## Summary
+
+The defining question of multiple regression is: 
+
+$$\text{What is the value of knowing each predictor, once we already know the other predictors?}$$
+
+Implicit in this question are: 
+
+(1) a focus on the value of the predictors for description of the sample, instead of forecasting a future sample
+
+(2) the assumption that the value of each predictor does not depend upon the values of the other predictors
+
+$~$
+
+## Practice
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
