@@ -21,6 +21,7 @@ library(dplyr)
 library(patchwork)
 library(MASS)
 library(tidyr)
+library(Ecdat)
 ```
 
 # Chapter 1: The Golem of Prague
@@ -6822,6 +6823,180 @@ Implicit in this question are:
 $~$
 
 ## Practice
+
+### Easy
+
+$~$
+
+5E1. Which of the linear models below are multiple linear regressions?
+
+(2) $\mu_i = \beta_x \text{x}_i + \beta_z \text{Z}_i$
+(4) $\mu_i = \alpha + \beta_x \text{x}_i + \beta_z \text{Z}_i$
+
+$~$
+
+5E2. Write down a multiple regression to evaluate the claim: Animal diversity is linearly related to latitude, but only after controlling for plant diversity. You just need to write down the model definition.
+
+\[
+\begin{align*}
+\text{AD_i} &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_L \text{L}_i + \beta_D \text{D}_i
+\end{align*}
+\]
+
+```
+AD    = Animal diversity
+
+L     = Latitude
+
+D     = Plant diversity
+
+```
+
+$~$
+
+5E3. Write down a multiple regression to evaluate the claim: Neither amount of funding nor size of laboratory is by itself a good predictor of time to PhD degree; but together these variables are both positively associated with time to degree. Write down the model definition and indicate which side of zero each slope parameter should be on.
+
+\[
+\begin{align*}
+T_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_F \text{F}_i + \beta_S \text{S}_i
+\end{align*}
+\]
+
+```
+T   = Time to PhD degree
+
+F   = Amount of funding
+
+S   = Size of laboratory
+
+Both beta_F and beta_S should be on the positive size of zero if considered together.
+If considered individually, both will be almost zero. 
+
+```
+
+$~$
+
+5E4. Suppose you have a single categorical predictor with 4 levels (unique values), labeled A, B, C and D. Let Ai be an indicator variable that is 1 where case i is in category A. Also suppose Bi, Ci, and Di for the other categories. Now which of the following linear models are inferentially equivalent ways to include the categorical variable in a regression? Models are inferentially equivalent when it’s possible to compute one posterior distribution from the posterior distribution of another model.
+
+I exclude choice 2 as it contains all variables plus one extra unidentified interceptor variable. I use `Accident` dataset to check the similarity among posterior distributions of the models in choices 1, 3, 4, and 5. As seen below, the mean ($\mu$) values of dummy variables A, B, C and D are similar across the models 1, 3, 4 and 5. Hence, choice 1, 3, 4 and 5 are the correct answers to the question. The slight difference between model 1,3 and model 4,5 is because I used informative priors for model 4 and 5, and flat priors for model 1 and 3. 
+
+```{r 5E4}
+
+par(mfrow = c(2,2), mar = c(4,4,4,4))
+
+# Load data to test the posteriors of each model 
+data("Accident")
+d <- Accident
+
+# Extract categorical variables
+unique(d$type)
+
+# Remove level E because we only need A, B, C, D
+dn <- droplevels(d[!d$type == "E", ])
+str(dn)
+
+# Extract again
+unique(dn$type)
+
+# I want to see correlation between ship type and number of accident
+# Check if got NA values in accident
+dn$acc
+
+# Drop the 4 NA values
+dnc <- dn[complete.cases(dn), ]
+dnc$acc
+
+# Make dummy variables for A, B, C, D
+# The question doesn't specify which label is the intercept one, so I will do all
+dnc$type.A <- ifelse(dnc$type == "A", 1, 0)
+dnc$type.B <- ifelse(dnc$type == "B", 1, 0)
+dnc$type.C <- ifelse(dnc$type == "C", 1, 0)
+dnc$type.D <- ifelse(dnc$type == "D", 1, 0)
+
+# Model 1
+m1 <- lm(dnc$acc ~ 1 + type.A + type.B + type.D, data = dnc)
+precis(m1)
+plot(precis(m1), main = "Model 1")
+post1 <- extract.samples(m1)
+mu.C <- post1$Intercept
+mu.A <- post1$Intercept + post1$type.A
+mu.B <- post1$Intercept + post1$type.B
+mu.D <- post1$Intercept + post1$type.D
+precis(data.frame(mu.A, mu.B, mu.C, mu.D))
+
+# Model 2 is skipped because it contains two intercepts.
+
+# Model 3
+m3 <- lm(dnc$acc ~ 1 + type.B + type.C + type.D, data = dnc)
+precis(m3)
+plot(precis(m3), main = "Model 3")
+post3 <- extract.samples(m3)
+mu.A <- post3$Intercept
+mu.C <- post3$Intercept + post3$type.C
+mu.B <- post3$Intercept + post3$type.B
+mu.D <- post3$Intercept + post3$type.D
+precis(data.frame(mu.A, mu.B, mu.C, mu.D))
+
+# Model 4
+m4 <- map(
+  alist(
+    acc ~ dnorm(mu, sigma),
+    mu <- aA*type.A + aB*type.B + aC*type.C + aD*type.D,
+    aA ~ dnorm(5, 5),
+    aB ~ dnorm(30, 9),
+    aC ~ dnorm(1, 5),
+    aD ~ dnorm(2, 5),
+    sigma ~ dunif(0, 10)
+  ),
+  data = dnc
+)
+precis(m4)
+plot(precis(m4), main = "Model 4")
+post4 <- extract.samples(m4)
+mu.A <- post4$aA
+mu.B <- post4$aB
+mu.C <- post4$aC
+mu.D <- post4$aD
+precis(data.frame(mu.A, mu.B, mu.C, mu.D))
+
+# Model 5
+m5 <- map(
+  alist(
+    acc ~ dnorm(mu, sigma),
+    mu <- aA*(1 - type.B - type.C - type.D) + aB*type.B + aC*type.C + aD*type.D,
+    aA ~ dnorm(5, 5),
+    aB ~ dnorm(30, 9),
+    aC ~ dnorm(1, 5),
+    aD ~ dnorm(2, 5),
+    sigma ~ dunif(0, 10)
+    ),
+  data = dnc
+)
+precis(m5)
+post5 <- extract.samples(m5)
+mu.A <- post5$aA
+mu.B <- post5$aB
+mu.C <- post5$aC
+mu.D <- post5$aD
+precis(data.frame(mu.A, mu.B, mu.C, mu.D))
+plot(precis(m5), main = "Model 5")
+
+
+```
+
+$~$
+
+
+  
+
+
+
+
+
+```
+
 
 
 
