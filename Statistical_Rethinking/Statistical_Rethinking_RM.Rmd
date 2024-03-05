@@ -24,6 +24,7 @@ library(tidyr)
 library(Ecdat)
 library(gridExtra)
 library(grid)
+library(rcartocolor)
 ```
 
 # Chapter 1: The Golem of Prague
@@ -260,7 +261,7 @@ $~$
 
 I made a mental note in the beginning that the bag contained 4 pears and 4 avocados. Now, using the counting method has gotten me nearer to the truth, but it makes no difference since I will get the wrong answer anyway. The author asked "Is there a threshold difference in these counts at which we can safely decide that one of the conjectures is the correct one?", when one conjecture is barely more possible than the other. I think the answer is no (correct answer is in chapter 3). 
 
-"Which assumption should we use, when there is no previous information about the conjectures? The most common solution is to assign an equal number of ways that each conjecture could be correct, before seeing any data. This is sometimes known as the *principle of indifference*: When there is no reason to say that one conjecture is more plausible than another, weigh all of the conjectures equally. The issue of choosing a representation of “ignorance” is surprisingly complicated. The issue will arise again in later chapters. For the sort of problems we examine in this book, the principle of indifference results in inferences very comparable to mainstream non- Bayesian approaches, most of which contain implicit equal weighting of possibilities. For example a typical non-Bayesian confidence interval weighs equally all of the possible values a parameter could take, regardless of how implausible some of them are. Many non-Bayesian procedures have moved away from this, through the use of penalized likelihood and other methods."
+"Which assumption should we use, when there is no previous information about the conjectures? The most common solution is to assign an equal number of ways that each conjecture could be correct, before seeing any data. This is sometimes known as the *principle of indifference*: When there is no reason to say that one conjecture is more plausible than another, weigh all of the conjectures equally. The issue of choosing a representation of “ignorance” is surprisingly complicated. The issue will arise again in later chapters. For the sort of problems we examine in this book, the principle of indifference results in inferences very comparable to mainstream non-Bayesian approaches, most of which contain implicit equal weighting of possibilities. For example a typical non-Bayesian confidence interval weighs equally all of the possible values a parameter could take, regardless of how implausible some of them are. Many non-Bayesian procedures have moved away from this, through the use of penalized likelihood and other methods."
 
 $~$
 
@@ -7803,6 +7804,7 @@ To visualize the results of the thought experiment, what we’ll do now is condu
 \end{align*}
 \]
 
+
 ```{r 6.12}
 
 par(mfrow= c(1,2))
@@ -7870,13 +7872,735 @@ text(2.42, 284, "out")
 # Blue shows deviance in-sample, the training data. Black shows deviance out-of-sample, the test data. 
 # Points show means, and the line segments show ±1 standard deviation.
 
+# Moving left to right with increasing numbers of parameters, the average deviance declines. 
+# A smaller deviance means a better fit. So this decline with increasing model complexity.
+# While deviance keeps improving (declining) in the training sample, it gets worse on average in 
+# the test sample.
+
 ```
 
+$~$
+
+## Regularization
+
+The root of overfitting is a model’s tendency to get overexcited by the training sample. One way to prevent a model from getting too excited by the training sample is to give it a skeptical prior. By “skeptical,” I mean a prior that slows the rate of learning from the sample. The most common skeptical prior is a ***regularizing prior***, which is applied to a beta-coefficient, a “slope” in a linear model.
+
+The regularizing prior, when *tuned properly*, reduces overfitting while still allowing the model to learn the regular features of a sample. If the prior is too skeptical, however, then regular features will be missed, resulting in underfitting. For example, consider this Gaussian model:
+
+\[
+\begin{align*}
+\text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta \text{x}_i\\
+\alpha &\sim \text{Normal}(0, 100)\\
+\beta &\sim \text{Normal}(0, 1)\\
+\sigma &\sim \text{Uniform}(0, 10)
+\end{align*}
+\]
+
+Assume, as is good practice, that the predictor x is standardized so that its standard deviation is 1 and its mean is zero. Then the prior on $\alpha$ is a nearly flat prior that has no practical effect on inference. 
+
+But the prior on $\beta$ is narrower and is meant to regularize. The prior $\beta$ ∼ Normal(0, 1) says that, before seeing the data, the machine should be very skeptical of values above 2 and below −2, as a Gaussian prior with a standard deviation of 1 assigns only 5% plausibility to values above and below 2 standard deviations. Because the predictor variable x is standardized, you can interpret this as meaning that a change of 1 standard deviation in x is very unlikely to produce 2 units of change in the outcome.
+
+```{r f6.8}
+
+tibble(x = seq(from = - 3.5, 
+               to   = 3.5, 
+               by   = .01)) %>%
+  
+  ggplot(aes(x = x, ymin = 0)) +
+  geom_ribbon(aes(ymax = dnorm(x, mean = 0, sd = 0.2)), 
+               fill = "transparent", col = "black",linetype = 1, size = 1) +
+  geom_ribbon(aes(ymax = dnorm(x, mean = 0, sd = 0.5)), 
+              fill = "transparent", col = "black", linetype = 1) +
+  geom_ribbon(aes(ymax = dnorm(x, mean = 0, sd = 1)), 
+              fill = "transparent", col = "black", linetype = 2) +
+  scale_y_continuous(limits = c(0, 2.2), expand = c(0, 0)) +
+  xlab("parameter value") +
+  ylab("Density") +
+  scale_x_continuous(breaks = seq(-3, 3, by = 1), expand = c(0,0)) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+# Regularizing priors, weak and strong. Three Gaussian priors of varying standard deviation. 
+# These priors reduce overfitting, but with different strength. 
+# Dashed: Normal(0, 1). Thin solid: Normal(0, 0.5). Thick solid: Normal(0, 0.2).
+
+```
+
+$~$
+
+How strong or weak these skeptical priors will be in practice depends upon the data and model. So let’s explore a train-test example again, but this time we’ll use the regularizing priors. 
+
+```{r f6.9}
+
+## Use Ajkurz's codes
+n       <- 20
+kseq    <- 1:5
+# I've reduced this number by one order of magnitude to reduce computation time
+n_sim   <- 1e3
+n_cores <- 4
+
+# here's our dev object based on `N <- 20`
+dev_20 <-
+  sapply(kseq, function(k) {
+    print(k);
+    r <- mcreplicate(n_sim, sim.train.test(N = n, k = k),
+                     mc.cores = n_cores);
+    c(mean(r[1, ]), mean(r[2, ]), sd(r[1, ]), sd(r[2, ]))
+    })
+
+# here's our dev object based on N <- 100
+n       <- 100
+dev_100 <- 
+  sapply(kseq, function(k) {
+    print(k);
+    r <- mcreplicate(n_sim, sim.train.test(N = n, k = k), 
+                     mc.cores = n_cores);
+    c(mean(r[1, ]), mean(r[2, ]), sd(r[1, ]), sd(r[2, ]))
+    })
+
+dev_tibble <-
+  dev_20 %>% 
+  as_tibble() %>% 
+  bind_rows(
+    dev_100 %>%
+      as_tibble()
+  ) %>% 
+  mutate(n         = rep(c("n = 20", "n = 100"), each = 4),
+         statistic = rep(c("mean", "sd"), each = 2) %>% rep(., times = 2),
+         sample    = rep(c("in", "out"), times = 2) %>% rep(., times = 2)) %>% 
+  gather(n_par, value, -n, -statistic, -sample) %>% 
+  spread(key = statistic, value = value) %>% 
+  mutate(n     = factor(n, levels = c("n = 20", "n = 100")),
+         n_par = str_remove(n_par, "V") %>% as.double()) %>% 
+  mutate(n_par = ifelse(sample == "in", n_par - .075, n_par + .075))
+
+head(dev_tibble)
+
+make_sim <- function(n, b_sigma){
+  sapply(kseq, function(k) {
+    print(k);
+    # this is an augmented line of code
+    r <- mcreplicate(n_sim, sim.train.test(N = n, k = k, b_sigma = b_sigma),
+                     mc.cores = n_cores);
+    c(mean(r[1, ]), mean(r[2, ]), sd(r[1, ]), sd(r[2, ])) }) %>% 
+    
+    # this is a new line of code
+    as_tibble()
+}
+
+s <-
+  tibble(n       = rep(c(20, 100), each = 3),
+         b_sigma = rep(c(1, .5, .2), times = 2)) %>% 
+  mutate(sim     = map2(n, b_sigma, make_sim)) %>% 
+  unnest()
+
+# wrangle the simulation data
+s %>% 
+  mutate(statistic = rep(c("mean", "sd"), each = 2) %>% rep(., times = 3 * 2),
+         sample    = rep(c("in", "out"), times = 2) %>% rep(., times = 3 * 2)) %>% 
+  gather(n_par, value, -n, -b_sigma, -statistic, -sample) %>% 
+  spread(key = statistic, value = value) %>% 
+  mutate(n     = str_c("n = ", n) %>% factor(., levels = c("n = 20", "n = 100")),
+         n_par = str_remove(n_par, "V") %>% as.double())  %>% 
+  
+  # now plot
+  ggplot(aes(x = n_par, y = mean,
+             group = interaction(sample, b_sigma))) +
+  geom_line(aes(color = sample, size = b_sigma %>% as.character())) +
+  # this function contains the data from the previous simulation
+  geom_point(data = dev_tibble, 
+             aes(group = sample, fill = sample),
+             color = "black", shape = 21, size = 2.5, stroke = .1) +
+  scale_fill_manual(values = c("slateblue", "black")) +
+  scale_color_manual(values = c("slateblue", "black")) +
+  scale_size_manual(values = c(1, .5, .2)) +
+  labs(x = "number of parameters",
+       y = "deviance") +
+  theme_classic() +
+  theme(text             = element_text(family = "serif"),
+        legend.position  = "none",
+        strip.background = element_rect(fill = alpha("purple", 1/4), color = "white"),
+        panel.background = element_rect(fill = alpha("white", 1/4))) +
+  facet_wrap(~n, scale = "free_y")
+
+# Regularizing priors and out-of-sample deviance. The points in both plots are the same as 6.12. 
+# The lines show training (blue) and testing (black) deviance for the three regularizing priors in f6.8. 
+# Thin solid: Each beta-coefficient is given a Normal(0, 1) prior. 
+# Thick solid: Normal(0, 0.5). 
+# Bold solid: Normal(0, 0.2).
+
+## For left-hand plot
+# The training deviance always increases—gets worse—with tighter priors. The thick blue trend 
+# is substantially larger than the others, and this is because the skeptical prior prevents 
+# the model from adapting completely to the sample. But the test deviances, out-of-sample, 
+# improve (get smaller) with the tighter priors. The model with three parameters is still the 
+# best model out-of-sample, and the regularizing priors have little impact on its deviance.
+
+# But also notice that as the prior gets more skeptical, the harm done by an overly complex model 
+# is greatly reduced. For the Normal(0, 0.2) prior (thick line), the models with 4 and 5 parameters 
+# are barely worse than the correct model with 3 parameters. If you can tune the regularizing prior 
+# right, then overfitting can be greatly reduced.
+
+## For right hand plot
+# The priors have much less of an effect here, because there is so much more evidence. 
+# The priors do help. But overfitting was less of a concern to begin with, and there is 
+# enough information in the data to overwhelm even the Normal(0, 0.2) prior (thick line).
+```
+
+$~$
+
+Regularizing priors are great, because they reduce overfitting. But if they are too skeptical, they prevent the model from learning from the data. If you have enough data, you can split into “train” and “test” samples and then try different priors and select the one that provides the smallest deviance on the test sample. That is the essence of cross-validation, a common technique for reducing overfitting. But if you need to use all of the data to train the model, tuning the prior may not be so easy. 
+
+$~$
+
+## Information criteria
+
+We’ve used simulations in which a model is fit to one sample, the training sample, and then used to predict a second sample of the same size, the testing sample. Let’s look at one of those thought experiments again, but now annotated with the difference between the training deviance (in-sample) and the testing deviance (out-of-sample).
+
+```{r f6.10}
+
+## Use ajkurz's codes
+# The data from our initial simulation isn’t formatted well to plot Figure 6.10. 
+# We’ll have to wrangle a little.
+dev_tibble1 <- dev_tibble[, !names(dev_tibble) %in% "sd"]
+# He used select() to remove sd column but the function is not working for me
+# So, I use !name instead of select(-sd)
+(
+  dev_tibble2 <-
+    dev_tibble1 %>% 
+    mutate(n_par  = ifelse(sample == "in", n_par + 0.075, n_par - 0.075)) %>% 
+    spread(key = sample, value = mean) %>% 
+    mutate(height = (out - `in`) %>% round(digits = 1) %>% as.character(),
+           dash   = `in` + 2 * n_par)
+)
 
 
+# Plot
+dev_tibble2  %>% 
+  ggplot(aes(x = n_par)) +
+  geom_line(aes(y = dash),
+            linetype = 2, color = carto_pal(7, "BurgYl")[5]) +
+  geom_point(aes(y = `in`),
+             color = carto_pal(7, "BurgYl")[7], size = 2) +
+  geom_point(aes(y = out),
+             color = carto_pal(7, "BurgYl")[5], size = 2) +
+  geom_errorbar(aes(x = n_par + .15,
+                    ymin = `in`, ymax = out),
+                width = .1, color = carto_pal(7, "BurgYl")[6]) +
+  geom_text(aes(x = n_par + .4,
+                y = (out + `in`) / 2,
+                label = height),
+            family = "Courier", size = 3, color = carto_pal(7, "BurgYl")[6]) +
+  labs(x = "number of parameters",
+       y = "deviance") +
+  theme_classic() +
+  theme(text             = element_text(family = "Courier"),
+        strip.background = element_rect(fill = alpha(carto_pal(7, "BurgYl")[1], 1/4), color = "white"),
+        panel.background = element_rect(fill = alpha(carto_pal(7, "BurgYl")[3], 1/4))) +
+  facet_wrap(~n, scale = "free_y")
 
-
-
-
+# Deviance in (dark red) and out (red) of sample, using flat priors. The vertical segments 
+# measure the distance between each pair of deviances. For both N = 20 and N = 100, this distance 
+# is approximately twice the number of parameters. The dashed lines show exactly the deviance 
+# in-sample (training) plus twice the number of parameters on the horizontal axis. 
+# These lines therefore show AIC for each model, an approximation of the out-of-sample deviance.
           
+```
+
+$~$
+
+This is the phenomenon behind ***information criteria***. The most known information criterion is the ***Akaike information criterion***, abbreviated **AIC**. AIC provides a surprisingly simple estimate of the average out-of-sample deviance:
+
+$$\text{AIC} = D_{train} ~+~ 2p $$
+
+```
+p   = the number of free parameters to be estimated in the model
+
+This definition reflects the relationship between training and testing deviance in f6.10. 
+The dashed lines in f6.10 trace out the AIC values of the models.
+
+```
+
+$~$
+
+AIC provides an approximation of predictive accuracy, as measured by out-of-sample deviance. AIC is an approximation that is reliable only when:
+
+(1) The priors are flat or overwhelmed by the likelihood.
+
+(2) The posterior distribution is approximately multivariate Gaussian.
+
+(3) The sample size N is much greater than the number of parameters k.
+
+Since flat priors are hardly ever the best priors, we’ll want something more general.
+
+$~$
+
+<span style="color:purple">***Two common and more-general criteria***</span>
+
+- ***Deviance Information Criterion (DIC)***
+    - accommodates informative priors, but still assumes that the posterior is multivariate Gaussian and that $N \gg k$
+    
+\n
+
+- ***Widely Applicable Information Criterion (WAIC)***
+    - more general yet, making no assumption about the shape of the posterior
+    
+$~$
+
+### Deviance Information Criterion (DIC)
+
+DIC is essentially a version of AIC that is aware of informative priors. Like AIC, it assumes a multivariate Gaussian posterior distribution. This means if any parameter in the posterior is substantially skewed, and also has a substantial effect on prediction, then DIC like AIC can go horribly wrong.
+
+DIC is calculated from the posterior distribution of the training deviance. So define D now as the posterior distribution of deviance. This means we compute deviance (on the training sample) for each set of sampled parameter values in the posterior distribution.  So if we draw 10,000 samples from the posterior, we compute 10,000 deviance values.
+
+DIC is calculated as:
+
+$$\text{DIC} = D^{\overline{}} + (D^{\overline{}} - D\hat{}) = D^{\overline{}} + p_D $$
+
+```
+D ̄ = the average of D
+
+Dˆ = the deviance calculated at the posterior mean
+
+p_D = the expected distance between the deviance in-sample and the deviance out-of-sample 
+
+The difference D ̄ − Dˆ = p_D is analogous to the number of parameters used in computing AIC.
+
+```
+
+$~$
+
+### Widely Applicable Information Criterion(WAIC)
+
+WAIC is also calculated by taking averages of log-likelihood over the posterior distribution. And it is also just an estimate of out-of-sample deviance. But it does not require a multivariate Gaussian posterior, and it is often more accurate than DIC.
+
+The distinguishing feature of WAIC is that it is *pointwise*. This means that uncertainty in prediction is considered case-by-case, or point-by-point, in the data. WAIC assesses flexibility of a model with respect to fitting each observation, and then sums up across all observations.
+
+We compute the likelihood of $y_i$ for each set of parameters sampled from the posterior distribution. Then we average the likelihoods for each observation i and finally sum over all observations. This produces the first part of WAIC, the log-pointwise-predictive-density, lppd:
+
+$$\text{lppd} = \sum_{i=1}^N ~\text{log Pr}(y_i)$$
+
+```
+Pr(y_i)   =  the average likelihood of observation i in the training sample
+
+The log-pointwise-predictive-density is the total across observations of the logarithm of 
+the average likelihood of each observation.
+
+The lppd is just a pointwise analog of deviance, averaged over the posterior distribution. 
+If you multiplied it by −2, it’d be similar to the deviance, in fact.
+
+```
+$~$
+
+The second piece of WAIC is the effective number of parameters $p_{WAIC}$. 
+
+$$p_{WAIC} = \sum_{i=1}^N ~V(y_i)$$
+
+```
+p_WAIC    = the effective number of parameters
+
+V(y_i)    = the variance in log-likelihood for observation i in the training sample
+
+```
+
+$~$
+
+Now WAIC is defined as:
+
+$$\text{WAIC} = ~-2 (\text{lppd}~-~ p_{WAIC})$$
+
+Because WAIC requires splitting up the data into independent observations i = 1...N, it is sometimes hard to define. Consider for example a model in which each prediction depends upon a previous observation. This happens, for example, in a *time series*. In a time series, a previous observation becomes a predictor variable for the next observation. So it’s not easy to think of each observation as independent of, or exchangeable with, the others. In such a case, you can of course compute WAIC as if each observation were independent of the others, but it’s not clear what the resulting value means.
+
+$~$
+
+<span style="color:brown"><span style="text-decoration:underline">**WAIC calculations**</span>
+
+
+```{r 6.15}
+set.seed(615)
+
+# To see how the WAIC calculations actually work, consider a simple regression fit with map:
+data(cars)
+m <- rethinking::map(
+    alist(
+        dist ~ dnorm(mu,sigma),
+        mu <- a + b*speed,
+        a ~ dnorm(0,100),
+        b ~ dnorm(0,10),
+        sigma ~ dunif(0,30)
+    ) , data=cars )
+
+post <- extract.samples(m,n=1000)
+
+# We’ll need the log-likelihood of each observation i at each sample s from the posterior:
+n_samples <- 1000
+ll <- sapply( 1:n_samples ,
+    function(s) {
+        mu <- post$a[s] + post$b[s]*cars$speed
+        dnorm( cars$dist , mu , post$sigma[s] , log=TRUE )
+})
+
+str(ll)
+# You end up with a 50-by-1000 matrix of log-likelihoods, with observations in rows 
+# and samples in columns.
+
+# Now to compute lppd, the Bayesian deviance, we average the samples in each row, 
+# take the log, and add all of the logs together. However, to do this with precision, 
+# we need to do all of the averaging on the log scale. This is made easy with a 
+# function log_sum_exp, which computes the log of a sum of exponentiated terms. 
+# Then we can just subtract the log of the number of samples. 
+# This computes the log of the average.
+n_cases <- nrow(cars)
+lppd <- sapply( 1:n_cases , function(i) log_sum_exp(ll[i,]) - log(n_samples) )
+sum(lppd)
+
+# Now for the effective number of parameters, pWAIC. This is more straightforward, as 
+# we just compute the variance across samples for each observation, then add these together:
+pWAIC <- sapply( 1:n_cases , function(i) var(ll[i,]) )
+sum(pWAIC)
+
+# To compute WAIC:
+-2*( sum(lppd) - sum(pWAIC) )
+
+# You can compute the standard error by computing the square root of number of cases 
+# multiplied by the variance over the individual observation terms in WAIC:
+waic_vec <- -2*( lppd - pWAIC )
+str(waic_vec)
+sqrt( n_cases*var(waic_vec) )
+# The variance remains much smaller than the standard error of WAIC itself. 
+
+```
+
+$~$
+
+### DIC and WAIC as estimates of deviance
+
+Let's visualize the estimates of out-of-sample deviance that DIC and WAIC provide, in the same familiar context as earlier sections.
+
+```{r 6.11}
+
+## Use akjurz's codes
+
+n_sim <- 1e3
+
+make_sim <- function(b_sigma){
+  sapply(kseq, function(k) {
+    print(k);
+    r <- mcreplicate(n_sim, 
+                     sim.train.test(N         = 20,
+                                    k         = k,
+                                    b_sigma   = b_sigma,
+                                    DIC       = T,
+                                    WAIC      = T, 
+                                    devbar    = T, 
+                                    devbarout = T),
+                     mc.cores = n_cores);
+    
+    c(dev_in    = mean(r[1, ]),
+      dev_out   = mean(r[2, ]),
+      DIC       = mean(r[3, ]), 
+      WAIC      = mean(r[4, ]), 
+      devbar    = mean(r[5, ]), 
+      devbarout = mean(r[6, ])) 
+  }
+  ) %>% 
+    data.frame() %>% 
+    rownames_to_column() %>% 
+    rename(statistic = rowname)
+}
+
+s <-
+  tibble(b_sigma = c(100, .5)) %>% 
+  mutate(sim = purrr::map(b_sigma, make_sim)) %>% 
+  unnest()
+
+# Wrangle and plot
+s %>% 
+  gather(n_par, value, -b_sigma, -statistic) %>% 
+  mutate(n_par = str_remove(n_par, "X") %>% as.double()) %>% 
+  filter(statistic != "devbar" & statistic != "devbarout") %>% 
+  spread(key = statistic, value = value) %>% 
+  gather(ic, value, -b_sigma, -n_par, -dev_in, -dev_out) %>% 
+  gather(sample, deviance, -b_sigma, -n_par, -ic, -value) %>% 
+  filter(sample == "dev_out") %>% 
+  mutate(b_sigma = b_sigma %>% as.character()) %>% 
+  
+  ggplot(aes(x = n_par)) +
+  geom_point(aes(y = deviance, color = b_sigma),
+             size = 2.5) +
+  geom_line(aes(y = value, group = b_sigma, color = b_sigma)) +
+  scale_color_manual(values = c(carto_pal(7, "BurgYl")[7], carto_pal(7, "BurgYl")[5])) +
+  # scale_color_manual(values = c("steelblue", "black")) +
+  labs(subtitle = "n = 20",
+       x = "number of parameters",
+       y = "deviance") +
+  theme_classic() +
+  theme(text             = element_text(family = "Courier"),
+        strip.background = element_rect(fill = alpha(carto_pal(7, "BurgYl")[1], 1/4), color = "white"),
+        panel.background = element_rect(fill = alpha(carto_pal(7, "BurgYl")[3], 1/4)),
+        legend.position  = "none") +
+  facet_wrap(~ic, ncol = 1)
+# Out-of-sample deviance as estimated by DIC and WAIC. Points are average out-of-sample 
+# deviance over 1000 simulations. The lines are average DIC (top) and WAIC (bottom) 
+# computed from the same simulations. 
+# The red (top) points and lines come from simulations with a nearly flat Normal(0, 100) prior. 
+# The brown (bottom) points and lines used a regularizing Normal(0, 0.5) prior.
+
+```
+
+In the above figure, both DIC and WAIC are accurate on average, being within 1 point of deviance of the actual average in most cases. Both are useful estimates of the deviance, but WAIC is more accurate in this context.
+
+Also notice that the regularizing prior (brown) still helps, and that DIC and WAIC do track this help. This suggests that using both regularization and information criteria will always beat using only one or the other alone. Regularization, as long as it’s not too strong, reduces overfitting for any particular model. Information criteria instead help us measure overfitting across models fit to the same data.
+
+$~$
+
+## Using information criteria
+
+Once we have DIC or WAIC calculated for each plausible model, how do we use these values? 
+
+- ***Model comparison***
+        - means using DIC/WAIC in combination with the estimates and posterior predictive checks from each model
+        - It is just as important to understand why a model outperforms another as it is to measure the performance difference. 
+        - DIC/WAIC alone says very little about such details. But in combination with other information, DIC/WAIC is a big help.
+        
+\n
+
+- ***Model averaging***
+        - means using DIC/WAIC to construct a posterior predictive distribution that exploits what we know about relative accuracy of the models
+        - This helps guard against overconfidence in model structure, in the same way that using the entire posterior distribution helps guard against overconfidence in parameter values. 
+        - What model averaging does not mean is averaging parameter estimates, because parameters in different models have different meanings and should not be averaged, unless you are sure you are in a special case in which it is safe to do so. 
+        - So it is better to think of model averaging as prediction averaging, because that’s what is actually being done.
+        
+$~$
+
+### Model comparison
+
+As an example, we’ll repeat the analysis of predicting kilocalories per gram of milk (kcal.per.g) with the two predictor variables neocortex and the logarithm of mass. But now we’ll fit four different models, corresponding to the four simple combinations of linear models with these two predictor variables: 
+
+(1) a model with both neocortex and log mass
+
+(2) a model with only neocortex
+
+(3) a model with only log mass
+
+(4) a model with neither predictor (just an intercept)
+
+Fitting the four models, using map, is straightforward. The only thing that differs among these models is the equation for $\mu_i$ (mu). 
+
+A way to constrain the standard deviation of the outcome, $\sigma$, to be positive is to estimate the logarithm of $\sigma$, which can be any real number. Then inside the likelihood function we just exponentiate it. Since $exp(x) > 0$ for any real number $x$, this effectively bounds $\sigma$ to positive reals.
+
+```{r 6.21}
+
+# Load the primate milk data, remove the NAs, and rescale one of the explanatory variables
+data(milk)
+d <- milk[ complete.cases(milk) , ]
+d$neocortex <- d$neocortex.perc / 100
+dim(d)
+# data frame now have 17 rows (cases) and 9 columns (variables)
+
+## Constrain sigma to be positive and fit the models
+a.start <- mean(d$kcal.per.g)
+sigma.start <- log(sd(d$kcal.per.g))
+
+# The priors are all flat which is clearly not the best idea. But this will let you get 
+# a sense of what the sample alone says, in the absence of regularization, and 
+# how WAIC measures overfitting. 
+
+# Model with neither predictor (just intercept)
+m6.11 <- rethinking::map(
+    alist(
+        kcal.per.g ~ dnorm( a , exp(log.sigma) )
+),
+    data=d , start=list(a=a.start,log.sigma=sigma.start) )
+
+# Model with only neocortex
+m6.12 <- rethinking::map(
+    alist(
+        kcal.per.g ~ dnorm( mu , exp(log.sigma) ) ,
+        mu <- a + bn*neocortex
+),
+    data=d , start=list(a=a.start,bn=0,log.sigma=sigma.start) )
+
+# Model with only log mass
+m6.13 <- rethinking::map(
+    alist(
+        kcal.per.g ~ dnorm( mu , exp(log.sigma) ) ,
+        mu <- a + bm*log(mass)
+),
+    data=d , start=list(a=a.start,bm=0,log.sigma=sigma.start) )
+
+# Model with both neocortex and log mass
+m6.14 <- rethinking::map(
+    alist(
+        kcal.per.g ~ dnorm( mu , exp(log.sigma) ) ,
+        mu <- a + bn*neocortex + bm*log(mass)
+),
+data=d , start=list(a=a.start,bn=0,bm=0,log.sigma=sigma.start) )
+
+
+```
+
+Fitting these four models provides answers to questions about how and how much prediction changes when we include either or both predictor variables. With the four sets of estimates, and four deviances, in hand, we’ll look quickly at both (1) comparing the models on the basis of WAIC values and (2) on the basis of parameter estimates. These are complementary approaches, aimed at understanding the best model by understanding how predictions and estimates change as predictors are added and subtracted from a model.
+
+$~$
+
+#### Comparing WAIC values
+
+To compare models using an information criterion, you first compute the criterion. Then you can rank the models from lowest (best) to highest (worst) and also calculate weights, which provide a more interpretable measure of the relative distances among the models.
+
+```{r 6.23}
+
+WAIC( m6.14 )
+# Note that WAIC value is negative in this case. That’s fine. There’s nothing 
+# preventing deviance from being negative. Smaller values are still better.
+
+# The third value is pWAIC. If you subtract pWAIC from lppd and then multiply that 
+# difference by −2, you’ll get the WAIC value.
+
+# The standard error (std_err) provides rough guidance to the uncertainty in WAIC 
+# that arises from sampling. It can be very rough guidance, when the sample size is small. 
+# Still, always remember that WAIC is an estimate.
+
+## Calculate WAIC for other models
+WAIC( m6.13 )
+WAIC( m6.12 )
+WAIC( m6.11 )
+
+## Order the models by their WAIC values using compare()
+( milk.models <- compare( m6.11 , m6.12 , m6.13 , m6.14 ) )
+# The function `compare` takes fit models as input. It returns a table in which 
+# models are ranked from best to worst, with six columns of information.
+
+```
+
+(1) WAIC is obviously WAIC for each model. Smaller WAIC indicates better estimated out-of-sample deviance, so model m6.14 is ranked first.
+
+(2) pWAIC is the estimated effective number of parameters. This provides a clue as to how flexible each model is in fitting the sample.
+
+(3) dWAIC is the difference between each WAIC and the lowest WAIC. Since only relative deviance matters, this column shows the differences in relative fashion.
+
+(4) weight is the Akaike weight for each model. These values are transformed information criterion values. 
+
+(5) SE is the standard error of the WAIC estimate. WAIC is an estimate, and provided the sample size N is large enough, its uncertainty will be well approximated by its standard error. So this SE value isn’t necessarily very precise, but it does provide a check against overconfidence in differences between WAIC values.
+
+(6) dSE is the standard error of the difference in WAIC between each model and the top-ranked model. So it is missing for the top model. If you want the full set of pairwise model differences, you can extract milk.models@dSE.
+
+```{r 6.25}
+milk.models@dSE
+
+## Plot the values, to provide a possibly more-intuitive presentation
+plot( milk.models , SE=TRUE , dSE=TRUE )
+# Each row is a model, ordered by WAIC. 
+
+# The filled points are the in-sample deviance of each model, which for WAIC is 
+# calculated as −2 × lppd, which is 2pWAIC from the corresponding WAIC value. 
+
+# The open points are WAIC. The standard error of each WAIC is shown by the dark line 
+# segment that passes through each open point. 
+
+# The standard error of the difference between each WAIC and the top-ranked WAIC is shown 
+# by the gray triangles and line segments between the rows. The triangle just above each
+# WAIC point is the difference between that model and the top model. The gray line segment 
+# is the standard deviation of that difference.
+
+
+```
+ 
+ $~$
+ 
+Akaike weights help by rescaling. A total weight of 1 is partitioned among the considered models, making it easier to compare their relative predictive accuracy. The weight for a model $i$ in a set of $m$ models is given by:
+
+$$ w_i = \frac{exp \left(- \frac{1}{2}dWAIC_i \right)}{\sum_{j=1}^m exp\left(- \frac{1}{2}dWAIC_j \right)}$$
+
+
+The Akaike weight formula might look rather odd, but really all it is doing is putting WAIC on a probability scale, so it just undoes the multiplication by −2 and then exponentiates to reverse the log transformation. Then it standardizes by dividing by the total. So each weight will be a number from 0 to 1, and the weights together always sum to 1. ***Now larger values are better.***
+
+$~$
+
+<span style="color:purple">***Akaike’s interpretation of the Akaike weight***</span>
+
+A model’s weight is an estimate of the probability that the model will make the best predictions on new data, conditional on the set of models considered.
+
+$~$
+
+<span style="color:purple">***Heuristic explanation of the Akaike weight***</span>
+
+- First, regard WAIC as the expected deviance of a model on future data. That is to say that WAIC gives us an estimate of E($D_{test}$). 
+
+- Akaike weights convert these deviance values, which are log-likelihoods, to plain likelihoods and then standardize them all. This is just like Bayes’ theorem uses a sum in the denominator to standardize the product of the likelihood and prior. 
+
+- Therefore the Akaike weights are analogous to posterior probabilities of models, conditional on expected future data. 
+
+- Remember, a probability is a standardized count of all the ways some particular thing might happen, according to our assumptions, among all the things that could happen, also according to our assumptions.
+
+- So you can heuristically read each weight as an estimated probability that each model will perform best on future data. In simulation at least, interpreting weights in this way turns out to be appropriate. However, given all the strong assumptions about repeat sampling that go into calculating WAIC, you can’t take this heuristic too seriously. The future is unlikely to be exactly like the past, after all.
+
+- In this analysis, the best model has more than 90% of the model weight. But with only 12 cases, the error on the WAIC estimates is substantial, and of course that uncertainty should propagate to the Akaike weights. If we take the standard error of the difference from the `compare` table literally, you can think of the difference as Gaussian distribution centered (for the difference between models m6.14 and m6.11) on 7.4 with a standard deviation of 7.16. If you feel hesitant that you know how to calculate from that the probability that the difference is negative, and so reversed, you can just simulate it:
+
+```{r 6.26}
+
+diff <- rnorm( 1e5 , 7.4 , 7.16 )
+sum(diff<0)/1e5
+# This is only of heuristic value, especially with only 12 cases. On the other hand, for having only 12 cases, this is more than we might have reasonably hoped for.
+
+```
+
+$~$
+
+<span style="color:purple">***Interpreting differences in information criteria***</span>
+
+Akaike weights are conditional upon the set of models considered. If you add another model, or take one away, all of the weights will change. How you interpret differences in information criteria always depend upon context: 
+
+- sample size
+
+- past research
+
+- nature of measurements
+
+$~$
+
+#### Comparing estimates
+
+Comparing estimates helps in at least two major ways:
+
+- *It is useful to understand why a particular model or models have lower WAIC values.* Changes in posterior distributions, across models, provide useful hints. 
+
+- *Regardless of WAIC values, we often want to know whether some parameter’s posterior distribution is stable across models.* For example, to know whether a predictor remains important as other predictors are added and subtracted from the model, one typically looks for a parameter’s posterior distribution to remain stable across models, as well as for all models that contain that parameter to have lower WAIC than those models without it.
+
+In the primate milk example, comparing estimates confirms that the model with both predictors does much better, because each predictor masks the other. Looking at a consolidated table of the MAP estimates makes the comparison a lot easier. The `coeftab` function takes a series of fit models as input and builds such a table:
+
+```{r 6.27}
+
+coeftab(m6.11,m6.12,m6.13,m6.14)
+# The nobs at the bottom are the number of observations, just there to help you make sure 
+# you fit each model to the same observations.
+
+# Estimates for both bn and bm get farther from zero when they are both present in the model.
+# But standard errors aren’t represented here, and seeing how the uncertainty changes is 
+# just as important as seeing how the location changes.
+
+## Plot the estimates 
+plot( coeftab(m6.11,m6.12,m6.13,m6.14) )
+# Comparing the posterior densities of parameters for the four models fit to the 
+# primate milk data. Each point is a MAP estimate, and each black line segment is 
+# a 89% percentile interval. Estimates are grouped by parameter identity, and 
+# each row in a group is a model.
+
+```
+
+$~$
+
+### Model averaging
+
+
+
+
+
+
+
+
+
+
+
 ---
