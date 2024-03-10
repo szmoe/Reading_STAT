@@ -889,7 +889,7 @@ plot(p_grid, posterior, type = "l",
 
 $~$
 
-2M2. Assume a prior for p that is equal to zero when p < 0.5 and is a positive constant when p ≥ 0.5. 
+> 2M2. Assume a prior for p that is equal to zero when p < 0.5 and is a positive constant when p ≥ 0.5. 
 
 <span style= "color: blue">*(1) W, W, W*</span>
 
@@ -993,7 +993,7 @@ plot(p_grid, posterior, type = "l",
 
 $~$
 
-2M3. Suppose there are two globes, one for Earth and one for Mars. The Earth globe is 70% covered in water. The Mars globe is 100% land. Further suppose that one of these globes—you don’t know which—was tossed in the air and produced a “land” observation. Assume that each globe was equally likely to be tossed. Show that the posterior probability that the globe was the Earth, conditional on seeing “land” (Pr(Earth|land)), is 0.23.
+> 2M3. Suppose there are two globes, one for Earth and one for Mars. The Earth globe is 70% covered in water. The Mars globe is 100% land. Further suppose that one of these globes—you don’t know which—was tossed in the air and produced a “land” observation. Assume that each globe was equally likely to be tossed. Show that the posterior probability that the globe was the Earth, conditional on seeing “land” (Pr(Earth|land)), is 0.23.
 
 ```
 
@@ -1033,7 +1033,7 @@ Pr(earth|land) = (Pr(land|earth) * Pr(earth))/ Pr(land)
 
 $~$
 
-2M4. Suppose you have a deck with only three cards. Each card has two sides, and each side is either black or white. One card has two black sides. The second card has one black and one white side. The third card has two white sides. Now suppose all three cards are placed in a bag and shuffled. Someone reaches into the bag and pulls out a card and places it flat on a table. A black side is shown facing up, but you don’t know the color of the side facing down. Show that the probability that the other side is also black is 2/3. Use the counting method (Section 2 of the chapter) to approach this problem. This means counting up the ways that each card could produce the observed data (a black side facing up on the table).
+> 2M4. Suppose you have a deck with only three cards. Each card has two sides, and each side is either black or white. One card has two black sides. The second card has one black and one white side. The third card has two white sides. Now suppose all three cards are placed in a bag and shuffled. Someone reaches into the bag and pulls out a card and places it flat on a table. A black side is shown facing up, but you don’t know the color of the side facing down. Show that the probability that the other side is also black is 2/3. Use the counting method (Section 2 of the chapter) to approach this problem. This means counting up the ways that each card could produce the observed data (a black side facing up on the table).
 
 ```
 # First card has two black sides
@@ -1080,7 +1080,7 @@ ways/ sum(ways)
 
 $~$
 
-2M5. Now suppose there are four cards: B/B, B/W, W/W, and another B/B. Again suppose a card is drawn from the bag and a black side appears face up. Again calculate the probability that the other side is black.
+> 2M5. Now suppose there are four cards: B/B, B/W, W/W, and another B/B. Again suppose a card is drawn from the bag and a black side appears face up. Again calculate the probability that the other side is black.
 
 ```
 # Possible conjectures
@@ -1108,7 +1108,7 @@ Hence, the probability of getting a card with both sides black by counting metho
 ```
 $~$
 
-2M6. Imagine that black ink is heavy, and so cards with black sides are heavier than cards with white sides. As a result, it’s less likely that a card with black sides is pulled from the bag. So again assume there are three cards: B/B, B/W, and W/W. After experimenting a number of times, you conclude that for every way to pull the B/B card from the bag, there are 2 ways to pull the B/W card and 3 ways to pull the W/W card. Again suppose that a card is pulled and a black side appears face up. Show that the probability the other side is black is now 0.5. Use the counting method, as before.
+> 2M6. Imagine that black ink is heavy, and so cards with black sides are heavier than cards with white sides. As a result, it’s less likely that a card with black sides is pulled from the bag. So again assume there are three cards: B/B, B/W, and W/W. After experimenting a number of times, you conclude that for every way to pull the B/B card from the bag, there are 2 ways to pull the B/W card and 3 ways to pull the W/W card. Again suppose that a card is pulled and a black side appears face up. Show that the probability the other side is black is now 0.5. Use the counting method, as before.
 
 ``` 
 # Possible conjectures
@@ -1140,7 +1140,7 @@ Probability the other side is also black = 2/4 = 0.5
 ```
 $~$
 
-2M7. Assume again the original card problem, with a single card showing a black side face up.Before looking at the other side, we draw another card from the bag and lay it face up on the table. The face that is shown on the new card is white. Show that the probability that the first card, the one showing a black side, has black on its other side is now 0.75. Use the counting method, if you can. Hint: Treat this like the sequence of globe tosses, counting all the ways to see each observation, for each possible first card.
+> 2M7. Assume again the original card problem, with a single card showing a black side face up.Before looking at the other side, we draw another card from the bag and lay it face up on the table. The face that is shown on the new card is white. Show that the probability that the first card, the one showing a black side, has black on its other side is now 0.75. Use the counting method, if you can. Hint: Treat this like the sequence of globe tosses, counting all the ways to see each observation, for each possible first card.
 
 ```
 # Possible conjectures
@@ -1177,7 +1177,7 @@ $~$
 
 ### Hard
 
-2H1. Suppose there are two species of panda bear. Both are equally common in the wild and live in the same places. They look exactly alike and eat the same food, and there is yet no genetic assay capable of telling them apart. They differ however in their family sizes. Species A gives birth to twins 10% of the time, otherwise birthing a single infant. Species B births twins 20% of the time, otherwise birthing singleton infants. Assume these numbers are known with certainty, from many years of field research.
+> 2H1. Suppose there are two species of panda bear. Both are equally common in the wild and live in the same places. They look exactly alike and eat the same food, and there is yet no genetic assay capable of telling them apart. They differ however in their family sizes. Species A gives birth to twins 10% of the time, otherwise birthing a single infant. Species B births twins 20% of the time, otherwise birthing singleton infants. Assume these numbers are known with certainty, from many years of field research.
 Now suppose you are managing a captive panda breeding program. You have a new female panda of unknown species, and she has just given birth to twins. What is the probability that her next birth will also be twins?
 
 ```
@@ -1210,7 +1210,7 @@ Pr (second_twins|first_twins) = Pr(first_twins, second_twins)/ Pr(twins)
 ```
 $~$
 
-2H2. Recall all the facts from the problem above. Now compute the probability that the panda we have is from species A, assuming we have observed only the first birth and that it was twins.
+> 2H2. Recall all the facts from the problem above. Now compute the probability that the panda we have is from species A, assuming we have observed only the first birth and that it was twins.
 
 ``` 
 # Probability of panda from species A giving birth to twins
@@ -1234,7 +1234,7 @@ Pr(SpA|twins) = (Pr(twins|SpA) * Pr(SpA))/ Pr(twins)
 ```
 $~$
 
-2H3. Continuing on from the previous problem, suppose the same panda mother has a second birth and that it is not twins, but a singleton infant. Compute the posterior probability that this panda is species A.
+> 2H3. Continuing on from the previous problem, suppose the same panda mother has a second birth and that it is not twins, but a singleton infant. Compute the posterior probability that this panda is species A.
 
 ```
 # Probability that the new female panda belongs to species A or species B
@@ -1286,7 +1286,7 @@ Pr(SpA|singleton) = (Pr(singleton|SpA) * Pr(SpA))/ Pr(singleton)
 ```
 $~$
 
-2H4. A common boast of Bayesian statisticians is that Bayesian inference makes it easy to use all of the data, even if the data are of different types.
+> 2H4. A common boast of Bayesian statisticians is that Bayesian inference makes it easy to use all of the data, even if the data are of different types.
 So suppose now that a veterinarian comes along who has a new genetic test that she claims can identify the species of our mother panda. But the test, like all tests, is imperfect. This is the information you have about the test:
 • The probability it correctly identifies a species A panda is 0.8. 
 • The probability it correctly identifies a species B panda is 0.65.
@@ -1986,7 +1986,7 @@ samples <- sample( p_grid , prob=posterior , size=1e4 , replace=TRUE )
 
 ```
 
-3E1. How much posterior probability lies below p = 0.2?
+> 3E1. How much posterior probability lies below p = 0.2?
 
 ```{r 3E1}
 
@@ -1997,7 +1997,7 @@ sum(samples < 0.2)/ 1e4
 
 $~$
 
-3E2. How much posterior probability lies above p = 0.8?
+> 3E2. How much posterior probability lies above p = 0.8?
 
 ```{r 3E2}
 
@@ -2008,7 +2008,7 @@ sum(samples > 0.8)/ 1e4
 
 $~$
 
-3E3. How much posterior probability lies between p = 0.2 and p = 0.8? 
+> 3E3. How much posterior probability lies between p = 0.2 and p = 0.8? 
 
 ```{r 3E3}
 
@@ -2019,7 +2019,7 @@ sum(samples > 0.2 & samples < 0.8)/ 1e4
 
 $~$
   
-3E4. 20% of the posterior probability lies below which value of p?
+> 3E4. 20% of the posterior probability lies below which value of p?
 
 ``` {r 3E4}
 
@@ -2028,7 +2028,7 @@ quantile(samples, 0.2)
 
 ```
 
-3E5. 20% of the posterior probability lies above which value of p?
+> 3E5. 20% of the posterior probability lies above which value of p?
 
 ```{r 3E5}
 # 20% is the quantile in the upper end of distribution,
@@ -2040,7 +2040,7 @@ quantile(samples, 0.8)
 
 $~$
 
-3E6. Which values of p contain the narrowest interval equal to 66% of the posterior probability?
+> 3E6. Which values of p contain the narrowest interval equal to 66% of the posterior probability?
 
 ``` {r 3E6}
 HPDI(samples, 0.66)
@@ -2051,7 +2051,7 @@ HPDI(samples, 0.66)
 
 $~$
 
-3E7. Which values of p contain 66% of the posterior probability, assuming equal posterior probability both below and above the interval?
+> 3E7. Which values of p contain 66% of the posterior probability, assuming equal posterior probability both below and above the interval?
 
 ```{r 3E7}
 PI(samples, 0.66)
@@ -2062,7 +2062,7 @@ $~$
 
 ### Medium
 
-3M1. Suppose the globe tossing data had turned out to be 8 water in 15 tosses. Construct the posterior distribution, using grid approximation. Use the same flat prior as before.
+> 3M1. Suppose the globe tossing data had turned out to be 8 water in 15 tosses. Construct the posterior distribution, using grid approximation. Use the same flat prior as before.
 
 ```{r 3M1}
 p_grid <- seq(from = 0, to = 1, length.out = 10000)
@@ -2077,7 +2077,7 @@ plot(posterior~p_grid, type ="l")
 
 $~$
 
-3M2. Draw 10,000 samples from the grid approximation from above. Then use the samples to calculate the 90% HPDI for p.
+> 3M2. Draw 10,000 samples from the grid approximation from above. Then use the samples to calculate the 90% HPDI for p.
 
 ```{r 3M2}
 
@@ -2096,7 +2096,7 @@ HPDI(sample3m2, 0.9)
 
 $~$
 
-3M3. Construct a posterior predictive check for this model and data. This means simulate the distribution of samples, averaging over the posterior uncertainty in p. What is the probability of observing 8 water in 15 tosses?
+> 3M3. Construct a posterior predictive check for this model and data. This means simulate the distribution of samples, averaging over the posterior uncertainty in p. What is the probability of observing 8 water in 15 tosses?
 
 ```{r 3M3}
 
@@ -2109,7 +2109,7 @@ sum(w == 8)/1e4
 
 $~$
 
-3M4. Using the posterior distribution constructed from the new (8/15) data,now calculate the probability of observing 6 water in 9 tosses.
+> 3M4. Using the posterior distribution constructed from the new (8/15) data,now calculate the probability of observing 6 water in 9 tosses.
 
 ```{r 3M4}
 
@@ -2124,7 +2124,7 @@ table(w == 6)/ 1e4
 
 $~$
 
-3M5. Start over at 3M1, but now use a prior that is zero below p = 0.5 and a constant above p = 0.5. This corresponds to prior information that a majority of the Earth’s surface is water. Repeat each problem above and compare the inferences. What difference does the better prior make? If it helps, compare inferences (using both priors) to the true value p = 0.7.
+> 3M5. Start over at 3M1, but now use a prior that is zero below p = 0.5 and a constant above p = 0.5. This corresponds to prior information that a majority of the Earth’s surface is water. Repeat each problem above and compare the inferences. What difference does the better prior make? If it helps, compare inferences (using both priors) to the true value p = 0.7.
 
 *For 3M1 and 3M3*
 ```{r 3M51}
@@ -2206,7 +2206,7 @@ $~$
 
 ### Hard
 
-3H1. Using grid approximation, compute the posterior distribution for the probability of a birth being a boy. Assume a uniform prior probability. Which parameter value maximizes the posterior probability?
+> 3H1. Using grid approximation, compute the posterior distribution for the probability of a birth being a boy. Assume a uniform prior probability. Which parameter value maximizes the posterior probability?
 
 ```{r 3H1}
 
@@ -2292,7 +2292,7 @@ df %>%
 
 $~$
 
-3H2. Using the sample function, draw 10,000 random parameter values from the posterior distribution you calculated above. Use these samples to estimate the 50%, 89%, and 97% highest posterior density intervals.
+> 3H2. Using the sample function, draw 10,000 random parameter values from the posterior distribution you calculated above. Use these samples to estimate the 50%, 89%, and 97% highest posterior density intervals.
 
 ```{r 3H2}
 
@@ -2308,7 +2308,7 @@ HPDI(sample3h1, prob = 0.97)
 ```
 $~$
 
-3H3. Use rbinom to simulate 10,000 replicates of 200 births. You should end up with 10,000 numbers, each one a count of boys out of 200 births. Compare the distribution of predicted numbers of boys to the actual count in the data (111 boys out of 200 births). There are many good ways to visualize the simulations, but the dens command (part of the rethinking package) is probably the easiest way in this case. Does it look like the model fits the data well? That is, does the distribution of predictions include the actual observation as a central, likely outcome?
+> 3H3. Use rbinom to simulate 10,000 replicates of 200 births. You should end up with 10,000 numbers, each one a count of boys out of 200 births. Compare the distribution of predicted numbers of boys to the actual count in the data (111 boys out of 200 births). There are many good ways to visualize the simulations, but the dens command (part of the rethinking package) is probably the easiest way in this case. Does it look like the model fits the data well? That is, does the distribution of predictions include the actual observation as a central, likely outcome?
 
 ```{r 3H3}
 # Use rbinom to simulate 10,000 replicates of 200 births
@@ -2383,7 +2383,7 @@ abline(v = 111, col = "red")
 
 $~$
 
-3H4. Now compare 10,000 counts of boys from 100 simulated first borns only to the number of boys in the first births, birth1. How does the model look in this light?
+> 3H4. Now compare 10,000 counts of boys from 100 simulated first borns only to the number of boys in the first births, birth1. How does the model look in this light?
 
 ```{r 3H4}
 # Calculate posterior for first born boys
@@ -2441,7 +2441,7 @@ abline(v = first_born_boy, col = "red")
 
 $~$
 
-3H5. The model assumes that sex of first and second births are independent. To check this assumption, focus now on second births that followed female first borns. Compare 10,000 simulated counts of boys to only those second births that followed girls. To do this correctly, you need to count the number of first borns who were girls and simulate that many births, 10,000 times. Compare the counts of boys in your simulations to the actual observed count of boys following girls. How does the model look in this light? Any guesses what is going on in these data?
+> 3H5. The model assumes that sex of first and second births are independent. To check this assumption, focus now on second births that followed female first borns. Compare 10,000 simulated counts of boys to only those second births that followed girls. To do this correctly, you need to count the number of first borns who were girls and simulate that many births, 10,000 times. Compare the counts of boys in your simulations to the actual observed count of boys following girls. How does the model look in this light? Any guesses what is going on in these data?
 
 ```{r 3H5}
 
@@ -4320,7 +4320,7 @@ $~$
 
 ### Hard
 
-4H1. The weights listed below were recorded in the !Kung census, but heights were not recorded for these individuals. Provide predicted heights and 89% intervals (either HPDI or PI) for each of these individuals.
+> 4H1. The weights listed below were recorded in the !Kung census, but heights were not recorded for these individuals. Provide predicted heights and 89% intervals (either HPDI or PI) for each of these individuals.
 
 ```{r 4H1}
 
@@ -4424,7 +4424,7 @@ HPDI(y,prob=0.90)
 
 $~$
 
-4H2. Select out all the rows in the Howell1 data with ages below 18 years of age. If you do it right, you should end up with a new data frame with 192 rows in it.
+> 4H2. Select out all the rows in the Howell1 data with ages below 18 years of age. If you do it right, you should end up with a new data frame with 192 rows in it.
 
 ```{r 4H2}
 
@@ -4641,9 +4641,9 @@ lines( w.seq , pred.ci[2,] , lty=2 )
 
 $~$
 
-4H3. Suppose a colleague of yours, who works on allometry, glances at the practice problems just above. Your colleague exclaims, “That’s silly. Everyone knows that it’s only the logarithm of body weight that scales with height!” Let’s take your colleague’s advice and see what happens.
+> 4H3. Suppose a colleague of yours, who works on allometry, glances at the practice problems just above. Your colleague exclaims, “That’s silly. Everyone knows that it’s only the logarithm of body weight that scales with height!” Let’s take your colleague’s advice and see what happens.
 
-(a) Model the relationship between height (cm) and the natural logarithm of weight (log-kg). Use the entire Howell1 data frame, all 544 rows, adults and non-adults. Fit this model, using quadratic approximation:
+> (a) Model the relationship between height (cm) and the natural logarithm of weight (log-kg). Use the entire Howell1 data frame, all 544 rows, adults and non-adults. Fit this model, using quadratic approximation:
 
 ```{r 4H3a}
 
@@ -4673,7 +4673,7 @@ precis(qfit)
 
 $~$
 
-(b) Use samples from the quadratic approximate posterior of the model in (a) to superimpose on the plot: (1) the predicted mean height as a function of weight, (2) the 97% HPDI for the mean, and (3) the 97% HPDI for predicted heights.
+> (b) Use samples from the quadratic approximate posterior of the model in (a) to superimpose on the plot: (1) the predicted mean height as a function of weight, (2) the 97% HPDI for the mean, and (3) the 97% HPDI for predicted heights.
 
 ```{r 4H3b}
 
@@ -6825,14 +6825,14 @@ $~$
 
 $~$
 
-**5E1. Which of the linear models below are multiple linear regressions?**
+> 5E1. Which of the linear models below are multiple linear regressions?
 
 (2) $\mu_i = \beta_x \text{x}_i + \beta_z \text{Z}_i$
 (4) $\mu_i = \alpha + \beta_x \text{x}_i + \beta_z \text{Z}_i$
 
 $~$
 
-**5E2. Write down a multiple regression to evaluate the claim: Animal diversity is linearly related to latitude, but only after controlling for plant diversity. You just need to write down the model definition.**
+> 5E2. Write down a multiple regression to evaluate the claim: Animal diversity is linearly related to latitude, but only after controlling for plant diversity. You just need to write down the model definition.
 
 \[
 \begin{align*}
@@ -6852,7 +6852,8 @@ D     = Plant diversity
 
 $~$
 
-**5E3. Write down a multiple regression to evaluate the claim: Neither amount of funding nor size of laboratory is by itself a good predictor of time to PhD degree; but together these variables are both positively associated with time to degree. Write down the model definition and indicate which side of zero each slope parameter should be on.**
+> 5E3. Write down a multiple regression to evaluate the claim: Neither amount of funding nor size of laboratory is by itself a good predictor of time to PhD degree; but together these variables are both positively associated with time to degree. Write down the model definition and indicate which side of zero each slope parameter should be on.
+
 
 \[
 \begin{align*}
@@ -6875,7 +6876,7 @@ If considered individually, both will be almost zero.
 
 $~$
 
-**5E4. Suppose you have a single categorical predictor with 4 levels (unique values), labeled A, B, C and D. Let Ai be an indicator variable that is 1 where case i is in category A. Also suppose Bi, Ci, and Di for the other categories. Now which of the following linear models are inferentially equivalent ways to include the categorical variable in a regression? Models are inferentially equivalent when it’s possible to compute one posterior distribution from the posterior distribution of another model.**
+> 5E4. Suppose you have a single categorical predictor with 4 levels (unique values), labeled A, B, C and D. Let Ai be an indicator variable that is 1 where case i is in category A. Also suppose Bi, Ci, and Di for the other categories. Now which of the following linear models are inferentially equivalent ways to include the categorical variable in a regression? Models are inferentially equivalent when it’s possible to compute one posterior distribution from the posterior distribution of another model.
 
 I exclude choice 2 as it contains all variables plus one extra unidentified interceptor variable. I use `Accident` dataset to check the similarity among posterior distributions of the models in choices 1, 3, 4, and 5. As seen below, the mean ($\mu$) values of dummy variables A, B, C and D are similar across the models 1, 3, 4 and 5. Hence, choice 1, 3, 4 and 5 are the correct answers to the question. The slight difference between model 1,3 and model 4,5 is because I used informative priors for model 4 and 5, and flat priors for model 1 and 3. 
 
@@ -6989,7 +6990,7 @@ $~$
 
 $~$
 
-**5M1. Invent your own example of a spurious correlation. An outcome variable should be correlated with both predictor variables. But when both predictors are entered in the same model, the correlation between the outcome and one of the predictors should mostly vanish (or at least be greatly reduced).**
+> 5M1. Invent your own example of a spurious correlation. An outcome variable should be correlated with both predictor variables. But when both predictors are entered in the same model, the correlation between the outcome and one of the predictors should mostly vanish (or at least be greatly reduced).
 
 I invented a data set that contains rate of rainfall (rain.ppt), percent probability of seeing stars in the night sky (chance.star) and percent increase in sales of umbrella (umbrella.sales). The outcome variable `chance.star` and predictor variable `rain.ppt` were fitted in model `m.rs`, and the model predicts the chance of seeing stars would be decreased by 1.4% for every inch of increased rainfall. 
 
@@ -7070,31 +7071,28 @@ pairs(~ chance.star + rain.ppt + umbrella.sales, data = d, col = "firebrick")
 
 $~$
 
-**5M2. Invent your own example of a masked relationship. An outcome variable should be correlated with both predictor variables, but in opposite directions. And the two predictor variables should be correlated with one another.**
+> 5M2. Invent your own example of a masked relationship. An outcome variable should be correlated with both predictor variables, but in opposite directions. And the two predictor variables should be correlated with one another.
 
+Instead of adjusting each data point to get the desired relationship (like in 5M1 which took quite a while to manipulate the data), I used the book's code to create a data set for simulating a masked relationship. In the example below, the number of trees in the area (`tree.number`) is positively associated with good air quality (`pm.air`), while the number of factory in the area (`factory.number`) is negatively associated with good air quality(`pm.air`). The `factory.number` and `tree.number` have a correlation strength of 0.5.
 
+When the predictors are fitted separately to the model, the $\beta$ coefficients for `tree.number` and `factory.number` are 0.52 and -0.47, in relation to the outcome `pm.air`. But when the predictors are fitted together in the model, stronger associations with outcome variable are seen with each of the predictors (0.99 for `tree.number` and -0.97 for `factory.number`). 
 
 
 ```{r 5M2}
 
-# Create ranges of air quality measure (ug/m^3)
-pm.air <- c(5, 6, 10, 12, 15, 20, 22, 30, 25, 27)
-
-# Number of trees (100 per hectare)
-tree.number <- c(40, 30, 25, 18, 15, 18.5, 16, 5, 8, 10)
-
-# Number of factories in the area
-factory.number <- c(15, 17, 25, 20, 30, 28, 32, 40, 18, 28)
-
-# Put into data frame
-d <- data.frame(pm.air, tree.number, factory.number)
-str(d)
+# Create data set
+N <- 1000                             
+rho <- 0.5                         
+tree.number <- rnorm(N)                     
+factory.number <- rnorm(N, rho*tree.number, sqrt(1-rho^2))
+pm.air <- rnorm(N, tree.number - factory.number)        
+d <- data.frame(pm.air, tree.number, factory.number)  
 
 # Air quality vs. trees
 m.at <- lm(pm.air ~ 1 + tree.number, data = d)
 precis(m.at)
 d1 <- ggplot(d, aes(x = tree.number, y = pm.air)) +
-  geom_point(color = col.alpha("green3", 0.8), size = 2) +
+  geom_point(color = col.alpha("green3", 0.2), size = 2) +
   geom_smooth(method = "lm", fullrange = T,
               color  = "green4", size = 1/2, 
               fill   = "green", alpha = 1/3) +
@@ -7105,7 +7103,7 @@ d1 <- ggplot(d, aes(x = tree.number, y = pm.air)) +
 m.af <- lm(pm.air ~ 1 + factory.number, data = d)
 precis(m.af)
 d2 <- ggplot(d, aes(x = factory.number, y = pm.air)) +
-  geom_point(color = col.alpha("red3", 0.8), size = 2) +
+  geom_point(color = col.alpha("red3", 0.2), size = 2) +
   geom_smooth(method = "lm", fullrange = T,
               color  = "red4", size = 1/2, 
               fill   = "red", alpha = 1/3) +
@@ -7113,30 +7111,125 @@ d2 <- ggplot(d, aes(x = factory.number, y = pm.air)) +
   theme_bw() 
  grid.arrange(d1, d2, ncol = 2)
  
- # number of trees vs. number of factories
- m.tf <- lm(tree.number ~ 1 + factory.number, data = d)
- precis(m.tf)
- d3 <- ggplot(d, aes(x = factory.number, y = tree.number)) +
-  geom_point(color = col.alpha("purple3", 0.8), size = 2) +
-  geom_smooth(method = "lm", fullrange = T,
-              color  = "purple4", size = 1/2, 
-              fill   = "purple", alpha = 1/3) +
-  labs(x = "Number of factories", y = "Particulate matter (ug/m^3)") +
-  theme_bw() 
- d3
- 
  
  # Air quality vs. number of trees and number of factories
  m.atf <- lm(pm.air ~ 1 + tree.number + factory.number, data = d)
  precis(m.atf)
- pairs(~ pm.air + tree.number + factory.number, data = d, col = "blue")
-
+ pairs(~ pm.air + tree.number + factory.number, data = d, col = col.alpha("skyblue", 0.4))
 
 ```
 
+$~$
+
+> 5M3. It is sometimes observed that the best predictor of fire risk is the presence of firefighters— States and localities with many firefighters also have more fires. Presumably firefighters do not cause fires. Nevertheless, this is not a spurious correlation. Instead fires cause firefighters. Consider the same reversal of causal inference in the context of the divorce and marriage data. How might a high divorce rate cause a higher marriage rate? Can you think of a way to evaluate this relationship, using multiple regression?
+
+```{r 5M3}
+# load data
+data("WaffleDivorce")
+d <- WaffleDivorce
+
+## Try fitting divorce rate vs. marriage.rate first
+# Standardize the variable
+d$Divorce.s <- (d$Divorce - mean(d$Divorce))/ sd(d$Divorce)
+
+# fit model
+m.5m3.a <- lm(Marriage ~ 1 + Divorce.s, data = d)
+precis(m.5m3.a)
+
+```
+
+So, with every sd increase in divorces, there is 1.42 increase in marriage cases. Since this is not a spurious relationship, a logical explanation of this phenomenon would be people remarry after divorce. In order to analyse this using multiple regression, the marriage data needs to be split into first marriage, second marriage, etc (Divorce rate may not correlate with first marriages but with remarriages). But then, the marriage and divorce data are for the year 2009 only. How likely for the couples to remarry within the same year of divorce? It is possible, but it's not typically considered a norm. So, that means within the year 2009, it is possible that increased divorce cases did not result in more marriages&mdash; more people were actually getting married for the first time. To assume a causal inference between divorce and marriage rate, we need to analyse data for more years (longitudinal data). Even then, the term causal inference sounds quite easy for divorce and remarriage rate. Of course, people can only remarry after divorce, but does divorce cause people to remarry? This is different from the assumption *"fire causes firefighters."* Fire can cause an increased in firefighters because firefighters are necessary to put out the fire (a danger). But, is it necessary for people to remarry after divorce? Is being a divorcee a social disadvantage that people must remarry (is remarriage an inevitable consequence of getting divorced)? 
 
 $~$
 
+> 5M4. In the divorce data, States with high numbers of Mormons (members of The Church of Jesus Christ of Latter-day Saints, LDS) have much lower divorce rates than the regression models expected. Find a list of LDS population by State and use those numbers as a predictor variable, predicting divorce rate using marriage rate, median age at marriage, and percent LDS population (possibly standardized). You may want to consider transformations of the raw percent LDS variable.
+
+```{r 5M4}
+
+# I don't know which states have Mormons, so I copy the data from answer sheet
+data(WaffleDivorce)
+d <- WaffleDivorce
+d$pct_LDS <- c(0.75, 4.53, 6.18, 1, 2.01, 2.82, 0.43, 0.55, 0.38,
+  0.75, 0.82, 5.18, 26.35, 0.44, 0.66, 0.87, 1.25, 0.77, 0.64, 0.81,
+  0.72, 0.39, 0.44, 0.58, 0.72, 1.14, 4.78, 1.29, 0.61, 0.37, 3.34,
+  0.41, 0.82, 1.48, 0.52, 1.2, 3.85, 0.4, 0.37, 0.83, 1.27, 0.75,
+  1.21, 67.97, 0.74, 1.13, 3.99, 0.92, 0.44, 11.5 )
+
+# Standardize the variables
+d$pct_LDS.s <- (d$pct_LDS - mean(d$pct_LDS))/ sd(d$pct_LDS)
+d$Marriage.s <- (d$Marriage - mean(d$Marriage))/ sd(d$Marriage)
+d$MedianAgeMarriage.s <- (d$MedianAgeMarriage - mean(d$MedianAgeMarriage))/ sd(d$MedianAgeMarriage)
+
+# Predict divorce rate using marriage rate, median age at marriage, and percent LDS population
+m.5m4.s <- lm(d$Divorce ~ 1 + d$Marriage.s + d$MedianAgeMarriage.s + d$pct_LDS.s )
+
+precis(m.5m4.s)
+
+# Each standard deviation increase in percent of Mormons, the divorce rate will be reduced by 
+# 0.62 divorces per 1000 adults.  
+
+```
+
+$~$
+
+> 5M5. One way to reason through multiple causation hypotheses is to imagine detailed mechanisms through which predictor variables may influence outcomes. For example, it is sometimes argued that the price of gasoline (predictor variable) is positively associated with lower obesity rates (outcome variable). However, there are at least two important mechanisms by which the price of gas could reduce obesity. First, it could lead to less driving and therefore more exercise. Second, it could lead to less driving, which leads to less eating out, which leads to less consumption of huge restaurant meals. Can you outline one or more multiple regressions that address these two mechanisms? Assume you can have any predictor data you need.
+
+<span style="color:navy"><span style="text-decoration:underline">***First mechanism***</span>
+
+Higher gasoline price leads to people using public transportation more and less driving. That reduces traffic congestion, leading to lower air pollution which can cause people to go out more and exercise during free time (fresh air and more spaces). Those who don't use public transportation may walk or ride bicycle, resulting in more exercise. This can result in reduce obesity. The assumptions are:
+
+- Gasoline price (G) increases usage of public transportation (T).
+
+- Gasoline price (G) reduces driving (D).
+
+- T and D reduces traffic congestion (C).
+
+- C increases air quality (F) and space (S).
+
+- F, S, T, and D increases exercise (E).
+
+- E reduces obesity (O). 
+
+$~$
+
+<span style="color:navy"><span style="text-decoration:underline">***Second mechanism***</span>
+
+High gasoline price leads to less driving, which leads to less eating out. Also, high gasoline price increases food food prices (higher cost of food production and transportation), leading to less eating out. 
+
+- D reduces eating out at restaurants (R).
+
+- G increases food prices (P).
+
+- P reduces R.
+
+- R reduces O. 
+
+***Here I included many predictor variables I could think of at the moment. Using all predictors to fit multiple regressions is a bad idea. So, predictor variables need to be thoroughly checked and weeded out before building the regression model.***
+
+$~$
+
+### Hard
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$~$
 
 # Chapter 6: Overfitting, Regularization, and Information Criteria
 
@@ -7805,7 +7898,7 @@ To visualize the results of the thought experiment, what we’ll do now is condu
 \]
 
 
-```{r 6.12}
+```{r 6.12, eval=FALSE}
 
 par(mfrow= c(1,2))
 ## sim.train.test is run 10,000 (1e4) times for each of the 5 models
@@ -7931,7 +8024,7 @@ $~$
 
 How strong or weak these skeptical priors will be in practice depends upon the data and model. So let’s explore a train-test example again, but this time we’ll use the regularizing priors. 
 
-```{r f6.9}
+```{r f6.9, eval=FALSE}
 
 ## Use Ajkurz's codes
 n       <- 20
@@ -8058,7 +8151,7 @@ $~$
 
 We’ve used simulations in which a model is fit to one sample, the training sample, and then used to predict a second sample of the same size, the testing sample. Let’s look at one of those thought experiments again, but now annotated with the difference between the training deviance (in-sample) and the testing deviance (out-of-sample).
 
-```{r f6.10}
+```{r f6.10, eval=FALSE}
 
 ## Use ajkurz's codes
 # The data from our initial simulation isn’t formatted well to plot Figure 6.10. 
@@ -8278,7 +8371,7 @@ $~$
 
 Let's visualize the estimates of out-of-sample deviance that DIC and WAIC provide, in the same familiar context as earlier sections.
 
-```{r 6.11}
+```{r 6.11, eval=FALSE}
 
 ## Use akjurz's codes
 
@@ -8542,7 +8635,8 @@ $~$
 
 diff <- rnorm( 1e5 , 7.4 , 7.16 )
 sum(diff<0)/1e5
-# This is only of heuristic value, especially with only 12 cases. On the other hand, for having only 12 cases, this is more than we might have reasonably hoped for.
+# This is only of heuristic value, especially with only 12 cases. On the other hand, 
+# for having only 12 cases, this is more than we might have reasonably hoped for.
 
 ```
 
@@ -8592,6 +8686,1014 @@ plot( coeftab(m6.11,m6.12,m6.13,m6.14) )
 $~$
 
 ### Model averaging
+
+Treating model weights as heuristic plausibilities that each model will perform best in testing, it makes sense to try to preserve these relative plausibilities when generating predictions. And doing so is mechanically very similar to the procedure with a single model.
+
+```{r 6.29}
+
+## simulate and plot counterfactual predictions for the minimum-WAIC model, m6.14
+# compute counterfactual predictions
+# neocortex from 0.5 to 0.8
+nc.seq <- seq(from=0.5,to=0.8,length.out=30)
+d.predict <- list(
+    kcal.per.g = rep(0,30), # empty outcome
+    neocortex = nc.seq,     # sequence of neocortex
+    mass = rep(4.5,30)      # average mass
+)
+pred.m6.14 <- link( m6.14 , data=d.predict )
+mu <- apply( pred.m6.14 , 2 , mean )
+mu.PI <- apply( pred.m6.14 , 2 , PI )
+
+# plot it all
+plot( kcal.per.g ~ neocortex , d , col=rangi2 )
+lines( nc.seq , mu , lty=2 )
+lines( nc.seq , mu.PI[1,] , lty=2 )
+lines( nc.seq , mu.PI[2,] , lty=2 )
+# Focus on the dashed regression line and the dashed 89% percentile interval of the mean. 
+
+# Now let’s compute and add model averaged posterior predictions. 
+# What we’re going to compute is an ensemble of posterior predictions.
+milk.ensemble <- ensemble( m6.11 , m6.12 , m6.13 , m6.14 , data=d.predict )
+mu <- apply( milk.ensemble$link , 2 , mean )
+mu.PI <- apply( milk.ensemble$link , 2 , PI )
+lines( nc.seq , mu )
+shade(mu.PI, nc.seq)
+# Model averaged posterior predictive distribution for the primate milk analysis. 
+# The dashed regression line and dashed 89% percentile interval correspond to the 
+# minimum-WAIC model, m6.14. The solid line and shaded 89% percentile region correspond 
+# to the model averaged predictions.
+
+```
+
+ The conceptual procedure behind the calculation of an ensemble of posterior predictions:
+ 
+(1) Compute WAIC (or another information criterion) for each model.
+
+(2) Compute the weight for each model.
+
+(3) Compute linear model and simulated outcomes for each model.
+
+(4) Combine these values into an ensemble of predictions, using the model weights as proportions.
+
+$~$
+
+## Practice
+
+### Easy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$~$
+
+# Chapter 7: Interactions
+
+To model deeper conditionality&mdash; where the importance of one predictor depends upon another predictor&mdash; we need interaction. Interaction is a kind of conditioning, a way of allowing parameters (really their posterior distributions) to be conditional on further aspects of the data. 
+
+$~$
+
+## Building an interaction
+
+```{r 7.1}
+
+## Terrain ruggedness aganist economic performance inside and outside of Africa
+# Load data
+data(rugged)
+d <- rugged
+
+# make log version of outcome
+d$log_gdp <- log( d$rgdppc_2000 )
+
+# extract countries with GDP data
+dd <- d[ complete.cases(d$rgdppc_2000) , ]
+
+# split countries into Africa and not-Africa
+d.A1 <- dd[ dd$cont_africa==1 , ] # Africa
+d.A0 <- dd[ dd$cont_africa==0 , ] # not Africa
+
+# Fit the regression models
+# African nations
+m7.1 <- rethinking::map(
+alist(  log_gdp ~ dnorm( mu , sigma ) ,
+        mu <- a + bR*rugged ,
+        a ~ dnorm( 8 , 100 ) ,
+        bR ~ dnorm( 0 , 1 ) ,
+sigma ~ dunif( 0 , 10 ) ),
+data=d.A1 )
+
+# non-African nations
+m7.2 <- rethinking::map(
+    alist(
+        log_gdp ~ dnorm( mu , sigma ) ,
+        mu <- a + bR*rugged ,
+        a ~ dnorm( 8 , 100 ) ,
+        bR ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+), data=d.A0 )
+
+# Plot the posterior
+par(mfrow = c(1,2))
+
+# African countries
+plot(log_gdp ~ rugged, d.A1, col = "slateblue", main = "Africa",
+     ylab = "log(rgdppc_2000)")
+abline(m7.1)
+rugged.seq <- seq(from = -1, to = 7, length.out = 40)
+mu <- link(m7.1, data = data.frame(rugged = rugged.seq))
+mu.PI <- apply(mu, 2, PI)
+shade(mu.PI, rugged.seq)
+
+# Non-african countries
+plot(log_gdp ~ rugged, d.A0, col = "black", main = "not Africa",
+     ylab = "log(rgdppc_2000)")
+abline(m7.2)
+rugged.seq <- seq(from = -1, to = 6, length.out = 40)
+mu <- link(m7.2, data = data.frame(rugged = rugged.seq))
+mu.PI <- apply(mu, 2, PI)
+shade(mu.PI, rugged.seq)
+
+# Separate linear regressions inside and outside of Africa, for log-GDP against terrain ruggedness. 
+# The slope is positive inside Africa, but negative outside. How can we recover this reversal of 
+# the slope, using the combined data?
+
+```
+
+$~$
+
+<span style="color:purple">***How do we discover and describe such a reversal in the context of a regression model?***</span> 
+
+The plots above cheat, because they split the data into two data frames. But it’s not a good idea to split the data in this way. Here are four, of many, reasons.
+
+- There are usually some parameters, such as $\sigma$, that the model says do not depend in any way upon an African identity for each nation. By splitting the data table, you are hurting the accuracy of the estimates for these parameters, because you are essentially making two less-accurate estimates instead of pooling all of the evidence into one estimate. In effect, you have accidentally assumed that variance differs between African and non-African nations. Now, there’s nothing wrong with that sort of assumption. But you want to avoid accidental assumptions.
+
+- In order to acquire probability statements about the variable you used to split the data, `cont_africa` in this case, you need to include it in the model. Otherwise, you have only the weakest sort of statistical argument. Isn’t there uncertainty about the predictive value of distinguishing between African and non-African nations? Of course there is. Unless you analyze all of the data in a single model, you can’t easily quantify that uncertainty. If you just let the posterior distribution do the work for you, you’ll have a useful measure of that uncertainty.
+
+- We may want to use information criteria or another method to compare models. In order to compare a model that treats all continents the same way to a model that allows different slopes in different continents, we need models that use all of the same data. This means we can’t split the data, but have to make the model split the data.
+
+- There are advantages to borrowing information across categories like “Africa” and “not Africa.” This is especially true when sample sizes vary across categories, such that overfitting risk is higher within some categories. In other words, what we learn about ruggedness outside of Africa should have some effect on our estimate within Africa, and visa versa.
+
+$~$
+
+### Adding a dummy variable doesn't work
+
+The first thing to realize is that just including the categorical variable (dummy variable) `cont_africa` won’t reveal the reversed slope. The question is to what extent singling out African nations changes predictions.
+
+```{r 7.3}
+
+# First model: simple linear regression of log-GDP on ruggedness for entire data set
+m7.3 <- rethinking::map(
+    alist(
+        log_gdp ~ dnorm( mu , sigma ) ,
+        mu <- a + bR*rugged ,
+        a ~ dnorm( 8 , 100 ) ,
+        bR ~ dnorm( 0 , 1 ) ,
+sigma ~ dunif( 0 , 10 ) ),
+data=dd )
+
+# Second model: the model that includes a dummy variable for African nations
+m7.4 <- rethinking::map(
+    alist(
+        log_gdp ~ dnorm( mu , sigma ) ,
+        mu <- a + bR*rugged + bA*cont_africa ,
+        a ~ dnorm( 8 , 100 ) ,
+        bR ~ dnorm( 0 , 1 ) ,
+        bA ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+), data=dd )
+
+# Compare the two models using WAIC
+compare( m7.3 , m7.4 )
+# While the standard error of the difference in WAIC is 15, the difference itself is 63, 
+# implying a 95% interval of 63 ± 30. So the continent predictor variable seems to be picking 
+# up something important to the sample, even accounting for expected overfitting.
+
+## Now let’s plot the posterior predictions for m7.4, so you can see how, despite it’s plausible 
+## superiority to m7.3, it still doesn’t manage different slopes inside and outside of Africa.
+# To sample from the posterior and compute the predicted means and intervals for 
+# both African and non-African nations
+rugged.seq <- seq(from=-1,to=8,by=0.25)
+
+# compute mu over samples, fixing cont_africa=0
+mu.NotAfrica <- link( m7.4 , data=data.frame(cont_africa=0,rugged=rugged.seq) )
+
+# compute mu over samples, fixing cont_africa=1
+mu.Africa <- link( m7.4 , data=data.frame(cont_africa=1,rugged=rugged.seq) )
+
+# summarize to means and intervals
+mu.NotAfrica.mean <- apply( mu.NotAfrica , 2 , mean )
+mu.NotAfrica.PI <- apply( mu.NotAfrica , 2 , PI , prob=0.97 )
+mu.Africa.mean <- apply( mu.Africa , 2 , mean )
+mu.Africa.PI <- apply( mu.Africa , 2 , PI , prob=0.97 )
+
+# Plot the posterior
+plot(mu.Africa.mean ~ rugged.seq, type = "l", col = "#446CCF", ylim = c(6, 11), 
+     xlim = c(0, 6), xlab = "Terrain Ruggedness Index", ylab = "log GDP year 2000")
+lines(mu.NotAfrica.mean ~ rugged.seq, type = "l", col = "black")
+shade(mu.Africa.PI, rugged.seq, col = col.alpha("#446CCF", 0.3))
+shade(mu.NotAfrica.PI, rugged.seq)
+
+# Add data points for log_gdp ~ rugged
+points(dd$rugged[dd$cont_africa == 1], dd$log_gdp[dd$cont_africa == 1], col = "#446CCF", pch = 1)
+points(dd$rugged[dd$cont_africa == 0], dd$log_gdp[dd$cont_africa == 0], col = "black", pch = 1)
+
+# Add text
+text(4, 6.5, "Africa", col = "#446CCF")
+text(4, 9.4, "not Africa", col = "black")
+
+# Including a dummy variable for African nations has no effect on the slope. African nations 
+# are shown in blue. Non-African nations are shown in gray. Regression means for each subset 
+# of nations are shown in corresponding colors, along with 97% intervals shown by shading.
+## The fact that WAIC tells you that the model with the dummy variable is hugely better only
+## indicates that African nations on average do have lower GDP.
+
+```
+
+$~$
+
+### Adding a linear interaction does work
+
+A proper interaction effect is needed to recover the change in slope you saw at the start of this section. The likelihood for the model you just plotted, in math form, is:
+
+\[
+\begin{align*}
+\ Y_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_R R_i + \beta_A A_i
+\end{align*}
+\]
+
+```
+Y   = log(rgdppc_2000)
+
+A   = cont_africa
+
+R   = rugged
+
+```
+
+$~$
+
+Now you want to allow the relationship between Y and R to vary as a function of A. Within the model, this relationship is measured by the slope $\beta_R$. Following the same strategy of replacing parameters with linear models, the most straightforward way to make $\beta_R$ depend upon $A$ is just to define the slope $\beta_R$ as a linear model itself, one that includes $A$.
+
+$~$
+
+\[
+\begin{align*}
+\ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
+\mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
+\gamma_i &= \beta_R + \beta_{AR} A_i &&&    \text{[linear model of slope]}
+\end{align*}
+\]
+
+$~$
+
+By defining the relationship between GDP and ruggedness in this way, you are explicitly modeling the hypothesis that the slope between GDP and ruggedness depends&mdash; is *conditional*&mdash; upon whether or not a nation is in Africa. The parameter $\beta_{AR}$ defines the strength of this dependency. If you set $\beta_{AR}$ = 0, then you get the previous model back. If instead $\beta_{AR}$ > 0, then African nations have a more positive slope between GDP and ruggedness. If $\beta_{AR}$ < 0, African nations have a more negative slope. For any nation not in Africa, $A_i$ = 0 and so the interaction parameter $\beta_{AR}$ has no effect on prediction for that nation.
+
+$~$
+
+```{r 7.7}
+
+# Fit the model that includes an interaction between ruggedness and being in Africa
+m7.5 <- rethinking::map(
+    alist(
+        log_gdp ~ dnorm( mu , sigma ) ,
+        mu <- a + gamma*rugged + bA*cont_africa ,
+        gamma <- bR + bAR*cont_africa ,
+        a ~ dnorm( 8 , 100 ) ,
+        bA ~ dnorm( 0 , 1 ) ,
+        bR ~ dnorm( 0 , 1 ) ,
+        bAR ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+), data=dd )
+
+precis(m7.5)
+
+# Compare the new model to the previous two using WAIC
+compare(m7.3, m7.4, m7.5)
+# The modicum of weight given to m7.4 suggests that the posterior means for the slopes in m7.5 
+# are a little overfit. And the standard error of the difference in WAIC between the top two 
+# models is almost the same as the difference itself. 
+
+```
+
+$~$
+
+<span style="color:purple">***Conventional form of interaction***</span>
+
+Instead of a model definition with more than one linear model, as you saw above, it’s conventional to multiply out any interaction effects, so that there is only one linear model. The equation for $\gamma$ can be substituted into the second line and expanded.
+
+\[
+\begin{align*}
+\ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
+\mu_i &= \alpha + \beta_R R_i + \beta_{AR} A_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]
+\end{align*}
+\]
+
+$~$
+
+```{r 7.9}
+
+m7.5b <- rethinking::map(
+    alist(
+        log_gdp ~ dnorm( mu , sigma ) ,
+        mu <- a + bR*rugged + bAR*rugged*cont_africa + bA*cont_africa,
+        a ~ dnorm( 8 , 100 ) ,
+        bA ~ dnorm( 0 , 1 ) ,
+        bR ~ dnorm( 0 , 1 ) ,
+        bAR ~ dnorm( 0 , 1 ) ,
+        sigma ~ dunif( 0 , 10 )
+), data=dd )
+
+precis(m7.5b)
+
+```
+
+$~$
+
+### Plotting the interaction
+
+The goal is to make two plots. In the first, we’ll display nations in Africa and overlay the posterior mean (MAP) regression line and the 97% interval of that line. In the second, we’ll display nations outside of Africa instead.
+
+```{r 7.10}
+
+# Calculate the necessary posterior mean line and interval, for both plots
+rugged.seq <- seq(from=-1,to=8,by=0.25)
+
+mu.Africa <- link( m7.5b , data=data.frame(cont_africa=1,rugged=rugged.seq) )
+mu.Africa.mean <- apply( mu.Africa , 2 , mean )
+mu.Africa.PI <- apply( mu.Africa , 2 , PI , prob=0.97 )
+
+mu.NotAfrica <- link( m7.5b , data=data.frame(cont_africa=0,rugged=rugged.seq) )
+mu.NotAfrica.mean <- apply( mu.NotAfrica , 2 , mean )
+mu.NotAfrica.PI <- apply( mu.NotAfrica , 2 , PI , prob=0.97 )
+
+par(mfrow = c(1,2))
+# plot African nations with regression
+d.A1 <- dd[dd$cont_africa==1,]
+plot( log(rgdppc_2000) ~ rugged , data=d.A1 ,
+    col=rangi2 , ylab="log GDP year 2000" ,
+    xlab="Terrain Ruggedness Index" )
+mtext( "African nations" , 3 )
+lines( rugged.seq , mu.Africa.mean , col=rangi2 )
+shade( mu.Africa.PI , rugged.seq , col=col.alpha(rangi2,0.3) )
+
+# plot non-African nations with regression
+d.A0 <- dd[dd$cont_africa==0,]
+plot( log(rgdppc_2000) ~ rugged , data=d.A0 ,
+    col="black" , ylab="log GDP year 2000" ,
+    xlab="Terrain Ruggedness Index" )
+mtext( "Non-African nations" , 3 )
+lines( rugged.seq , mu.NotAfrica.mean )
+shade( mu.NotAfrica.PI , rugged.seq )
+# Posterior predictions for the terrain ruggedness model,including the interaction between 
+# Africa and ruggedness. Shaded regions are 97% posterior intervals of the mean.
+## Finally, the slope reverses direction inside and outside of Africa.
+
+```
+
+$~$
+
+### Interpreting an interaction estimate
+
+
+There are two basic reasons to be wary of interpreting tables of posterior means and standard deviations as a way to understanding interactions.
+
+(1) When you add an interaction to a model, this changes the meanings of the parameters. A “main effect” coefficient in an interaction model does not mean the same thing as a coefficient of the same name in a model without an interaction. Their distributions cannot usually be directly compared.
+
+(2) Tables of numbers don’t make it easy to fully incorporate uncertainty in our thinking, since covariance among parameters isn’t usually shown. And this gets much harder once the influence of a predictor depends upon multiple parameters.
+
+$~$
+
+#### Parameters change meaning
+
+Unlike in the simple linear regression models, you can no longer read the influence of either predictor from the table of estimates in interaction models:
+
+\[
+\begin{align*}
+\ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
+\mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
+\gamma_i &= \beta_R + \beta_{AR} A_i &&&    \text{[linear model of slope]}
+\end{align*}
+\]
+
+$~$
+
+Now the change in $\mu_i$ that results from a unit change in $R_i$ is given by $\gamma_i$. And since $\gamma_i$ is a function of three things&mdash; $\beta_R$, $\beta_{AR}$, and $A_i$&mdash; we have to know all three in order to know the influence of $R_i$ on the outcome. The only time the slope $\beta_R$ has its old meaning is when $A_i = 0$, which makes $\gamma_i = \beta_R$. Otherwise, to compute the influence of $R_i$ on the outcome, we have to simultaneously consider two parameters and another predictor variable.
+
+```{r 7.12}
+
+precis(m7.5)
+
+```
+
+Since $\gamma$ (gamma) doesn’t appear in this table&mdash; it wasn’t estimated&mdash; we have to compute it ourselves. 
+
+For example, the ***MAP*** slope relating ruggedness to log-GDP within Africa is:
+
+$$\gamma = \beta_R + \beta_{AR}(1) = −0.18 + 0.35 = 0.17$$
+$~$
+
+And outside of Africa:
+
+$$\gamma = \beta_R + \beta_{AR}(0) = -0.18$$
+
+So the relationship between ruggedness and log-GDP is essentially reversed inside and out-side of Africa.
+
+$~$
+
+#### Incorporating uncertainty
+
+Anything calculated using parameters has a distribution. Since $\gamma$ depends upon parameters, and those parameters have a posterior distribution, $\gamma$ must also have a posterior distribution.
+
+```{r 7.13}
+
+# Compute the posterior distribution of γ using samples from posterior
+post <- extract.samples( m7.5 )
+gamma.Africa <- post$bR + post$bAR*1
+gamma.notAfrica <- post$bR + post$bAR*0
+
+# Calculate means of the distributions
+mean(gamma.Africa)
+mean(gamma.notAfrica)
+# Nearly identical to the MAP values, of course.
+# Now we have full distributions of the slopes within and outside of Africa. 
+
+# Plot the distributions on the same axis
+dens( gamma.Africa , xlim=c(-0.5,0.6) , ylim=c(0,5.5) ,
+    xlab="gamma" , col=rangi2 )
+dens( gamma.notAfrica , add=TRUE )
+legend("topright", legend = c("Africa", "Not Africa"), col = c("blue", "black"), lty = 1)
+# Posterior distributions of the slope relating terrain ruggedness to log-GDP. 
+# Blue: African nations. Black: non-African nations.
+
+```
+
+$~$
+
+From here, you could use the samples to ask a bunch of questions, depending upon your interest. For example, what’s the probability (according to this model and these data) that the slope within Africa is less than the slope outside of Africa? All we need to do is compute the difference between the slopes, for each sample from the posterior, and then ask what proportion of these differences is below zero.
+
+```{r 7.16}
+
+diff <- gamma.Africa - gamma.notAfrica
+sum( diff < 0 ) / length( diff )
+# So conditional on this model and these data, it’s highly implausible that the slope 
+# association ruggedness with log-GDP is lower inside Africa than outside it.
+
+# Let's try the reverse
+diff <- gamma.notAfrica - gamma.Africa
+sum( diff < 0 ) / length( diff )
+# So, it's highly plausible that the slope association ruggedness with log-GDP is 
+# lower outside Africa than inside it.
+
+```
+
+Also note that this probability, 0.004, is very tiny compared to the visual overlap of the two distributions in the figure. The distributions in the figure are marginal, like silhouettes of each distribution, ignoring all of the other dimensions in the posterior. The calculation above is the distribution of the difference between the two. The distribution of their difference is not the same as the visual overlap of their marginal distributions. This is also the reason we can’t use overlap in confidence intervals of different parameters as an informal test of “significance” of the difference. If you care about the difference, you must compute the distribution of the difference directly.
+
+$~$
+
+## Symmetry of the linear interaction
+
+The linear interaction contains two symmetrical interpretations. Absent some other information, outside the model, there’s no logical basis for preferring one over the other.
+
+$~$
+
+### Buridan's interaction
+
+We’ll plot the ruggedness and GDP example again, but with the reverse phrasing&mdash; the influence of Africa depends upon ruggedness.
+
+Consider yet again the mathematical form of the likelihood:
+
+\[
+\begin{align*}
+\ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
+\mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
+\gamma_i &\sim \beta_R + \beta_{AR} A_i &&&   \text{[linear model of slope]}
+\end{align*}
+\]
+
+$~$
+
+Let’s expand $\gamma_i$ into the expression for $\mu_i$:
+\[
+\begin{align*}
+\mu_i &= \alpha + (\beta_R + \beta_{AR} A_i) R_i + \beta_A A_i\\
+&= \alpha + \beta_R R_i + \beta_{AR} A_i R_i + \beta_A A_i
+\end{align*}
+\]
+
+$~$
+
+Now factor together the terms with $A_i$ in them:
+\[
+\begin{align*}
+\mu_i &= \alpha + \beta_R R_i + \underbrace{(\beta_A + \beta_{AR}R_i)}_G A_i
+\end{align*}
+\]
+
+$~$
+
+The term labeled $G$ looks a lot like $\gamma_i$ in the original form. This is the same model of $\mu_i$, but re-expressed so that the linear interaction applies to $A_i$&mdash; prove that linear interactions are symmetric. Within the model, there’s no basis to prefer one interpretation over the other, because in fact they are the same interpretation. But when we reason causally about models, our minds tend to prefer one interpretation over the other, because it’s usually easier to imagine manipulating one of the predictor variables instead of the other&mdash; hard to imagine manipulating which continent a nation is on, but it's easy to imagine manipulating terrain ruggedness.
+
+$~$
+
+### Africa depends upon ruggedness
+
+It’ll be helpful to plot the reverse interpretation: *The influence of being in Africa depends upon terrain ruggedness*.
+
+```{r 7.17}
+
+# get minimum and maximum rugged values
+q.rugged <- range(dd$rugged)
+
+# compute lines and confidence intervals
+mu.ruggedlo <- link( m7.5b ,
+    data=data.frame(rugged=q.rugged[1],cont_africa=0:1) )
+mu.ruggedlo.mean <- apply( mu.ruggedlo , 2 , mean )
+mu.ruggedlo.PI <- apply( mu.ruggedlo , 2 , PI )
+
+mu.ruggedhi <- link( m7.5b ,
+    data=data.frame(rugged=q.rugged[2],cont_africa=0:1) )
+mu.ruggedhi.mean <- apply( mu.ruggedhi , 2 , mean )
+mu.ruggedhi.PI <- apply( mu.ruggedhi , 2 , PI )
+
+# plot it all, splitting points at median
+med.r <- median(dd$rugged)
+ox <- ifelse( dd$rugged > med.r , 0.05 , -0.05 )
+plot( dd$cont_africa + ox , log(dd$rgdppc_2000) ,
+    col=ifelse(dd$rugged>med.r,rangi2,"black") ,
+    xlim=c(-0.25,1.25) , xaxt="n" , ylab="log GDP year 2000" ,
+    xlab="Continent" )
+axis( 1 , at=c(0,1) , labels=c("other","Africa") )
+lines( 0:1 , mu.ruggedlo.mean , lty=2 )
+shade( mu.ruggedlo.PI , 0:1 )
+lines( 0:1 , mu.ruggedhi.mean , col=rangi2 )
+shade( mu.ruggedhi.PI , 0:1 , col=col.alpha(rangi2,0.25) )
+
+# The other side of the interaction between ruggedness and continent. 
+# Blue points are nations with above-median ruggedness. 
+# Black points are below the median. 
+# Dashed black line: relationship between continent and log-GDP, for an 
+# imaginary nation with minimum observed ruggedness (0.003). 
+# Blue line: an imaginary nation with maximum observed ruggedness (6.2).
+
+```
+
+$~$
+
+## Continuous interactions
+
+A third reason to be wary of using only tables of numbers to interpret interactions is that interactions among continuous variables are especially opaque. It’s one thing to make a slope conditional upon a *category*, as in the previous example of ruggedness and being in Africa. In such a context, the model reduces to estimating a different slope for each category. But, it’s quite a lot harder to understand that a slope varies in a continuous fashion with a continuous variable.
+
+<span style="color:brown"><span style="text-decoration:underline">**Two common benefits of centering prediction variables**</span>
+
+- Centering the prediction variables can make it much easier to lean on the coefficients alone in understanding the model, especially when you want to compare the estimates from models with and without an interaction.
+
+- Sometimes model fitting has a hard time with uncentered variables. Centering (and possibly also standardizing) the data before fitting the model can help you achieve a faster and more reliable set of estimates.
+
+$~$
+
+### The data
+
+The data in this example are sizes of blooms from beds of tulips grown in greenhouses, under different soil and light conditions.
+
+```{r 7.18}
+
+# Load the data
+data(tulips)
+d <- tulips
+str(d)
+
+```
+
+The `blooms` column will be our outcome. The `water` and `shade` columns will be our predictor variables. Independent effects of sunlight (`shade`) and `water` will produce bigger blooms. We are also interested in the interaction between these two variables. How will the `water` help in the absence of light, or will sunlight helps the blooms in the absence of water? One way to model such an interdependency is to use an interaction effect.
+
+$~$
+
+### The un-centered models
+
+Example focusing on just two models: 
+
+(1) the model with both `water` and `shade` but no interaction 
+
+(2) the model with both main effects and the interaction of `water` with `shade`
+
+$~$
+
+The main effect likelihood is:
+
+\[
+\begin{align*}
+\ B_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_W W_i + \beta_S S_i
+\end{align*}
+\]
+
+$~$
+
+And the full interaction likelihood is:
+
+\[
+\begin{align*}
+\ B_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_W W_i + \beta_S S_i + \beta_{WS} W_i S_i
+\end{align*}
+\]
+
+```
+B_i    = the value of bloom on row i 
+
+W_i    = the value of water
+
+S_i    = the value of shade.
+
+```
+
+```{r 7.19}
+
+set.seed(717)
+
+m7.6 <- rethinking::map(
+    alist(
+        blooms ~ dnorm( mu , sigma ) ,
+        mu <- a + bW*water + bS*shade ,
+        a ~ dnorm( 0 , 100 ) ,
+        bW ~ dnorm( 0 , 100 ) ,
+        bS ~ dnorm( 0 , 100 ) ,
+sigma ~ dunif( 0 , 100 ) ),
+    data=d )
+
+m7.7 <- rethinking::map(
+    alist(
+        blooms ~ dnorm( mu , sigma ) ,
+        mu <- a + bW*water + bS*shade + bWS*water*shade ,
+        a ~ dnorm( 0 , 100 ) ,
+        bW ~ dnorm( 0 , 100 ) ,
+        bS ~ dnorm( 0 , 100 ) ,
+        bWS ~ dnorm( 0 , 100 ) ,
+        sigma ~ dunif( 0 , 100 )
+), data=d )
+# The model fitting engine, R’s optim, searched for a very long time. It searched so long 
+# that it reached the time limit, the “maximum iterations.” As a result, the estimates are 
+# unreliable and should not be used, unless you are sure they are okay.
+
+```
+
+$~$
+
+<span style="color:gray">***Fix the maximum iterations problem.***</span>
+
+```{r 7.19a}
+set.seed(719)
+# Use  Nelder-Mead method of optimization
+m7.6 <- rethinking::map(
+    alist(
+        blooms ~ dnorm( mu , sigma ) ,
+        mu <- a + bW*water + bS*shade ,
+        a ~ dnorm( 0 , 100 ) ,
+        bW ~ dnorm( 0 , 100 ) ,
+        bS ~ dnorm( 0 , 100 ) ,
+sigma ~ dunif( 0 , 100 ) ),
+    data=d ,
+    method="Nelder-Mead" ,
+    control=list(maxit=1e4) )
+
+m7.7 <- rethinking::map(
+    alist(
+        blooms ~ dnorm( mu , sigma ) ,
+        mu <- a + bW*water + bS*shade + bWS*water*shade ,
+        a ~ dnorm( 0 , 100 ) ,
+        bW ~ dnorm( 0 , 100 ) ,
+        bS ~ dnorm( 0 , 100 ) ,
+        bWS ~ dnorm( 0 , 100 ) ,
+        sigma ~ dunif( 0 , 100 )
+),
+data=d , method="Nelder-Mead" , control=list(maxit=1e4) )
+
+# Use coeftab function to check the estimates
+coeftab(m7.6,m7.7)
+# In main-effects-only model (m7.6), for every additional level of soil moisture, 
+# blooms increase by 76, on average. For every addition unit of shade, 
+# blooms decrease by 42, on average. 
+
+# In interaction model (m7.7), both main effects are positive, but the new interaction
+# posterior mean is negative.
+
+# WAIC values assure that the interaction model is indeed a much better model
+compare( m7.6 , m7.7 )
+
+```
+
+$~$
+
+### Center and re-estimate
+
+To *center* a variable means to create a new variable that contains the same information as the original, but has a new mean of zero. Centering can help with two things in this analysis:
+
+- fix our previous problem with maximum iterations
+
+- make the estimates easier to interpret
+
+```{r 7.23}
+
+# Make centered versions of shade and water by subtracting the mean of the original from each value
+d$shade.c <- d$shade - mean(d$shade)
+d$water.c <- d$water - mean(d$water)
+
+# Re-estimate m7.6 and m7.7 using centered variables
+m7.8 <- rethinking::map(
+    alist(
+        blooms ~ dnorm( mu , sigma ) ,
+        mu <- a + bW*water.c + bS*shade.c ,
+        a ~ dnorm( 130 , 100 ) ,
+        bW ~ dnorm( 0 , 100 ) ,
+        bS ~ dnorm( 0 , 100 ) ,
+        sigma ~ dunif( 0 , 100 )
+),
+data=d , start=list(a=mean(d$blooms),bW=0,bS=0,sigma=sd(d$blooms)) )
+
+m7.9 <- rethinking::map(
+    alist(
+        blooms ~ dnorm( mu , sigma ) ,
+        mu <- a + bW*water.c + bS*shade.c + bWS*water.c*shade.c ,
+        a ~ dnorm( 130 , 100 ) ,
+        bW ~ dnorm( 0 , 100 ) ,
+        bS ~ dnorm( 0 , 100 ) ,
+        bWS ~ dnorm( 0 , 100 ) ,
+        sigma ~ dunif( 0 , 100 )
+),
+data=d , start=list(a=mean(d$blooms),bW=0,bS=0,bWS=0,sigma=sd(d$blooms)) )
+
+
+# Check estimates
+coeftab(m7.8,m7.9)
+# Now when we compare the posterior means across the two models, the main effects are the same. 
+# Unlike before, the direction of the association for shade has not changed. More water appears 
+# to directly increase blooms, while more shade directly decreases them. Meanwhile, the 
+# interaction posterior mean has remained the same as it was in the non-centered model.
+## Centering has these effects because: Estimation worked better, Estimates changed less across models.
+
+```
+
+$~$
+
+#### Estimation worked better
+
+Estimation failed with the un-centered predictor variables, because there was a long way to go from the `start` values you provided to map and the `MAP` values it was seeking. When the predictors are centered, the MAP value for $\alpha$ is just the empirical mean for the outcome. That is also the `start` value given to `map`. With un-centered predictors, the MAP value for $\alpha$ lies a long way from the empirical mean. Hence, the long search that failed.
+
+$~$
+
+#### Estimates changed less across models
+
+In the un-centered models, the interaction effect is applied to every case, and so none of the parameters in $\mu$ makes sense alone. This is because neither of the predictors in those models, `shade` and `water`, are ever zero. As a result the interaction parameter always factors into generating a prediction. Consider for example a tulip at the average moisture and shade levels, 2 in each case. The expected blooms for such a tulip is:
+
+$$\mu_i|_{S_i=2, W_i=2} = \alpha + \beta_W(2) + \beta_S (2) + \beta_{WS}(2 \times 2)$$
+
+```{r 7.25}
+
+# Plugging in the MAP values for the un-centered interaction model, m7.7
+k <- coef(m7.7)
+k[1] + k[2]*2 + k[3]*2 + k[4]*2*2
+
+# Same prediction from the centered interaction model, m7.9,
+# also using the mean values of both predictors
+k <- coef(m7.9)
+k[1] + k[2]*0 + k[3]*0 + k[4]*0*0
+precis(m7.9)
+# The estimate a,α, is the expected value of blooms when both water and shade are at 
+# their average values. Their average values are both zero (0), because they were centered 
+# before fitting the model.
+
+# The estimate bW, βW, is the expected change in blooms when water increases by one unit 
+# and shade is at its average value (of zero). This parameter does not tell you the expected 
+# rate of change for any other value of shade. This estimate suggests that when shade is at 
+# its average value, increasing water is highly beneficial to blooms.
+
+# The estimate bS, βS, is the expected change in blooms when shade increases by one unit and 
+# water is at its average value (of zero). This parameter does not tell you the expected rate 
+# of change for any other value of water. This estimate suggests that when water is at its 
+# average value, increasing shade is highly detrimental to blooms.
+
+# The estimate bWS, βWS, is the interaction effect. Like all linear interactions, it can be 
+# explained in more than one way. First, the estimate tells us the expected change in the 
+# influence of water on blooms when increasing shade by one unit. Second, it tells us the 
+# expected change in the influence of shade on blooms when increasing water by one unit.
+
+```
+
+$~$
+
+### Plotting implied predictions
+
+There were no interactions in the models in previous chapters. As a result, when plotting model predictions as a function of any one predictor, you could hold the other predictors constant at any value you liked. So the choice of which values to set the un-viewed predictor variables to hardly mattered.
+
+Once there are interactions in a model, the effect of changing a predictor depends upon the values of the other predictors. Maybe the simplest way to go about plotting such interdependency is to make a frame of multiple bivariate plots. In each plot, you choose different values for the un-viewed variables. Then by comparing the plots to one another, you can see how big of a difference the changes make.
+
+```{r 7.28, fig.width=8, fig.height=6}
+
+# make a plot window with three panels in a single row
+par(mfrow=c(2,3), mar = c(4, 4, 4, 4)) # 2 row, 3 columns
+
+## Without interaction
+# loop over values of water.c and plot predictions
+shade.seq <- -1:1
+for ( w in -1:1 ) {
+    dt <- d[d$water.c==w,]
+    plot( blooms ~ shade.c , data=dt , col=rangi2 ,
+        main=paste("water.c =",w) , xaxp=c(-1,1,2) , ylim=c(0,362) ,
+        xlab="shade (centered)" )
+    mu <- link( m7.8 , data=data.frame(water.c=w,shade.c=shade.seq) )
+    mu.mean <- apply( mu , 2 , mean )
+    mu.PI <- apply( mu , 2 , PI , prob=0.97 )
+    lines( shade.seq , mu.mean )
+    lines( shade.seq , mu.PI[1,] , lty=2 )
+    lines( shade.seq , mu.PI[2,] , lty=2 )
+}
+
+## With interaction
+# loop over values of water.c and plot predictions
+shade.seq <- -1:1
+for ( w in -1:1 ) {
+    dt <- d[d$water.c==w,]
+    plot( blooms ~ shade.c , data=dt , col=rangi2 ,
+        main=paste("water.c =",w) , xaxp=c(-1,1,2) , ylim=c(0,362) ,
+        xlab="shade (centered)" )
+    mu <- link( m7.9 , data=data.frame(water.c=w,shade.c=shade.seq) )
+    mu.mean <- apply( mu , 2 , mean )
+    mu.PI <- apply( mu , 2 , PI , prob=0.97 )
+    lines( shade.seq , mu.mean )
+    lines( shade.seq , mu.PI[1,] , lty=2 )
+    lines( shade.seq , mu.PI[2,] , lty=2 )
+}
+
+# Triptych plot of predicted blooms across water treatments, without (top row) and 
+# with (bottom row) an interaction effect. Blue points in each plot are data- individual 
+# cases that match the water value displayed at the top of each plot.
+# The solid line is the posterior mean and the dashed lines give 97% interval of the mean.
+
+# Top row: Without the interaction, model m7.8. Each of the three plots of blooms against 
+# shade level is for a different water level. The slope of the regression line in each case 
+# is exactly the same, because there is no interaction in this model. 
+
+# Bottom row: With the interaction, model m7.9. Now the slope of blooms against shade has 
+# a different value in each plot.At low water levels, shade can’t have much of an effect, 
+# because the tulips don’t have enough water to produce blooms anyway. At higher water levels, 
+# shade can matter more, because the tulips have enough water to produce some blooms. 
+# At very high water levels, water is no longer limiting the blooms very much, and so shade 
+# can have a much more dramatic impact on the outcome.
+
+```
+
+$~$
+
+```{r 7.28a, fig.width=8, fig.height=6}
+
+## Water on the horizontal axes and shade level varied from left to right
+
+par(mfrow=c(2,3), mar = c(4, 4, 4, 4))
+
+## Without interaction
+# loop over values of shade.c and plot predictions
+water.seq <- -1:1
+for ( s in -1:1 ) {
+    dt <- d[d$shade.c==s,]
+    plot( blooms ~ water.c , data=dt , col=rangi2 ,
+        main=paste("shade.c =",s) , xaxp=c(-1,1,2) , ylim=c(0,362) ,
+        xlab="water (centered)" )
+    mu <- link( m7.8 , data=data.frame(shade.c=s,water.c=water.seq) )
+    mu.mean <- apply( mu , 2 , mean )
+    mu.PI <- apply( mu , 2 , PI , prob=0.97 )
+    lines( water.seq , mu.mean )
+    lines( water.seq , mu.PI[1,] , lty=2 )
+    lines( water.seq , mu.PI[2,] , lty=2 )
+}
+
+## With interaction
+# loop over values of shade.c and plot predictions
+water.seq <- -1:1
+for ( s in -1:1 ) {
+    dt <- d[d$shade.c==s,]
+    plot( blooms ~ water.c , data=dt , col=rangi2 ,
+        main=paste("shade.c =",s) , xaxp=c(-1,1,2) , ylim=c(0,362) ,
+        xlab="water (centered)" )
+    mu <- link( m7.9 , data=data.frame(shade.c=s,water.c=water.seq) )
+    mu.mean <- apply( mu , 2 , mean )
+    mu.PI <- apply( mu , 2 , PI , prob=0.97 )
+    lines( water.seq , mu.mean )
+    lines( water.seq , mu.PI[1,] , lty=2 )
+    lines( water.seq , mu.PI[2,] , lty=2 )
+}
+# If there isn’t enough light, then more water hardly helps.
+
+```
+
+$~$
+
+## Interactions in design formulas
+
+To specify interaction models using design formulas, like those used by `lm` and other automated model fitting functions, you just strip out the parameters from the linear model.
+
+For example, here’s a model with an interaction between $x$ and $z$:
+
+\[
+\begin{align*}
+\ y_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_x x_i + \beta_z z_i + \beta_{xz} x_i z_i
+\end{align*}
+\]
+
+
+$~$
+
+```{r 7.29}
+
+# As a design formula, this is:
+m7.x <- lm( y ~ x + z + x*z , data=d )
+
+# You can also omit the pure x and z terms, the main effects, and still get the same model.
+m7.x <- lm( y ~ x*z , data=d )
+
+```
+
+$~$
+
+If you do not want the main effects in the model, you must explicitly subtract them from the formula. For example, here’s a model with an interaction, but without one of the main effects (when you know a priori that there is no direct effect of $z$ on the outcome, when $\beta_z$ = 0 by assumption):
+
+\[
+\begin{align*}
+\ y_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_x x_i + \beta_{xz} x_i z_i
+\end{align*}
+\]
+
+```{r 7.31}
+
+# As a design formula, this model is:
+m7.x <- lm( y ~ x + x*z - z , data=d )
+
+```
+
+$~$
+
+For higher-order interactions, just multiply more predictors together. The design formula always implies all of the lower-order interactions, even though you don’t explicitly state them. For example, this model has a three-way interaction between $x$, $z$, and $w$, as well as three two-way interactions and all three main effects:
+
+\[
+\begin{align*}
+y_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + \beta_x x_i + \beta_z z_i + \beta_w w_i + \beta_{xz} x_i z_i + \beta_{xw} x_i w_i + \beta_{zw} z_i w_i + \beta_{xzw} x_i z_i w_i 
+\end{align*}
+\]
+
+
+```{r 7.32}
+
+# create mock data set to solve "error:variable lengths differ (found for 'w')"
+d <- data.frame(
+  y = rnorm(40),
+  x = rnorm(40),
+  z = rnorm(40),
+  w = rnorm(40)
+) 
+
+## In design formula:
+m7.x <- lm( y ~ x*z*w , data=d )
+# And you can explicitly subtract any lower-order interactions or main effects to 
+# construct a reduced model.
+
+## Expand the design formula to see how it works
+# Expand a three-way interaction into a full set of terms:
+x <- z <- w <- 1 # any number would do here
+colnames( model.matrix(~x*z*w) )
+# That function takes the design formula, absent the outcome variable, and expands it 
+# into a full set of variables for a linear model. This expanded set is the model matrix. 
+# ":" symbols stand for multiplication.
+
+```
+
+$~$
+
+## Practice
+
+
+
+
+
+
+
+
+
+
+
 
 
 
