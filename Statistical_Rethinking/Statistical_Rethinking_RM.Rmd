@@ -25,6 +25,10 @@ library(Ecdat)
 library(gridExtra)
 library(grid)
 library(rcartocolor)
+library(tidyverse)
+library(rstan)
+library(cmdstanr)
+library(brms)
 ```
 
 # Chapter 1: The Golem of Prague
@@ -7426,7 +7430,7 @@ There are two principle concerns with just adding variables.
 
 The first is that adding parameters&mdash; making the model more complex&mdash; nearly always improves the fit of a model to the data. For example, like other measures of fit to sample, *R^2^* increases as more predictor variables are added. This is true even when the variables added to a model are just random numbers, with no relation to the outcome. So it’s no good to choose among models using only fit to the data.
 
-Second, while more complex models fit the data better, they often predict new data worse. Models that have many parameters tend to overfit more than do simpler models. This means that a complex model will be very sensitive to the exact sample used to fit it, leading to potentially large mistakes when future data is not exactly like the past data. But simple models, with too few parameters, tend instead to underfit, systematically over&mdash; predicting or under&mdash; predicting the data, regardless of how well future data resemble past data. So we can’t always favor either simple models or complex models.
+Second, while more complex models fit the data better, they often predict new data worse. Models that have many parameters tend to overfit more than do simpler models. This means that a complex model will be very sensitive to the exact sample used to fit it, leading to potentially large mistakes when future data is not exactly like the past data. But simple models, with too few parameters, tend instead to underfit, systematically over-predicting or under-predicting the data, regardless of how well future data resemble past data. So we can’t always favor either simple models or complex models.
 
 $~$
 
@@ -7678,7 +7682,6 @@ for ( i in 1:nrow(d) ) {
 
 
 ```{r f6.5a}
-library(tidyverse)
 
 ### Use codes from "ajkurz"
 # Create base plot
@@ -8711,7 +8714,7 @@ To compare models using an information criterion, you first compute the criterio
 
 ```{r 6.23}
 
-WAIC( m6.14 )
+rethinking::WAIC( m6.14 )
 # Note that WAIC value is negative in this case. That’s fine. There’s nothing 
 # preventing deviance from being negative. Smaller values are still better.
 
@@ -8723,9 +8726,9 @@ WAIC( m6.14 )
 # Still, always remember that WAIC is an estimate.
 
 ## Calculate WAIC for other models
-WAIC( m6.13 )
-WAIC( m6.12 )
-WAIC( m6.11 )
+rethinking::WAIC( m6.13 )
+rethinking::WAIC( m6.12 )
+rethinking::WAIC( m6.11 )
 
 ## Order the models by their WAIC values using compare()
 ( milk.models <- compare( m6.11 , m6.12 , m6.13 , m6.14 ) )
@@ -8906,7 +8909,12 @@ $~$
 
 ## Practice
 
-### Easy
+### Easy 
+
+> 6E1. State the three motivating criteria that define information entropy. Try to express each in your
+own words.
+
+
 
 
 
@@ -9850,6 +9858,301 @@ colnames( model.matrix(~x*z*w) )
 $~$
 
 ## Practice
+
+
+$~$
+
+# Chapter 8: Markov Chain Monte Carlo
+
+***Markov chain Monte Carlo (MCMC) estimation*** is the estimation of posterior probability distributions using a stochastic process. It has the ability to directly estimate models, such as the generalized linear and multilevel models, which routinely produce non-Gaussian posterior distributions. 
+
+$~$
+
+## Good King Markov and his island kingdom
+
+King Markov was a benevolent autocrat of an island kingdom,a circular archipelago, with 10 islands. Each island was neighbored by two others, and the entire archipelago formed a ring. The islands were of different sizes, and so had different sized populations living on them. The second island was about twice as populous as the first, the third about three times as populous as the first, and so on, up to the largest island, which was 10 times as populous as the smallest.
+
+The king should visit each island in proportion to its population size, visiting the largest island 10 times as often as the smallest, for example. Also, since the archipelago was a ring, the King insisted that he only move among adjacent islands, to minimize time spent on the water. 
+
+The king’s advisor, a Mr Metropolis, engineered a clever solution to these demands. We’ll call this solution the ***Metropolis algorithm***. Here's how it works.
+
+(1) Wherever the King is, each week he decides between staying put for another week or moving to one of the two adjacent islands. To decide his next move, he flips a coin.
+
+(2) If the coin turns up heads, the King considers moving to the adjacent island clock- wise around the archipelago. If the coin turns up tails, he considers instead moving counterclockwise. Call the island the coin nominates the *proposal* island.
+
+(3) Now, to see whether or not he moves to the proposal island, King Markov counts out a number of seashells equal to the relative population size of the proposal island. So for example, if the proposal island is number 9, then he counts out 9 seashells. Then he also counts out a number of stones equal to the relative population of the current island. So for example, if the current island is number 10, then King Markov ends up holding 10 stones, in addition to the 9 seashells.
+
+(4) When there are more seashells than stones, King Markov always moves to the proposal island. But if there are fewer shells than stones, he discards a number of stones equal to the number of shells. So for example, if there are 4 shells and 6 stones, he ends up with 4 shells and 6 − 4 = 2 stones. Then he places the shells and the remaining stones in a bag. He reaches in and randomly pulls out one object. If it is a shell, he moves to the proposal island. Otherwise, he stays put another week. As a result, the probability that he moves is equal to the number of shells divided by the original number of stones.
+
+```{r 8.1}
+
+## Simulate King Markov’s journey
+
+# Set number of weeks to simulate
+num_weeks <- 1e5
+
+# Define an empty history vector
+positions <- rep(0,num_weeks)
+
+# Define a starting island position (the biggest island, number 10)
+current <- 10
+
+for ( i in 1:num_weeks ) {
+    # record current position
+    positions[i] <- current
+    
+    # flip coin to generate proposal
+    proposal <- current + sample( c(-1,1) , size=1 )
+    
+    # now make sure he loops around the archipelago
+    if ( proposal < 1 ) proposal <- 10
+    if ( proposal > 10 ) proposal <- 1
+    
+    # move?
+    prob_move <- proposal/current
+    current <- ifelse( runif(1) < prob_move , proposal , current )
+}
+
+
+
+
+
+
+
+# Results of the king following the Metropolis algorithm. The left-hand plot shows 
+# the king’s position (vertical axis) across first 100 weeks (horizontal axis). 
+# In any particular week, it’s nearly impossible to say where the king will be. 
+
+# The right-hand plot shows the long-run behavior of the algorithm, as the time spent on 
+# each island turns out to be proportional to its population size.
+
+# The algorithm will still work in this way, even if we allow the king to be equally likely 
+# to propose a move to any island from any island, not just among neighbors. The algorithm 
+# would also work for any size archipelago, even if the king didn’t know how many islands 
+# were in it. All he needs to know at any point in time is the population of the current 
+# island and the population of the proposal island.
+
+```
+
+$~$
+
+## Markov chain Monte Carlo
+
+The goal of general **Metropolis Algorithm**, an example of Markov chain Monte Carlo, is to draw samples from an unknown and usually complex target distribution, like a posterior probability distribution.
+
+- The “islands” in our objective are parameter values, and they need not be discrete, but can instead take on a continuous range of values as usual.
+
+- The “population sizes” in our objective are the posterior probabilities at each parameter value.
+
+- The “weeks” in our objective are samples taken from the joint posterior of the parameters in the model.
+
+Provided the way we choose our proposed parameter values at each step is symmetric&mdash; so that there is an equal chance of proposing from A to B and from B to A&mdash; then the Metropolis algorithm will eventually give us a collection of samples from the joint posterior.
+
+$~$
+
+<spans style="color:brown"><span style="text-decoration:underline">**Two of the most important in contemporary Bayesian inference**</span>
+
+- Gibbs sampling
+
+- Hamiltonian (aka Hybrid, aka HMC) Monte Carlo
+
+$~$
+
+### Gibbs sampling
+
+The Metropolis algorithm works whenever the probability of proposing a jump to B from A is equal to the probability of proposing A from B, when the proposal distribution is symmetric. There is a more general method, known as Metropolis-Hastings, that allows asymmetric proposals. 
+
+An algorithm that allows asymmetric proposals is useful because:
+
+- it makes it easier to handle parameters, like standard deviations, that have boundaries at zero
+
+- we can acquire an equally good image of the posterior distribution in fewer steps
+
+Gibbs sampling is a variant of the Metropolis-Hastings algorithm that uses clever proposals and is therefore more efficient&mdash; you can get a good estimate of the posterior from Gibbs sampling with many fewer samples than a comparable Metropolis approach. The improvement arises from ***adaptive proposals*** in which the distribution of proposed parameter values adjusts itself intelligently, depending upon the parameter values at the moment. Gibbs sampling computes these adaptive proposals using particular combinations of prior distributions and likelihoods known as *conjugate pairs*.
+
+Some limitations of Gibbs sampling:
+
+- Some conjugate priors seem silly, and choosing a prior so that the model fits efficiently isn’t really a strong argument from a scientific perspective.
+
+- As models become more complex and contain hundreds or thousands or tens of thousands of parameters, Gibbs sampling becomes shockingly inefficient.
+
+$~$
+
+### Hamiltonian Monte Carlo
+
+Hamiltonian Monte Carlo (or Hybrid Monte Carlo, HMC) adopts Jaynes’ principle that, *"whenever there is a randomized way of doing something, then there is a non-randomized way that delivers better performance but requires more thought."*
+
+HMC is much more computationally costly than are Metropolis or Gibbs sampling&mdash; both highly random procedures. But its proposals are typically much more efficient&mdash; doesn’t need as many samples to describe the posterior distribution, outshine other algorithms as models become more complex (thousands or tens of thousands of parameters). HMC outperforms Metropolis and Gibbs sampling, but it is not a universal solution to all MCMC problems.
+
+Monty’s kingdom is not a discrete set of islands. Instead, it is a continuous territory stretched out along a narrow valley. Monty's advisor, Hamilton realized that a much more efficient way to visit the citizens in the continuous Kingdom is to travel back and forth along its length. In order to spend more time in densely settled areas, they should slow the royal vehicle down when houses grow more dense. Likewise, they should speed up when houses grow more sparse. This strategy requires knowing how quickly population density is changing, at their current location. But it doesn’t require remembering where they’ve been or knowing the population distribution anyplace else. And a major benefit of this strategy compared to that of Metropolis is that the King makes a full sweep of the kingdom before revisiting anyone.
+
+In statistical applications, the royal vehicle is the current vector of parameter values. Let’s consider the single parameter case, just to keep things simple. In that case, the log-posterior is like a bowl, with the MAP at its nadir. Then the job is to sweep across the surface of the bowl, adjusting speed in proportion to how high up we are. In cases where ordinary Metropolis or Gibbs sampling wander slowly through parameter space, Hamiltonian Monte Carlo remains efficient.
+
+Some limitations of HMC:
+
+- HMC requires continuous parameters. It can’t glide through a discrete parameter. 
+
+- it needs to be tuned to a particular model and its data. That’s where an engine like Stan (mc-stan.org) comes in. Stan automates much of that tuning.
+
+$~$
+
+## Easy HMC: `map2stan`
+
+`map2stan` compiles lists of formulas, like the lists you’ve been using so far to construct map estimates, into Stan HMC code. To use `map2stan`, you need to preprocess any variable transformations, and you need to construct a clean data frame with only the variables you will use.
+
+```{r 8.2}
+
+# load the data and reduce it down to cases (nations) that have the outcome variable of interest
+data(rugged)
+d <- rugged
+d$log_gdp <- log(d$rgdppc_2000)
+dd <- d[ complete.cases(d$rgdppc_2000) , ]
+
+# Fit the interaction model which  aims to predict log-GDP with terrain ruggedness, 
+# continent, and the interaction of the two
+m8.1 <- rethinking::map(
+    alist(
+        log_gdp ~ dnorm( mu , sigma ) ,
+        mu <- a + bR*rugged + bA*cont_africa + bAR*rugged*cont_africa ,
+        a ~ dnorm(0,100),
+        bR ~ dnorm(0,10),
+        bA ~ dnorm(0,10),
+        bAR ~ dnorm(0,10),
+        sigma ~ dunif(0,10)
+),
+    data=dd )
+precis(m8.1)
+
+```
+
+$~$
+
+### Preparation
+
+But now we’ll also fit this model using Hamiltonian Monte Carlo. This means there will be no more quadratic approximation&mdash; if the posterior distribution is non-Gaussian, then we’ll get whatever non-Gaussian shape it has. You can use exactly the same formula list as before, but you need to do two additional things.
+
+(1) Preprocess all variable transformations.
+        - If the outcome is transformed somehow, like by taking the logarithm, then do this before fitting the model by constructing a new variable in the data frame. 
+        - Likewise, if any predictor variables are transformed, including squaring and cubing and such to build polynomial models, then compute these transformed values before fitting the model.
+        
+\n
+
+(2) Once you’ve got all the variables ready, make a new trimmed down data frame that contains only the variables you will actually use to fit the model. Technically, you don’t have to do this. But doing so avoids common problems. For example, if any of the unused variables have missing values, NA, then Stan will refuse to work.
+
+```{r 8.4}
+
+dd.trim <- dd[ , c("log_gdp","rugged","cont_africa") ]
+str(dd.trim)
+
+# The data frame dd.trim contains only the three variables we’re using.
+```
+
+$~$
+
+### Estimation
+
+```{r 8.5, warning=FALSE, error=FALSE}
+
+# Get samples from the posterior distribution using HMC
+m8.1stan <- ulam(
+    alist(
+        log_gdp ~ dnorm( mu , sigma ) ,
+        mu <- a + bR*rugged + bA*cont_africa + bAR*rugged*cont_africa ,
+        a ~ dnorm(0,100),
+        bR ~ dnorm(0,10),
+        bA ~ dnorm(0,10),
+        bAR ~ dnorm(0,10),
+        sigma ~ dcauchy(0,2) # a weakly regularizing prior for standard deviations
+
+# The uniform prior on sigma has been changed to a half-Cauchy prior. 
+# The Cauchy distribution is a useful thick-tailed probability distribution 
+# related to the Student t distribution.
+
+), data=dd.trim)
+
+precis(m8.1stan)
+
+# The interval boundaries in the table are highest posterior density intervals (HPDI), 
+# not ordinary percentile intervals (PI).
+
+# n_eff and Rhat provide MCMC diagnostic criteria, to help you tell how well estimation worked.
+# n_eff is a crude estimate of the number of independent samples you managed to get.
+# Rhat is a complicated estimate of the convergence of the Markov chains to the target 
+# distribution. It should approach 1.00 from above, when all is well.
+
+```
+
+$~$
+
+### Sampling agian, in parallel
+
+Once you have compiled your Stan model, you can draw more samples from it anytime, running as many independent Markov chains as you like. And you can easily parallelize those chains, as well. To run four independent Markov chains for the model above, and to distribute them across separate processors in your computer, just pass the previous fit back to map2stan:
+
+```{r 8.7}
+
+m8.1stan_4chains <- update( m8.1stan , chains=4 , cores=4 )
+# map2stan doesn't work anymore- use update() here. 
+precis(m8.1stan_4chains)
+
+```
+
+$~$
+
+### Visualization
+
+```{r 8.8, message=FALSE, warning=FALSE, error=FALSE}
+
+# Pull out the samples
+post <- extract.samples( m8.1stan )
+str(post)
+# Samples are in a list- not in a data.frame (useful for multilevel models)
+
+# For now, if it doesn’t behave like you expect it to, you can coerce it to a data frame 
+post<-as.data.frame(post)
+
+# To plot all these samples at once, provided there aren’t too many parameters
+pairs(post)
+
+# To display parameter names and parameter correlations
+pairs(m8.1stan)
+# Pairs plot of the samples produced by Stan. The diagonal shows a density estimate for 
+# each parameter. Below the diagonal, correlations between parameters are shown.
+
+```
+
+$~$
+
+### Using the samples
+
+If you have the samples from the posterior and you know the model, you can do anything: simulate predictions, compute differences between parameters, and calculate DIC and WAIC.
+
+```{r 8.11}
+
+show(m8.1stan)
+# map2stan does not work anymore and ulam doesn't compute WAIC and DIC 
+
+## Use brms (copy Akjurz's codes)
+# Run HMC model
+output <- capture.output(b8.1 <-
+  brm(data = dd, family = gaussian,
+      log_gdp ~ 1 + rugged + cont_africa + rugged:cont_africa,
+      prior = c(prior(normal(0, 100), class = Intercept),
+                prior(normal(0, 10), class = b),
+                prior(cauchy(0, 2), class = sigma)),
+      seed = 8))
+
+print(b8.1)
+
+
+
+```
+
+
+
+
+
+
+
 
 
 
