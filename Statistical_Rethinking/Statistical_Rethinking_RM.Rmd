@@ -2,23 +2,25 @@
 title: "Statistical_Rethinking_RM"
 author: "SM"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
-format:
-   html:
-    code-tools: true
-    code-fold: true
-    code-summary: 'Show code'
-    code-link: true
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc-title: "Contents"
+    toc-depth: 5
+    toc-location: left
+    number_sections: true
+    fig_caption: true
+    includes:
+      in_header: "header.html"
+    code_folding: show
+    code_highlight: tango
+    code_download: true
     theme: sandstone
-toc: true
-toc-title: 'Contents'
-toc-depth: 5
-toc-location: left
-number-sections: true
-highlight-style: tango
-smooth-scroll: true
-fig_caption: true
-
+    highlight: tango
+    mathjax: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML.js"
 ---
+
 
 ```{r setup, include=FALSE, message  = FALSE, warning = F}
 knitr::opts_chunk$set(echo = TRUE,  message = FALSE,  warning = FALSE,  tidy = TRUE)
