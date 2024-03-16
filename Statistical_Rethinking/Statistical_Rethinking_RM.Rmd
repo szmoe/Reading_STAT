@@ -2806,7 +2806,7 @@ subscript i   = index- each individual element of this list (row numbers)
 
 Then, we add priors assuming Pr($\mu$, $\sigma$) = Pr($\mu$) Pr($\sigma$):
 
-```math
+$$
 \begin{align*}
 \text{h}_i &\sim \text{Normal}(\mu, \sigma) \ &&& [\text{Likelihood}]\\
 
@@ -2815,7 +2815,7 @@ Then, we add priors assuming Pr($\mu$, $\sigma$) = Pr($\mu$) Pr($\sigma$):
 \sigma &\sim \text{Uniform}(0, 50) \ &&& [\sigma \text{ prior}]
 \end{align*}
 
-```
+$$
 
 <br>
 
@@ -3029,7 +3029,7 @@ d2 <- d[ d$age >= 18 , ]
 
 - Define the model, using R's formula syntax:
 
-```math
+$$
 
 \begin{align*}
 \text{h}_i & \sim \text{Normal}(\mu, \sigma) \ &&& \text{[height} & \sim \text{dnorm(mu, sigma)}\text{]}\\
@@ -3039,7 +3039,7 @@ d2 <- d[ d$age >= 18 , ]
 \sigma &\sim \text{Uniform}(0, 50) \ &&& [\text{sigma} &\sim \text{dunif}(0, 50)]
 \end{align*}
 
-```
+$$
 
 <br>
 
@@ -3290,7 +3290,7 @@ All we have to do is incorporate our new model for the mean into the model speci
 
 Repeat model definition, with corresponding R code:
 
-```math
+$$
 
 \begin{align*}
 \text{h}_i & \sim \text{Normal}(\mu_i, \sigma) \ &&& \text{height} & \sim \text{dnorm(mu, sigma)} \\
@@ -3305,7 +3305,7 @@ Repeat model definition, with corresponding R code:
 
 \end{align*}
 
-```
+$$
 
 <br>
 
@@ -3998,7 +3998,7 @@ plot(height ~ weight.s, d, col = col.alpha("black", 0.5))
 
 To fit the parabolic model, just modify the definition of $\mu_i$. Here’s the model (with very weak priors):
 
-```math
+$$
 
 \begin{align*}
 
@@ -4016,7 +4016,7 @@ To fit the parabolic model, just modify the definition of $\mu_i$. Here’s the 
 
 \end{align*}
 
-```
+$$
 
 <br>
 
@@ -4827,7 +4827,7 @@ Multivariate regression uses more than one predictor variable to model an outcom
 
 Linear regression model for correlation between age at marriage and divorce rate:
 
-```math
+$$
 \begin{align*}
 \text{D}_i &\sim \text{Normal}(\mu_i, \sigma) \\
 \mu_i &= \alpha + \beta_A \text{A}_i \\
@@ -4836,7 +4836,7 @@ Linear regression model for correlation between age at marriage and divorce rate
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
 
-```
+$$
 
 ```
 Di = the divorce rate for State i
@@ -4966,7 +4966,7 @@ Multivariate regression formulas look a lot like the polynomial models- they add
 
 Example model that predicts divorce rate, using both marriage rate and age at marriage:
 
-```math
+$$
 
 \begin{align*}
 \text{D}_i &\sim \text{Normal}(\mu, \sigma)\ &&&  \text{[likelihood]}\\
@@ -4977,7 +4977,7 @@ Example model that predicts divorce rate, using both marriage rate and age at ma
 \sigma &\sim \text{Uniform}(0, 10)\ &&&           \text{[prior for }\sigma]
 \end{align*}
 
-```
+$$
 
 ```
 R = marriage rate 
@@ -5032,7 +5032,7 @@ the predicted means. In R notation, this operation is X %*% b.
 
 To fit this model to the divorce data, we just expand the linear model.
 
-```math
+$$
 
 \begin{align*}
 \text{D}_i &\sim \text{Normal}(\mu, \sigma)\ &&&  \text{Divorce} \sim \text{dnorm(mu, sigma)}\\
@@ -5043,7 +5043,7 @@ To fit this model to the divorce data, we just expand the linear model.
 \sigma &\sim \text{Uniform}(0, 10)\ &&&           \text{sigma} \sim \text{dunif}(0, 10)
 \end{align*}
 
-```
+$$
 
 ```{r 5.4}
 
@@ -5098,7 +5098,7 @@ In our multivariate model of divorce rate, we have two predictors:
 
 To compute predictor residuals for either, we just use the other predictor to model it. The model for marraige rate:
 
-```math
+$$
 \begin{align*}
 \text{R}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta \text{A}_i\\
@@ -5106,7 +5106,8 @@ To compute predictor residuals for either, we just use the other predictor to mo
 \beta &\sim \text{Normal}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-```
+
+$$
 
 
 ```{r 5.4a}
@@ -5739,7 +5740,7 @@ lines( np.seq , mu.PI[2,] , lty=2 )
 
 Now let’s see what happens when we add both predictor variables at the same time to the regression. This is the multivariate model, in math form:
 
-```math
+$$
 \begin{align*}
 \text{k}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_n \text{n}_i + \beta_m \text{log}(\text{m}_i)\\
@@ -5748,7 +5749,8 @@ Now let’s see what happens when we add both predictor variables at the same ti
 \beta_m &\sim \text{Normal}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-```
+
+$$
 
 \n
 
@@ -6072,12 +6074,12 @@ plot( bl ~ br , post , col=col.alpha(rangi2,0.1) , pch=16 )
 
 One way to think of this phenomenon is that you have approximated this likelihood:
 
-```math
+$$
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i
 \end{align*}
-```
+$$
 
 
 ```
@@ -6089,12 +6091,13 @@ x   = single predictor (leg lengths)
 
 Here x is used twice, which is a perfect example of the problem caused by using the almost-identical leg lengths. From the computer’s perspective, this likelihood is really:
 
-```math
+$$
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + (\beta_1 + \beta_2) \text{x}_i
 \end{align*}
-```
+
+$$
 
 
 This means the posterior distribution ends up reporting the practically infinite combinations of $\beta_1$ and $\beta_2$ that make their sum close to the actual association of x with y.
@@ -6438,7 +6441,7 @@ str(d)
 
 The effect of a dummy variable is to turn a parameter on for those cases in the category. Simultaneously, the variable turns the same parameter off for those cases in another category. The model to fit is:
 
-```math
+$$
 \begin{align*}
 \text{h}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_m \text{m}_i\\
@@ -6446,7 +6449,8 @@ The effect of a dummy variable is to turn a parameter on for those cases in the 
 \beta_m &\sim \text{Normal}(0, 10)\\
 \sigma &\sim \text{Uniform}(0, 50)
 \end{align*}
-```
+
+$$
 
 
 ```
@@ -6496,12 +6500,12 @@ PI(mu.male)
 
 Instead of using a parameter for the difference between males and females, we can make parameters specific to males and females:
 
-```math
+$$
 \begin{align*}
 \text{h}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha_f(1 - \text{m}_i) + \alpha_m \text{m}_i\\
 \end{align*}
-```
+$$
 
 
 ```
@@ -6564,7 +6568,7 @@ The category `Ape` will be the default "intercept" category. In fact, if you try
 
 The model we aim to fit to the data is kcal.per.g regressed on the dummy variables for clade:
 
-```math
+$$
 \begin{align*}
 \text{k}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_{NWM} \text{NWM}_i + \beta_{OWM} \text{OWM}_i + \beta_S \text{S}_i\\
@@ -6574,7 +6578,8 @@ The model we aim to fit to the data is kcal.per.g regressed on the dummy variabl
 \beta_S &\sim \text{Normal}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-```
+
+$$
 
 
 A linear model like this really defines four different linear models, each corresponding to a different category.
@@ -6681,46 +6686,50 @@ Design formulas (input format for models) take the expression for $\mu_i$ in the
 
 The linear regression model:
 
-```math
+$$
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta \text{x}_i
 \end{align*}
-```
+
+$$
 
 
 <br>
 
 The corresponding design formula with the leading 1 on the right-hand side indicates the intercept, $\alpha$:
 
-```math
+$$
 \begin{align*}
 \text{y} \sim 1 + \text{x}
 \end{align*}
-```
+
+$$
 
 
 <br> 
 
 The linear regression model with three predictors:
 
-```math
+$$
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_x \text{x}_i + \beta_z \text{Z}_i + \beta_w \text{W}_i
 \end{align*}
-```
+
+$$
 
 
 <br>
 
 The corresponding design formula:
 
-```math
+$$
 \begin{align*}
 \text{y} \sim 1 + \text{x} + \text{z} + \text{w}
 \end{align*}
-```
+
+$$
 
 
 <br>
@@ -6880,12 +6889,13 @@ Implicit in this question are:
 
 > 5E2. Write down a multiple regression to evaluate the claim: Animal diversity is linearly related to latitude, but only after controlling for plant diversity. You just need to write down the model definition.
 
-```math
+$$
 \begin{align*}
 \text{AD_i} &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_L \text{L}_i + \beta_D \text{D}_i
 \end{align*}
-```
+
+$$
 
 
 ```
@@ -6902,12 +6912,13 @@ D     = Plant diversity
 > 5E3. Write down a multiple regression to evaluate the claim: Neither amount of funding nor size of laboratory is by itself a good predictor of time to PhD degree; but together these variables are both positively associated with time to degree. Write down the model definition and indicate which side of zero each slope parameter should be on.
 
 
-```math
+$$
 \begin{align*}
 T_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_F \text{F}_i + \beta_S \text{S}_i
 \end{align*}
-```
+
+$$
 
 
 ```
@@ -8002,13 +8013,14 @@ grid.arrange(f1, f2, ncol = 2)
     - Divergence depends upon direction: $H(p, q)$ does not in general equal $H(q, p)$
     - It's just the difference between $H(p)$, the actual entropy of events, and $H(p, q)$: 
     
-```math
+$$
 \begin{align*}
 \ D_{KL} (p, q) &= H(p, q) ~- ~ H(p)\\
 &= ~- \sum_i p_i ~\text{log}(q_i) ~-~ \left(- \sum_i p_i ~\text{log}(p_i) \right)\\
 &= ~- \sum_i p_i ~\left( \text{log}(q_i) ~-~ \text{log}(p_i) \right)
 \end{align*}
-```
+
+$$
 
 
 ***If we use a distribution with high entropy to approximate an unknown true distribution of events, we will reduce the distance to the truth and therefore the error.***
@@ -8105,12 +8117,13 @@ The above is a thought experiment. It allows us to explore the distinction betwe
 
 To visualize the results of the thought experiment, what we’ll do now is conduct the above thought experiment 10,000 times, for each of five different linear regression models. The model that generates the data is:
 
-```math
+$$
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, 1)\\
 \mu_i &\sim (0.15)\text{x}_{1,i} ~-~ (0.4)\text{x}_{2,i}
 \end{align*}
-```
+
+$$
 
 
 
@@ -8196,7 +8209,7 @@ The root of overfitting is a model’s tendency to get overexcited by the traini
 
 The regularizing prior, when *tuned properly*, reduces overfitting while still allowing the model to learn the regular features of a sample. If the prior is too skeptical, however, then regular features will be missed, resulting in underfitting. For example, consider this Gaussian model:
 
-```math
+$$
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta \text{x}_i\\
@@ -8204,7 +8217,8 @@ The regularizing prior, when *tuned properly*, reduces overfitting while still a
 \beta &\sim \text{Normal}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-```
+
+$$
 
 
 Assume, as is good practice, that the predictor x is standardized so that its standard deviation is 1 and its mean is zero. Then the prior on $\alpha$ is a nearly flat prior that has no practical effect on inference. 
@@ -9148,12 +9162,13 @@ text(4, 9.4, "not Africa", col = "black")
 
 A proper interaction effect is needed to recover the change in slope you saw at the start of this section. The likelihood for the model you just plotted, in math form, is:
 
-```math
+$$
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_R R_i + \beta_A A_i
 \end{align*}
-```
+
+$$
 
 
 ```
@@ -9171,13 +9186,14 @@ Now you want to allow the relationship between Y and R to vary as a function of 
 
 <br>
 
-```math
+$$
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
 \mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
 \gamma_i &= \beta_R + \beta_{AR} A_i &&&    \text{[linear model of slope]}
 \end{align*}
-```
+
+$$
 
 <br>
 
@@ -9216,12 +9232,13 @@ compare(m7.3, m7.4, m7.5)
 
 Instead of a model definition with more than one linear model, as you saw above, it’s conventional to multiply out any interaction effects, so that there is only one linear model. The equation for $\gamma$ can be substituted into the second line and expanded.
 
-```math
+$$
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
 \mu_i &= \alpha + \beta_R R_i + \beta_{AR} A_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]
 \end{align*}
-```
+
+$$
 
 
 <br>
@@ -9303,13 +9320,14 @@ There are two basic reasons to be wary of interpreting tables of posterior means
 
 Unlike in the simple linear regression models, you can no longer read the influence of either predictor from the table of estimates in interaction models:
 
-```math
+$$
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
 \mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
 \gamma_i &= \beta_R + \beta_{AR} A_i &&&    \text{[linear model of slope]}
 \end{align*}
-```
+
+$$
 
 
 <br>
@@ -9399,35 +9417,38 @@ We’ll plot the ruggedness and GDP example again, but with the reverse phrasing
 
 Consider yet again the mathematical form of the likelihood:
 
-```math
+$$
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
 \mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
 \gamma_i &\sim \beta_R + \beta_{AR} A_i &&&   \text{[linear model of slope]}
 \end{align*}
-```
+
+$$
 
 
 <br>
 
 Let’s expand $\gamma_i$ into the expression for $\mu_i$:
 
-```math
+$$
 \begin{align*}
 \mu_i &= \alpha + (\beta_R + \beta_{AR} A_i) R_i + \beta_A A_i\\
 &= \alpha + \beta_R R_i + \beta_{AR} A_i R_i + \beta_A A_i
 \end{align*}
-```
+
+$$
 
 <br>
 
 Now factor together the terms with $A_i$ in them:
 
-```math
+$$
 \begin{align*}
 \mu_i &= \alpha + \beta_R R_i + \underbrace{(\beta_A + \beta_{AR}R_i)}_G A_i
 \end{align*}
-```
+
+$$
 
 
 <br>
@@ -9521,24 +9542,26 @@ Example focusing on just two models:
 
 The main effect likelihood is:
 
-```math
+$$
 \begin{align*}
 \ B_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_W W_i + \beta_S S_i
 \end{align*}
-```
+
+$$
 
 
 <br>
 
 And the full interaction likelihood is:
 
-```math
+$$
 \begin{align*}
 \ B_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_W W_i + \beta_S S_i + \beta_{WS} W_i S_i
 \end{align*}
-```
+
+$$
 
 
 ```
@@ -9836,12 +9859,13 @@ To specify interaction models using design formulas, like those used by `lm` and
 
 For example, here’s a model with an interaction between $x$ and $z$:
 
-```math
+$$
 \begin{align*}
 \ y_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_x x_i + \beta_z z_i + \beta_{xz} x_i z_i
 \end{align*}
-```
+
+$$
 
 <br>
 
@@ -9859,12 +9883,13 @@ m7.x <- lm( y ~ x*z , data=d )
 
 If you do not want the main effects in the model, you must explicitly subtract them from the formula. For example, here’s a model with an interaction, but without one of the main effects (when you know a priori that there is no direct effect of $z$ on the outcome, when $\beta_z$ = 0 by assumption):
 
-```math
+$$
 \begin{align*}
 \ y_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_x x_i + \beta_{xz} x_i z_i
 \end{align*}
-```
+
+$$
 
 
 ```{r 7.31}
@@ -9878,12 +9903,13 @@ m7.x <- lm( y ~ x + x*z - z , data=d )
 
 For higher-order interactions, just multiply more predictors together. The design formula always implies all of the lower-order interactions, even though you don’t explicitly state them. For example, this model has a three-way interaction between $x$, $z$, and $w$, as well as three two-way interactions and all three main effects:
 
-```math
+$$
 \begin{align*}
 y_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_x x_i + \beta_z z_i + \beta_w w_i + \beta_{xz} x_i z_i + \beta_{xw} x_i w_i + \beta_{zw} z_i w_i + \beta_{xzw} x_i z_i w_i 
 \end{align*}
-```
+
+$$
 
 ```{r 7.32}
 
