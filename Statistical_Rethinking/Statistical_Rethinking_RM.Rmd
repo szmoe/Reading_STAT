@@ -2,19 +2,26 @@
 title: "Statistical_Rethinking_RM"
 author: "SM"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
-output: 
-  bookdown::html_document2:
-    toc: true 
-    toc_float: true
-    toc_depth: 5  
-    number_sections: true  
-    theme: united  
-    highlight: tango  
-    fig_caption: true
+format:
+   html:
+    code-tools: true
+    code-fold: true
+    code-summary: 'Show code'
+    code-link: true
+    theme: sandstone
+toc: true
+toc-title: 'Contents'
+toc-depth: 5
+toc-location: left
+number-sections: true
+highlight-style: tango
+smooth-scroll: true
+fig_caption: true
+
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, message  = FALSE, warning = F}
+knitr::opts_chunk$set(echo = TRUE,  message = FALSE,  warning = FALSE,  tidy = TRUE)
 library(rethinking)
 library(ggplot2)
 library(dplyr)
@@ -4800,7 +4807,6 @@ $~$
 
 Linear regression model for correlation between age at marriage and divorce rate:
 
-\[
 \begin{align*}
 \text{D}_i &\sim \text{Normal}(\mu_i, \sigma) \\
 \mu_i &= \alpha + \beta_A \text{A}_i \\
@@ -4808,7 +4814,6 @@ Linear regression model for correlation between age at marriage and divorce rate
 \beta_A &\sim \text{Normal}(0, 1) \\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-\]
 
 ```
 Di = the divorce rate for State i
@@ -4938,7 +4943,6 @@ Multivariate regression formulas look a lot like the polynomial models- they add
 
 Example model that predicts divorce rate, using both marriage rate and age at marriage:
 
-\[
 \begin{align*}
 \text{D}_i &\sim \text{Normal}(\mu, \sigma)\ &&&  \text{[likelihood]}\\
 \mu_i &= \alpha + \beta_R R_i + \beta_A A_i\ &&&  \text{[linear model]}\\
@@ -4947,7 +4951,6 @@ Example model that predicts divorce rate, using both marriage rate and age at ma
 \beta_A &\sim \text{Normal}(0, 1)\ &&&            \text{[prior for }\beta_A]\\
 \sigma &\sim \text{Uniform}(0, 10)\ &&&           \text{[prior for }\sigma]
 \end{align*}
-\]
 
 ```
 R = marriage rate 
@@ -5002,7 +5005,6 @@ $~$
 
 To fit this model to the divorce data, we just expand the linear model.
 
-\[
 \begin{align*}
 \text{D}_i &\sim \text{Normal}(\mu, \sigma)\ &&&  \text{Divorce} \sim \text{dnorm(mu, sigma)}\\
 \mu_i &= \alpha + \beta_R R_i + \beta_A A_i\ &&&  \text{mu} \leftarrow \text{a + bR}^* \text{Marriage.s + bA}^* \text{MedianAgeMarriage.s}\\
@@ -5011,7 +5013,7 @@ To fit this model to the divorce data, we just expand the linear model.
 \beta_A &\sim \text{Normal}(0, 1)\ &&&            \text{bA} \sim \text{dnorm}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)\ &&&           \text{sigma} \sim \text{dunif}(0, 10)
 \end{align*}
-\]
+
 
 ```{r 5.4}
 
@@ -5066,7 +5068,6 @@ In our multivariate model of divorce rate, we have two predictors:
 
 To compute predictor residuals for either, we just use the other predictor to model it. The model for marraige rate:
 
-\[
 \begin{align*}
 \text{R}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta \text{A}_i\\
@@ -5074,7 +5075,7 @@ To compute predictor residuals for either, we just use the other predictor to mo
 \beta &\sim \text{Normal}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-\]
+
 
 ```{r 5.4a}
 
@@ -5706,7 +5707,6 @@ $~$
 
 Now let’s see what happens when we add both predictor variables at the same time to the regression. This is the multivariate model, in math form:
 
-\[
 \begin{align*}
 \text{k}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_n \text{n}_i + \beta_m \text{log}(\text{m}_i)\\
@@ -5715,7 +5715,6 @@ Now let’s see what happens when we add both predictor variables at the same ti
 \beta_m &\sim \text{Normal}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-\]
 
 \n
 
@@ -6039,12 +6038,11 @@ $~$
 
 One way to think of this phenomenon is that you have approximated this likelihood:
 
-\[
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i
 \end{align*}
-\]
+
 
 ```
 y   = outcome (height)
@@ -6055,12 +6053,11 @@ x   = single predictor (leg lengths)
 
 Here x is used twice, which is a perfect example of the problem caused by using the almost-identical leg lengths. From the computer’s perspective, this likelihood is really:
 
-\[
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + (\beta_1 + \beta_2) \text{x}_i
 \end{align*}
-\]
+
 
 This means the posterior distribution ends up reporting the practically infinite combinations of $\beta_1$ and $\beta_2$ that make their sum close to the actual association of x with y.
 
@@ -6403,7 +6400,6 @@ str(d)
 
 The effect of a dummy variable is to turn a parameter on for those cases in the category. Simultaneously, the variable turns the same parameter off for those cases in another category. The model to fit is:
 
-\[
 \begin{align*}
 \text{h}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_m \text{m}_i\\
@@ -6411,7 +6407,7 @@ The effect of a dummy variable is to turn a parameter on for those cases in the 
 \beta_m &\sim \text{Normal}(0, 10)\\
 \sigma &\sim \text{Uniform}(0, 50)
 \end{align*}
-\]
+
 
 ```
 h   = height
@@ -6460,12 +6456,11 @@ $~$
 
 Instead of using a parameter for the difference between males and females, we can make parameters specific to males and females:
 
-\[
 \begin{align*}
 \text{h}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha_f(1 - \text{m}_i) + \alpha_m \text{m}_i\\
 \end{align*}
-\]
+
 
 ```
 alpha_f   = average female height
@@ -6527,7 +6522,7 @@ The category `Ape` will be the default "intercept" category. In fact, if you try
 
 The model we aim to fit to the data is kcal.per.g regressed on the dummy variables for clade:
 
-\[
+
 \begin{align*}
 \text{k}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_{NWM} \text{NWM}_i + \beta_{OWM} \text{OWM}_i + \beta_S \text{S}_i\\
@@ -6537,7 +6532,7 @@ The model we aim to fit to the data is kcal.per.g regressed on the dummy variabl
 \beta_S &\sim \text{Normal}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-\]
+
 
 A linear model like this really defines four different linear models, each corresponding to a different category.
 
@@ -6643,43 +6638,43 @@ Design formulas (input format for models) take the expression for $\mu_i$ in the
 
 The linear regression model:
 
-\[
+
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta \text{x}_i
 \end{align*}
-\]
+
 
 $~$
 
 The corresponding design formula with the leading 1 on the right-hand side indicates the intercept, $\alpha$:
 
-\[
+
 \begin{align*}
 \text{y} \sim 1 + \text{x}
 \end{align*}
-\]
+
 
 $~$ 
 
 The linear regression model with three predictors:
 
-\[
+
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_x \text{x}_i + \beta_z \text{Z}_i + \beta_w \text{W}_i
 \end{align*}
-\]
+
 
 $~$
 
 The corresponding design formula:
 
-\[
+
 \begin{align*}
 \text{y} \sim 1 + \text{x} + \text{z} + \text{w}
 \end{align*}
-\]
+
 
 $~$
 
@@ -6838,12 +6833,12 @@ $~$
 
 > 5E2. Write down a multiple regression to evaluate the claim: Animal diversity is linearly related to latitude, but only after controlling for plant diversity. You just need to write down the model definition.
 
-\[
+
 \begin{align*}
 \text{AD_i} &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_L \text{L}_i + \beta_D \text{D}_i
 \end{align*}
-\]
+
 
 ```
 AD    = Animal diversity
@@ -6859,12 +6854,12 @@ $~$
 > 5E3. Write down a multiple regression to evaluate the claim: Neither amount of funding nor size of laboratory is by itself a good predictor of time to PhD degree; but together these variables are both positively associated with time to degree. Write down the model definition and indicate which side of zero each slope parameter should be on.
 
 
-\[
+
 \begin{align*}
 T_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_F \text{F}_i + \beta_S \text{S}_i
 \end{align*}
-\]
+
 
 ```
 T   = Time to PhD degree
@@ -7958,13 +7953,13 @@ $~$
     - Divergence depends upon direction: $H(p, q)$ does not in general equal $H(q, p)$
     - It's just the difference between $H(p)$, the actual entropy of events, and $H(p, q)$: 
     
-\[
+
 \begin{align*}
 \ D_{KL} (p, q) &= H(p, q) ~- ~ H(p)\\
 &= ~- \sum_i p_i ~\text{log}(q_i) ~-~ \left(- \sum_i p_i ~\text{log}(p_i) \right)\\
 &= ~- \sum_i p_i ~\left( \text{log}(q_i) ~-~ \text{log}(p_i) \right)
 \end{align*}
-\]
+
 
 ***If we use a distribution with high entropy to approximate an unknown true distribution of events, we will reduce the distance to the truth and therefore the error.***
 
@@ -8060,12 +8055,12 @@ The above is a thought experiment. It allows us to explore the distinction betwe
 
 To visualize the results of the thought experiment, what we’ll do now is conduct the above thought experiment 10,000 times, for each of five different linear regression models. The model that generates the data is:
 
-\[
+
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, 1)\\
 \mu_i &\sim (0.15)\text{x}_{1,i} ~-~ (0.4)\text{x}_{2,i}
 \end{align*}
-\]
+
 
 
 ```{r 6.12, eval=FALSE}
@@ -8150,7 +8145,7 @@ The root of overfitting is a model’s tendency to get overexcited by the traini
 
 The regularizing prior, when *tuned properly*, reduces overfitting while still allowing the model to learn the regular features of a sample. If the prior is too skeptical, however, then regular features will be missed, resulting in underfitting. For example, consider this Gaussian model:
 
-\[
+
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta \text{x}_i\\
@@ -8158,7 +8153,7 @@ The regularizing prior, when *tuned properly*, reduces overfitting while still a
 \beta &\sim \text{Normal}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-\]
+
 
 Assume, as is good practice, that the predictor x is standardized so that its standard deviation is 1 and its mean is zero. Then the prior on $\alpha$ is a nearly flat prior that has no practical effect on inference. 
 
@@ -9101,12 +9096,12 @@ $~$
 
 A proper interaction effect is needed to recover the change in slope you saw at the start of this section. The likelihood for the model you just plotted, in math form, is:
 
-\[
+
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_R R_i + \beta_A A_i
 \end{align*}
-\]
+
 
 ```
 Y   = log(rgdppc_2000)
@@ -9123,13 +9118,13 @@ Now you want to allow the relationship between Y and R to vary as a function of 
 
 $~$
 
-\[
+
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
 \mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
 \gamma_i &= \beta_R + \beta_{AR} A_i &&&    \text{[linear model of slope]}
 \end{align*}
-\]
+
 
 $~$
 
@@ -9168,12 +9163,12 @@ $~$
 
 Instead of a model definition with more than one linear model, as you saw above, it’s conventional to multiply out any interaction effects, so that there is only one linear model. The equation for $\gamma$ can be substituted into the second line and expanded.
 
-\[
+
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
 \mu_i &= \alpha + \beta_R R_i + \beta_{AR} A_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]
 \end{align*}
-\]
+
 
 $~$
 
@@ -9254,13 +9249,13 @@ $~$
 
 Unlike in the simple linear regression models, you can no longer read the influence of either predictor from the table of estimates in interaction models:
 
-\[
+
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
 \mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
 \gamma_i &= \beta_R + \beta_{AR} A_i &&&    \text{[linear model of slope]}
 \end{align*}
-\]
+
 
 $~$
 
@@ -9349,32 +9344,32 @@ We’ll plot the ruggedness and GDP example again, but with the reverse phrasing
 
 Consider yet again the mathematical form of the likelihood:
 
-\[
+
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
 \mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
 \gamma_i &\sim \beta_R + \beta_{AR} A_i &&&   \text{[linear model of slope]}
 \end{align*}
-\]
+
 
 $~$
 
 Let’s expand $\gamma_i$ into the expression for $\mu_i$:
-\[
+
 \begin{align*}
 \mu_i &= \alpha + (\beta_R + \beta_{AR} A_i) R_i + \beta_A A_i\\
 &= \alpha + \beta_R R_i + \beta_{AR} A_i R_i + \beta_A A_i
 \end{align*}
-\]
+
 
 $~$
 
 Now factor together the terms with $A_i$ in them:
-\[
+
 \begin{align*}
 \mu_i &= \alpha + \beta_R R_i + \underbrace{(\beta_A + \beta_{AR}R_i)}_G A_i
 \end{align*}
-\]
+
 
 $~$
 
@@ -9467,23 +9462,23 @@ $~$
 
 The main effect likelihood is:
 
-\[
+
 \begin{align*}
 \ B_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_W W_i + \beta_S S_i
 \end{align*}
-\]
+
 
 $~$
 
 And the full interaction likelihood is:
 
-\[
+
 \begin{align*}
 \ B_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_W W_i + \beta_S S_i + \beta_{WS} W_i S_i
 \end{align*}
-\]
+
 
 ```
 B_i    = the value of bloom on row i 
@@ -9780,12 +9775,12 @@ To specify interaction models using design formulas, like those used by `lm` and
 
 For example, here’s a model with an interaction between $x$ and $z$:
 
-\[
+
 \begin{align*}
 \ y_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_x x_i + \beta_z z_i + \beta_{xz} x_i z_i
 \end{align*}
-\]
+
 
 
 $~$
@@ -9804,12 +9799,12 @@ $~$
 
 If you do not want the main effects in the model, you must explicitly subtract them from the formula. For example, here’s a model with an interaction, but without one of the main effects (when you know a priori that there is no direct effect of $z$ on the outcome, when $\beta_z$ = 0 by assumption):
 
-\[
+
 \begin{align*}
 \ y_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_x x_i + \beta_{xz} x_i z_i
 \end{align*}
-\]
+
 
 ```{r 7.31}
 
@@ -9822,12 +9817,12 @@ $~$
 
 For higher-order interactions, just multiply more predictors together. The design formula always implies all of the lower-order interactions, even though you don’t explicitly state them. For example, this model has a three-way interaction between $x$, $z$, and $w$, as well as three two-way interactions and all three main effects:
 
-\[
+
 \begin{align*}
 y_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_x x_i + \beta_z z_i + \beta_w w_i + \beta_{xz} x_i z_i + \beta_{xw} x_i w_i + \beta_{zw} z_i w_i + \beta_{xzw} x_i z_i w_i 
 \end{align*}
-\]
+
 
 
 ```{r 7.32}
@@ -9860,6 +9855,14 @@ $~$
 ## Practice
 
 
+
+
+
+
+
+
+
+
 $~$
 
 # Chapter 8: Markov Chain Monte Carlo
@@ -9878,13 +9881,13 @@ The king’s advisor, a Mr Metropolis, engineered a clever solution to these dem
 
 (1) Wherever the King is, each week he decides between staying put for another week or moving to one of the two adjacent islands. To decide his next move, he flips a coin.
 
-(2) If the coin turns up heads, the King considers moving to the adjacent island clock- wise around the archipelago. If the coin turns up tails, he considers instead moving counterclockwise. Call the island the coin nominates the *proposal* island.
+(2) If the coin turns up heads, the King considers moving to the adjacent island clockwise around the archipelago. If the coin turns up tails, he considers instead moving counterclockwise. Call the island the coin nominates the *proposal* island.
 
 (3) Now, to see whether or not he moves to the proposal island, King Markov counts out a number of seashells equal to the relative population size of the proposal island. So for example, if the proposal island is number 9, then he counts out 9 seashells. Then he also counts out a number of stones equal to the relative population of the current island. So for example, if the current island is number 10, then King Markov ends up holding 10 stones, in addition to the 9 seashells.
 
 (4) When there are more seashells than stones, King Markov always moves to the proposal island. But if there are fewer shells than stones, he discards a number of stones equal to the number of shells. So for example, if there are 4 shells and 6 stones, he ends up with 4 shells and 6 − 4 = 2 stones. Then he places the shells and the remaining stones in a bag. He reaches in and randomly pulls out one object. If it is a shell, he moves to the proposal island. Otherwise, he stays put another week. As a result, the probability that he moves is equal to the number of shells divided by the original number of stones.
 
-```{r 8.1}
+```{r 8.1, eval=FALSE}
 
 ## Simulate King Markov’s journey
 
@@ -9912,6 +9915,20 @@ for ( i in 1:num_weeks ) {
     prob_move <- proposal/current
     current <- ifelse( runif(1) < prob_move , proposal , current )
 }
+
+# Plot the data (follow ajkurz's codes)
+tibble(week   = 1:1e5,
+       island = positions) %>%
+
+  ggplot(aes(x = week, y = island)) +
+  geom_point(shape = 1) +
+  scale_x_continuous(breaks = seq(from = 0, to = 100, by = 20)) +
+  scale_y_continuous(breaks = seq(from = 0, to = 10, by = 2)) +
+  coord_cartesian(xlim = 0:100,
+                  ylim = 1:10) +
+  labs(title    = "Behold: The Metropolis algorithm in action!",
+       subtitle = "The dots show the king's path over the first 100 weeks.") +
+  theme_bw()
 
 
 
@@ -10051,10 +10068,10 @@ $~$
 
 ### Estimation
 
-```{r 8.5, warning=FALSE, error=FALSE}
+```{r 8.5}
 
 # Get samples from the posterior distribution using HMC
-m8.1stan <- ulam(
+output <- capture.output(m8.1stan <- ulam(
     alist(
         log_gdp ~ dnorm( mu , sigma ) ,
         mu <- a + bR*rugged + bA*cont_africa + bAR*rugged*cont_africa ,
@@ -10068,7 +10085,7 @@ m8.1stan <- ulam(
 # The Cauchy distribution is a useful thick-tailed probability distribution 
 # related to the Student t distribution.
 
-), data=dd.trim)
+), data=dd.trim))
 
 precis(m8.1stan)
 
@@ -10089,8 +10106,7 @@ $~$
 Once you have compiled your Stan model, you can draw more samples from it anytime, running as many independent Markov chains as you like. And you can easily parallelize those chains, as well. To run four independent Markov chains for the model above, and to distribute them across separate processors in your computer, just pass the previous fit back to map2stan:
 
 ```{r 8.7}
-
-m8.1stan_4chains <- update( m8.1stan , chains=4 , cores=4 )
+output <- capture.output(m8.1stan_4chains <- update( m8.1stan , chains=4 , cores=4 ))
 # map2stan doesn't work anymore- use update() here. 
 precis(m8.1stan_4chains)
 
@@ -10100,7 +10116,7 @@ $~$
 
 ### Visualization
 
-```{r 8.8, message=FALSE, warning=FALSE, error=FALSE}
+```{r 8.8}
 
 # Pull out the samples
 post <- extract.samples( m8.1stan )
@@ -10142,7 +10158,6 @@ output <- capture.output(b8.1 <-
       seed = 8))
 
 print(b8.1)
-
 
 
 ```
