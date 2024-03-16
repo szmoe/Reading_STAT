@@ -945,8 +945,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="co"># display summary of quadratic approximation</span></span>
 <span><span class="fu">precis</span><span class="op">(</span> <span class="va">globe.qa</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>       mean        sd      5.5%     94.5%
-p 0.6666663 0.1571339 0.4155361 0.9177966</code></pre>
+<pre><code>      mean        sd      5.5%    94.5%
+p 0.666667 0.1571337 0.4155371 0.917797</code></pre>
 </div>
 </div>
 <p><em>To use map, you provide a formula, a list of data, and a list of start values for the parameters. The formula defines the likelihood and prior.</em></p>
@@ -978,7 +978,7 @@ p 0.6666663 0.1571339 0.4155361 0.9177966</code></pre>
 <span><span class="fu">precis</span><span class="op">(</span> <span class="va">globe.qa1</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>       mean        sd      5.5%     94.5%
-p 0.6666662 0.1111104 0.4890902 0.8442421</code></pre>
+p 0.6666662 0.1111104 0.4890903 0.8442421</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1004,8 +1004,8 @@ p 0.6666662 0.1111104 0.4890902 0.8442421</code></pre>
 <span><span class="co"># display summary of quadratic approximation</span></span>
 <span><span class="fu">precis</span><span class="op">(</span> <span class="va">globe.qa2</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>      mean         sd     5.5%    94.5%
-p 0.666667 0.07856685 0.541102 0.792232</code></pre>
+<pre><code>       mean         sd      5.5%     94.5%
+p 0.6666665 0.07856691 0.5411014 0.7922316</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1639,7 +1639,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">samples</span> <span class="op">&lt;</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">/</span> <span class="fl">1e4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 17.1534</code></pre>
+<pre><code>[1] 17.1943</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The answer is the posterior probability below a parameter value of 0.5.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1649,7 +1649,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">samples</span> <span class="op">&gt;</span> <span class="fl">0.5</span> <span class="op">&amp;</span> <span class="va">samples</span> <span class="op">&lt;</span> <span class="fl">0.75</span><span class="op">)</span><span class="op">/</span> <span class="fl">1e4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 60.4677</code></pre>
+<pre><code>[1] 60.4792</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># So about 61% of the posterior probability lies between 0.5 and 0.75.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1675,7 +1675,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">samples</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      10%       90% 
-0.4484484 0.8128128 </code></pre>
+0.4484484 0.8118118 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Intervals of this sort are called percentile intervals (PI).</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1703,7 +1703,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu">PI</span><span class="op">(</span><span class="va">samples2</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      25%       75% 
-0.7087087 0.9289289 </code></pre>
+0.7027027 0.9279279 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This interval assigns 25% of the probability mass above and below the interval. </span></span>
 <span><span class="co"># So it provides the central 50% probability. But in this example, it ends up excluding </span></span>
@@ -1753,7 +1753,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu">HPDI</span><span class="op">(</span><span class="va">samples2</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>     |0.5      0.5| 
-0.8408408 1.0000000 </code></pre>
+0.8418418 1.0000000 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This interval captures the parameters with highest posterior probability, </span></span>
 <span><span class="co"># as well as being noticeably narrower: </span></span>
@@ -1807,23 +1807,23 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu">HPDI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>     |0.8      0.8| 
-0.4694695 0.8278278 </code></pre>
+0.4624625 0.8248248 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">PI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      10%       90% 
-0.4504505 0.8119119 </code></pre>
+0.4484484 0.8148148 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute 95% HPDI and PI from samples</span></span>
 <span><span class="fu">HPDI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>    |0.95     0.95| 
-0.3743744 0.9009009 </code></pre>
+0.3713714 0.8948949 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">PI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>       3%       98% 
-0.3453453 0.8768769 </code></pre>
+0.3493493 0.8778779 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Add name for 80% HPDI and PI</span></span>
 <span><span class="va">hpdi_80</span> <span class="op">&lt;-</span> <span class="fu">HPDI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
@@ -1909,14 +1909,14 @@ inferences, then you’d be better off just plotting the entire posterior distri
 <details><summary>Code</summary><div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute MAP using samples from posterior</span></span>
 <span><span class="fu">chainmode</span><span class="op">(</span> <span class="va">samples2</span>, adj <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span> <span class="co"># rethinking</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.997199</code></pre>
+<pre><code>[1] 0.9679314</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">map_value</span> <span class="op">&lt;-</span> <span class="va">p_grid</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span> <span class="op">]</span></span>
 <span></span>
 <span><span class="co"># mean of the samples</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">samples2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8010829</code></pre>
+<pre><code>[1] 0.8004773</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mean_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">samples2</span><span class="op">)</span></span>
 <span></span>
@@ -2075,7 +2075,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">10</span>, size <span class="op">=</span> <span class="fl">2</span>, prob <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code> [1] 1 2 0 2 2 1 0 2 1 1</code></pre>
+<pre><code> [1] 2 1 1 2 1 2 1 2 2 1</code></pre>
 </div>
 </div>
 <p>Let’s generate 100,000 dummy observations, just to verify that each value (0, 1, or 2) appears in proportion to its likelihood:</p>
@@ -2086,7 +2086,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 </details><div class="cell-output cell-output-stdout">
 <pre><code>dummy_w
       0       1       2 
-0.09086 0.41951 0.48963 </code></pre>
+0.08999 0.42250 0.48751 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb104"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># values are very close to the likelihood values calculated above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -2098,7 +2098,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 </details><div class="cell-output cell-output-stdout">
 <pre><code>dummy_w_9
       0       1       2       3       4       5       6       7       8       9 
-0.00004 0.00038 0.00430 0.02053 0.07302 0.17122 0.26679 0.26541 0.15742 0.04089 </code></pre>
+0.00003 0.00036 0.00366 0.02126 0.07359 0.16986 0.26792 0.26880 0.15568 0.03884 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">simplehist</span><span class="op">(</span><span class="va">dummy_w_9</span>, xlab <span class="op">=</span> <span class="st">"dummy water count"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
@@ -10278,11 +10278,12 @@ sigma  45.22497  6.152983  35.39132  55.05863</code></pre>
 </div>
 <p><br></p>
 <p>For higher-order interactions, just multiply more predictors together. The design formula always implies all of the lower-order interactions, even though you don’t explicitly state them. For example, this model has a three-way interaction between <span class="math inline">\(x\)</span>, <span class="math inline">\(z\)</span>, and <span class="math inline">\(w\)</span>, as well as three two-way interactions and all three main effects:</p>
-<p>$$ <span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
 y_i &amp;\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &amp;= \alpha + \beta_x x_i + \beta_z z_i + \beta_w w_i + \beta_{xz} x_i z_i + \beta_{xw} x_i w_i + \beta_{zw} z_i w_i + \beta_{xzw} x_i z_i w_i
-\end{align*}\]</span></p>
-<p>$$</p>
+\end{align*}
+\]</span></p>
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb772"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># create mock data set to solve "error:variable lengths differ (found for 'w')"</span></span>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
@@ -10938,9 +10939,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb795-20"><a href="#cb795-20" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: sandstone</span></span>
 <span id="cb795-21"><a href="#cb795-21" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight: tango</span></span>
 <span id="cb795-22"><a href="#cb795-22" aria-hidden="true" tabindex="-1"></a><span class="co">    smooth-scroll: true</span></span>
-<span id="cb795-23"><a href="#cb795-23" aria-hidden="true" tabindex="-1"></a><span class="co">    includes:</span></span>
-<span id="cb795-24"><a href="#cb795-24" aria-hidden="true" tabindex="-1"></a><span class="co">      in_header: "header.html"</span></span>
-<span id="cb795-25"><a href="#cb795-25" aria-hidden="true" tabindex="-1"></a><span class="co">    mathjax: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML.js"</span></span>
+<span id="cb795-23"><a href="#cb795-23" aria-hidden="true" tabindex="-1"></a><span class="co">    markdown: kramdown</span></span>
+<span id="cb795-24"><a href="#cb795-24" aria-hidden="true" tabindex="-1"></a><span class="an">kramdown:</span></span>
+<span id="cb795-25"><a href="#cb795-25" aria-hidden="true" tabindex="-1"></a><span class="co">    math_engine: katex</span></span>
 <span id="cb795-26"><a href="#cb795-26" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb795-27"><a href="#cb795-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-28"><a href="#cb795-28" aria-hidden="true" tabindex="-1"></a></span>
@@ -20824,37 +20825,37 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb795-9910"><a href="#cb795-9910" aria-hidden="true" tabindex="-1"></a>y_i &amp;\sim \text{Normal}(\mu_i, \sigma)<span class="sc">\\</span></span>
 <span id="cb795-9911"><a href="#cb795-9911" aria-hidden="true" tabindex="-1"></a>\mu_i &amp;= \alpha + \beta_x x_i + \beta_z z_i + \beta_w w_i + \beta_{xz} x_i z_i + \beta_{xw} x_i w_i + \beta_{zw} z_i w_i + \beta_{xzw} x_i z_i w_i </span>
 <span id="cb795-9912"><a href="#cb795-9912" aria-hidden="true" tabindex="-1"></a>\end{align*}</span>
-<span id="cb795-9913"><a href="#cb795-9913" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9914"><a href="#cb795-9914" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb795-9915"><a href="#cb795-9915" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9916"><a href="#cb795-9916" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 7.32}</span></span>
-<span id="cb795-9917"><a href="#cb795-9917" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9918"><a href="#cb795-9918" aria-hidden="true" tabindex="-1"></a><span class="co"># create mock data set to solve "error:variable lengths differ (found for 'w')"</span></span>
-<span id="cb795-9919"><a href="#cb795-9919" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb795-9920"><a href="#cb795-9920" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>),</span>
-<span id="cb795-9921"><a href="#cb795-9921" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>),</span>
-<span id="cb795-9922"><a href="#cb795-9922" aria-hidden="true" tabindex="-1"></a>  <span class="at">z =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>),</span>
-<span id="cb795-9923"><a href="#cb795-9923" aria-hidden="true" tabindex="-1"></a>  <span class="at">w =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>)</span>
-<span id="cb795-9924"><a href="#cb795-9924" aria-hidden="true" tabindex="-1"></a>) </span>
-<span id="cb795-9925"><a href="#cb795-9925" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9926"><a href="#cb795-9926" aria-hidden="true" tabindex="-1"></a><span class="do">## In design formula:</span></span>
-<span id="cb795-9927"><a href="#cb795-9927" aria-hidden="true" tabindex="-1"></a>m7.x <span class="ot">&lt;-</span> <span class="fu">lm</span>( y <span class="sc">~</span> x<span class="sc">*</span>z<span class="sc">*</span>w , <span class="at">data=</span>d )</span>
-<span id="cb795-9928"><a href="#cb795-9928" aria-hidden="true" tabindex="-1"></a><span class="co"># And you can explicitly subtract any lower-order interactions or main effects to </span></span>
-<span id="cb795-9929"><a href="#cb795-9929" aria-hidden="true" tabindex="-1"></a><span class="co"># construct a reduced model.</span></span>
-<span id="cb795-9930"><a href="#cb795-9930" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9931"><a href="#cb795-9931" aria-hidden="true" tabindex="-1"></a><span class="do">## Expand the design formula to see how it works</span></span>
-<span id="cb795-9932"><a href="#cb795-9932" aria-hidden="true" tabindex="-1"></a><span class="co"># Expand a three-way interaction into a full set of terms:</span></span>
-<span id="cb795-9933"><a href="#cb795-9933" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> z <span class="ot">&lt;-</span> w <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># any number would do here</span></span>
-<span id="cb795-9934"><a href="#cb795-9934" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>( <span class="fu">model.matrix</span>(<span class="sc">~</span>x<span class="sc">*</span>z<span class="sc">*</span>w) )</span>
-<span id="cb795-9935"><a href="#cb795-9935" aria-hidden="true" tabindex="-1"></a><span class="co"># That function takes the design formula, absent the outcome variable, and expands it </span></span>
-<span id="cb795-9936"><a href="#cb795-9936" aria-hidden="true" tabindex="-1"></a><span class="co"># into a full set of variables for a linear model. This expanded set is the model matrix. </span></span>
-<span id="cb795-9937"><a href="#cb795-9937" aria-hidden="true" tabindex="-1"></a><span class="co"># ":" symbols stand for multiplication.</span></span>
-<span id="cb795-9938"><a href="#cb795-9938" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9939"><a href="#cb795-9939" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb795-9940"><a href="#cb795-9940" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9941"><a href="#cb795-9941" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-9942"><a href="#cb795-9942" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9943"><a href="#cb795-9943" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practice</span></span>
+<span id="cb795-9913"><a href="#cb795-9913" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb795-9914"><a href="#cb795-9914" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9915"><a href="#cb795-9915" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 7.32}</span></span>
+<span id="cb795-9916"><a href="#cb795-9916" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9917"><a href="#cb795-9917" aria-hidden="true" tabindex="-1"></a><span class="co"># create mock data set to solve "error:variable lengths differ (found for 'w')"</span></span>
+<span id="cb795-9918"><a href="#cb795-9918" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb795-9919"><a href="#cb795-9919" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>),</span>
+<span id="cb795-9920"><a href="#cb795-9920" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>),</span>
+<span id="cb795-9921"><a href="#cb795-9921" aria-hidden="true" tabindex="-1"></a>  <span class="at">z =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>),</span>
+<span id="cb795-9922"><a href="#cb795-9922" aria-hidden="true" tabindex="-1"></a>  <span class="at">w =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>)</span>
+<span id="cb795-9923"><a href="#cb795-9923" aria-hidden="true" tabindex="-1"></a>) </span>
+<span id="cb795-9924"><a href="#cb795-9924" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9925"><a href="#cb795-9925" aria-hidden="true" tabindex="-1"></a><span class="do">## In design formula:</span></span>
+<span id="cb795-9926"><a href="#cb795-9926" aria-hidden="true" tabindex="-1"></a>m7.x <span class="ot">&lt;-</span> <span class="fu">lm</span>( y <span class="sc">~</span> x<span class="sc">*</span>z<span class="sc">*</span>w , <span class="at">data=</span>d )</span>
+<span id="cb795-9927"><a href="#cb795-9927" aria-hidden="true" tabindex="-1"></a><span class="co"># And you can explicitly subtract any lower-order interactions or main effects to </span></span>
+<span id="cb795-9928"><a href="#cb795-9928" aria-hidden="true" tabindex="-1"></a><span class="co"># construct a reduced model.</span></span>
+<span id="cb795-9929"><a href="#cb795-9929" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9930"><a href="#cb795-9930" aria-hidden="true" tabindex="-1"></a><span class="do">## Expand the design formula to see how it works</span></span>
+<span id="cb795-9931"><a href="#cb795-9931" aria-hidden="true" tabindex="-1"></a><span class="co"># Expand a three-way interaction into a full set of terms:</span></span>
+<span id="cb795-9932"><a href="#cb795-9932" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> z <span class="ot">&lt;-</span> w <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># any number would do here</span></span>
+<span id="cb795-9933"><a href="#cb795-9933" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>( <span class="fu">model.matrix</span>(<span class="sc">~</span>x<span class="sc">*</span>z<span class="sc">*</span>w) )</span>
+<span id="cb795-9934"><a href="#cb795-9934" aria-hidden="true" tabindex="-1"></a><span class="co"># That function takes the design formula, absent the outcome variable, and expands it </span></span>
+<span id="cb795-9935"><a href="#cb795-9935" aria-hidden="true" tabindex="-1"></a><span class="co"># into a full set of variables for a linear model. This expanded set is the model matrix. </span></span>
+<span id="cb795-9936"><a href="#cb795-9936" aria-hidden="true" tabindex="-1"></a><span class="co"># ":" symbols stand for multiplication.</span></span>
+<span id="cb795-9937"><a href="#cb795-9937" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9938"><a href="#cb795-9938" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb795-9939"><a href="#cb795-9939" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9940"><a href="#cb795-9940" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-9941"><a href="#cb795-9941" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9942"><a href="#cb795-9942" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practice</span></span>
+<span id="cb795-9943"><a href="#cb795-9943" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-9944"><a href="#cb795-9944" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-9945"><a href="#cb795-9945" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-9946"><a href="#cb795-9946" aria-hidden="true" tabindex="-1"></a></span>
@@ -20864,305 +20865,305 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb795-9950"><a href="#cb795-9950" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-9951"><a href="#cb795-9951" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-9952"><a href="#cb795-9952" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9953"><a href="#cb795-9953" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9954"><a href="#cb795-9954" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-9955"><a href="#cb795-9955" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9956"><a href="#cb795-9956" aria-hidden="true" tabindex="-1"></a><span class="fu"># Chapter 8: Markov Chain Monte Carlo</span></span>
-<span id="cb795-9957"><a href="#cb795-9957" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9958"><a href="#cb795-9958" aria-hidden="true" tabindex="-1"></a>***Markov chain Monte Carlo (MCMC) estimation*** is the estimation of posterior probability distributions using a stochastic process. It has the ability to directly estimate models, such as the generalized linear and multilevel models, which routinely produce non-Gaussian posterior distributions. </span>
-<span id="cb795-9959"><a href="#cb795-9959" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9960"><a href="#cb795-9960" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-9961"><a href="#cb795-9961" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9962"><a href="#cb795-9962" aria-hidden="true" tabindex="-1"></a><span class="fu">## Good King Markov and his island kingdom</span></span>
-<span id="cb795-9963"><a href="#cb795-9963" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9964"><a href="#cb795-9964" aria-hidden="true" tabindex="-1"></a>King Markov was a benevolent autocrat of an island kingdom,a circular archipelago, with 10 islands. Each island was neighbored by two others, and the entire archipelago formed a ring. The islands were of different sizes, and so had different sized populations living on them. The second island was about twice as populous as the first, the third about three times as populous as the first, and so on, up to the largest island, which was 10 times as populous as the smallest.</span>
-<span id="cb795-9965"><a href="#cb795-9965" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9966"><a href="#cb795-9966" aria-hidden="true" tabindex="-1"></a>The king should visit each island in proportion to its population size, visiting the largest island 10 times as often as the smallest, for example. Also, since the archipelago was a ring, the King insisted that he only move among adjacent islands, to minimize time spent on the water. </span>
-<span id="cb795-9967"><a href="#cb795-9967" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9968"><a href="#cb795-9968" aria-hidden="true" tabindex="-1"></a>The king’s advisor, a Mr Metropolis, engineered a clever solution to these demands. We’ll call this solution the ***Metropolis algorithm***. Here's how it works.</span>
-<span id="cb795-9969"><a href="#cb795-9969" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9970"><a href="#cb795-9970" aria-hidden="true" tabindex="-1"></a>(1) Wherever the King is, each week he decides between staying put for another week or moving to one of the two adjacent islands. To decide his next move, he flips a coin.</span>
-<span id="cb795-9971"><a href="#cb795-9971" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9972"><a href="#cb795-9972" aria-hidden="true" tabindex="-1"></a>(2) If the coin turns up heads, the King considers moving to the adjacent island clockwise around the archipelago. If the coin turns up tails, he considers instead moving counterclockwise. Call the island the coin nominates the *proposal* island.</span>
-<span id="cb795-9973"><a href="#cb795-9973" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9974"><a href="#cb795-9974" aria-hidden="true" tabindex="-1"></a>(3) Now, to see whether or not he moves to the proposal island, King Markov counts out a number of seashells equal to the relative population size of the proposal island. So for example, if the proposal island is number 9, then he counts out 9 seashells. Then he also counts out a number of stones equal to the relative population of the current island. So for example, if the current island is number 10, then King Markov ends up holding 10 stones, in addition to the 9 seashells.</span>
-<span id="cb795-9975"><a href="#cb795-9975" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9976"><a href="#cb795-9976" aria-hidden="true" tabindex="-1"></a>(4) When there are more seashells than stones, King Markov always moves to the proposal island. But if there are fewer shells than stones, he discards a number of stones equal to the number of shells. So for example, if there are 4 shells and 6 stones, he ends up with 4 shells and 6 − 4 = 2 stones. Then he places the shells and the remaining stones in a bag. He reaches in and randomly pulls out one object. If it is a shell, he moves to the proposal island. Otherwise, he stays put another week. As a result, the probability that he moves is equal to the number of shells divided by the original number of stones.</span>
-<span id="cb795-9977"><a href="#cb795-9977" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9978"><a href="#cb795-9978" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.1, eval=FALSE}</span></span>
-<span id="cb795-9979"><a href="#cb795-9979" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9980"><a href="#cb795-9980" aria-hidden="true" tabindex="-1"></a><span class="do">## Simulate King Markov’s journey</span></span>
-<span id="cb795-9981"><a href="#cb795-9981" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9982"><a href="#cb795-9982" aria-hidden="true" tabindex="-1"></a><span class="co"># Set number of weeks to simulate</span></span>
-<span id="cb795-9983"><a href="#cb795-9983" aria-hidden="true" tabindex="-1"></a>num_weeks <span class="ot">&lt;-</span> <span class="fl">1e5</span></span>
-<span id="cb795-9984"><a href="#cb795-9984" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9985"><a href="#cb795-9985" aria-hidden="true" tabindex="-1"></a><span class="co"># Define an empty history vector</span></span>
-<span id="cb795-9986"><a href="#cb795-9986" aria-hidden="true" tabindex="-1"></a>positions <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>,num_weeks)</span>
-<span id="cb795-9987"><a href="#cb795-9987" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9988"><a href="#cb795-9988" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a starting island position (the biggest island, number 10)</span></span>
-<span id="cb795-9989"><a href="#cb795-9989" aria-hidden="true" tabindex="-1"></a>current <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb795-9990"><a href="#cb795-9990" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-9991"><a href="#cb795-9991" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ( i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>num_weeks ) {</span>
-<span id="cb795-9992"><a href="#cb795-9992" aria-hidden="true" tabindex="-1"></a>    <span class="co"># record current position</span></span>
-<span id="cb795-9993"><a href="#cb795-9993" aria-hidden="true" tabindex="-1"></a>    positions[i] <span class="ot">&lt;-</span> current</span>
-<span id="cb795-9994"><a href="#cb795-9994" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb795-9995"><a href="#cb795-9995" aria-hidden="true" tabindex="-1"></a>    <span class="co"># flip coin to generate proposal</span></span>
-<span id="cb795-9996"><a href="#cb795-9996" aria-hidden="true" tabindex="-1"></a>    proposal <span class="ot">&lt;-</span> current <span class="sc">+</span> <span class="fu">sample</span>( <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) , <span class="at">size=</span><span class="dv">1</span> )</span>
-<span id="cb795-9997"><a href="#cb795-9997" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb795-9998"><a href="#cb795-9998" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now make sure he loops around the archipelago</span></span>
-<span id="cb795-9999"><a href="#cb795-9999" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ( proposal <span class="sc">&lt;</span> <span class="dv">1</span> ) proposal <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb795-10000"><a href="#cb795-10000" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ( proposal <span class="sc">&gt;</span> <span class="dv">10</span> ) proposal <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb795-10001"><a href="#cb795-10001" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb795-10002"><a href="#cb795-10002" aria-hidden="true" tabindex="-1"></a>    <span class="co"># move?</span></span>
-<span id="cb795-10003"><a href="#cb795-10003" aria-hidden="true" tabindex="-1"></a>    prob_move <span class="ot">&lt;-</span> proposal<span class="sc">/</span>current</span>
-<span id="cb795-10004"><a href="#cb795-10004" aria-hidden="true" tabindex="-1"></a>    current <span class="ot">&lt;-</span> <span class="fu">ifelse</span>( <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> prob_move , proposal , current )</span>
-<span id="cb795-10005"><a href="#cb795-10005" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb795-10006"><a href="#cb795-10006" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10007"><a href="#cb795-10007" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data (follow ajkurz's codes)</span></span>
-<span id="cb795-10008"><a href="#cb795-10008" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">week   =</span> <span class="dv">1</span><span class="sc">:</span><span class="fl">1e5</span>,</span>
-<span id="cb795-10009"><a href="#cb795-10009" aria-hidden="true" tabindex="-1"></a>       <span class="at">island =</span> positions) <span class="sc">%&gt;%</span></span>
-<span id="cb795-10010"><a href="#cb795-10010" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10011"><a href="#cb795-10011" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> island)) <span class="sc">+</span></span>
-<span id="cb795-10012"><a href="#cb795-10012" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb795-10013"><a href="#cb795-10013" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">20</span>)) <span class="sc">+</span></span>
-<span id="cb795-10014"><a href="#cb795-10014" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb795-10015"><a href="#cb795-10015" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb795-10016"><a href="#cb795-10016" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylim =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">+</span></span>
-<span id="cb795-10017"><a href="#cb795-10017" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title    =</span> <span class="st">"Behold: The Metropolis algorithm in action!"</span>,</span>
-<span id="cb795-10018"><a href="#cb795-10018" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"The dots show the king's path over the first 100 weeks."</span>) <span class="sc">+</span></span>
-<span id="cb795-10019"><a href="#cb795-10019" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb795-9953"><a href="#cb795-9953" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-9954"><a href="#cb795-9954" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9955"><a href="#cb795-9955" aria-hidden="true" tabindex="-1"></a><span class="fu"># Chapter 8: Markov Chain Monte Carlo</span></span>
+<span id="cb795-9956"><a href="#cb795-9956" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9957"><a href="#cb795-9957" aria-hidden="true" tabindex="-1"></a>***Markov chain Monte Carlo (MCMC) estimation*** is the estimation of posterior probability distributions using a stochastic process. It has the ability to directly estimate models, such as the generalized linear and multilevel models, which routinely produce non-Gaussian posterior distributions. </span>
+<span id="cb795-9958"><a href="#cb795-9958" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9959"><a href="#cb795-9959" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-9960"><a href="#cb795-9960" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9961"><a href="#cb795-9961" aria-hidden="true" tabindex="-1"></a><span class="fu">## Good King Markov and his island kingdom</span></span>
+<span id="cb795-9962"><a href="#cb795-9962" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9963"><a href="#cb795-9963" aria-hidden="true" tabindex="-1"></a>King Markov was a benevolent autocrat of an island kingdom,a circular archipelago, with 10 islands. Each island was neighbored by two others, and the entire archipelago formed a ring. The islands were of different sizes, and so had different sized populations living on them. The second island was about twice as populous as the first, the third about three times as populous as the first, and so on, up to the largest island, which was 10 times as populous as the smallest.</span>
+<span id="cb795-9964"><a href="#cb795-9964" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9965"><a href="#cb795-9965" aria-hidden="true" tabindex="-1"></a>The king should visit each island in proportion to its population size, visiting the largest island 10 times as often as the smallest, for example. Also, since the archipelago was a ring, the King insisted that he only move among adjacent islands, to minimize time spent on the water. </span>
+<span id="cb795-9966"><a href="#cb795-9966" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9967"><a href="#cb795-9967" aria-hidden="true" tabindex="-1"></a>The king’s advisor, a Mr Metropolis, engineered a clever solution to these demands. We’ll call this solution the ***Metropolis algorithm***. Here's how it works.</span>
+<span id="cb795-9968"><a href="#cb795-9968" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9969"><a href="#cb795-9969" aria-hidden="true" tabindex="-1"></a>(1) Wherever the King is, each week he decides between staying put for another week or moving to one of the two adjacent islands. To decide his next move, he flips a coin.</span>
+<span id="cb795-9970"><a href="#cb795-9970" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9971"><a href="#cb795-9971" aria-hidden="true" tabindex="-1"></a>(2) If the coin turns up heads, the King considers moving to the adjacent island clockwise around the archipelago. If the coin turns up tails, he considers instead moving counterclockwise. Call the island the coin nominates the *proposal* island.</span>
+<span id="cb795-9972"><a href="#cb795-9972" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9973"><a href="#cb795-9973" aria-hidden="true" tabindex="-1"></a>(3) Now, to see whether or not he moves to the proposal island, King Markov counts out a number of seashells equal to the relative population size of the proposal island. So for example, if the proposal island is number 9, then he counts out 9 seashells. Then he also counts out a number of stones equal to the relative population of the current island. So for example, if the current island is number 10, then King Markov ends up holding 10 stones, in addition to the 9 seashells.</span>
+<span id="cb795-9974"><a href="#cb795-9974" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9975"><a href="#cb795-9975" aria-hidden="true" tabindex="-1"></a>(4) When there are more seashells than stones, King Markov always moves to the proposal island. But if there are fewer shells than stones, he discards a number of stones equal to the number of shells. So for example, if there are 4 shells and 6 stones, he ends up with 4 shells and 6 − 4 = 2 stones. Then he places the shells and the remaining stones in a bag. He reaches in and randomly pulls out one object. If it is a shell, he moves to the proposal island. Otherwise, he stays put another week. As a result, the probability that he moves is equal to the number of shells divided by the original number of stones.</span>
+<span id="cb795-9976"><a href="#cb795-9976" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9977"><a href="#cb795-9977" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.1, eval=FALSE}</span></span>
+<span id="cb795-9978"><a href="#cb795-9978" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9979"><a href="#cb795-9979" aria-hidden="true" tabindex="-1"></a><span class="do">## Simulate King Markov’s journey</span></span>
+<span id="cb795-9980"><a href="#cb795-9980" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9981"><a href="#cb795-9981" aria-hidden="true" tabindex="-1"></a><span class="co"># Set number of weeks to simulate</span></span>
+<span id="cb795-9982"><a href="#cb795-9982" aria-hidden="true" tabindex="-1"></a>num_weeks <span class="ot">&lt;-</span> <span class="fl">1e5</span></span>
+<span id="cb795-9983"><a href="#cb795-9983" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9984"><a href="#cb795-9984" aria-hidden="true" tabindex="-1"></a><span class="co"># Define an empty history vector</span></span>
+<span id="cb795-9985"><a href="#cb795-9985" aria-hidden="true" tabindex="-1"></a>positions <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>,num_weeks)</span>
+<span id="cb795-9986"><a href="#cb795-9986" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9987"><a href="#cb795-9987" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a starting island position (the biggest island, number 10)</span></span>
+<span id="cb795-9988"><a href="#cb795-9988" aria-hidden="true" tabindex="-1"></a>current <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb795-9989"><a href="#cb795-9989" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-9990"><a href="#cb795-9990" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ( i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>num_weeks ) {</span>
+<span id="cb795-9991"><a href="#cb795-9991" aria-hidden="true" tabindex="-1"></a>    <span class="co"># record current position</span></span>
+<span id="cb795-9992"><a href="#cb795-9992" aria-hidden="true" tabindex="-1"></a>    positions[i] <span class="ot">&lt;-</span> current</span>
+<span id="cb795-9993"><a href="#cb795-9993" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb795-9994"><a href="#cb795-9994" aria-hidden="true" tabindex="-1"></a>    <span class="co"># flip coin to generate proposal</span></span>
+<span id="cb795-9995"><a href="#cb795-9995" aria-hidden="true" tabindex="-1"></a>    proposal <span class="ot">&lt;-</span> current <span class="sc">+</span> <span class="fu">sample</span>( <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>) , <span class="at">size=</span><span class="dv">1</span> )</span>
+<span id="cb795-9996"><a href="#cb795-9996" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb795-9997"><a href="#cb795-9997" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now make sure he loops around the archipelago</span></span>
+<span id="cb795-9998"><a href="#cb795-9998" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ( proposal <span class="sc">&lt;</span> <span class="dv">1</span> ) proposal <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb795-9999"><a href="#cb795-9999" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ( proposal <span class="sc">&gt;</span> <span class="dv">10</span> ) proposal <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb795-10000"><a href="#cb795-10000" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb795-10001"><a href="#cb795-10001" aria-hidden="true" tabindex="-1"></a>    <span class="co"># move?</span></span>
+<span id="cb795-10002"><a href="#cb795-10002" aria-hidden="true" tabindex="-1"></a>    prob_move <span class="ot">&lt;-</span> proposal<span class="sc">/</span>current</span>
+<span id="cb795-10003"><a href="#cb795-10003" aria-hidden="true" tabindex="-1"></a>    current <span class="ot">&lt;-</span> <span class="fu">ifelse</span>( <span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> prob_move , proposal , current )</span>
+<span id="cb795-10004"><a href="#cb795-10004" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb795-10005"><a href="#cb795-10005" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10006"><a href="#cb795-10006" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data (follow ajkurz's codes)</span></span>
+<span id="cb795-10007"><a href="#cb795-10007" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">week   =</span> <span class="dv">1</span><span class="sc">:</span><span class="fl">1e5</span>,</span>
+<span id="cb795-10008"><a href="#cb795-10008" aria-hidden="true" tabindex="-1"></a>       <span class="at">island =</span> positions) <span class="sc">%&gt;%</span></span>
+<span id="cb795-10009"><a href="#cb795-10009" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10010"><a href="#cb795-10010" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> island)) <span class="sc">+</span></span>
+<span id="cb795-10011"><a href="#cb795-10011" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb795-10012"><a href="#cb795-10012" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb795-10013"><a href="#cb795-10013" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb795-10014"><a href="#cb795-10014" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb795-10015"><a href="#cb795-10015" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylim =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb795-10016"><a href="#cb795-10016" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title    =</span> <span class="st">"Behold: The Metropolis algorithm in action!"</span>,</span>
+<span id="cb795-10017"><a href="#cb795-10017" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"The dots show the king's path over the first 100 weeks."</span>) <span class="sc">+</span></span>
+<span id="cb795-10018"><a href="#cb795-10018" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb795-10019"><a href="#cb795-10019" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-10020"><a href="#cb795-10020" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-10021"><a href="#cb795-10021" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-10022"><a href="#cb795-10022" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-10023"><a href="#cb795-10023" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-10024"><a href="#cb795-10024" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-10025"><a href="#cb795-10025" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10026"><a href="#cb795-10026" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10027"><a href="#cb795-10027" aria-hidden="true" tabindex="-1"></a><span class="co"># Results of the king following the Metropolis algorithm. The left-hand plot shows </span></span>
-<span id="cb795-10028"><a href="#cb795-10028" aria-hidden="true" tabindex="-1"></a><span class="co"># the king’s position (vertical axis) across first 100 weeks (horizontal axis). </span></span>
-<span id="cb795-10029"><a href="#cb795-10029" aria-hidden="true" tabindex="-1"></a><span class="co"># In any particular week, it’s nearly impossible to say where the king will be. </span></span>
-<span id="cb795-10030"><a href="#cb795-10030" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10031"><a href="#cb795-10031" aria-hidden="true" tabindex="-1"></a><span class="co"># The right-hand plot shows the long-run behavior of the algorithm, as the time spent on </span></span>
-<span id="cb795-10032"><a href="#cb795-10032" aria-hidden="true" tabindex="-1"></a><span class="co"># each island turns out to be proportional to its population size.</span></span>
-<span id="cb795-10033"><a href="#cb795-10033" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10034"><a href="#cb795-10034" aria-hidden="true" tabindex="-1"></a><span class="co"># The algorithm will still work in this way, even if we allow the king to be equally likely </span></span>
-<span id="cb795-10035"><a href="#cb795-10035" aria-hidden="true" tabindex="-1"></a><span class="co"># to propose a move to any island from any island, not just among neighbors. The algorithm </span></span>
-<span id="cb795-10036"><a href="#cb795-10036" aria-hidden="true" tabindex="-1"></a><span class="co"># would also work for any size archipelago, even if the king didn’t know how many islands </span></span>
-<span id="cb795-10037"><a href="#cb795-10037" aria-hidden="true" tabindex="-1"></a><span class="co"># were in it. All he needs to know at any point in time is the population of the current </span></span>
-<span id="cb795-10038"><a href="#cb795-10038" aria-hidden="true" tabindex="-1"></a><span class="co"># island and the population of the proposal island.</span></span>
-<span id="cb795-10039"><a href="#cb795-10039" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10040"><a href="#cb795-10040" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb795-10041"><a href="#cb795-10041" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10042"><a href="#cb795-10042" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-10043"><a href="#cb795-10043" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10044"><a href="#cb795-10044" aria-hidden="true" tabindex="-1"></a><span class="fu">## Markov chain Monte Carlo</span></span>
-<span id="cb795-10045"><a href="#cb795-10045" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10046"><a href="#cb795-10046" aria-hidden="true" tabindex="-1"></a>The goal of general **Metropolis Algorithm**, an example of Markov chain Monte Carlo, is to draw samples from an unknown and usually complex target distribution, like a posterior probability distribution.</span>
-<span id="cb795-10047"><a href="#cb795-10047" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10048"><a href="#cb795-10048" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The “islands” in our objective are parameter values, and they need not be discrete, but can instead take on a continuous range of values as usual.</span>
-<span id="cb795-10049"><a href="#cb795-10049" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10050"><a href="#cb795-10050" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The “population sizes” in our objective are the posterior probabilities at each parameter value.</span>
-<span id="cb795-10051"><a href="#cb795-10051" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10052"><a href="#cb795-10052" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The “weeks” in our objective are samples taken from the joint posterior of the parameters in the model.</span>
-<span id="cb795-10053"><a href="#cb795-10053" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10054"><a href="#cb795-10054" aria-hidden="true" tabindex="-1"></a>Provided the way we choose our proposed parameter values at each step is symmetric<span class="dv">&amp;mdash;</span> so that there is an equal chance of proposing from A to B and from B to A<span class="dv">&amp;mdash;</span> then the Metropolis algorithm will eventually give us a collection of samples from the joint posterior.</span>
-<span id="cb795-10055"><a href="#cb795-10055" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10056"><a href="#cb795-10056" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-10057"><a href="#cb795-10057" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10058"><a href="#cb795-10058" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;spans</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color:brown"</span><span class="kw">&gt;&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"text-decoration:underline"</span><span class="kw">&gt;</span>**Two of the most important in contemporary Bayesian inference**<span class="kw">&lt;/span&gt;</span></span>
-<span id="cb795-10059"><a href="#cb795-10059" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10060"><a href="#cb795-10060" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Gibbs sampling</span>
-<span id="cb795-10061"><a href="#cb795-10061" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10062"><a href="#cb795-10062" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Hamiltonian (aka Hybrid, aka HMC) Monte Carlo</span>
-<span id="cb795-10063"><a href="#cb795-10063" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10064"><a href="#cb795-10064" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-10065"><a href="#cb795-10065" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10066"><a href="#cb795-10066" aria-hidden="true" tabindex="-1"></a><span class="fu">### Gibbs sampling</span></span>
-<span id="cb795-10067"><a href="#cb795-10067" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10068"><a href="#cb795-10068" aria-hidden="true" tabindex="-1"></a>The Metropolis algorithm works whenever the probability of proposing a jump to B from A is equal to the probability of proposing A from B, when the proposal distribution is symmetric. There is a more general method, known as Metropolis-Hastings, that allows asymmetric proposals. </span>
-<span id="cb795-10069"><a href="#cb795-10069" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10070"><a href="#cb795-10070" aria-hidden="true" tabindex="-1"></a>An algorithm that allows asymmetric proposals is useful because:</span>
-<span id="cb795-10071"><a href="#cb795-10071" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10072"><a href="#cb795-10072" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>it makes it easier to handle parameters, like standard deviations, that have boundaries at zero</span>
-<span id="cb795-10073"><a href="#cb795-10073" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10074"><a href="#cb795-10074" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>we can acquire an equally good image of the posterior distribution in fewer steps</span>
-<span id="cb795-10075"><a href="#cb795-10075" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10076"><a href="#cb795-10076" aria-hidden="true" tabindex="-1"></a>Gibbs sampling is a variant of the Metropolis-Hastings algorithm that uses clever proposals and is therefore more efficient<span class="dv">&amp;mdash;</span> you can get a good estimate of the posterior from Gibbs sampling with many fewer samples than a comparable Metropolis approach. The improvement arises from ***adaptive proposals*** in which the distribution of proposed parameter values adjusts itself intelligently, depending upon the parameter values at the moment. Gibbs sampling computes these adaptive proposals using particular combinations of prior distributions and likelihoods known as *conjugate pairs*.</span>
-<span id="cb795-10077"><a href="#cb795-10077" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10078"><a href="#cb795-10078" aria-hidden="true" tabindex="-1"></a>Some limitations of Gibbs sampling:</span>
-<span id="cb795-10079"><a href="#cb795-10079" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10080"><a href="#cb795-10080" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Some conjugate priors seem silly, and choosing a prior so that the model fits efficiently isn’t really a strong argument from a scientific perspective.</span>
-<span id="cb795-10081"><a href="#cb795-10081" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10082"><a href="#cb795-10082" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>As models become more complex and contain hundreds or thousands or tens of thousands of parameters, Gibbs sampling becomes shockingly inefficient.</span>
-<span id="cb795-10083"><a href="#cb795-10083" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10084"><a href="#cb795-10084" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-10085"><a href="#cb795-10085" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10086"><a href="#cb795-10086" aria-hidden="true" tabindex="-1"></a><span class="fu">### Hamiltonian Monte Carlo</span></span>
-<span id="cb795-10087"><a href="#cb795-10087" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10088"><a href="#cb795-10088" aria-hidden="true" tabindex="-1"></a>Hamiltonian Monte Carlo (or Hybrid Monte Carlo, HMC) adopts Jaynes’ principle that, *"whenever there is a randomized way of doing something, then there is a non-randomized way that delivers better performance but requires more thought."*</span>
-<span id="cb795-10089"><a href="#cb795-10089" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10090"><a href="#cb795-10090" aria-hidden="true" tabindex="-1"></a>HMC is much more computationally costly than are Metropolis or Gibbs sampling<span class="dv">&amp;mdash;</span> both highly random procedures. But its proposals are typically much more efficient<span class="dv">&amp;mdash;</span> doesn’t need as many samples to describe the posterior distribution, outshine other algorithms as models become more complex (thousands or tens of thousands of parameters). HMC outperforms Metropolis and Gibbs sampling, but it is not a universal solution to all MCMC problems.</span>
-<span id="cb795-10091"><a href="#cb795-10091" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10092"><a href="#cb795-10092" aria-hidden="true" tabindex="-1"></a>Monty’s kingdom is not a discrete set of islands. Instead, it is a continuous territory stretched out along a narrow valley. Monty's advisor, Hamilton realized that a much more efficient way to visit the citizens in the continuous Kingdom is to travel back and forth along its length. In order to spend more time in densely settled areas, they should slow the royal vehicle down when houses grow more dense. Likewise, they should speed up when houses grow more sparse. This strategy requires knowing how quickly population density is changing, at their current location. But it doesn’t require remembering where they’ve been or knowing the population distribution anyplace else. And a major benefit of this strategy compared to that of Metropolis is that the King makes a full sweep of the kingdom before revisiting anyone.</span>
-<span id="cb795-10093"><a href="#cb795-10093" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10094"><a href="#cb795-10094" aria-hidden="true" tabindex="-1"></a>In statistical applications, the royal vehicle is the current vector of parameter values. Let’s consider the single parameter case, just to keep things simple. In that case, the log-posterior is like a bowl, with the MAP at its nadir. Then the job is to sweep across the surface of the bowl, adjusting speed in proportion to how high up we are. In cases where ordinary Metropolis or Gibbs sampling wander slowly through parameter space, Hamiltonian Monte Carlo remains efficient.</span>
-<span id="cb795-10095"><a href="#cb795-10095" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10096"><a href="#cb795-10096" aria-hidden="true" tabindex="-1"></a>Some limitations of HMC:</span>
-<span id="cb795-10097"><a href="#cb795-10097" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10098"><a href="#cb795-10098" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>HMC requires continuous parameters. It can’t glide through a discrete parameter. </span>
-<span id="cb795-10099"><a href="#cb795-10099" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10100"><a href="#cb795-10100" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>it needs to be tuned to a particular model and its data. That’s where an engine like Stan (mc-stan.org) comes in. Stan automates much of that tuning.</span>
-<span id="cb795-10101"><a href="#cb795-10101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10102"><a href="#cb795-10102" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-10103"><a href="#cb795-10103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10104"><a href="#cb795-10104" aria-hidden="true" tabindex="-1"></a><span class="fu">## Easy HMC: `map2stan`</span></span>
-<span id="cb795-10105"><a href="#cb795-10105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10106"><a href="#cb795-10106" aria-hidden="true" tabindex="-1"></a><span class="in">`map2stan`</span> compiles lists of formulas, like the lists you’ve been using so far to construct map estimates, into Stan HMC code. To use <span class="in">`map2stan`</span>, you need to preprocess any variable transformations, and you need to construct a clean data frame with only the variables you will use.</span>
-<span id="cb795-10107"><a href="#cb795-10107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10108"><a href="#cb795-10108" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.2}</span></span>
-<span id="cb795-10109"><a href="#cb795-10109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10110"><a href="#cb795-10110" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data and reduce it down to cases (nations) that have the outcome variable of interest</span></span>
-<span id="cb795-10111"><a href="#cb795-10111" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(rugged)</span>
-<span id="cb795-10112"><a href="#cb795-10112" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> rugged</span>
-<span id="cb795-10113"><a href="#cb795-10113" aria-hidden="true" tabindex="-1"></a>d<span class="sc">$</span>log_gdp <span class="ot">&lt;-</span> <span class="fu">log</span>(d<span class="sc">$</span>rgdppc_2000)</span>
-<span id="cb795-10114"><a href="#cb795-10114" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> d[ <span class="fu">complete.cases</span>(d<span class="sc">$</span>rgdppc_2000) , ]</span>
-<span id="cb795-10115"><a href="#cb795-10115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10116"><a href="#cb795-10116" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the interaction model which  aims to predict log-GDP with terrain ruggedness, </span></span>
-<span id="cb795-10117"><a href="#cb795-10117" aria-hidden="true" tabindex="-1"></a><span class="co"># continent, and the interaction of the two</span></span>
-<span id="cb795-10118"><a href="#cb795-10118" aria-hidden="true" tabindex="-1"></a>m8<span class="fl">.1</span> <span class="ot">&lt;-</span> rethinking<span class="sc">::</span><span class="fu">map</span>(</span>
-<span id="cb795-10119"><a href="#cb795-10119" aria-hidden="true" tabindex="-1"></a>    <span class="fu">alist</span>(</span>
-<span id="cb795-10120"><a href="#cb795-10120" aria-hidden="true" tabindex="-1"></a>        log_gdp <span class="sc">~</span> <span class="fu">dnorm</span>( mu , sigma ) ,</span>
-<span id="cb795-10121"><a href="#cb795-10121" aria-hidden="true" tabindex="-1"></a>        mu <span class="ot">&lt;-</span> a <span class="sc">+</span> bR<span class="sc">*</span>rugged <span class="sc">+</span> bA<span class="sc">*</span>cont_africa <span class="sc">+</span> bAR<span class="sc">*</span>rugged<span class="sc">*</span>cont_africa ,</span>
-<span id="cb795-10122"><a href="#cb795-10122" aria-hidden="true" tabindex="-1"></a>        a <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">100</span>),</span>
-<span id="cb795-10123"><a href="#cb795-10123" aria-hidden="true" tabindex="-1"></a>        bR <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
-<span id="cb795-10124"><a href="#cb795-10124" aria-hidden="true" tabindex="-1"></a>        bA <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
-<span id="cb795-10125"><a href="#cb795-10125" aria-hidden="true" tabindex="-1"></a>        bAR <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
-<span id="cb795-10126"><a href="#cb795-10126" aria-hidden="true" tabindex="-1"></a>        sigma <span class="sc">~</span> <span class="fu">dunif</span>(<span class="dv">0</span>,<span class="dv">10</span>)</span>
-<span id="cb795-10127"><a href="#cb795-10127" aria-hidden="true" tabindex="-1"></a>),</span>
-<span id="cb795-10128"><a href="#cb795-10128" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>dd )</span>
-<span id="cb795-10129"><a href="#cb795-10129" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.1</span>)</span>
-<span id="cb795-10130"><a href="#cb795-10130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10131"><a href="#cb795-10131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb795-10132"><a href="#cb795-10132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10133"><a href="#cb795-10133" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-10134"><a href="#cb795-10134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10135"><a href="#cb795-10135" aria-hidden="true" tabindex="-1"></a><span class="fu">### Preparation</span></span>
-<span id="cb795-10136"><a href="#cb795-10136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10137"><a href="#cb795-10137" aria-hidden="true" tabindex="-1"></a>But now we’ll also fit this model using Hamiltonian Monte Carlo. This means there will be no more quadratic approximation<span class="dv">&amp;mdash;</span> if the posterior distribution is non-Gaussian, then we’ll get whatever non-Gaussian shape it has. You can use exactly the same formula list as before, but you need to do two additional things.</span>
-<span id="cb795-10138"><a href="#cb795-10138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10139"><a href="#cb795-10139" aria-hidden="true" tabindex="-1"></a>(1) Preprocess all variable transformations.</span>
-<span id="cb795-10140"><a href="#cb795-10140" aria-hidden="true" tabindex="-1"></a><span class="ss">        - </span>If the outcome is transformed somehow, like by taking the logarithm, then do this before fitting the model by constructing a new variable in the data frame. </span>
-<span id="cb795-10141"><a href="#cb795-10141" aria-hidden="true" tabindex="-1"></a><span class="ss">        - </span>Likewise, if any predictor variables are transformed, including squaring and cubing and such to build polynomial models, then compute these transformed values before fitting the model.</span>
-<span id="cb795-10142"><a href="#cb795-10142" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb795-10143"><a href="#cb795-10143" aria-hidden="true" tabindex="-1"></a>\n</span>
-<span id="cb795-10144"><a href="#cb795-10144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10145"><a href="#cb795-10145" aria-hidden="true" tabindex="-1"></a>(2) Once you’ve got all the variables ready, make a new trimmed down data frame that contains only the variables you will actually use to fit the model. Technically, you don’t have to do this. But doing so avoids common problems. For example, if any of the unused variables have missing values, NA, then Stan will refuse to work.</span>
-<span id="cb795-10146"><a href="#cb795-10146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10147"><a href="#cb795-10147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.4}</span></span>
-<span id="cb795-10148"><a href="#cb795-10148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10149"><a href="#cb795-10149" aria-hidden="true" tabindex="-1"></a>dd.trim <span class="ot">&lt;-</span> dd[ , <span class="fu">c</span>(<span class="st">"log_gdp"</span>,<span class="st">"rugged"</span>,<span class="st">"cont_africa"</span>) ]</span>
-<span id="cb795-10150"><a href="#cb795-10150" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dd.trim)</span>
-<span id="cb795-10151"><a href="#cb795-10151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10152"><a href="#cb795-10152" aria-hidden="true" tabindex="-1"></a><span class="co"># The data frame dd.trim contains only the three variables we’re using.</span></span>
-<span id="cb795-10153"><a href="#cb795-10153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb795-10154"><a href="#cb795-10154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10155"><a href="#cb795-10155" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-10156"><a href="#cb795-10156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10157"><a href="#cb795-10157" aria-hidden="true" tabindex="-1"></a><span class="fu">### Estimation</span></span>
-<span id="cb795-10158"><a href="#cb795-10158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10159"><a href="#cb795-10159" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.5}</span></span>
-<span id="cb795-10160"><a href="#cb795-10160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10161"><a href="#cb795-10161" aria-hidden="true" tabindex="-1"></a><span class="co"># Get samples from the posterior distribution using HMC</span></span>
-<span id="cb795-10162"><a href="#cb795-10162" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(m8<span class="fl">.1</span>stan <span class="ot">&lt;-</span> <span class="fu">ulam</span>(</span>
-<span id="cb795-10163"><a href="#cb795-10163" aria-hidden="true" tabindex="-1"></a>    <span class="fu">alist</span>(</span>
-<span id="cb795-10164"><a href="#cb795-10164" aria-hidden="true" tabindex="-1"></a>        log_gdp <span class="sc">~</span> <span class="fu">dnorm</span>( mu , sigma ) ,</span>
-<span id="cb795-10165"><a href="#cb795-10165" aria-hidden="true" tabindex="-1"></a>        mu <span class="ot">&lt;-</span> a <span class="sc">+</span> bR<span class="sc">*</span>rugged <span class="sc">+</span> bA<span class="sc">*</span>cont_africa <span class="sc">+</span> bAR<span class="sc">*</span>rugged<span class="sc">*</span>cont_africa ,</span>
-<span id="cb795-10166"><a href="#cb795-10166" aria-hidden="true" tabindex="-1"></a>        a <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">100</span>),</span>
-<span id="cb795-10167"><a href="#cb795-10167" aria-hidden="true" tabindex="-1"></a>        bR <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
-<span id="cb795-10168"><a href="#cb795-10168" aria-hidden="true" tabindex="-1"></a>        bA <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
-<span id="cb795-10169"><a href="#cb795-10169" aria-hidden="true" tabindex="-1"></a>        bAR <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
-<span id="cb795-10170"><a href="#cb795-10170" aria-hidden="true" tabindex="-1"></a>        sigma <span class="sc">~</span> <span class="fu">dcauchy</span>(<span class="dv">0</span>,<span class="dv">2</span>) <span class="co"># a weakly regularizing prior for standard deviations</span></span>
-<span id="cb795-10171"><a href="#cb795-10171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10172"><a href="#cb795-10172" aria-hidden="true" tabindex="-1"></a><span class="co"># The uniform prior on sigma has been changed to a half-Cauchy prior. </span></span>
-<span id="cb795-10173"><a href="#cb795-10173" aria-hidden="true" tabindex="-1"></a><span class="co"># The Cauchy distribution is a useful thick-tailed probability distribution </span></span>
-<span id="cb795-10174"><a href="#cb795-10174" aria-hidden="true" tabindex="-1"></a><span class="co"># related to the Student t distribution.</span></span>
-<span id="cb795-10175"><a href="#cb795-10175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10176"><a href="#cb795-10176" aria-hidden="true" tabindex="-1"></a>), <span class="at">data=</span>dd.trim))</span>
-<span id="cb795-10177"><a href="#cb795-10177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10178"><a href="#cb795-10178" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.1</span>stan)</span>
-<span id="cb795-10179"><a href="#cb795-10179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10180"><a href="#cb795-10180" aria-hidden="true" tabindex="-1"></a><span class="co"># The interval boundaries in the table are highest posterior density intervals (HPDI), </span></span>
-<span id="cb795-10181"><a href="#cb795-10181" aria-hidden="true" tabindex="-1"></a><span class="co"># not ordinary percentile intervals (PI).</span></span>
-<span id="cb795-10182"><a href="#cb795-10182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10183"><a href="#cb795-10183" aria-hidden="true" tabindex="-1"></a><span class="co"># n_eff and Rhat provide MCMC diagnostic criteria, to help you tell how well estimation worked.</span></span>
-<span id="cb795-10184"><a href="#cb795-10184" aria-hidden="true" tabindex="-1"></a><span class="co"># n_eff is a crude estimate of the number of independent samples you managed to get.</span></span>
-<span id="cb795-10185"><a href="#cb795-10185" aria-hidden="true" tabindex="-1"></a><span class="co"># Rhat is a complicated estimate of the convergence of the Markov chains to the target </span></span>
-<span id="cb795-10186"><a href="#cb795-10186" aria-hidden="true" tabindex="-1"></a><span class="co"># distribution. It should approach 1.00 from above, when all is well.</span></span>
-<span id="cb795-10187"><a href="#cb795-10187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10188"><a href="#cb795-10188" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb795-10189"><a href="#cb795-10189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10190"><a href="#cb795-10190" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-10191"><a href="#cb795-10191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10192"><a href="#cb795-10192" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sampling agian, in parallel</span></span>
-<span id="cb795-10193"><a href="#cb795-10193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10194"><a href="#cb795-10194" aria-hidden="true" tabindex="-1"></a>Once you have compiled your Stan model, you can draw more samples from it anytime, running as many independent Markov chains as you like. And you can easily parallelize those chains, as well. To run four independent Markov chains for the model above, and to distribute them across separate processors in your computer, just pass the previous fit back to map2stan:</span>
-<span id="cb795-10195"><a href="#cb795-10195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10196"><a href="#cb795-10196" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.7}</span></span>
-<span id="cb795-10197"><a href="#cb795-10197" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(m8<span class="fl">.1</span>stan_4chains <span class="ot">&lt;-</span> <span class="fu">update</span>( m8<span class="fl">.1</span>stan , <span class="at">chains=</span><span class="dv">4</span> , <span class="at">cores=</span><span class="dv">4</span> ))</span>
-<span id="cb795-10198"><a href="#cb795-10198" aria-hidden="true" tabindex="-1"></a><span class="co"># map2stan doesn't work anymore- use update() here. </span></span>
-<span id="cb795-10199"><a href="#cb795-10199" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.1</span>stan_4chains)</span>
-<span id="cb795-10200"><a href="#cb795-10200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10201"><a href="#cb795-10201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb795-10202"><a href="#cb795-10202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10203"><a href="#cb795-10203" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-10204"><a href="#cb795-10204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10205"><a href="#cb795-10205" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
-<span id="cb795-10206"><a href="#cb795-10206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10207"><a href="#cb795-10207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.8}</span></span>
-<span id="cb795-10208"><a href="#cb795-10208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10209"><a href="#cb795-10209" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull out the samples</span></span>
-<span id="cb795-10210"><a href="#cb795-10210" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">extract.samples</span>( m8<span class="fl">.1</span>stan )</span>
-<span id="cb795-10211"><a href="#cb795-10211" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(post)</span>
-<span id="cb795-10212"><a href="#cb795-10212" aria-hidden="true" tabindex="-1"></a><span class="co"># Samples are in a list- not in a data.frame (useful for multilevel models)</span></span>
-<span id="cb795-10213"><a href="#cb795-10213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10214"><a href="#cb795-10214" aria-hidden="true" tabindex="-1"></a><span class="co"># For now, if it doesn’t behave like you expect it to, you can coerce it to a data frame </span></span>
-<span id="cb795-10215"><a href="#cb795-10215" aria-hidden="true" tabindex="-1"></a>post<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(post)</span>
-<span id="cb795-10216"><a href="#cb795-10216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10217"><a href="#cb795-10217" aria-hidden="true" tabindex="-1"></a><span class="co"># To plot all these samples at once, provided there aren’t too many parameters</span></span>
-<span id="cb795-10218"><a href="#cb795-10218" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(post)</span>
-<span id="cb795-10219"><a href="#cb795-10219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10220"><a href="#cb795-10220" aria-hidden="true" tabindex="-1"></a><span class="co"># To display parameter names and parameter correlations</span></span>
-<span id="cb795-10221"><a href="#cb795-10221" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(m8<span class="fl">.1</span>stan)</span>
-<span id="cb795-10222"><a href="#cb795-10222" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairs plot of the samples produced by Stan. The diagonal shows a density estimate for </span></span>
-<span id="cb795-10223"><a href="#cb795-10223" aria-hidden="true" tabindex="-1"></a><span class="co"># each parameter. Below the diagonal, correlations between parameters are shown.</span></span>
-<span id="cb795-10224"><a href="#cb795-10224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10225"><a href="#cb795-10225" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb795-10226"><a href="#cb795-10226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10227"><a href="#cb795-10227" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb795-10228"><a href="#cb795-10228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10229"><a href="#cb795-10229" aria-hidden="true" tabindex="-1"></a><span class="fu">### Using the samples</span></span>
-<span id="cb795-10230"><a href="#cb795-10230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10231"><a href="#cb795-10231" aria-hidden="true" tabindex="-1"></a>If you have the samples from the posterior and you know the model, you can do anything: simulate predictions, compute differences between parameters, and calculate DIC and WAIC.</span>
-<span id="cb795-10232"><a href="#cb795-10232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10233"><a href="#cb795-10233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.11}</span></span>
-<span id="cb795-10234"><a href="#cb795-10234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10235"><a href="#cb795-10235" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m8<span class="fl">.1</span>stan)</span>
-<span id="cb795-10236"><a href="#cb795-10236" aria-hidden="true" tabindex="-1"></a><span class="co"># map2stan does not work anymore and ulam doesn't compute WAIC and DIC </span></span>
-<span id="cb795-10237"><a href="#cb795-10237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10238"><a href="#cb795-10238" aria-hidden="true" tabindex="-1"></a><span class="do">## Use brms (copy Akjurz's codes)</span></span>
-<span id="cb795-10239"><a href="#cb795-10239" aria-hidden="true" tabindex="-1"></a><span class="co"># Run HMC model</span></span>
-<span id="cb795-10240"><a href="#cb795-10240" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(b8<span class="fl">.1</span> <span class="ot">&lt;-</span></span>
-<span id="cb795-10241"><a href="#cb795-10241" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span>(<span class="at">data =</span> dd, <span class="at">family =</span> gaussian,</span>
-<span id="cb795-10242"><a href="#cb795-10242" aria-hidden="true" tabindex="-1"></a>      log_gdp <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> rugged <span class="sc">+</span> cont_africa <span class="sc">+</span> rugged<span class="sc">:</span>cont_africa,</span>
-<span id="cb795-10243"><a href="#cb795-10243" aria-hidden="true" tabindex="-1"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb795-10244"><a href="#cb795-10244" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> b),</span>
-<span id="cb795-10245"><a href="#cb795-10245" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="fu">cauchy</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class =</span> sigma)),</span>
-<span id="cb795-10246"><a href="#cb795-10246" aria-hidden="true" tabindex="-1"></a>      <span class="at">seed =</span> <span class="dv">8</span>))</span>
-<span id="cb795-10247"><a href="#cb795-10247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10248"><a href="#cb795-10248" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(b8<span class="fl">.1</span>)</span>
+<span id="cb795-10026"><a href="#cb795-10026" aria-hidden="true" tabindex="-1"></a><span class="co"># Results of the king following the Metropolis algorithm. The left-hand plot shows </span></span>
+<span id="cb795-10027"><a href="#cb795-10027" aria-hidden="true" tabindex="-1"></a><span class="co"># the king’s position (vertical axis) across first 100 weeks (horizontal axis). </span></span>
+<span id="cb795-10028"><a href="#cb795-10028" aria-hidden="true" tabindex="-1"></a><span class="co"># In any particular week, it’s nearly impossible to say where the king will be. </span></span>
+<span id="cb795-10029"><a href="#cb795-10029" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10030"><a href="#cb795-10030" aria-hidden="true" tabindex="-1"></a><span class="co"># The right-hand plot shows the long-run behavior of the algorithm, as the time spent on </span></span>
+<span id="cb795-10031"><a href="#cb795-10031" aria-hidden="true" tabindex="-1"></a><span class="co"># each island turns out to be proportional to its population size.</span></span>
+<span id="cb795-10032"><a href="#cb795-10032" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10033"><a href="#cb795-10033" aria-hidden="true" tabindex="-1"></a><span class="co"># The algorithm will still work in this way, even if we allow the king to be equally likely </span></span>
+<span id="cb795-10034"><a href="#cb795-10034" aria-hidden="true" tabindex="-1"></a><span class="co"># to propose a move to any island from any island, not just among neighbors. The algorithm </span></span>
+<span id="cb795-10035"><a href="#cb795-10035" aria-hidden="true" tabindex="-1"></a><span class="co"># would also work for any size archipelago, even if the king didn’t know how many islands </span></span>
+<span id="cb795-10036"><a href="#cb795-10036" aria-hidden="true" tabindex="-1"></a><span class="co"># were in it. All he needs to know at any point in time is the population of the current </span></span>
+<span id="cb795-10037"><a href="#cb795-10037" aria-hidden="true" tabindex="-1"></a><span class="co"># island and the population of the proposal island.</span></span>
+<span id="cb795-10038"><a href="#cb795-10038" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10039"><a href="#cb795-10039" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb795-10040"><a href="#cb795-10040" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10041"><a href="#cb795-10041" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-10042"><a href="#cb795-10042" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10043"><a href="#cb795-10043" aria-hidden="true" tabindex="-1"></a><span class="fu">## Markov chain Monte Carlo</span></span>
+<span id="cb795-10044"><a href="#cb795-10044" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10045"><a href="#cb795-10045" aria-hidden="true" tabindex="-1"></a>The goal of general **Metropolis Algorithm**, an example of Markov chain Monte Carlo, is to draw samples from an unknown and usually complex target distribution, like a posterior probability distribution.</span>
+<span id="cb795-10046"><a href="#cb795-10046" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10047"><a href="#cb795-10047" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The “islands” in our objective are parameter values, and they need not be discrete, but can instead take on a continuous range of values as usual.</span>
+<span id="cb795-10048"><a href="#cb795-10048" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10049"><a href="#cb795-10049" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The “population sizes” in our objective are the posterior probabilities at each parameter value.</span>
+<span id="cb795-10050"><a href="#cb795-10050" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10051"><a href="#cb795-10051" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The “weeks” in our objective are samples taken from the joint posterior of the parameters in the model.</span>
+<span id="cb795-10052"><a href="#cb795-10052" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10053"><a href="#cb795-10053" aria-hidden="true" tabindex="-1"></a>Provided the way we choose our proposed parameter values at each step is symmetric<span class="dv">&amp;mdash;</span> so that there is an equal chance of proposing from A to B and from B to A<span class="dv">&amp;mdash;</span> then the Metropolis algorithm will eventually give us a collection of samples from the joint posterior.</span>
+<span id="cb795-10054"><a href="#cb795-10054" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10055"><a href="#cb795-10055" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-10056"><a href="#cb795-10056" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10057"><a href="#cb795-10057" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;spans</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color:brown"</span><span class="kw">&gt;&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"text-decoration:underline"</span><span class="kw">&gt;</span>**Two of the most important in contemporary Bayesian inference**<span class="kw">&lt;/span&gt;</span></span>
+<span id="cb795-10058"><a href="#cb795-10058" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10059"><a href="#cb795-10059" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Gibbs sampling</span>
+<span id="cb795-10060"><a href="#cb795-10060" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10061"><a href="#cb795-10061" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Hamiltonian (aka Hybrid, aka HMC) Monte Carlo</span>
+<span id="cb795-10062"><a href="#cb795-10062" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10063"><a href="#cb795-10063" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-10064"><a href="#cb795-10064" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10065"><a href="#cb795-10065" aria-hidden="true" tabindex="-1"></a><span class="fu">### Gibbs sampling</span></span>
+<span id="cb795-10066"><a href="#cb795-10066" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10067"><a href="#cb795-10067" aria-hidden="true" tabindex="-1"></a>The Metropolis algorithm works whenever the probability of proposing a jump to B from A is equal to the probability of proposing A from B, when the proposal distribution is symmetric. There is a more general method, known as Metropolis-Hastings, that allows asymmetric proposals. </span>
+<span id="cb795-10068"><a href="#cb795-10068" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10069"><a href="#cb795-10069" aria-hidden="true" tabindex="-1"></a>An algorithm that allows asymmetric proposals is useful because:</span>
+<span id="cb795-10070"><a href="#cb795-10070" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10071"><a href="#cb795-10071" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>it makes it easier to handle parameters, like standard deviations, that have boundaries at zero</span>
+<span id="cb795-10072"><a href="#cb795-10072" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10073"><a href="#cb795-10073" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>we can acquire an equally good image of the posterior distribution in fewer steps</span>
+<span id="cb795-10074"><a href="#cb795-10074" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10075"><a href="#cb795-10075" aria-hidden="true" tabindex="-1"></a>Gibbs sampling is a variant of the Metropolis-Hastings algorithm that uses clever proposals and is therefore more efficient<span class="dv">&amp;mdash;</span> you can get a good estimate of the posterior from Gibbs sampling with many fewer samples than a comparable Metropolis approach. The improvement arises from ***adaptive proposals*** in which the distribution of proposed parameter values adjusts itself intelligently, depending upon the parameter values at the moment. Gibbs sampling computes these adaptive proposals using particular combinations of prior distributions and likelihoods known as *conjugate pairs*.</span>
+<span id="cb795-10076"><a href="#cb795-10076" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10077"><a href="#cb795-10077" aria-hidden="true" tabindex="-1"></a>Some limitations of Gibbs sampling:</span>
+<span id="cb795-10078"><a href="#cb795-10078" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10079"><a href="#cb795-10079" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Some conjugate priors seem silly, and choosing a prior so that the model fits efficiently isn’t really a strong argument from a scientific perspective.</span>
+<span id="cb795-10080"><a href="#cb795-10080" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10081"><a href="#cb795-10081" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>As models become more complex and contain hundreds or thousands or tens of thousands of parameters, Gibbs sampling becomes shockingly inefficient.</span>
+<span id="cb795-10082"><a href="#cb795-10082" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10083"><a href="#cb795-10083" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-10084"><a href="#cb795-10084" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10085"><a href="#cb795-10085" aria-hidden="true" tabindex="-1"></a><span class="fu">### Hamiltonian Monte Carlo</span></span>
+<span id="cb795-10086"><a href="#cb795-10086" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10087"><a href="#cb795-10087" aria-hidden="true" tabindex="-1"></a>Hamiltonian Monte Carlo (or Hybrid Monte Carlo, HMC) adopts Jaynes’ principle that, *"whenever there is a randomized way of doing something, then there is a non-randomized way that delivers better performance but requires more thought."*</span>
+<span id="cb795-10088"><a href="#cb795-10088" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10089"><a href="#cb795-10089" aria-hidden="true" tabindex="-1"></a>HMC is much more computationally costly than are Metropolis or Gibbs sampling<span class="dv">&amp;mdash;</span> both highly random procedures. But its proposals are typically much more efficient<span class="dv">&amp;mdash;</span> doesn’t need as many samples to describe the posterior distribution, outshine other algorithms as models become more complex (thousands or tens of thousands of parameters). HMC outperforms Metropolis and Gibbs sampling, but it is not a universal solution to all MCMC problems.</span>
+<span id="cb795-10090"><a href="#cb795-10090" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10091"><a href="#cb795-10091" aria-hidden="true" tabindex="-1"></a>Monty’s kingdom is not a discrete set of islands. Instead, it is a continuous territory stretched out along a narrow valley. Monty's advisor, Hamilton realized that a much more efficient way to visit the citizens in the continuous Kingdom is to travel back and forth along its length. In order to spend more time in densely settled areas, they should slow the royal vehicle down when houses grow more dense. Likewise, they should speed up when houses grow more sparse. This strategy requires knowing how quickly population density is changing, at their current location. But it doesn’t require remembering where they’ve been or knowing the population distribution anyplace else. And a major benefit of this strategy compared to that of Metropolis is that the King makes a full sweep of the kingdom before revisiting anyone.</span>
+<span id="cb795-10092"><a href="#cb795-10092" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10093"><a href="#cb795-10093" aria-hidden="true" tabindex="-1"></a>In statistical applications, the royal vehicle is the current vector of parameter values. Let’s consider the single parameter case, just to keep things simple. In that case, the log-posterior is like a bowl, with the MAP at its nadir. Then the job is to sweep across the surface of the bowl, adjusting speed in proportion to how high up we are. In cases where ordinary Metropolis or Gibbs sampling wander slowly through parameter space, Hamiltonian Monte Carlo remains efficient.</span>
+<span id="cb795-10094"><a href="#cb795-10094" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10095"><a href="#cb795-10095" aria-hidden="true" tabindex="-1"></a>Some limitations of HMC:</span>
+<span id="cb795-10096"><a href="#cb795-10096" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10097"><a href="#cb795-10097" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>HMC requires continuous parameters. It can’t glide through a discrete parameter. </span>
+<span id="cb795-10098"><a href="#cb795-10098" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10099"><a href="#cb795-10099" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>it needs to be tuned to a particular model and its data. That’s where an engine like Stan (mc-stan.org) comes in. Stan automates much of that tuning.</span>
+<span id="cb795-10100"><a href="#cb795-10100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10101"><a href="#cb795-10101" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-10102"><a href="#cb795-10102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10103"><a href="#cb795-10103" aria-hidden="true" tabindex="-1"></a><span class="fu">## Easy HMC: `map2stan`</span></span>
+<span id="cb795-10104"><a href="#cb795-10104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10105"><a href="#cb795-10105" aria-hidden="true" tabindex="-1"></a><span class="in">`map2stan`</span> compiles lists of formulas, like the lists you’ve been using so far to construct map estimates, into Stan HMC code. To use <span class="in">`map2stan`</span>, you need to preprocess any variable transformations, and you need to construct a clean data frame with only the variables you will use.</span>
+<span id="cb795-10106"><a href="#cb795-10106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10107"><a href="#cb795-10107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.2}</span></span>
+<span id="cb795-10108"><a href="#cb795-10108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10109"><a href="#cb795-10109" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data and reduce it down to cases (nations) that have the outcome variable of interest</span></span>
+<span id="cb795-10110"><a href="#cb795-10110" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(rugged)</span>
+<span id="cb795-10111"><a href="#cb795-10111" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> rugged</span>
+<span id="cb795-10112"><a href="#cb795-10112" aria-hidden="true" tabindex="-1"></a>d<span class="sc">$</span>log_gdp <span class="ot">&lt;-</span> <span class="fu">log</span>(d<span class="sc">$</span>rgdppc_2000)</span>
+<span id="cb795-10113"><a href="#cb795-10113" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> d[ <span class="fu">complete.cases</span>(d<span class="sc">$</span>rgdppc_2000) , ]</span>
+<span id="cb795-10114"><a href="#cb795-10114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10115"><a href="#cb795-10115" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the interaction model which  aims to predict log-GDP with terrain ruggedness, </span></span>
+<span id="cb795-10116"><a href="#cb795-10116" aria-hidden="true" tabindex="-1"></a><span class="co"># continent, and the interaction of the two</span></span>
+<span id="cb795-10117"><a href="#cb795-10117" aria-hidden="true" tabindex="-1"></a>m8<span class="fl">.1</span> <span class="ot">&lt;-</span> rethinking<span class="sc">::</span><span class="fu">map</span>(</span>
+<span id="cb795-10118"><a href="#cb795-10118" aria-hidden="true" tabindex="-1"></a>    <span class="fu">alist</span>(</span>
+<span id="cb795-10119"><a href="#cb795-10119" aria-hidden="true" tabindex="-1"></a>        log_gdp <span class="sc">~</span> <span class="fu">dnorm</span>( mu , sigma ) ,</span>
+<span id="cb795-10120"><a href="#cb795-10120" aria-hidden="true" tabindex="-1"></a>        mu <span class="ot">&lt;-</span> a <span class="sc">+</span> bR<span class="sc">*</span>rugged <span class="sc">+</span> bA<span class="sc">*</span>cont_africa <span class="sc">+</span> bAR<span class="sc">*</span>rugged<span class="sc">*</span>cont_africa ,</span>
+<span id="cb795-10121"><a href="#cb795-10121" aria-hidden="true" tabindex="-1"></a>        a <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">100</span>),</span>
+<span id="cb795-10122"><a href="#cb795-10122" aria-hidden="true" tabindex="-1"></a>        bR <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
+<span id="cb795-10123"><a href="#cb795-10123" aria-hidden="true" tabindex="-1"></a>        bA <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
+<span id="cb795-10124"><a href="#cb795-10124" aria-hidden="true" tabindex="-1"></a>        bAR <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
+<span id="cb795-10125"><a href="#cb795-10125" aria-hidden="true" tabindex="-1"></a>        sigma <span class="sc">~</span> <span class="fu">dunif</span>(<span class="dv">0</span>,<span class="dv">10</span>)</span>
+<span id="cb795-10126"><a href="#cb795-10126" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb795-10127"><a href="#cb795-10127" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>dd )</span>
+<span id="cb795-10128"><a href="#cb795-10128" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.1</span>)</span>
+<span id="cb795-10129"><a href="#cb795-10129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10130"><a href="#cb795-10130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb795-10131"><a href="#cb795-10131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10132"><a href="#cb795-10132" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-10133"><a href="#cb795-10133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10134"><a href="#cb795-10134" aria-hidden="true" tabindex="-1"></a><span class="fu">### Preparation</span></span>
+<span id="cb795-10135"><a href="#cb795-10135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10136"><a href="#cb795-10136" aria-hidden="true" tabindex="-1"></a>But now we’ll also fit this model using Hamiltonian Monte Carlo. This means there will be no more quadratic approximation<span class="dv">&amp;mdash;</span> if the posterior distribution is non-Gaussian, then we’ll get whatever non-Gaussian shape it has. You can use exactly the same formula list as before, but you need to do two additional things.</span>
+<span id="cb795-10137"><a href="#cb795-10137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10138"><a href="#cb795-10138" aria-hidden="true" tabindex="-1"></a>(1) Preprocess all variable transformations.</span>
+<span id="cb795-10139"><a href="#cb795-10139" aria-hidden="true" tabindex="-1"></a><span class="ss">        - </span>If the outcome is transformed somehow, like by taking the logarithm, then do this before fitting the model by constructing a new variable in the data frame. </span>
+<span id="cb795-10140"><a href="#cb795-10140" aria-hidden="true" tabindex="-1"></a><span class="ss">        - </span>Likewise, if any predictor variables are transformed, including squaring and cubing and such to build polynomial models, then compute these transformed values before fitting the model.</span>
+<span id="cb795-10141"><a href="#cb795-10141" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb795-10142"><a href="#cb795-10142" aria-hidden="true" tabindex="-1"></a>\n</span>
+<span id="cb795-10143"><a href="#cb795-10143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10144"><a href="#cb795-10144" aria-hidden="true" tabindex="-1"></a>(2) Once you’ve got all the variables ready, make a new trimmed down data frame that contains only the variables you will actually use to fit the model. Technically, you don’t have to do this. But doing so avoids common problems. For example, if any of the unused variables have missing values, NA, then Stan will refuse to work.</span>
+<span id="cb795-10145"><a href="#cb795-10145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10146"><a href="#cb795-10146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.4}</span></span>
+<span id="cb795-10147"><a href="#cb795-10147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10148"><a href="#cb795-10148" aria-hidden="true" tabindex="-1"></a>dd.trim <span class="ot">&lt;-</span> dd[ , <span class="fu">c</span>(<span class="st">"log_gdp"</span>,<span class="st">"rugged"</span>,<span class="st">"cont_africa"</span>) ]</span>
+<span id="cb795-10149"><a href="#cb795-10149" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dd.trim)</span>
+<span id="cb795-10150"><a href="#cb795-10150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10151"><a href="#cb795-10151" aria-hidden="true" tabindex="-1"></a><span class="co"># The data frame dd.trim contains only the three variables we’re using.</span></span>
+<span id="cb795-10152"><a href="#cb795-10152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb795-10153"><a href="#cb795-10153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10154"><a href="#cb795-10154" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-10155"><a href="#cb795-10155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10156"><a href="#cb795-10156" aria-hidden="true" tabindex="-1"></a><span class="fu">### Estimation</span></span>
+<span id="cb795-10157"><a href="#cb795-10157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10158"><a href="#cb795-10158" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.5}</span></span>
+<span id="cb795-10159"><a href="#cb795-10159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10160"><a href="#cb795-10160" aria-hidden="true" tabindex="-1"></a><span class="co"># Get samples from the posterior distribution using HMC</span></span>
+<span id="cb795-10161"><a href="#cb795-10161" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(m8<span class="fl">.1</span>stan <span class="ot">&lt;-</span> <span class="fu">ulam</span>(</span>
+<span id="cb795-10162"><a href="#cb795-10162" aria-hidden="true" tabindex="-1"></a>    <span class="fu">alist</span>(</span>
+<span id="cb795-10163"><a href="#cb795-10163" aria-hidden="true" tabindex="-1"></a>        log_gdp <span class="sc">~</span> <span class="fu">dnorm</span>( mu , sigma ) ,</span>
+<span id="cb795-10164"><a href="#cb795-10164" aria-hidden="true" tabindex="-1"></a>        mu <span class="ot">&lt;-</span> a <span class="sc">+</span> bR<span class="sc">*</span>rugged <span class="sc">+</span> bA<span class="sc">*</span>cont_africa <span class="sc">+</span> bAR<span class="sc">*</span>rugged<span class="sc">*</span>cont_africa ,</span>
+<span id="cb795-10165"><a href="#cb795-10165" aria-hidden="true" tabindex="-1"></a>        a <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">100</span>),</span>
+<span id="cb795-10166"><a href="#cb795-10166" aria-hidden="true" tabindex="-1"></a>        bR <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
+<span id="cb795-10167"><a href="#cb795-10167" aria-hidden="true" tabindex="-1"></a>        bA <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
+<span id="cb795-10168"><a href="#cb795-10168" aria-hidden="true" tabindex="-1"></a>        bAR <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
+<span id="cb795-10169"><a href="#cb795-10169" aria-hidden="true" tabindex="-1"></a>        sigma <span class="sc">~</span> <span class="fu">dcauchy</span>(<span class="dv">0</span>,<span class="dv">2</span>) <span class="co"># a weakly regularizing prior for standard deviations</span></span>
+<span id="cb795-10170"><a href="#cb795-10170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10171"><a href="#cb795-10171" aria-hidden="true" tabindex="-1"></a><span class="co"># The uniform prior on sigma has been changed to a half-Cauchy prior. </span></span>
+<span id="cb795-10172"><a href="#cb795-10172" aria-hidden="true" tabindex="-1"></a><span class="co"># The Cauchy distribution is a useful thick-tailed probability distribution </span></span>
+<span id="cb795-10173"><a href="#cb795-10173" aria-hidden="true" tabindex="-1"></a><span class="co"># related to the Student t distribution.</span></span>
+<span id="cb795-10174"><a href="#cb795-10174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10175"><a href="#cb795-10175" aria-hidden="true" tabindex="-1"></a>), <span class="at">data=</span>dd.trim))</span>
+<span id="cb795-10176"><a href="#cb795-10176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10177"><a href="#cb795-10177" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.1</span>stan)</span>
+<span id="cb795-10178"><a href="#cb795-10178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10179"><a href="#cb795-10179" aria-hidden="true" tabindex="-1"></a><span class="co"># The interval boundaries in the table are highest posterior density intervals (HPDI), </span></span>
+<span id="cb795-10180"><a href="#cb795-10180" aria-hidden="true" tabindex="-1"></a><span class="co"># not ordinary percentile intervals (PI).</span></span>
+<span id="cb795-10181"><a href="#cb795-10181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10182"><a href="#cb795-10182" aria-hidden="true" tabindex="-1"></a><span class="co"># n_eff and Rhat provide MCMC diagnostic criteria, to help you tell how well estimation worked.</span></span>
+<span id="cb795-10183"><a href="#cb795-10183" aria-hidden="true" tabindex="-1"></a><span class="co"># n_eff is a crude estimate of the number of independent samples you managed to get.</span></span>
+<span id="cb795-10184"><a href="#cb795-10184" aria-hidden="true" tabindex="-1"></a><span class="co"># Rhat is a complicated estimate of the convergence of the Markov chains to the target </span></span>
+<span id="cb795-10185"><a href="#cb795-10185" aria-hidden="true" tabindex="-1"></a><span class="co"># distribution. It should approach 1.00 from above, when all is well.</span></span>
+<span id="cb795-10186"><a href="#cb795-10186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10187"><a href="#cb795-10187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb795-10188"><a href="#cb795-10188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10189"><a href="#cb795-10189" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-10190"><a href="#cb795-10190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10191"><a href="#cb795-10191" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sampling agian, in parallel</span></span>
+<span id="cb795-10192"><a href="#cb795-10192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10193"><a href="#cb795-10193" aria-hidden="true" tabindex="-1"></a>Once you have compiled your Stan model, you can draw more samples from it anytime, running as many independent Markov chains as you like. And you can easily parallelize those chains, as well. To run four independent Markov chains for the model above, and to distribute them across separate processors in your computer, just pass the previous fit back to map2stan:</span>
+<span id="cb795-10194"><a href="#cb795-10194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10195"><a href="#cb795-10195" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.7}</span></span>
+<span id="cb795-10196"><a href="#cb795-10196" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(m8<span class="fl">.1</span>stan_4chains <span class="ot">&lt;-</span> <span class="fu">update</span>( m8<span class="fl">.1</span>stan , <span class="at">chains=</span><span class="dv">4</span> , <span class="at">cores=</span><span class="dv">4</span> ))</span>
+<span id="cb795-10197"><a href="#cb795-10197" aria-hidden="true" tabindex="-1"></a><span class="co"># map2stan doesn't work anymore- use update() here. </span></span>
+<span id="cb795-10198"><a href="#cb795-10198" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.1</span>stan_4chains)</span>
+<span id="cb795-10199"><a href="#cb795-10199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10200"><a href="#cb795-10200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb795-10201"><a href="#cb795-10201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10202"><a href="#cb795-10202" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-10203"><a href="#cb795-10203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10204"><a href="#cb795-10204" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
+<span id="cb795-10205"><a href="#cb795-10205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10206"><a href="#cb795-10206" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.8}</span></span>
+<span id="cb795-10207"><a href="#cb795-10207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10208"><a href="#cb795-10208" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull out the samples</span></span>
+<span id="cb795-10209"><a href="#cb795-10209" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">extract.samples</span>( m8<span class="fl">.1</span>stan )</span>
+<span id="cb795-10210"><a href="#cb795-10210" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(post)</span>
+<span id="cb795-10211"><a href="#cb795-10211" aria-hidden="true" tabindex="-1"></a><span class="co"># Samples are in a list- not in a data.frame (useful for multilevel models)</span></span>
+<span id="cb795-10212"><a href="#cb795-10212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10213"><a href="#cb795-10213" aria-hidden="true" tabindex="-1"></a><span class="co"># For now, if it doesn’t behave like you expect it to, you can coerce it to a data frame </span></span>
+<span id="cb795-10214"><a href="#cb795-10214" aria-hidden="true" tabindex="-1"></a>post<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(post)</span>
+<span id="cb795-10215"><a href="#cb795-10215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10216"><a href="#cb795-10216" aria-hidden="true" tabindex="-1"></a><span class="co"># To plot all these samples at once, provided there aren’t too many parameters</span></span>
+<span id="cb795-10217"><a href="#cb795-10217" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(post)</span>
+<span id="cb795-10218"><a href="#cb795-10218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10219"><a href="#cb795-10219" aria-hidden="true" tabindex="-1"></a><span class="co"># To display parameter names and parameter correlations</span></span>
+<span id="cb795-10220"><a href="#cb795-10220" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(m8<span class="fl">.1</span>stan)</span>
+<span id="cb795-10221"><a href="#cb795-10221" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairs plot of the samples produced by Stan. The diagonal shows a density estimate for </span></span>
+<span id="cb795-10222"><a href="#cb795-10222" aria-hidden="true" tabindex="-1"></a><span class="co"># each parameter. Below the diagonal, correlations between parameters are shown.</span></span>
+<span id="cb795-10223"><a href="#cb795-10223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10224"><a href="#cb795-10224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb795-10225"><a href="#cb795-10225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10226"><a href="#cb795-10226" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb795-10227"><a href="#cb795-10227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10228"><a href="#cb795-10228" aria-hidden="true" tabindex="-1"></a><span class="fu">### Using the samples</span></span>
+<span id="cb795-10229"><a href="#cb795-10229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10230"><a href="#cb795-10230" aria-hidden="true" tabindex="-1"></a>If you have the samples from the posterior and you know the model, you can do anything: simulate predictions, compute differences between parameters, and calculate DIC and WAIC.</span>
+<span id="cb795-10231"><a href="#cb795-10231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10232"><a href="#cb795-10232" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.11}</span></span>
+<span id="cb795-10233"><a href="#cb795-10233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10234"><a href="#cb795-10234" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m8<span class="fl">.1</span>stan)</span>
+<span id="cb795-10235"><a href="#cb795-10235" aria-hidden="true" tabindex="-1"></a><span class="co"># map2stan does not work anymore and ulam doesn't compute WAIC and DIC </span></span>
+<span id="cb795-10236"><a href="#cb795-10236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10237"><a href="#cb795-10237" aria-hidden="true" tabindex="-1"></a><span class="do">## Use brms (copy Akjurz's codes)</span></span>
+<span id="cb795-10238"><a href="#cb795-10238" aria-hidden="true" tabindex="-1"></a><span class="co"># Run HMC model</span></span>
+<span id="cb795-10239"><a href="#cb795-10239" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(b8<span class="fl">.1</span> <span class="ot">&lt;-</span></span>
+<span id="cb795-10240"><a href="#cb795-10240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span>(<span class="at">data =</span> dd, <span class="at">family =</span> gaussian,</span>
+<span id="cb795-10241"><a href="#cb795-10241" aria-hidden="true" tabindex="-1"></a>      log_gdp <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> rugged <span class="sc">+</span> cont_africa <span class="sc">+</span> rugged<span class="sc">:</span>cont_africa,</span>
+<span id="cb795-10242"><a href="#cb795-10242" aria-hidden="true" tabindex="-1"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb795-10243"><a href="#cb795-10243" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> b),</span>
+<span id="cb795-10244"><a href="#cb795-10244" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="fu">cauchy</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class =</span> sigma)),</span>
+<span id="cb795-10245"><a href="#cb795-10245" aria-hidden="true" tabindex="-1"></a>      <span class="at">seed =</span> <span class="dv">8</span>))</span>
+<span id="cb795-10246"><a href="#cb795-10246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb795-10247"><a href="#cb795-10247" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(b8<span class="fl">.1</span>)</span>
+<span id="cb795-10248"><a href="#cb795-10248" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-10249"><a href="#cb795-10249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10250"><a href="#cb795-10250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10251"><a href="#cb795-10251" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb795-10250"><a href="#cb795-10250" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb795-10251"><a href="#cb795-10251" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-10252"><a href="#cb795-10252" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-10253"><a href="#cb795-10253" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-10254"><a href="#cb795-10254" aria-hidden="true" tabindex="-1"></a></span>
@@ -21191,8 +21192,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb795-10277"><a href="#cb795-10277" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-10278"><a href="#cb795-10278" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-10279"><a href="#cb795-10279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10280"><a href="#cb795-10280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-10281"><a href="#cb795-10281" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb795-10280"><a href="#cb795-10280" aria-hidden="true" tabindex="-1"></a>---</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
