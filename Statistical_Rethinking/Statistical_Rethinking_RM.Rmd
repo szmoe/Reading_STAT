@@ -40,7 +40,6 @@ library(brms)
 
 # Chapter 1: The Golem of Prague
 
-$~$
 
 Chapter 1 urged us to rethink the "popular statistical and scientific philosophy" by pointing out the flaws in classical statistical tools and reasoning. 
 
@@ -54,7 +53,7 @@ The author mentioned why deductive falsification is impossible in scientific con
 
 For both of these reasons, deductive falsification never works. The scientific method cannot be reduced to a statistical procedure, and so our statistical methods should not pretend." 
 
-$~$
+<br>
 
 ## Hypotheses are not models
 
@@ -70,7 +69,7 @@ In other words, it doesn't matter whether we reject or fail to reject the null. 
 
 In that case, should we disregard all studies that rely on NHST? Should we reject all findings made by rejecting the null hypothesis as senseless? And are the multiple process models the only way to go? The frequentists' way to solve this problem is to control the conditions of the experiment/study. In nutrition studies, this can be in the form of inclusion or exclusion criteria and strict control of test subjects (and conditions) throughout the duration of the study. This is to ensure the observed effect (or lack of) is caused by (or related to) the variables of interest and not by uncontrolled confounders. If a NHST research was done well with proper control, then we could 'more or less' have confidence in the research's findings. 
 
-$~$
+<br>
 
 ## *Measurement matters*
 
@@ -102,7 +101,7 @@ Another thing is the *modus tollens* swan story was merely to explain a theory- 
 
 The author said "falsification is always consensual, not logical," and "evidence often— but not always— has something to do with such falsification." He also highlighted the arguments towards "consensus about meaning of evidence" and the danger of "historical revisionism." I think the author is right. We hold such reverence towards the famous scientists in history, that their formulas are still widely applied to this day, without contesting their suitability in this age. Many researches were done following the same mould, that they gave similar results, which became our gold-standard- the guidelines. And those guidelines are not set in stone. They are regularly updated- albeit minor changes. Occasionally, some guidelines are completely proven false and replaced by new ones. These occasions are rare that they are called groundbreaking discovery. I remembered the day everyone at the department was talking about the guideline change on egg consumption- may seem insignificant to outsiders but we were really excited! It could be that such new discoveries are rare because we are doing the same thing over and over again, and are content when our findings (even vaguely) agree the current consensus- we seek validation from previous works by researchers more venerable than us. And that is dangerous to our patients and the public. We may be feeling relaxed because we think the worst that can happen from such findings is "the treatment is ineffective but not harmful." We pour scorn on some of the treatments given by the healthcare providers some hundred years ago as harmful and ineffective. We can do so because we now have the knowledge collected over time. It is very possible our best guidelines may seem 'folly' to the researchers in the next hundred years. Thus, I agree with the author that it's time we should do things differently. 
 
-$~$
+<br>
 
 ## Three tools for golem engineering 
 
@@ -170,12 +169,12 @@ These criteria can help researchers with two common difficulties in model compar
 
 (2) ***Comparison of multiple non-null models to the same data.*** Frequently, several plausible models of a phenomenon are known to us. In some empirical contexts, like social networks and evolutionary phylogenies, there are no reasonable or uniquely “null” models. This was also true of the neutral evolution example. In such cases, it’s not only a good idea to explicitly compare models. It’s also mandatory. Information criteria aren’t the only way to conduct the comparison. But they are an accessible and widely used way.
 
-$~$
+<br>
 
 
 # Chapter 2: Small Worlds and Large Worlds
 
-$~$
+<br>
 
 ## The garden of forking data
 
@@ -245,7 +244,7 @@ We select one more fruit from the bag. Now the data sequence is "a,p,a,a,p"
 
 "This updating approach amounts to nothing more than asserting that (1) when we have previous information suggesting there are W~prior~ ways for a conjecture to produce a previous observation D~prior~ and (2) we acquire new observations D~new~ that the same conjecture can produce in W~new~ ways, then (3) the number of ways the conjecture can account for both D~prior~ as well as D~new~ is just the product W~prior~ × W~new~."
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Incorporating new data types different from prior data**</span>
 
@@ -274,7 +273,7 @@ I made a mental note in the beginning that the bag contained 4 pears and 4 avoca
 
 "Which assumption should we use, when there is no previous information about the conjectures? The most common solution is to assign an equal number of ways that each conjecture could be correct, before seeing any data. This is sometimes known as the *principle of indifference*: When there is no reason to say that one conjecture is more plausible than another, weigh all of the conjectures equally. The issue of choosing a representation of “ignorance” is surprisingly complicated. The issue will arise again in later chapters. For the sort of problems we examine in this book, the principle of indifference results in inferences very comparable to mainstream non-Bayesian approaches, most of which contain implicit equal weighting of possibilities. For example a typical non-Bayesian confidence interval weighs equally all of the possible values a parameter could take, regardless of how implausible some of them are. Many non-Bayesian procedures have moved away from this, through the use of penalized likelihood and other methods."
 
-$~$
+<br>
 
 ### From counts to probability
 
@@ -327,7 +326,7 @@ probability.
 
 *If we really have shuffled a deck of cards enough to erase any prior knowledge of the ordering- in randomization process-, then the order the cards end up in is very likely to be one of the many orderings with high information entropy.*"
 
-$~$
+<br>
 
 ## Building a model
 
@@ -339,7 +338,7 @@ $~$
 
 (3) Evaluate: All statistical models require supervision, leading possibly to model revision."
 
-$~$
+<br>
 
 ### A data story
 
@@ -349,7 +348,7 @@ You can motivate your data story by trying to explain how each piece of data is 
 
 The data story is then translated into a formal probability model. This probability model is easy to build, because the construction process can be usefully broken down into a series of component decisions."
 
-$~$
+<br>
 
 ### Bayesian updating
 
@@ -359,7 +358,7 @@ Notice that every updated set of plausibilities becomes the initial plausibiliti
 
 Bayesian estimates are valid for any sample size. This does not mean that more data isn’t helpful—it certainly is. Rather, the estimates have a clear and valid interpretation, no matter the sample size. But the price for this power is dependency upon the initial estimates, the prior. If the prior is a bad one, then the resulting inference will be misleading."
 
-$~$
+<br>
 
 ### Evaluate
 
@@ -367,7 +366,7 @@ $~$
 
 Note that the goal is not to test the truth value of the model’s assumptions. All manner of small world assumptions about error distributions and the like can be violated in the large world, but a model may still produce a perfectly useful estimate. Instead, the objective is to check the model’s adequacy for some purpose. This usually means asking and answering additional questions, beyond those that originally constructed the model."
 
-$~$
+<br>
 
 ## Components of the model
 
@@ -379,7 +378,7 @@ $~$
 
 (3) a prior- the initial plausibility of each conjectured cause of the data"
 
-$~$
+<br>
 
 ### Likelihood
 
@@ -412,7 +411,7 @@ dbinom(6, size = 9, prob = 0.2)
 
 *"The job of the likelihood is to tell us the relative number of ways to see the data w, given values for p and n."*
 
-$~$
+<br>
 
 ### Parameters
 
@@ -420,7 +419,7 @@ $~$
 
 In globe tossing example, n and w are data, and p is unknown parameter. Your Bayesian machine can tell you what the data say about any parameter, once you tell it the likelihood and which bits have been observed. In some cases, the golem will just tell you that not much can be learned—Bayesian data analysis isn’t magic, after all. But it is usually an advance to learn that our data don’t discriminate among the possibilities."
 
-$~$
+<br>
 
 ### Prior
 
@@ -430,7 +429,7 @@ Within Bayesian data analysis in the natural and social sciences, the prior is c
 
 If you don’t have a strong argument for any particular prior, then try different ones. Because the prior is an assumption, it should be interrogated like other assumptions: by altering it and checking how sensitive inference is to the assumption."
 
-$~$
+<br>
 
 ### Posterior
 
@@ -458,7 +457,7 @@ $$\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}$
 
 - To standardize the posterior, to ensure it sums (integrates) to one 
 
-$~$
+<br>
 
 ## Making the model go 
 
@@ -472,7 +471,7 @@ Three different conditioning engines, numerical techniques for computing posteri
 
 (3) Markov chain Monte Carlo (MCMC)"
 
-$~$
+<br>
 
 ### Grid approximation
 
@@ -492,7 +491,7 @@ But in most of your real modeling, grid approximation isn’t practical. The rea
 
 5. Finally, standardize the posterior, by dividing each value by the sum of all values.
 
-$~$
+<br>
 
 <span style="color:gray">***Building a grid approximation for globe tossing example***</span>
 
@@ -520,7 +519,7 @@ mtext( "20 points" )
 
 ```
 
-$~$
+<br>
 
 <span style="color:gray">***Try with a 5-point grid***</span>
 
@@ -555,7 +554,7 @@ mtext("5 points")
 ```
 
 
-$~$
+<br>
 
 <span style="color:gray">***Try with a 100-point grid***</span>
 
@@ -591,7 +590,7 @@ mtext("100 points")
 
 *In this simple example, you can go crazy and use 100,000 points, but there won’t be much change in inference after the first 100.*
 
-$~$
+<br>
 
 <span style="color:gray">***Try with a step prior***</span>
 
@@ -625,7 +624,7 @@ mtext("40 points")
 
 ```
 
-$~$
+<br>
 
 <span style="color:gray">***Try with a peaked prior***</span>
 
@@ -659,7 +658,7 @@ mtext("40 points")
 
 ```
 
-$~$
+<br>
 
 ### Quadratic approximation
 
@@ -769,7 +768,7 @@ This phenomenon, where the quadratic approximation improves with the amount of d
 
 ***Maximum likelihood estimation:*** The quadratic approximation, either with a uniform prior or with a lot of data, is usually equivalent to a maximum likelihood estimate (MLE) and its standard error. The MLE is a very common non-Bayesian parameter estimate. This equivalence between a Bayesian approximation and a common non-Bayesian estimator is both a blessing and a curse. It is a blessing, because it allows us to re-interpret a wide range of published non-Bayesian model fits in Bayesian terms. It is a curse, because maximum likelihood estimates have some curious drawbacks.
 
-$~$
+<br>
 
 ### Markov chain Monte Carlo
 
@@ -777,7 +776,7 @@ The conceptual challenge with MCMC lies in its highly non-obvious strategy. Inst
 
 We nearly always work directly with these samples, rather than first constructing some mathematical estimate from them. And the samples are in many ways more convenient than having the posterior, because they are easier to think with.
 
-$~$
+<br>
 
 ## Practice
 
@@ -791,7 +790,7 @@ $~$
 
 2E4. In the context of the globe tossing example, "the probability of water is 0.7" means we estimates there is 70% chance of landing on water in the next toss, based on the observed data (the previous tosses). We may as well say 70% of the earth is water. This is a probability, but the "probability does not exist-" our best guess is 70% of earth is water based on previously observed data, but it may or may not reflect reality. If the next toss fell on land, the probability of water would be less than 70% for the subsequent toss. We can get a consistent probability of water after enough tosses, but we cannot say for sure this is the actual distribution of water on earth. Therefore, it remains as a probability. Once we have a concrete measurement of actual percentage of earth covered by water, it becomes an objective reality- a factual statement. At that point, the need for probability ceases.
 
-$~$
+<br>
 
 ### Medium
 
@@ -830,7 +829,7 @@ plot(p_grid, posterior, type = "l",
   
 ```
 
-$~$
+<br>
 
 <span style= "color: blue">*(2) W, W, W, L*</span>
 
@@ -864,7 +863,7 @@ plot(p_grid, posterior, type = "l",
   
 ```
 
-$~$
+<br>
 
 <span style= "color: blue">*(3) L, W, W, L, W, W, W*</span>
 
@@ -898,7 +897,7 @@ plot(p_grid, posterior, type = "l",
   
 ```
 
-$~$
+<br>
 
 > 2M2. Assume a prior for p that is equal to zero when p < 0.5 and is a positive constant when p ≥ 0.5. 
 
@@ -934,7 +933,7 @@ plot(p_grid, posterior, type = "l",
   
 ```
 
-$~$
+<br>
 
 <span style= "color: blue">*(2) W, W, W, L*</span>
 
@@ -968,7 +967,7 @@ plot(p_grid, posterior, type = "l",
   
 ```
     
-$~$
+<br>
 
 <span style= "color: blue">*(3) L, W, W, L, W, W, W*</span>
 
@@ -1002,7 +1001,7 @@ plot(p_grid, posterior, type = "l",
   
 ```
 
-$~$
+<br>
 
 > 2M3. Suppose there are two globes, one for Earth and one for Mars. The Earth globe is 70% covered in water. The Mars globe is 100% land. Further suppose that one of these globes—you don’t know which—was tossed in the air and produced a “land” observation. Assume that each globe was equally likely to be tossed. Show that the posterior probability that the globe was the Earth, conditional on seeing “land” (Pr(Earth|land)), is 0.23.
 
@@ -1042,7 +1041,7 @@ Pr(earth|land) = (Pr(land|earth) * Pr(earth))/ Pr(land)
 
 ```
 
-$~$
+<br>
 
 > 2M4. Suppose you have a deck with only three cards. Each card has two sides, and each side is either black or white. One card has two black sides. The second card has one black and one white side. The third card has two white sides. Now suppose all three cards are placed in a bag and shuffled. Someone reaches into the bag and pulls out a card and places it flat on a table. A black side is shown facing up, but you don’t know the color of the side facing down. Show that the probability that the other side is also black is 2/3. Use the counting method (Section 2 of the chapter) to approach this problem. This means counting up the ways that each card could produce the observed data (a black side facing up on the table).
 
@@ -1089,7 +1088,7 @@ ways/ sum(ways)
 
 ```
 
-$~$
+<br>
 
 > 2M5. Now suppose there are four cards: B/B, B/W, W/W, and another B/B. Again suppose a card is drawn from the bag and a black side appears face up. Again calculate the probability that the other side is black.
 
@@ -1117,7 +1116,7 @@ Total ways to get another black side -> 4
 Hence, the probability of getting a card with both sides black by counting method is 4/5. 
 
 ```
-$~$
+<br>
 
 > 2M6. Imagine that black ink is heavy, and so cards with black sides are heavier than cards with white sides. As a result, it’s less likely that a card with black sides is pulled from the bag. So again assume there are three cards: B/B, B/W, and W/W. After experimenting a number of times, you conclude that for every way to pull the B/B card from the bag, there are 2 ways to pull the B/W card and 3 ways to pull the W/W card. Again suppose that a card is pulled and a black side appears face up. Show that the probability the other side is black is now 0.5. Use the counting method, as before.
 
@@ -1149,7 +1148,7 @@ Total counts of way to get B/B = 2
 Probability the other side is also black = 2/4 = 0.5
 
 ```
-$~$
+<br>
 
 > 2M7. Assume again the original card problem, with a single card showing a black side face up.Before looking at the other side, we draw another card from the bag and lay it face up on the table. The face that is shown on the new card is white. Show that the probability that the first card, the one showing a black side, has black on its other side is now 0.75. Use the counting method, if you can. Hint: Treat this like the sequence of globe tosses, counting all the ways to see each observation, for each possible first card.
 
@@ -1184,7 +1183,7 @@ Total counts of ways to get data (B/B, W/x) = 6
 Probability that the first card has both black sides = 6/8 = 0.75
 
 ```
-$~$
+<br>
 
 ### Hard
 
@@ -1219,7 +1218,7 @@ Pr (second_twins|first_twins) = Pr(first_twins, second_twins)/ Pr(twins)
                               = 0.1666667
 
 ```
-$~$
+<br>
 
 > 2H2. Recall all the facts from the problem above. Now compute the probability that the panda we have is from species A, assuming we have observed only the first birth and that it was twins.
 
@@ -1243,7 +1242,7 @@ Pr(SpA|twins) = (Pr(twins|SpA) * Pr(SpA))/ Pr(twins)
               = 0.3333333
 
 ```
-$~$
+<br>
 
 > 2H3. Continuing on from the previous problem, suppose the same panda mother has a second birth and that it is not twins, but a singleton infant. Compute the posterior probability that this panda is species A.
 
@@ -1295,7 +1294,7 @@ Pr(SpA|singleton) = (Pr(singleton|SpA) * Pr(SpA))/ Pr(singleton)
                   = 0.3565426
 
 ```
-$~$
+<br>
 
 > 2H4. A common boast of Bayesian statisticians is that Bayesian inference makes it easy to use all of the data, even if the data are of different types.
 So suppose now that a veterinarian comes along who has a new genetic test that she claims can identify the species of our mother panda. But the test, like all tests, is imperfect. This is the information you have about the test:
@@ -1352,11 +1351,11 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
                   = 0.5625
 
 ```
-$~$
+<br>
 
 # Chapter 3: Sampling the Imaginary
 
-$~$
+<br>
 
 ## Sampling from a grid-approximate posterior
 
@@ -1405,7 +1404,7 @@ dens(samples, xlab= "proportion of water(p)", ylab= "Density")
 
 ```
 
-$~$
+<br>
 
 ## Sampling to summarize
 
@@ -1429,7 +1428,7 @@ These simple questions can be usefully divided into questions about:
 
 (3) point estimates.
 
-$~$
+<br>
 
 ### Intervals of defined boundaries
 
@@ -1468,7 +1467,7 @@ sum(samples > 0.5 & samples < 0.75)/ 1e4
 
 In the R code examples just above, I used the function sum to effectively count up how many samples fulfill a logical criterion. Why does this work? It works because R internally converts a logical expression, like samples < 0.5, to a vector of TRUE and FALSE results, one for each element of samples, saying whether or not each element matches the criterion.Go ahead and enter samples < 0.5 on the R prompt, to see this for yourself. Then when you sum this vector of TRUE and FALSE, R counts each TRUE as 1 and each FALSE as 0. So it ends up counting how many TRUE values are in the vector, which is the same as the number of elements in samples that match the logical criterion.
 
-$~$
+<br>
 
 ### Intervals of defined mass
 
@@ -1586,7 +1585,7 @@ df %>%
 
 ```
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**HPDI vs. PI**</span>
 
@@ -1671,7 +1670,7 @@ distribution are just helpful for summarizing it. If choice of interval leads to
 inferences, then you’d be better off just plotting the entire posterior distribution.
 
 ```
-$~$
+<br>
 
 ### Point estimates
 
@@ -1814,7 +1813,7 @@ df %>%
 
 ```
 
-$~$
+<br>
 
 ## Sampling to simulate prediction
 
@@ -1828,7 +1827,7 @@ Samples from posterior ease simulation of the model’s implied observations. Ge
 
 (4) Forecasting- can be useful as applied prediction, but also for model criticism and revision
 
-$~$
+<br>
 
 ### Dummy data (simulated data)
 
@@ -1904,7 +1903,7 @@ simplehist(dummy_w_40, xlab = "dummy water count")
 
 In this book, inference about parameters is never done directly through a sampling distribution. The posterior distribution is not sampled, but deduced logically. Then samples can be drawn from the posterior, to aid in inference. In neither case is “sampling” a physical act. In both cases, it’s just a mathematical device and produces only small world numbers.
 
-$~$
+<br>
 
 ### Model checking
 
@@ -1912,7 +1911,7 @@ $~$
 
 - Evaluate the adequacy of a model for some purpose
 
-$~$
+<br>
 
 #### Did the software work?
 
@@ -1922,7 +1921,7 @@ $~$
 
 - There is no way to really be sure that software works correctly. Even when the retrodictions correspond to the observed data, there may be subtle mistakes.
 
-$~$
+<br>
 
 #### Is the model adequate?
 
@@ -1945,7 +1944,7 @@ The implied predictions of the model are uncertain in two ways, and we’d like 
   - Since there is uncertainty about p, there is uncertainty about everything that depends upon p.
   - The uncertainty in p will interact with the sampling variation, when we try to assess what the model tells us about outcomes.
   
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Posterior predictive distribution**</span>
 
@@ -1979,7 +1978,7 @@ In your own modeling, you’ll have to imagine aspects of the data that are rele
 
 ```
 
-$~$
+<br>
 
 ## Practice
 
@@ -2006,7 +2005,7 @@ sum(samples < 0.2)/ 1e4
 
 ```
 
-$~$
+<br>
 
 > 3E2. How much posterior probability lies above p = 0.8?
 
@@ -2017,7 +2016,7 @@ sum(samples > 0.8)/ 1e4
 
 ```
 
-$~$
+<br>
 
 > 3E3. How much posterior probability lies between p = 0.2 and p = 0.8? 
 
@@ -2028,7 +2027,7 @@ sum(samples > 0.2 & samples < 0.8)/ 1e4
 
 ```
 
-$~$
+<br>
   
 > 3E4. 20% of the posterior probability lies below which value of p?
 
@@ -2049,7 +2048,7 @@ quantile(samples, 0.8)
 
 ```
 
-$~$
+<br>
 
 > 3E6. Which values of p contain the narrowest interval equal to 66% of the posterior probability?
 
@@ -2060,7 +2059,7 @@ HPDI(samples, 0.66)
 
 ```
 
-$~$
+<br>
 
 > 3E7. Which values of p contain 66% of the posterior probability, assuming equal posterior probability both below and above the interval?
 
@@ -2069,7 +2068,7 @@ PI(samples, 0.66)
 
 ```
 
-$~$
+<br>
 
 ### Medium
 
@@ -2086,7 +2085,7 @@ plot(posterior~p_grid, type ="l")
 
 ```
 
-$~$
+<br>
 
 > 3M2. Draw 10,000 samples from the grid approximation from above. Then use the samples to calculate the 90% HPDI for p.
 
@@ -2105,7 +2104,7 @@ HPDI(sample3m2, 0.9)
 
 ```
 
-$~$
+<br>
 
 > 3M3. Construct a posterior predictive check for this model and data. This means simulate the distribution of samples, averaging over the posterior uncertainty in p. What is the probability of observing 8 water in 15 tosses?
 
@@ -2118,7 +2117,7 @@ sum(w == 8)/1e4
 
 ```
 
-$~$
+<br>
 
 > 3M4. Using the posterior distribution constructed from the new (8/15) data,now calculate the probability of observing 6 water in 9 tosses.
 
@@ -2133,7 +2132,7 @@ table(w == 6)/ 1e4
 
 ```
 
-$~$
+<br>
 
 > 3M5. Start over at 3M1, but now use a prior that is zero below p = 0.5 and a constant above p = 0.5. This corresponds to prior information that a majority of the Earth’s surface is water. Repeat each problem above and compare the inferences. What difference does the better prior make? If it helps, compare inferences (using both priors) to the true value p = 0.7.
 
@@ -2184,7 +2183,7 @@ simplehist(w, col = "black", lty = 1,
 
 ```
 
-$~$
+<br>
 
 *For 3M2*
 ```{r 3M52}
@@ -2197,7 +2196,7 @@ HPDI(sample3m5, 0.9)
 # narrower interval for 90% HPDI when prior is more informative
 
 ```
-$~$
+<br>
 
 *For 3M4*
 
@@ -2213,7 +2212,7 @@ table(w ==6)/ 1e4
 # No difference in probability percentage 
 
 ```
-$~$
+<br>
 
 ### Hard
 
@@ -2301,7 +2300,7 @@ df %>%
 
 ```
 
-$~$
+<br>
 
 > 3H2. Using the sample function, draw 10,000 random parameter values from the posterior distribution you calculated above. Use these samples to estimate the 50%, 89%, and 97% highest posterior density intervals.
 
@@ -2317,7 +2316,7 @@ HPDI(sample3h1, prob = 0.89)
 HPDI(sample3h1, prob = 0.97)
 
 ```
-$~$
+<br>
 
 > 3H3. Use rbinom to simulate 10,000 replicates of 200 births. You should end up with 10,000 numbers, each one a count of boys out of 200 births. Compare the distribution of predicted numbers of boys to the actual count in the data (111 boys out of 200 births). There are many good ways to visualize the simulations, but the dens command (part of the rethinking package) is probably the easiest way in this case. Does it look like the model fits the data well? That is, does the distribution of predictions include the actual observation as a central, likely outcome?
 
@@ -2392,7 +2391,7 @@ abline(v = 111, col = "red")
 
 ```
 
-$~$
+<br>
 
 > 3H4. Now compare 10,000 counts of boys from 100 simulated first borns only to the number of boys in the first births, birth1. How does the model look in this light?
 
@@ -2450,7 +2449,7 @@ abline(v = first_born_boy, col = "red")
 
 ```
 
-$~$
+<br>
 
 > 3H5. The model assumes that sex of first and second births are independent. To check this assumption, focus now on second births that followed female first borns. Compare 10,000 simulated counts of boys to only those second births that followed girls. To do this correctly, you need to count the number of first borns who were girls and simulate that many births, 10,000 times. Compare the counts of boys in your simulations to the actual observed count of boys following girls. How does the model look in this light? Any guesses what is going on in these data?
 
@@ -2481,7 +2480,7 @@ abline( v=sum(b01) , col="red" )
 
 ```
 
-$~$
+<br>
 
 # Chapter 4: Linear Models
 
@@ -2534,7 +2533,7 @@ plot(density(pos))
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Why addition should result in a bell curve of sums?***</span>
 
@@ -2546,7 +2545,7 @@ $~$
 
 - It doesn’t matter what shape the underlying distribution possesses- uniform or anything else. Depending upon the underlying distribution, the convergence might be slow (often rapid), but it will be inevitable.
 
-$~$
+<br>
 
 ### Normal by multiplication
 
@@ -2582,7 +2581,7 @@ dens(small, col = "red", norm.comp = TRUE, main = "Small effect")
 
 ```
 
-$~$
+<br>
 
 ### Normal by log-multiplication 
 
@@ -2598,7 +2597,7 @@ dens(log.big, norm.comp = TRUE, col = "blue", main = "Big effect on log scale")
 
 ```
 
-$~$
+<br>
 
 ### Using Guassian distributions
 
@@ -2612,7 +2611,7 @@ The justifications for using the Gaussian distribution- as a skeleton for hypoth
 (2) epistemological justification
       - Gaussian distribution is the most natural expression of our state of ignorance, because if all we are willing to assume is that a measure has finite variance, the Gaussian distribution is the shape that can be realized in the largest number of ways and does not introduce any new assumptions. It is the least surprising and least informative assumption to make. In this way, the Gaussian is the distribution most consistent with our assumptions. Or rather, it is the most consistent with our golem’s assumptions.
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Gaussian distribution**</span>
 
@@ -2644,7 +2643,7 @@ dnorm(0, 0, 0.1)
 
 $$p(y|\mu, \tau) = \sqrt\frac{\tau}{{2\pi}} \exp\left(- \frac{1}{2}\tau(y - \mu)^2 \right)$$
 
-$~$
+<br>
 
 ## A language for describing models
 
@@ -2681,7 +2680,7 @@ $\beta\times\text{predictor}$ = the product of a coefficient ($\beta$) and a pre
 
 </div>
 
-$~$
+<br>
 
 ### Re-describing the globe tossing model
 
@@ -2708,7 +2707,7 @@ plausible under any model.
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***From model definition to Bayes' theorem***</span>
 
@@ -2716,7 +2715,7 @@ To relate the mathematical format above to Bayes’ theorem, you could use the m
 
 $$\text{Pr(p|w,n)} = \frac{\text{Binomial(w|n,p) Uniform(p|0,1)}}{\int \text{Binomial(w|n,p) Uniform(p|0,1)dp}}$$
 
-$~$
+<br>
 
 $$\text{posterior probability of any particular value of p} = \frac{likelihood \times prior}{\text{average likelihood}}$$
 
@@ -2729,7 +2728,7 @@ posterior <- posterior/ sum(posterior)
 plot(posterior~p_grid, type = "l")
 ```
 
-$~$
+<br>
 
 ## A Gaussian model of height
 
@@ -2737,7 +2736,7 @@ There are an infinite number of possible Gaussian distributions. Some have small
 
 In practice we’ll use approximations to the formal analysis. So we won’t really consider every possible value of $\mu$ and $\sigma$.  The “estimate” here will be the entire posterior distribution, not any point within it. And as a result, the posterior distribution will be a distribution of Gaussian distributions. Yes, a distribution of distributions.
 
-$~$
+<br>
 
 ### The data
 
@@ -2771,7 +2770,7 @@ str(d)
 # the comma is blank.
 
 ```
-$~$
+<br>
 
 ### The model
 
@@ -2797,7 +2796,7 @@ subscript i   = index- each individual element of this list (row numbers)
 
 ```
 
-$~$
+<br>
 
 Then, we add priors assuming Pr($\mu$, $\sigma$) = Pr($\mu$) Pr($\sigma$):
 
@@ -2809,7 +2808,7 @@ Then, we add priors assuming Pr($\mu$, $\sigma$) = Pr($\mu$) Pr($\sigma$):
 \sigma &\sim \text{Uniform}(0, 50) \ &&& [\sigma \text{ prior}]
 \end{align*}
 
-$~$
+<br>
 
 Plot the priors to have a sense of the assumption they build into the model:
 
@@ -2824,7 +2823,7 @@ curve(dnorm(x, 178, 20), from = 100, to = 250)
 
 ```
 
-$~$
+<br>
 
 ```{r c49}
 
@@ -2837,7 +2836,7 @@ curve(dunif(x, 0, 50), from = -10, to = 60)
 
 ```
 
-$~$
+<br>
 
 Simulate heights by sampling from priors (every posterior is also potentially a prior for a subsequent analysis, so you can process priors just like posteriors.):
 
@@ -2859,7 +2858,7 @@ dens(prior_h)
 
 ```
 
-$~$
+<br>
 
 ### Grid approximation of the posterior distribution
 
@@ -2902,7 +2901,7 @@ contour_xyz( post$mu , post$sigma , post$prob )
 image_xyz( post$mu , post$sigma , post$prob )
 ```
 
-$~$
+<br>
 
 ### Sampling from the posterior
 
@@ -2943,7 +2942,7 @@ HPDI(sample.sigma)
 
 ```
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Sample size and the normality of $\sigma$'s posterior**</span>
 
@@ -2998,7 +2997,7 @@ dens( sample2.sigma , norm.comp=TRUE, col = "purple" )
 
 ```
 
-$~$
+<br>
 
 ### Fitting the model with `map`
 
@@ -3006,7 +3005,7 @@ $~$
 
 - The posterior’s peak will lie at the maximum a posteriori estimate (MAP), and we can get a useful image of the posterior’s shape by using the quadratic approximation of the posterior distribution at this peak.
 
-$~$
+<br>
 
 <span style="color:brown; text-decoration:underline">**Use `map` to find the values of $\mu$ and $\sigma$ that maximize the posterior probability:**</span>
 
@@ -3029,7 +3028,7 @@ d2 <- d[ d$age >= 18 , ]
 \sigma &\sim \text{Uniform}(0, 50) \ &&& [\text{sigma} &\sim \text{dunif}(0, 50)]
 \end{align*}
 
-$~$
+<br>
 
 - Now, place the R code equivalents into `alist`. 
 
@@ -3044,7 +3043,7 @@ flist <- alist(
 # These commas separate each line of the model definition.
 ```
 
-$~$
+<br>
 
 - Fit the model to the data in the data frame d2 with: 
 
@@ -3056,7 +3055,7 @@ m4.1 <- rethinking::map( flist , data=d2 )
 
 ```
 
-$~$
+<br>
 
 - Now take a look at the fit maximum a posteriori model:
 
@@ -3073,7 +3072,7 @@ precis(m4.1)
 
 ```
 
-$~$
+<br>
 
 <span style="color:brown; text-decoration:underline">**Start values for `map`**</span>
 
@@ -3098,7 +3097,7 @@ that code like mean(d2$height) will be evaluated to a numeric value.
 
 ```
 
-$~$
+<br>
 
 See the effect of a more information prior for $\mu$:
 
@@ -3124,7 +3123,7 @@ precis( m4.2 )
 
 ```
 
-$~$
+<br>
 
 ### Sampling from a `map` fit
 
@@ -3165,7 +3164,7 @@ cov2cor( vcov( m4.1 ) )
 # μ tells us nothing about σ and likewise that learning σ tells us nothing about μ.
 
 ```
-$~$
+<br>
 
 To get samples from this multi-dimensional posterior, we sample vectors of values from a multi-dimensional Gaussian distribution- instead of sampling single values from a simple Gaussian distribution.
 
@@ -3195,7 +3194,7 @@ plot( sample.mu , sample.sigma , cex=0.5 , pch=16 , col=col.alpha(rangi2,0.1) )
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Under the hood with multivariate sampling***</span>
 
@@ -3211,7 +3210,7 @@ post <- mvrnorm( n=1e4 , mu=coef(m4.1) , Sigma=vcov(m4.1) )
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Getting $\sigma$ right***</span>
 
@@ -3253,7 +3252,7 @@ dens( sample2.sigma , main = "smaller.sample.sigma")
 
 ```
 
-$~$
+<br>
 
 ## Adding a predictor
 
@@ -3270,7 +3269,7 @@ plot(d2$height ~ d2$weight)
 
 ```
 
-$~$
+<br>
 
 ### Fitting the model
 
@@ -3291,7 +3290,7 @@ Repeat model definition, with corresponding R code:
 
 \end{align*}
 
-$~$
+<br>
 
 Build the MAP model fit using the above formulas:
 
@@ -3338,7 +3337,7 @@ precis(m4.3)
 
 ```
 
-$~$
+<br>
 
 ### Interpreting the model fit
 
@@ -3358,13 +3357,13 @@ Plotting the implications of your estimates will allow you to inquire about seve
 
 - The uncertainty surrounding the implied predictions of the model, as these are distinct from mere parameter uncertainty
 
-$~$
+<br>
 
 <span style="color:purple">***What do parameters mean?***</span>
 
 Posterior probabilities of parameter values describe the relative compatibility of different states of the world with the data, ac- cording to the model.
 
-$~$
+<br>
 
 #### Tables of estimates
 
@@ -3385,7 +3384,7 @@ precis(m4.3)
 
 ```
 
-$~$
+<br>
 
 The numbers in the default precis output aren’t sufficient to describe the quadratic posterior completely. For that, we also require the variance-covariance matrix. We’re interested in correlations among parameters—we already have their variance in the table above—so let’s go straight to the correlation matrix:
 
@@ -3403,7 +3402,7 @@ cov2cor(vcov(m4.3))
 # to fit the model to the data. One of the tricks to avoid it is centering.
 ```
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Centering**</span>
 
@@ -3446,7 +3445,7 @@ mean(d2$height)
 
 ```
 
-$~$
+<br>
 
 #### Plotting posterior inference aganist the data
 
@@ -3464,7 +3463,7 @@ abline(a = coef(m4.3)["a"], b = coef(m4.3)["b"])
 
 ```
 
-$~$
+<br>
 
 #### Adding uncertainty around the mean
 
@@ -3482,7 +3481,7 @@ post[1:5,]
 
 ```
 
-$~$
+<br>
 
 Each row is a correlated random sample from the joint posterior of all three parameters, using the covariances provided by vcov(m4.3). The paired values of a and b on each row define a line. The average of very many of these lines is the MAP line. But the scatter around that average is meaningful, because it alters our confidence in the relationship between the predictor and the outcome.
 
@@ -3521,7 +3520,7 @@ for (i in 1:20) # loops over all 20 lines, using abline to display each
 
 ```
 
-$~$
+<br>
 
 ```{r 4.48.1}
 
@@ -3629,7 +3628,7 @@ for ( i in 1:20 )
 
 ```
 
-$~$
+<br>
 
 #### Plotting regression intervals and contours
 
@@ -3665,7 +3664,7 @@ dens(mu_at_50_3, col = rangi2, lwd = 2, xlab = "mu|weight = 50 (352 samples)")
 
 ```
 
-$~$
+<br>
 
 Since the posterior for $\mu$ is a distribution, you can find intervals for it, just like for any posterior distribution. To find the 89% highest posterior density interval of $\mu$ at 50 kg, just use the HPDI command as usual:
 
@@ -3681,7 +3680,7 @@ HPDI(mu_at_50_3, prob = 0.89)
 
 ```
 
-$~$
+<br>
 
 We need to repeat the above calculation for every weight value on the horizontal axis, not just when it is 50 kg. We want to draw 89% HPDIs around the MAP slope. This can be done by using `link` function. What `link` will do is take your `map` model fit, sample from the posterior distribution, and then compute $\mu$ for each case in the data and sample from the posterior distribution.
 
@@ -3695,7 +3694,7 @@ str(mu) # to compactly show data frame
 # to 352 individuals. So there are 352 columns in the matrix mu above.
 ```
 
-$~$
+<br>
 
 Now we have a distribution of $\mu$ for each individual in the original data. We actually want something slightly different: a distribution of $\mu$ for each unique weight value on the horizontal axis.
 
@@ -3767,7 +3766,7 @@ shade( mu.HPDI , weight.seq )
 
 ```
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Recipe for generating predictions and intervals from the posterior of a fit model**</span></span>
 
@@ -3777,7 +3776,7 @@ $~$
 
 (3) Finally, use plotting functions like `lines` and `shade` to draw the lines and intervals. Or you might plot the distributions of the predictions, or do further numerical calculations with them. It’s really up to you.
 
-$~$
+<br>
 
 <span style="color:purple">***Manual method for using `link`:***</span>
 
@@ -3808,7 +3807,7 @@ mu.HPDI
 
 ```
 
-$~$
+<br>
 
 #### Prediction intervals
 
@@ -3851,7 +3850,7 @@ shade( height.PI , weight.seq )
 # the model expects to find 89% of actual heights in the population, at each weight.
 ```
 
-$~$
+<br>
 
 Notice that the outline for the wide shaded interval is a little jagged. This is the simulation variance in the tails of the sampled Gaussian values. If it really bothers you, increase the number of samples you take from the posterior distribution. The optional n parameter for sim.height controls how many samples are used.
 
@@ -3869,7 +3868,7 @@ shade( height.PI , weight.seq )
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Compare 67% and 97% intervals***</span>
 
@@ -3896,7 +3895,7 @@ shade(height.PI, weight.seq)
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Manual method for using `sim`:***</span>
 
@@ -3924,7 +3923,7 @@ height.PI
 
 ```
 
-$~$
+<br>
 
 ## Polynomial regression
 
@@ -3945,20 +3944,20 @@ plot(height ~ weight, d, col = col.alpha("black", 0.5))
 
 ```
 
-$~$
+<br>
 
 Polynomial regression is one of the ways to model a curved relationship between two variables. In this context, “polynomial” means equations for $\mu_i$ that add additional terms with squares, cubes, and even higher powers of the predictor variable. There’s still only one predictor variable in the model, so this is still a bivariate regression. But the definition of $\mu_i$ has more parameters now.
 
 The most common polynomial regression, a parabolic model of the mean:
 
 $$\mu_i = \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i^2$$
-$~$
+<br>
 
 The above is a parabolic (second order) polynomial. The $\alpha + \beta_1 \text{x}_i$ part is the same linear function of x in a linear regression, just with a little “1” subscript added to the parameter name, so we can tell it apart from the new parameter. The additional term uses the square of $x_i$ to construct a parabola, rather than a perfectly straight line. The new parameter $\beta_2$ measures the curvature of the relationship.
 
 The parabolic model of $\mu_i$ above is still called a “linear model” of the mean. What “linear” usually means in this context is that $\mu_i$ is a linear function of any single parameter. 
 
-$~$
+<br>
 
 ### Fitting the model to data
 
@@ -3976,7 +3975,7 @@ plot(height ~ weight.s, d, col = col.alpha("black", 0.5))
 
 ```
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Parabolic regression**</span></span>
 
@@ -3998,7 +3997,7 @@ To fit the parabolic model, just modify the definition of $\mu_i$. Here’s the 
 
 \end{align*}
 
-$~$
+<br>
 
 ```{r 4.66}
 
@@ -4067,7 +4066,7 @@ shade( height.PI , weight.seq )
 
 ```
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Cubic regression**</span></span>
 
@@ -4076,7 +4075,7 @@ The model is (hiding the priors, but they are the same as before):
 $$\text{h}_i \sim \text{Normal}(\mu_i, \sigma)$$
 $$\mu_i = \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i^2 + \beta_3 \text{x}_i^3$$
 
-$~$
+<br>
 
 Fit the model with a slight modification of the parabolic model’s code:
 
@@ -4136,7 +4135,7 @@ shade(height.PI_c, weight.seq)
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Compare linear, parabolic and cubic regressions***</span>
 
@@ -4190,7 +4189,7 @@ shade(height.PI_c, weight.seq)
 
 ```
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Converting back to natural scale**</span>
 
@@ -4213,33 +4212,33 @@ axis(side = 1 , at = at , labels = round(labels,1)) # 1=below, 2=left, 3=above, 
 
 ```
 
-$~$
+<br>
 
 ## Practice
 
 ### Easy
 
-$~$
+<br>
 
 4E1. $\text{y}_i \sim \text{Normal}(\mu, \sigma)$
 
-$~$
+<br>
 
 4E2. two parameters: mu and sigma
 
-$~$
+<br>
 
 4E3. $Pr(\mu, \sigma|y) = \frac{Normal(y|\mu,\sigma) Normal(\mu|0,10) Uniform(\sigma|0,10) }{\int \int Normal(y|\mu,\sigma) Normal(\mu|0,10) Uniform(\sigma|0,10)d\mu d\sigma}$
 
-$~$
+<br>
 
 4E4. $\mu_i = \alpha + \beta \text{x}_i$
 
-$~$
+<br>
 
 4E5. three parameters: alpha, beta and sigma
 
-$~$
+<br>
 
 ### Medium
 
@@ -4261,7 +4260,7 @@ dens(prior_height)
 
 ```
 
-$~$
+<br>
 
 4M2.
 ```{r 4M2}
@@ -4283,7 +4282,7 @@ m.4m2 <- rethinking::map(
 precis(m.4m2)
 ```
 
-$~$
+<br>
 
 4M3. 
 $$\text{y}_i \sim \text{Normal}(\mu, \sigma)$$
@@ -4292,7 +4291,7 @@ $$\alpha \sim \text{Normal(0, 50)}$$
 $$\beta \sim \text{Normal(0, 10)}$$
 $$\sigma \sim \text{Uniform(0, 50)}$$
 
-$~$
+<br>
 
 4M4. We don't know the age and gender of students. So, we will use uninformative priors, inclusive school age children to adult. 200 is chosen considering the adult height (may not be necessary?) and mean $\beta$ is zero considering height will not increase if the students are adult, but $\sigma$ is 40 to leave room for potential increase in height. 
 
@@ -4302,7 +4301,7 @@ $$\alpha \sim \text{Normal}(0, 200)$$
 $$\beta \sim \text{Normal}(0, 40)$$
 $$\sigma \sim \text{Uniform}(0, 50)$$
 
-$~$
+<br>
 
 4M5. Since average age is 120 cm, we will assume the students are around 7 years old, and estimate annual growth at 6-7 cm per year based on literature. 
 
@@ -4314,7 +4313,7 @@ $$\beta \sim \text{Normal}(6, 10)$$
 
 $$\sigma \sim \text{Uniform}(0, 30)$$
 
-$~$
+<br>
 
 4M6. If the variance  among heights for students of the same age is never more than 64cm:
 
@@ -4327,7 +4326,7 @@ $$\alpha \sim \text{Normal}(120, 20)$$
 $$\beta \sim \text{Normal}(6, 10)$$
 $$\sigma \sim \text{Uniform}(0, 64)$$
 
-$~$
+<br>
 
 ### Hard
 
@@ -4387,7 +4386,7 @@ HPDI(mu_at_54.63, prob = 0.89)
 
 ```
 
-$~$
+<br>
 
 <span style ="color:purple">***Given Answer:***</span>
 
@@ -4433,7 +4432,7 @@ HPDI(y,prob=0.90)
 
 ```
 
-$~$
+<br>
 
 > 4H2. Select out all the rows in the Howell1 data with ages below 18 years of age. If you do it right, you should end up with a new data frame with 192 rows in it.
 
@@ -4502,7 +4501,7 @@ shade(mu.HPDI, weight.seq)
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Check model fit with cubic regression***</span>
 
@@ -4591,7 +4590,7 @@ shade(height.PI, weight.seq)
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Given answer:***</span>
 
@@ -4650,7 +4649,7 @@ lines( w.seq , pred.ci[2,] , lty=2 )
 
 ```
 
-$~$
+<br>
 
 > 4H3. Suppose a colleague of yours, who works on allometry, glances at the practice problems just above. Your colleague exclaims, “That’s silly. Everyone knows that it’s only the logarithm of body weight that scales with height!” Let’s take your colleague’s advice and see what happens.
 
@@ -4682,7 +4681,7 @@ precis(qfit)
 
 ```
 
-$~$
+<br>
 
 > (b) Use samples from the quadratic approximate posterior of the model in (a) to superimpose on the plot: (1) the predicted mean height as a function of weight, (2) the 97% HPDI for the mean, and (3) the 97% HPDI for predicted heights.
 
@@ -4723,7 +4722,7 @@ shade(height.PI, weight.seq)
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Given answer:***</span>
 
@@ -4784,11 +4783,11 @@ lines( exp(lw.seq) , h.ci[2,] , lty=2 )
 
 ```
 
-$~$
+<br>
 
 # Chapter 5: Multivariate Linear Models
 
-$~$
+<br>
 
 Multivariate regression uses more than one predictor variable to model an outcome. Reasons often given for multivariate models include:
 
@@ -4801,7 +4800,7 @@ Multivariate regression uses more than one predictor variable to model an outcom
 - Interaction
     - Even when variables are completely uncorrelated, the importance of each may still depend upon the other. Such interactions occur in a very large number of systems. So effective inference about one variable will usually depend upon consideration of other variables.
     
-$~$
+<br>
 
 ## Spurious association
 
@@ -4915,7 +4914,7 @@ shade( mu.PI , MAM.seq )
 
 ```
 
-$~$
+<br>
 
 Merely comparing parameter means between different bivariate regressions is no way to decide which predictor is better. Both of these predictors could provide independent value, or they could be redundant, or one could eliminate the value of the other. So we’ll build a multivariate model with the goal of measuring the partial value of each predictor. The question we want answered is:
 
@@ -4929,7 +4928,7 @@ So for example once you fit a multivariate regression to predict divorce using b
   
 The parameter estimates corresponding to each predictor are the (often opaque) answers to these questions.
 
-$~$
+<br>
 
 ### Multivariate notation
 
@@ -4958,7 +4957,7 @@ R = marriage rate
 A = age at marriage
 
 ```
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Compact notation and the design matrix**</span></span>
 
@@ -4978,7 +4977,7 @@ j = an index over predictor variables
 n = the number of predictor variables
 
 ```
-$~$
+<br>
 
 Both of these forms may be read as *the mean is a modeled as the sum of an intercept and an additive combination of the products of parameters and predictors.* Even more compactly, using matrix notation:
 
@@ -4999,7 +4998,7 @@ the intercept, and so return the unmodified intercept. When X is matrix-multipli
 the predicted means. In R notation, this operation is X %*% b.
 
 ```
-$~$
+<br>
 
 ### Fitting the model
 
@@ -5042,7 +5041,7 @@ plot(precis(m5.3)) # same as plot(m5.3)
 
 ```
 
-$~$
+<br>
 
 ### Plotting multivariate posteriors
 
@@ -5054,7 +5053,7 @@ Three types of interpretive plots:
 
 (3) ***Posterior prediction plots.*** These show model-based predictions against raw data, or otherwise display the error in prediction.
 
-$~$
+<br>
 
 #### Predictor residual plots
 
@@ -5120,7 +5119,7 @@ for ( i in 1:length(m.resid) ) {
 # Notice that the residuals are variation in marriage rate that is left over, 
 # after taking out the purely linear relationship between the two variables.
 ```
-$~$
+<br>
 
 <span style="color:purple">***Residual plots for the divorce rate***</span>
 
@@ -5168,7 +5167,7 @@ shade(mu.PI, MAM.seq, col = col.alpha("brown", alpha = 0.2))
 
 ```
 
-$~$
+<br>
 
 ```{r divorce1}
 
@@ -5216,7 +5215,7 @@ shade(mu.PI, MAM.seq, col = col.alpha("brown", alpha = 0.2))
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Predictor residual plots for the divorce data***</span>
 
@@ -5321,7 +5320,7 @@ shade(mu.PI, mar.seq)
 
 ```
 
-$~$
+<br>
 
 #### Counterfactual plots
 
@@ -5329,7 +5328,7 @@ A second sort of inferential plot displays the implied predictions of the model.
 
 The simplest use of a counterfactual plot is to see how the predictions change as you change only one predictor at a time. This means holding the values of all predictors constant, except for a single predictor of interest. Such predictions will not necessarily look like your raw data— they are counterfactual after all— but they will help you understand the implications of the model.
 
-$~$
+<br>
 
 </span style="color:purple">***Counterfactual plots for the multivariate divorce model, m5.3***<span>
 
@@ -5399,11 +5398,11 @@ shade( A.PI , A.seq )
 
 ```
 
-$~$
+<br>
 
 In this example, the difficulty of separately manipulating marriage rate and marriage age doesn’t impede inference much, only because marriage rate has almost no effect on prediction, once median age of marriage is taken into account. But in many problems, more than one predictor variable has a sizable impact on the outcome. In that case, while these counterfactual plots always help in understanding the model, they may also mislead by displaying predictions for impossible combinations of predictor values. If our goal is to intervene in the world, there may not be any realistic way to manipulate each predictor without also manipulating the others. 
 
-$~$
+<br>
 
 #### Posterior prediction plots
 
@@ -5415,7 +5414,7 @@ Checking the model fit against the observed data is useful in many ways. Two use
 (2) How does the model fail?
     - Sometimes, the model fits correctly but is still so poor for our purposes that it must be discarded. More often, a model predicts well in some respects, but not in others. By inspecting the individual cases where the model makes poor predictions, you might get an idea of how to improve the model.
     
-$~$
+<br>
 
 <span style="color:purple">***Posterior predictive plots for the multivariate divorce model, m5.3***</span>
 
@@ -5462,7 +5461,7 @@ text(x = d$Divorce[indices], y = mu.mean[indices], labels = d$Loc[indices], cex 
 # both of which have much lower divorce rates than the model expects them to have.
 ```
 
-$~$
+<br>
 
 The plot above makes it hard to see the amount of prediction error, in many cases. For this reason, lots of people also use residual plots that show the mean prediction error for each row. 
 
@@ -5489,7 +5488,7 @@ for ( i in 1:nrow(d) ) {
 
 ```
 
-$~$
+<br>
 
 Yet another common use for these simulations is to construct novel predictor residual plots. Once you’ve computed the divorce residuals, as you did just above, you can plot those residuals against new predictor variables. This is a quick way to see if remaining variation in the outcome is associated with another predictor.
 
@@ -5565,7 +5564,7 @@ ggplot(d, aes(x = Wafflehouse_per_capita, y = divorce.resid)) +
 
 ```
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Simulating spurious association**</span>
 
@@ -5595,7 +5594,7 @@ pairs(d)
 
 ```
 
-$~$
+<br>
 
 ## Masked relationship
 
@@ -5638,7 +5637,7 @@ coef(m5.5)["bn"] * (75 - 55)
 
 ```
 
-$~$
+<br>
 
 The kilocalories in the data range from less than 0.5 to more than 0.9 per gram, so this association isn’t so impressive. More importantly, it isn’t very precise. The 89% interval of the parameter extends a good distance on both sides of zero.
 
@@ -5660,7 +5659,7 @@ lines( np.seq , mu.PI[2,] , lty=2 )
 
 ```
 
-$~$
+<br>
 
 Now consider another predictor variable, adult female body mass, mass in the data frame.
 
@@ -5703,7 +5702,7 @@ lines( np.seq , mu.PI[2,] , lty=2 )
 
 ```
 
-$~$
+<br>
 
 Now let’s see what happens when we add both predictor variables at the same time to the regression. This is the multivariate model, in math form:
 
@@ -5782,7 +5781,7 @@ lines( np.seq , mu.PI[2,] , lty=2 )
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Why did adding neocortex and body mass to the same model lead to larger estimated effects of both?***</span> 
 
@@ -5796,7 +5795,7 @@ $~$
 
 - The fact that these two variables, body size and neocortex, are correlated across species makes it hard to see these relationships, unless we statistically account for both.
 
-$~$
+<br>
 
 <span style="color:green">***Compound figure for milk energy and neocortex among primates***</span>
 
@@ -5870,7 +5869,7 @@ lines( np.seq , mu.PI[2,] , lty=2 )
 
 ```
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Simulating a masking relationship**</span>
 
@@ -5934,7 +5933,7 @@ pairs(d, main = "(d) Rho closer to -1")
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Why should two predictors be correlated in this way?***</span>
 
@@ -5944,7 +5943,7 @@ $~$
 
 - They might both partly influence one another, in a case of reciprocal causation.
 
-$~$
+<br>
 
 ## When adding variables hurts
 
@@ -5964,7 +5963,7 @@ It is commonly true that there are many potential predictor variables to add to 
 - Overfitting
     - a huge and perspective-changing problem
     
-$~$
+<br>
 
 ### Multicollinear legs
 
@@ -6034,7 +6033,7 @@ plot( bl ~ br , post , col=col.alpha(rangi2,0.1) , pch=16 )
 
 ```
 
-$~$
+<br>
 
 One way to think of this phenomenon is that you have approximated this likelihood:
 
@@ -6115,7 +6114,7 @@ plot(precis(m5.9b), main = "Right leg")
 
 The posterior distribution isn’t wrong, in such cases. It’s telling you that the question you asked cannot be answered with these data. And that’s a great thing for a model to say, that it cannot answer your question. And if you are just interested in prediction, you’ll find that this leg model makes fine predictions. It just doesn’t make any claims about which leg is more important.
 
-$~$
+<br>
 
 ### Multicollinear milk
 
@@ -6207,7 +6206,7 @@ cor( d$perc.fat , d$perc.lactose )
 
 ```
 
-$~$
+<br>
 
 Correlations do have to get pretty high before this problem interferes with your analysis. But, ***what matters isn’t just the correlation between a pair of variables. Rather, what matters is the correlation that remains after accounting for any other predictors.***
 
@@ -6269,7 +6268,7 @@ plot( stddev ~ r.seq , type="l" , col=rangi2, lwd=2 , xlab="correlation" )
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***What can be done about multicollinearity***</span>
 
@@ -6291,7 +6290,7 @@ $~$
 
 - ***It’s usually helpful to check the covariation among parameters, especially when intervals are extremely wide, so you don’t misinterpret what the model is trying to tell you.***
 
-$~$
+<br>
 
 ### Post-treatment bias
 
@@ -6303,7 +6302,7 @@ $~$
 - Post-treatment bias
     - mistaken inferences arising from including variables that are consequences of other variables
     
-$~$
+<br>
 
 Simulate post-treatment bias in plant growth vs. different anti-fungal soil treatments model. There are four variables of interest here: initial height, final height, treatment, and presence of fungus. Final height is the outcome of interest. But which of the other variables should be in the model? If your goal is to make a causal inference about the treatment, you shouldn’t include the presence of fungus, because it is a post-treatment effect.
 
@@ -6366,7 +6365,7 @@ precis(m5.14)
 
 ```
 
-$~$
+<br>
 
 ## Categorical variables
 
@@ -6380,7 +6379,7 @@ A common question for statistical methods is to what extent an outcome changes a
 
 - Taxonomic group: Ape, Monkeys
 
-$~$
+<br>
 
 ### Binary categories
 
@@ -6450,7 +6449,7 @@ PI(mu.male)
 
 ```
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Re-parameterizing the model**</span></span>
 
@@ -6492,7 +6491,7 @@ The mathematical model can be rearranged where the old $\beta_m$ as the differen
 
 $$\mu_i = \alpha_f + (\alpha_m - \alpha_f) \text{m}_i $$
 
-$~$
+<br>
 
 ### Many categories
 
@@ -6516,7 +6515,7 @@ d$clade.S <- ifelse( d$clade=="Strepsirrhine" , 1 , 0 )
 
 ```
 
-$~$
+<br>
 
 The category `Ape` will be the default "intercept" category. In fact, if you try to include a dummy variable for apes, you’ll up with a non-identifiable model. 
 
@@ -6580,7 +6579,7 @@ quantile( diff.NWM.OWM , probs=c(0.025,0.5,0.975) )
 
 ```
 
-$~$
+<br>
 
 ### Adding regular predictor variables
 
@@ -6595,7 +6594,7 @@ Fi    = the percent fat for the i-th case in the data
 
 ```
 
-$~$
+<br>
 
 ### Another approach: Unique intercepts
 
@@ -6624,13 +6623,13 @@ precis( m5.16_alt , depth=2 )
 
 ```
 
-$~$
+<br>
 
 ## Ordinary least squares and `lm`
 
 Gaussian regression models or ordinary least squares regression (OLS) is a way of estimating the parameters of a linear regression. Instead of searching for the combination of parameter values that maximizes the posterior probability, OLS instead solves for the parameter values that minimize the sum of the squared residuals. This procedure is often functionally equivalent to maximizing the posterior probability or maximizing the likelihood. *Provided you are happy with flat priors, you’ll get the same estimates with `lm` that you got with `map`.*
 
-$~$
+<br>
 
 ### Design formulas
 
@@ -6645,7 +6644,7 @@ The linear regression model:
 \end{align*}
 
 
-$~$
+<br>
 
 The corresponding design formula with the leading 1 on the right-hand side indicates the intercept, $\alpha$:
 
@@ -6655,7 +6654,7 @@ The corresponding design formula with the leading 1 on the right-hand side indic
 \end{align*}
 
 
-$~$ 
+<br> 
 
 The linear regression model with three predictors:
 
@@ -6666,7 +6665,7 @@ The linear regression model with three predictors:
 \end{align*}
 
 
-$~$
+<br>
 
 The corresponding design formula:
 
@@ -6676,7 +6675,7 @@ The corresponding design formula:
 \end{align*}
 
 
-$~$
+<br>
 
 ### Using `lm`
 
@@ -6699,7 +6698,7 @@ m5.18 <- lm( y ~ 1 + x + z + w , data=d )
 
 ```
 
-$~$
+<br>
 
 #### Intercepts are optional
 
@@ -6737,7 +6736,7 @@ precis(m5.21a)
 
 ```
 
-$~$
+<br>
 
 #### Categorical variables
 
@@ -6756,7 +6755,7 @@ m5.22 <- lm( y ~ 1 + as.factor(season) , data=d )
 
 ```
 
-$~$
+<br>
 
 #### Transform variables first
 
@@ -6778,7 +6777,7 @@ m5.24 <- lm( y ~ 1 + x + I(x^2) + I(x^3) , data=d )
 
 ```
 
-$~$
+<br>
 
 #### No estimate for $\sigma$
 
@@ -6786,7 +6785,7 @@ Using `lm` will not provide a posterior distribution for the standard deviation 
 
 Use `map` if you need $\sigma$- get some sense of the uncertainty of the estimate. As a bonus, you can use informative priors then, as well.
 
-$~$
+<br>
 
 ### Building `map` formulas from `lm` formulas
 
@@ -6802,7 +6801,7 @@ glimmer( dist ~ speed , data=cars )
 
 ```
 
-$~$
+<br>
 
 ## Summary
 
@@ -6816,20 +6815,20 @@ Implicit in this question are:
 
 (2) the assumption that the value of each predictor does not depend upon the values of the other predictors
 
-$~$
+<br>
 
 ## Practice
 
 ### Easy
 
-$~$
+<br>
 
 > 5E1. Which of the linear models below are multiple linear regressions?
 
 (2) $\mu_i = \beta_x \text{x}_i + \beta_z \text{Z}_i$
 (4) $\mu_i = \alpha + \beta_x \text{x}_i + \beta_z \text{Z}_i$
 
-$~$
+<br>
 
 > 5E2. Write down a multiple regression to evaluate the claim: Animal diversity is linearly related to latitude, but only after controlling for plant diversity. You just need to write down the model definition.
 
@@ -6849,7 +6848,7 @@ D     = Plant diversity
 
 ```
 
-$~$
+<br>
 
 > 5E3. Write down a multiple regression to evaluate the claim: Neither amount of funding nor size of laboratory is by itself a good predictor of time to PhD degree; but together these variables are both positively associated with time to degree. Write down the model definition and indicate which side of zero each slope parameter should be on.
 
@@ -6873,7 +6872,7 @@ If considered individually, both will be almost zero.
 
 ```
 
-$~$
+<br>
 
 > 5E4. Suppose you have a single categorical predictor with 4 levels (unique values), labeled A, B, C and D. Let Ai be an indicator variable that is 1 where case i is in category A. Also suppose Bi, Ci, and Di for the other categories. Now which of the following linear models are inferentially equivalent ways to include the categorical variable in a regression? Models are inferentially equivalent when it’s possible to compute one posterior distribution from the posterior distribution of another model.
 
@@ -6983,11 +6982,11 @@ plot(precis(m5), main = "Model 5")
 
 ```
 
-$~$
+<br>
 
 ### Medium
 
-$~$
+<br>
 
 > 5M1. Invent your own example of a spurious correlation. An outcome variable should be correlated with both predictor variables. But when both predictors are entered in the same model, the correlation between the outcome and one of the predictors should mostly vanish (or at least be greatly reduced).
 
@@ -7068,7 +7067,7 @@ pairs(~ chance.star + rain.ppt + umbrella.sales, data = d, col = "firebrick")
 
 ```
 
-$~$
+<br>
 
 > 5M2. Invent your own example of a masked relationship. An outcome variable should be correlated with both predictor variables, but in opposite directions. And the two predictor variables should be correlated with one another.
 
@@ -7118,7 +7117,7 @@ d2 <- ggplot(d, aes(x = factory.number, y = pm.air)) +
 
 ```
 
-$~$
+<br>
 
 > 5M3. It is sometimes observed that the best predictor of fire risk is the presence of firefighters— States and localities with many firefighters also have more fires. Presumably firefighters do not cause fires. Nevertheless, this is not a spurious correlation. Instead fires cause firefighters. Consider the same reversal of causal inference in the context of the divorce and marriage data. How might a high divorce rate cause a higher marriage rate? Can you think of a way to evaluate this relationship, using multiple regression?
 
@@ -7139,7 +7138,7 @@ precis(m.5m3.a)
 
 So, with every sd increase in divorces, there is 1.42 increase in marriage cases. Since this is not a spurious relationship, a logical explanation of this phenomenon would be people remarry after divorce. In order to analyse this using multiple regression, the marriage data needs to be split into first marriage, second marriage, etc (Divorce rate may not correlate with first marriages but with remarriages). But then, the marriage and divorce data are for the year 2009 only. How likely for the couples to remarry within the same year of divorce? It is possible, but it's not typically considered a norm. So, that means within the year 2009, it is possible that increased divorce cases did not result in more marriages&mdash; more people were actually getting married for the first time. To assume a causal inference between divorce and marriage rate, we need to analyse data for more years (longitudinal data). Even then, the term causal inference sounds quite easy for divorce and remarriage rate. Of course, people can only remarry after divorce, but does divorce cause people to remarry? This is different from the assumption *"fire causes firefighters."* Fire can cause an increased in firefighters because firefighters are necessary to put out the fire (a danger). But, is it necessary for people to remarry after divorce? Is being a divorcee a social disadvantage that people must remarry (is remarriage an inevitable consequence of getting divorced)? 
 
-$~$
+<br>
 
 > 5M4. In the divorce data, States with high numbers of Mormons (members of The Church of Jesus Christ of Latter-day Saints, LDS) have much lower divorce rates than the regression models expected. Find a list of LDS population by State and use those numbers as a predictor variable, predicting divorce rate using marriage rate, median age at marriage, and percent LDS population (possibly standardized). You may want to consider transformations of the raw percent LDS variable.
 
@@ -7169,7 +7168,7 @@ precis(m.5m4.s)
 
 ```
 
-$~$
+<br>
 
 > 5M5. One way to reason through multiple causation hypotheses is to imagine detailed mechanisms through which predictor variables may influence outcomes. For example, it is sometimes argued that the price of gasoline (predictor variable) is positively associated with lower obesity rates (outcome variable). However, there are at least two important mechanisms by which the price of gas could reduce obesity. First, it could lead to less driving and therefore more exercise. Second, it could lead to less driving, which leads to less eating out, which leads to less consumption of huge restaurant meals. Can you outline one or more multiple regressions that address these two mechanisms? Assume you can have any predictor data you need.
 
@@ -7189,7 +7188,7 @@ Higher gasoline price leads to people using public transportation more and less 
 
 - E reduces obesity (O). 
 
-$~$
+<br>
 
 <span style="color:navy"><span style="text-decoration:underline">***Second mechanism***</span>
 
@@ -7205,7 +7204,7 @@ High gasoline price leads to less driving, which leads to less eating out. Also,
 
 ***Here I included many predictor variables I could think of at the moment. Using all predictors to fit multiple regressions is a bad idea. So, predictor variables need to be thoroughly checked and weeded out before building the regression model.***
 
-$~$
+<br>
 
 ### Hard
 
@@ -7271,7 +7270,7 @@ shade(mu.PI, g.seq, col = col.alpha("slateblue", alpha = 0.4))
 
 ```
 
-$~$
+<br>
 
 > 5H2. Now fit a multiple linear regression with weight as the outcome and both area and groupsize as predictor variables. Plot the predictions of the model for each predictor, holding the other predictor constant at its mean. What does this model say about the importance of each variable? Why do you get different results than you got in the exercise just above?
 
@@ -7343,7 +7342,7 @@ mtext("Area is constant at mean value", col = "slateblue")
 
 ```
 
-$~$
+<br>
 
 > 5H3. Finally, consider the avgfood variable. Fit two more multiple regressions: (1) body weight as an additive function of avgfood and groupsize, and (2) body weight as an additive function of all three variables, avgfood and groupsize and area. Compare the results of these models to the previous models you’ve fit, in the first two exercises. (a) Is avgfood or area a better predictor of body weight? If you had to choose one or the other to include in a model, which would it be? Support your assessment with any tables or plots you choose. (b) When both avgfood or area are in the same model, their effects are reduced (closer to zero) and their standard errors are larger than when they are included in separate models. Can you explain this result?
 
@@ -7395,11 +7394,11 @@ pairs(~ weight + avgfood + groupsize + area, data = d, col = "slateblue3")
 
 ```
 
-$~$
+<br>
 
 # Chapter 6: Overfitting, Regularization, and Information Criteria
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Two fundamental kinds of statistical error:**</span></span>
 
@@ -7407,7 +7406,7 @@ $~$
 
 (2) ***Underfitting:*** leads to poor prediction by learning too little from the data
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Two approaches to address the errors:**</span></span>
 
@@ -7417,7 +7416,7 @@ $~$
 
 *Both can be&mdash; maybe should be&mdash; used in combination.*
 
-$~$
+<br>
 
 ## The problem with parameters
 
@@ -7427,7 +7426,7 @@ The first is that adding parameters&mdash; making the model more complex&mdash; 
 
 Second, while more complex models fit the data better, they often predict new data worse. Models that have many parameters tend to overfit more than do simpler models. This means that a complex model will be very sensitive to the exact sample used to fit it, leading to potentially large mistakes when future data is not exactly like the past data. But simple models, with too few parameters, tend instead to underfit, systematically over-predicting or under-predicting the data, regardless of how well future data resemble past data. So we can’t always favor either simple models or complex models.
 
-$~$
+<br>
 
 ## More parameters always improve fit
 
@@ -7589,7 +7588,7 @@ d2 <- ggplot(d, aes(x = masskg, y = brainvolcc)) +
  
 ```
 
-$~$
+<br>
 
 ## Too few parameters hurts, too
 
@@ -7628,7 +7627,7 @@ ggplot(d, aes(x = masskg, y = brainvolcc)) +
 
 ```
 
-$~$
+<br>
 
 Another way to conceptualize an underfit model is to notice that it is insensitive to the sample. We could remove any one point from the sample and get pretty much the same regression line. In contrast, the most complex model, m6.6, is very sensitive to the sample. The predicted mean would change course a lot, if we removed any one point from the sample.
 
@@ -7786,7 +7785,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```
 
-$~$
+<br>
 
 ## Information theory and model performance
 
@@ -7802,7 +7801,7 @@ The information theory provides a common and useful target (criterion of model p
 
 Once you have deviance in hand as a measure model performance, both regularizing priors and information criteria help you improve and estimate the out-of-sample deviance of a model.
 
-$~$
+<br>
 
 ### Firing the weatherperson
 
@@ -7814,7 +7813,7 @@ Accuracy depends upon the definition of the target, and there is no unique best 
 (2) ***Accuracy in context*** 
           - Some prediction tasks are inherently easier than others. So even if we ignore costs and benefits, we still need a way to judge “accuracy” that accounts for how much a model could possibly improve prediction.
           
-$~$
+<br>
 
 ### Information and uncertainty
 
@@ -7853,7 +7852,7 @@ p <- c( 0.3 , 0.7 )
 
 ```
 
-$~$
+<br>
 
 The entropy values by themselves don’t mean much to us, though. Instead we can use them to build a measure of accuracy. The information entropy is the average log-probability. But there’s also a −1 in the definition. Multiplying the average log-probability by −1 just makes the entropy H increase from zero, rather than decrease from zero. 
 
@@ -7861,13 +7860,13 @@ The logarithms above are natural logs (base *e*), but changing the base rescales
 
 The only trick in computing *H* is to deal with the inevitable question of what to do when *p~i~* = 0. The log(0) = −$\infty$, which won’t do. So just assume that 0 log(0) = 0, when you compute *H*. In other words, events that never happen drop out. It may make more sense to just remember that when an event never happens, there’s no point in keeping it in the model.
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**The benefits of maximizing uncertainty**</span></span>
 
 **Maximum entropy**, also known as **maxent**, is a family of techniques for finding probability distributions that are most consistent with states of knowledge. In other words, given what we know, what is the *least surprising* distribution? It turns out that one answer to this question maximizes the information entropy, using the prior knowledge as constraint.
 
-$~$
+<br>
 
 ### From entropy to accuracy
 
@@ -7937,7 +7936,7 @@ grid.arrange(f1, f2, ncol = 2)
 
 ```
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**Cross entropy and divergence**</span></span>
 
@@ -7963,7 +7962,7 @@ $~$
 
 ***If we use a distribution with high entropy to approximate an unknown true distribution of events, we will reduce the distance to the truth and therefore the error.***
 
-$~$
+<br>
 
 ### From divergence to deviance
 
@@ -7982,7 +7981,7 @@ q_i =  the likelihood of case i
 
 ```
 
-$~$
+<br>
 
 In examples of divergence, p is known. In real world, p is unknown, but we can still estimate which models (q or r, etc.) is a better fit by using deviance&mdash; like we don't know how far each archer is from hitting the target, but we can know which archer is closer and how far apart they are from each other. 
 
@@ -8037,7 +8036,7 @@ dev
 
 ```
 
-$~$
+<br>
 
 ### From deviance to out-of-sample
 
@@ -8137,7 +8136,7 @@ text(2.42, 284, "out")
 
 ```
 
-$~$
+<br>
 
 ## Regularization
 
@@ -8185,7 +8184,7 @@ tibble(x = seq(from = - 3.5,
 
 ```
 
-$~$
+<br>
 
 How strong or weak these skeptical priors will be in practice depends upon the data and model. So let’s explore a train-test example again, but this time we’ll use the regularizing priors. 
 
@@ -8306,11 +8305,11 @@ s %>%
 # enough information in the data to overwhelm even the Normal(0, 0.2) prior (thick line).
 ```
 
-$~$
+<br>
 
 Regularizing priors are great, because they reduce overfitting. But if they are too skeptical, they prevent the model from learning from the data. If you have enough data, you can split into “train” and “test” samples and then try different priors and select the one that provides the smallest deviance on the test sample. That is the essence of cross-validation, a common technique for reducing overfitting. But if you need to use all of the data to train the model, tuning the prior may not be so easy. 
 
-$~$
+<br>
 
 ## Information criteria
 
@@ -8366,7 +8365,7 @@ dev_tibble2  %>%
           
 ```
 
-$~$
+<br>
 
 This is the phenomenon behind ***information criteria***. The most known information criterion is the ***Akaike information criterion***, abbreviated **AIC**. AIC provides a surprisingly simple estimate of the average out-of-sample deviance:
 
@@ -8380,7 +8379,7 @@ The dashed lines in f6.10 trace out the AIC values of the models.
 
 ```
 
-$~$
+<br>
 
 AIC provides an approximation of predictive accuracy, as measured by out-of-sample deviance. AIC is an approximation that is reliable only when:
 
@@ -8392,7 +8391,7 @@ AIC provides an approximation of predictive accuracy, as measured by out-of-samp
 
 Since flat priors are hardly ever the best priors, we’ll want something more general.
 
-$~$
+<br>
 
 <span style="color:purple">***Two common and more-general criteria***</span>
 
@@ -8404,7 +8403,7 @@ $~$
 - ***Widely Applicable Information Criterion (WAIC)***
     - more general yet, making no assumption about the shape of the posterior
     
-$~$
+<br>
 
 ### Deviance Information Criterion (DIC)
 
@@ -8427,7 +8426,7 @@ The difference D ̄ − Dˆ = p_D is analogous to the number of parameters used 
 
 ```
 
-$~$
+<br>
 
 ### Widely Applicable Information Criterion(WAIC)
 
@@ -8449,7 +8448,7 @@ The lppd is just a pointwise analog of deviance, averaged over the posterior dis
 If you multiplied it by −2, it’d be similar to the deviance, in fact.
 
 ```
-$~$
+<br>
 
 The second piece of WAIC is the effective number of parameters $p_{WAIC}$. 
 
@@ -8462,7 +8461,7 @@ V(y_i)    = the variance in log-likelihood for observation i in the training sam
 
 ```
 
-$~$
+<br>
 
 Now WAIC is defined as:
 
@@ -8470,7 +8469,7 @@ $$\text{WAIC} = ~-2 (\text{lppd}~-~ p_{WAIC})$$
 
 Because WAIC requires splitting up the data into independent observations i = 1...N, it is sometimes hard to define. Consider for example a model in which each prediction depends upon a previous observation. This happens, for example, in a *time series*. In a time series, a previous observation becomes a predictor variable for the next observation. So it’s not easy to think of each observation as independent of, or exchangeable with, the others. In such a case, you can of course compute WAIC as if each observation were independent of the others, but it’s not clear what the resulting value means.
 
-$~$
+<br>
 
 <span style="color:brown"><span style="text-decoration:underline">**WAIC calculations**</span>
 
@@ -8530,7 +8529,7 @@ sqrt( n_cases*var(waic_vec) )
 
 ```
 
-$~$
+<br>
 
 ### DIC and WAIC as estimates of deviance
 
@@ -8611,7 +8610,7 @@ In the above figure, both DIC and WAIC are accurate on average, being within 1 p
 
 Also notice that the regularizing prior (brown) still helps, and that DIC and WAIC do track this help. This suggests that using both regularization and information criteria will always beat using only one or the other alone. Regularization, as long as it’s not too strong, reduces overfitting for any particular model. Information criteria instead help us measure overfitting across models fit to the same data.
 
-$~$
+<br>
 
 ## Using information criteria
 
@@ -8630,7 +8629,7 @@ Once we have DIC or WAIC calculated for each plausible model, how do we use thes
         - What model averaging does not mean is averaging parameter estimates, because parameters in different models have different meanings and should not be averaged, unless you are sure you are in a special case in which it is safe to do so. 
         - So it is better to think of model averaging as prediction averaging, because that’s what is actually being done.
         
-$~$
+<br>
 
 ### Model comparison
 
@@ -8701,7 +8700,7 @@ data=d , start=list(a=a.start,bn=0,bm=0,log.sigma=sigma.start) )
 
 Fitting these four models provides answers to questions about how and how much prediction changes when we include either or both predictor variables. With the four sets of estimates, and four deviances, in hand, we’ll look quickly at both (1) comparing the models on the basis of WAIC values and (2) on the basis of parameter estimates. These are complementary approaches, aimed at understanding the best model by understanding how predictions and estimates change as predictors are added and subtracted from a model.
 
-$~$
+<br>
 
 #### Comparing WAIC values
 
@@ -8765,7 +8764,7 @@ plot( milk.models , SE=TRUE , dSE=TRUE )
 
 ```
  
- $~$
+ <br>
  
 Akaike weights help by rescaling. A total weight of 1 is partitioned among the considered models, making it easier to compare their relative predictive accuracy. The weight for a model $i$ in a set of $m$ models is given by:
 
@@ -8774,13 +8773,13 @@ $$ w_i = \frac{exp \left(- \frac{1}{2}dWAIC_i \right)}{\sum_{j=1}^m exp\left(- \
 
 The Akaike weight formula might look rather odd, but really all it is doing is putting WAIC on a probability scale, so it just undoes the multiplication by −2 and then exponentiates to reverse the log transformation. Then it standardizes by dividing by the total. So each weight will be a number from 0 to 1, and the weights together always sum to 1. ***Now larger values are better.***
 
-$~$
+<br>
 
 <span style="color:purple">***Akaike’s interpretation of the Akaike weight***</span>
 
 A model’s weight is an estimate of the probability that the model will make the best predictions on new data, conditional on the set of models considered.
 
-$~$
+<br>
 
 <span style="color:purple">***Heuristic explanation of the Akaike weight***</span>
 
@@ -8805,7 +8804,7 @@ sum(diff<0)/1e5
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Interpreting differences in information criteria***</span>
 
@@ -8817,7 +8816,7 @@ Akaike weights are conditional upon the set of models considered. If you add ano
 
 - nature of measurements
 
-$~$
+<br>
 
 #### Comparing estimates
 
@@ -8848,7 +8847,7 @@ plot( coeftab(m6.11,m6.12,m6.13,m6.14) )
 
 ```
 
-$~$
+<br>
 
 ### Model averaging
 
@@ -8900,7 +8899,7 @@ shade(mu.PI, nc.seq)
 
 (4) Combine these values into an ensemble of predictions, using the model weights as proportions.
 
-$~$
+<br>
 
 ## Practice
 
@@ -8926,13 +8925,13 @@ own words.
 
 
 
-$~$
+<br>
 
 # Chapter 7: Interactions
 
 To model deeper conditionality&mdash; where the importance of one predictor depends upon another predictor&mdash; we need interaction. Interaction is a kind of conditioning, a way of allowing parameters (really their posterior distributions) to be conditional on further aspects of the data. 
 
-$~$
+<br>
 
 ## Building an interaction
 
@@ -9000,7 +8999,7 @@ shade(mu.PI, rugged.seq)
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***How do we discover and describe such a reversal in the context of a regression model?***</span> 
 
@@ -9014,7 +9013,7 @@ The plots above cheat, because they split the data into two data frames. But it�
 
 - There are advantages to borrowing information across categories like “Africa” and “not Africa.” This is especially true when sample sizes vary across categories, such that overfitting risk is higher within some categories. In other words, what we learn about ruggedness outside of Africa should have some effect on our estimate within Africa, and visa versa.
 
-$~$
+<br>
 
 ### Adding a dummy variable doesn't work
 
@@ -9090,7 +9089,7 @@ text(4, 9.4, "not Africa", col = "black")
 
 ```
 
-$~$
+<br>
 
 ### Adding a linear interaction does work
 
@@ -9112,11 +9111,11 @@ R   = rugged
 
 ```
 
-$~$
+<br>
 
 Now you want to allow the relationship between Y and R to vary as a function of A. Within the model, this relationship is measured by the slope $\beta_R$. Following the same strategy of replacing parameters with linear models, the most straightforward way to make $\beta_R$ depend upon $A$ is just to define the slope $\beta_R$ as a linear model itself, one that includes $A$.
 
-$~$
+<br>
 
 
 \begin{align*}
@@ -9126,11 +9125,11 @@ $~$
 \end{align*}
 
 
-$~$
+<br>
 
 By defining the relationship between GDP and ruggedness in this way, you are explicitly modeling the hypothesis that the slope between GDP and ruggedness depends&mdash; is *conditional*&mdash; upon whether or not a nation is in Africa. The parameter $\beta_{AR}$ defines the strength of this dependency. If you set $\beta_{AR}$ = 0, then you get the previous model back. If instead $\beta_{AR}$ > 0, then African nations have a more positive slope between GDP and ruggedness. If $\beta_{AR}$ < 0, African nations have a more negative slope. For any nation not in Africa, $A_i$ = 0 and so the interaction parameter $\beta_{AR}$ has no effect on prediction for that nation.
 
-$~$
+<br>
 
 ```{r 7.7}
 
@@ -9157,7 +9156,7 @@ compare(m7.3, m7.4, m7.5)
 
 ```
 
-$~$
+<br>
 
 <span style="color:purple">***Conventional form of interaction***</span>
 
@@ -9170,7 +9169,7 @@ Instead of a model definition with more than one linear model, as you saw above,
 \end{align*}
 
 
-$~$
+<br>
 
 ```{r 7.9}
 
@@ -9189,7 +9188,7 @@ precis(m7.5b)
 
 ```
 
-$~$
+<br>
 
 ### Plotting the interaction
 
@@ -9232,7 +9231,7 @@ shade( mu.NotAfrica.PI , rugged.seq )
 
 ```
 
-$~$
+<br>
 
 ### Interpreting an interaction estimate
 
@@ -9243,7 +9242,7 @@ There are two basic reasons to be wary of interpreting tables of posterior means
 
 (2) Tables of numbers don’t make it easy to fully incorporate uncertainty in our thinking, since covariance among parameters isn’t usually shown. And this gets much harder once the influence of a predictor depends upon multiple parameters.
 
-$~$
+<br>
 
 #### Parameters change meaning
 
@@ -9257,7 +9256,7 @@ Unlike in the simple linear regression models, you can no longer read the influe
 \end{align*}
 
 
-$~$
+<br>
 
 Now the change in $\mu_i$ that results from a unit change in $R_i$ is given by $\gamma_i$. And since $\gamma_i$ is a function of three things&mdash; $\beta_R$, $\beta_{AR}$, and $A_i$&mdash; we have to know all three in order to know the influence of $R_i$ on the outcome. The only time the slope $\beta_R$ has its old meaning is when $A_i = 0$, which makes $\gamma_i = \beta_R$. Otherwise, to compute the influence of $R_i$ on the outcome, we have to simultaneously consider two parameters and another predictor variable.
 
@@ -9272,7 +9271,7 @@ Since $\gamma$ (gamma) doesn’t appear in this table&mdash; it wasn’t estimat
 For example, the ***MAP*** slope relating ruggedness to log-GDP within Africa is:
 
 $$\gamma = \beta_R + \beta_{AR}(1) = −0.18 + 0.35 = 0.17$$
-$~$
+<br>
 
 And outside of Africa:
 
@@ -9280,7 +9279,7 @@ $$\gamma = \beta_R + \beta_{AR}(0) = -0.18$$
 
 So the relationship between ruggedness and log-GDP is essentially reversed inside and out-side of Africa.
 
-$~$
+<br>
 
 #### Incorporating uncertainty
 
@@ -9309,7 +9308,7 @@ legend("topright", legend = c("Africa", "Not Africa"), col = c("blue", "black"),
 
 ```
 
-$~$
+<br>
 
 From here, you could use the samples to ask a bunch of questions, depending upon your interest. For example, what’s the probability (according to this model and these data) that the slope within Africa is less than the slope outside of Africa? All we need to do is compute the difference between the slopes, for each sample from the posterior, and then ask what proportion of these differences is below zero.
 
@@ -9330,13 +9329,13 @@ sum( diff < 0 ) / length( diff )
 
 Also note that this probability, 0.004, is very tiny compared to the visual overlap of the two distributions in the figure. The distributions in the figure are marginal, like silhouettes of each distribution, ignoring all of the other dimensions in the posterior. The calculation above is the distribution of the difference between the two. The distribution of their difference is not the same as the visual overlap of their marginal distributions. This is also the reason we can’t use overlap in confidence intervals of different parameters as an informal test of “significance” of the difference. If you care about the difference, you must compute the distribution of the difference directly.
 
-$~$
+<br>
 
 ## Symmetry of the linear interaction
 
 The linear interaction contains two symmetrical interpretations. Absent some other information, outside the model, there’s no logical basis for preferring one over the other.
 
-$~$
+<br>
 
 ### Buridan's interaction
 
@@ -9352,7 +9351,7 @@ Consider yet again the mathematical form of the likelihood:
 \end{align*}
 
 
-$~$
+<br>
 
 Let’s expand $\gamma_i$ into the expression for $\mu_i$:
 
@@ -9362,7 +9361,7 @@ Let’s expand $\gamma_i$ into the expression for $\mu_i$:
 \end{align*}
 
 
-$~$
+<br>
 
 Now factor together the terms with $A_i$ in them:
 
@@ -9371,11 +9370,11 @@ Now factor together the terms with $A_i$ in them:
 \end{align*}
 
 
-$~$
+<br>
 
 The term labeled $G$ looks a lot like $\gamma_i$ in the original form. This is the same model of $\mu_i$, but re-expressed so that the linear interaction applies to $A_i$&mdash; prove that linear interactions are symmetric. Within the model, there’s no basis to prefer one interpretation over the other, because in fact they are the same interpretation. But when we reason causally about models, our minds tend to prefer one interpretation over the other, because it’s usually easier to imagine manipulating one of the predictor variables instead of the other&mdash; hard to imagine manipulating which continent a nation is on, but it's easy to imagine manipulating terrain ruggedness.
 
-$~$
+<br>
 
 ### Africa depends upon ruggedness
 
@@ -9419,7 +9418,7 @@ shade( mu.ruggedhi.PI , 0:1 , col=col.alpha(rangi2,0.25) )
 
 ```
 
-$~$
+<br>
 
 ## Continuous interactions
 
@@ -9431,7 +9430,7 @@ A third reason to be wary of using only tables of numbers to interpret interacti
 
 - Sometimes model fitting has a hard time with uncentered variables. Centering (and possibly also standardizing) the data before fitting the model can help you achieve a faster and more reliable set of estimates.
 
-$~$
+<br>
 
 ### The data
 
@@ -9448,7 +9447,7 @@ str(d)
 
 The `blooms` column will be our outcome. The `water` and `shade` columns will be our predictor variables. Independent effects of sunlight (`shade`) and `water` will produce bigger blooms. We are also interested in the interaction between these two variables. How will the `water` help in the absence of light, or will sunlight helps the blooms in the absence of water? One way to model such an interdependency is to use an interaction effect.
 
-$~$
+<br>
 
 ### The un-centered models
 
@@ -9458,7 +9457,7 @@ Example focusing on just two models:
 
 (2) the model with both main effects and the interaction of `water` with `shade`
 
-$~$
+<br>
 
 The main effect likelihood is:
 
@@ -9469,7 +9468,7 @@ The main effect likelihood is:
 \end{align*}
 
 
-$~$
+<br>
 
 And the full interaction likelihood is:
 
@@ -9519,7 +9518,7 @@ m7.7 <- rethinking::map(
 
 ```
 
-$~$
+<br>
 
 <span style="color:gray">***Fix the maximum iterations problem.***</span>
 
@@ -9564,7 +9563,7 @@ compare( m7.6 , m7.7 )
 
 ```
 
-$~$
+<br>
 
 ### Center and re-estimate
 
@@ -9615,13 +9614,13 @@ coeftab(m7.8,m7.9)
 
 ```
 
-$~$
+<br>
 
 #### Estimation worked better
 
 Estimation failed with the un-centered predictor variables, because there was a long way to go from the `start` values you provided to map and the `MAP` values it was seeking. When the predictors are centered, the MAP value for $\alpha$ is just the empirical mean for the outcome. That is also the `start` value given to `map`. With un-centered predictors, the MAP value for $\alpha$ lies a long way from the empirical mean. Hence, the long search that failed.
 
-$~$
+<br>
 
 #### Estimates changed less across models
 
@@ -9661,7 +9660,7 @@ precis(m7.9)
 
 ```
 
-$~$
+<br>
 
 ### Plotting implied predictions
 
@@ -9724,7 +9723,7 @@ for ( w in -1:1 ) {
 
 ```
 
-$~$
+<br>
 
 ```{r 7.28a, fig.width=8, fig.height=6}
 
@@ -9767,7 +9766,7 @@ for ( s in -1:1 ) {
 
 ```
 
-$~$
+<br>
 
 ## Interactions in design formulas
 
@@ -9783,7 +9782,7 @@ For example, here’s a model with an interaction between $x$ and $z$:
 
 
 
-$~$
+<br>
 
 ```{r 7.29}
 
@@ -9795,7 +9794,7 @@ m7.x <- lm( y ~ x*z , data=d )
 
 ```
 
-$~$
+<br>
 
 If you do not want the main effects in the model, you must explicitly subtract them from the formula. For example, here’s a model with an interaction, but without one of the main effects (when you know a priori that there is no direct effect of $z$ on the outcome, when $\beta_z$ = 0 by assumption):
 
@@ -9813,7 +9812,7 @@ m7.x <- lm( y ~ x + x*z - z , data=d )
 
 ```
 
-$~$
+<br>
 
 For higher-order interactions, just multiply more predictors together. The design formula always implies all of the lower-order interactions, even though you don’t explicitly state them. For example, this model has a three-way interaction between $x$, $z$, and $w$, as well as three two-way interactions and all three main effects:
 
@@ -9850,7 +9849,7 @@ colnames( model.matrix(~x*z*w) )
 
 ```
 
-$~$
+<br>
 
 ## Practice
 
@@ -9863,13 +9862,13 @@ $~$
 
 
 
-$~$
+<br>
 
 # Chapter 8: Markov Chain Monte Carlo
 
 ***Markov chain Monte Carlo (MCMC) estimation*** is the estimation of posterior probability distributions using a stochastic process. It has the ability to directly estimate models, such as the generalized linear and multilevel models, which routinely produce non-Gaussian posterior distributions. 
 
-$~$
+<br>
 
 ## Good King Markov and his island kingdom
 
@@ -9951,7 +9950,7 @@ tibble(week   = 1:1e5,
 
 ```
 
-$~$
+<br>
 
 ## Markov chain Monte Carlo
 
@@ -9965,7 +9964,7 @@ The goal of general **Metropolis Algorithm**, an example of Markov chain Monte C
 
 Provided the way we choose our proposed parameter values at each step is symmetric&mdash; so that there is an equal chance of proposing from A to B and from B to A&mdash; then the Metropolis algorithm will eventually give us a collection of samples from the joint posterior.
 
-$~$
+<br>
 
 <spans style="color:brown"><span style="text-decoration:underline">**Two of the most important in contemporary Bayesian inference**</span>
 
@@ -9973,7 +9972,7 @@ $~$
 
 - Hamiltonian (aka Hybrid, aka HMC) Monte Carlo
 
-$~$
+<br>
 
 ### Gibbs sampling
 
@@ -9993,7 +9992,7 @@ Some limitations of Gibbs sampling:
 
 - As models become more complex and contain hundreds or thousands or tens of thousands of parameters, Gibbs sampling becomes shockingly inefficient.
 
-$~$
+<br>
 
 ### Hamiltonian Monte Carlo
 
@@ -10011,7 +10010,7 @@ Some limitations of HMC:
 
 - it needs to be tuned to a particular model and its data. That’s where an engine like Stan (mc-stan.org) comes in. Stan automates much of that tuning.
 
-$~$
+<br>
 
 ## Easy HMC: `map2stan`
 
@@ -10042,7 +10041,7 @@ precis(m8.1)
 
 ```
 
-$~$
+<br>
 
 ### Preparation
 
@@ -10064,7 +10063,7 @@ str(dd.trim)
 # The data frame dd.trim contains only the three variables we’re using.
 ```
 
-$~$
+<br>
 
 ### Estimation
 
@@ -10099,7 +10098,7 @@ precis(m8.1stan)
 
 ```
 
-$~$
+<br>
 
 ### Sampling agian, in parallel
 
@@ -10112,7 +10111,7 @@ precis(m8.1stan_4chains)
 
 ```
 
-$~$
+<br>
 
 ### Visualization
 
@@ -10136,7 +10135,7 @@ pairs(m8.1stan)
 
 ```
 
-$~$
+<br>
 
 ### Using the samples
 
