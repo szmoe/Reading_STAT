@@ -11,13 +11,15 @@ format:
     toc-location: left
     number_sections: true
     fig_caption: true
-    includes:
-      in_header: "header.html"
-    code_folding: show
+    code-tools: true
+    code-fold: true
+    code-summary: 'Show code'
+    code-link: true
     code_highlight: tango
     code_download: true
     theme: sandstone
     highlight: tango
+    smooth-scroll: true
     mathjax: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML.js"
 ---
 
