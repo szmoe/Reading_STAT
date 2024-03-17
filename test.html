@@ -151,9 +151,9 @@ Ai = State i’s median age at marriage
 <span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/precis.html">precis</a></span><span class="op">(</span><span class="va">m5.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>           mean        sd      5.5%      94.5%
-a      9.688173 0.2045129  9.361322 10.0150242
-bA    -1.042927 0.2025382 -1.366622 -0.7192315
-sigma  1.446427 0.1447753  1.215049  1.6778063</code></pre>
+a      9.688075 0.2044974  9.361248 10.0149010
+bA    -1.043001 0.2025228 -1.366671 -0.7193301
+sigma  1.446317 0.1447477  1.214983  1.6776521</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># each additional standard deviation of delay in marriage (1.24 years- the difference between</span></span>
 <span><span class="co"># two data points after converting back to natural scale) predicts a decrease of </span></span>
@@ -201,9 +201,9 @@ sigma  1.446427 0.1447753  1.215049  1.6778063</code></pre>
 <span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/precis.html">precis</a></span><span class="op">(</span><span class="va">m5.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>           mean        sd      5.5%     94.5%
-a     9.6882151 0.2364420 9.3103351 10.066095
-bR    0.6437299 0.2324739 0.2721917  1.015268
-sigma 1.6723649 0.1673218 1.4049523  1.939777</code></pre>
+a     9.6881098 0.2364369 9.3102380 10.065982
+bR    0.6436707 0.2324695 0.2721396  1.015202
+sigma 1.6723286 0.1673128 1.4049305  1.939727</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This shows an increase of 0.6 divorces for every additional standard deviation </span></span>
 <span><span class="co"># of marriage rate (3.8). this relationship isn’t as strong as the previous one.</span></span>
@@ -293,6 +293,10 @@ A = age at marriage
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="https://latex.codecogs.com/svg.latex?%5CLarge&amp;space;x=%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption"></figcaption></figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><embed src="https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D" class="img-fluid"></p>
+<figcaption class="figure-caption"><span class="math display">\[\begin{align*} \text{D}_i &amp;\sim \text{Normal}(\mu, \sigma) &amp; \text{[likelihood]}\\ \mu_i &amp;= \alpha + \beta_R R_i + \beta_A A_i &amp; \text{[linear model]}\\ \alpha &amp;\sim \text{Normal}(10, 10) &amp; \text{[prior for }\alpha]\\ \beta_R &amp;\sim \text{Normal}(0, 1) &amp; \text{[prior for }\beta_R]\\ \beta_A &amp;\sim \text{Normal}(0, 1) &amp; \text{[prior for }\beta_A]\\ \sigma &amp;\sim \text{Uniform}(0, 10) &amp; \text{[prior for }\sigma] \end{align*}\]</span></figcaption></figure>
 </div>
 <!-- -->
 
@@ -800,7 +804,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a><span class="al">![\large \frac{-b\pm\sqrt{b^2-4ac}}{2a}](https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D)</span></span>
 <span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a><span class="al">![\Large \frac{-b\pm\sqrt{b^2-4ac}}{2a}](https://latex.codecogs.com/svg.latex?\Large&amp;space;x=\frac{-b\pm\sqrt{b^2-4ac}}{2a})</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a><span class="al">![\Large \frac{-b\pm\sqrt{b^2-4ac}}{2a}](https://latex.codecogs.com/svg.latex?\Large&amp;space;x=\frac{-b\pm\sqrt{b^2-4ac}}{2a})</span></span>
+<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">\begin{align*} \text{D}_i &amp;\sim \text{Normal}(\mu, \sigma) &amp; \text{[likelihood]}\\ \mu_i &amp;= \alpha + \beta_R R_i + \beta_A A_i &amp; \text{[linear model]}\\ \alpha &amp;\sim \text{Normal}(10, 10) &amp; \text{[prior for }\alpha]\\ \beta_R &amp;\sim \text{Normal}(0, 1) &amp; \text{[prior for }\beta_R]\\ \beta_A &amp;\sim \text{Normal}(0, 1) &amp; \text{[prior for }\beta_A]\\ \sigma &amp;\sim \text{Uniform}(0, 10) &amp; \text{[prior for }\sigma] \end{align*}</span><span class="co">](https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
