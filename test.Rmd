@@ -220,5 +220,13 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 ![\Large \frac{-b\pm\sqrt{b^2-4ac}}{2a}](https://latex.codecogs.com/svg.latex?\Large&space;x=\frac{-b\pm\sqrt{b^2-4ac}}{2a})
 
-![\begin{align*} \text{D}_i &\sim \text{Normal}(\mu, \sigma) & \text{[likelihood]}\\ \mu_i &= \alpha + \beta_R R_i + \beta_A A_i & \text{[linear model]}\\ \alpha &\sim \text{Normal}(10, 10) & \text{[prior for }\alpha]\\ \beta_R &\sim \text{Normal}(0, 1) & \text{[prior for }\beta_R]\\ \beta_A &\sim \text{Normal}(0, 1) & \text{[prior for }\beta_A]\\ \sigma &\sim \text{Uniform}(0, 10) & \text{[prior for }\sigma] \end{align*}](https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D)
+![\Large \begin{align*} 
+\text{D}_i &\sim \text{Normal}(\mu, \sigma) & \text{[likelihood]}\\ 
+\mu_i &= \alpha + \beta_R R_i + \beta_A A_i & \text{[linear model]}\\ 
+\alpha &\sim \text{Normal}(10, 10) & \text{[prior for }\alpha]\\ 
+\beta_R &\sim \text{Normal}(0, 1) & \text{[prior for }\beta_R]\\ 
+\beta_A &\sim \text{Normal}(0, 1) & \text{[prior for }\beta_A]\\ 
+\sigma &\sim \text{Uniform}(0, 10) & \text{[prior for }\sigma] 
+\end{align*}](https://latex.codecogs.com/svg.latex?\Large&space; \begin{align*} \text{D}_i &\sim \text{Normal}(\mu, \sigma) & \text{[likelihood]}\\ \mu_i &= \alpha + \beta_R R_i + \beta_A A_i & \text{[linear model]}\\ \alpha &\sim \text{Normal}(10, 10) & \text{[prior for }\alpha]\\ \beta_R &\sim \text{Normal}(0, 1) & \text{[prior for }\beta_R]\\ \beta_A &\sim \text{Normal}(0, 1) & \text{[prior for }\beta_A]\\ \sigma &\sim \text{Uniform}(0, 10) & \text{[prior for }\sigma] \end{align*})
+
 
