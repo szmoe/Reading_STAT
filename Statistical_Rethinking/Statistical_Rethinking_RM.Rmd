@@ -4803,9 +4803,6 @@ Multivariate regression uses more than one predictor variable to model an outcom
 
 Linear regression model for correlation between age at marriage and divorce rate:
 
-<script type="text/javascript" async  
-src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
 
 $$
 \begin{align*}
