@@ -173,14 +173,14 @@ Multivariate regression formulas look a lot like the polynomial models- they add
 Example model that predicts divorce rate, using both marriage rate and age at marriage:
 
 
-\begin{align*}
+\begin{matrix}
 \text{D}_i &\sim \text{Normal}(\mu, \sigma)\ &&&  \text{[likelihood]}\\
 \mu_i &= \alpha + \beta_R R_i + \beta_A A_i\ &&&  \text{[linear model]}\\
 \alpha &\sim \text{Normal}(10, 10)\ &&&           \text{[prior for }\alpha]\\
 \beta_R &\sim \text{Normal}(0, 1)\ &&&            \text{[prior for }\beta_R]\\
 \beta_A &\sim \text{Normal}(0, 1)\ &&&            \text{[prior for }\beta_A]\\
 \sigma &\sim \text{Uniform}(0, 10)\ &&&           \text{[prior for }\sigma]
-\end{align*}
+\end{matrix}
 
 
 ```
@@ -220,13 +220,17 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 ![\Large \frac{-b\pm\sqrt{b^2-4ac}}{2a}](https://latex.codecogs.com/svg.latex?\Large&space;x=\frac{-b\pm\sqrt{b^2-4ac}}{2a})
 
-![\Large \begin{align*} 
-\text{D}_i &\sim \text{Normal}(\mu, \sigma) & \text{[likelihood]}\\ 
-\mu_i &= \alpha + \beta_R R_i + \beta_A A_i & \text{[linear model]}\\ 
-\alpha &\sim \text{Normal}(10, 10) & \text{[prior for }\alpha]\\ 
-\beta_R &\sim \text{Normal}(0, 1) & \text{[prior for }\beta_R]\\ 
-\beta_A &\sim \text{Normal}(0, 1) & \text{[prior for }\beta_A]\\ 
-\sigma &\sim \text{Uniform}(0, 10) & \text{[prior for }\sigma] 
-\end{align*}](https://latex.codecogs.com/svg.latex?\Large&space; \begin{align*} \text{D}_i &\sim \text{Normal}(\mu, \sigma) & \text{[likelihood]}\\ \mu_i &= \alpha + \beta_R R_i + \beta_A A_i & \text{[linear model]}\\ \alpha &\sim \text{Normal}(10, 10) & \text{[prior for }\alpha]\\ \beta_R &\sim \text{Normal}(0, 1) & \text{[prior for }\beta_R]\\ \beta_A &\sim \text{Normal}(0, 1) & \text{[prior for }\beta_A]\\ \sigma &\sim \text{Uniform}(0, 10) & \text{[prior for }\sigma] \end{align*})
+![](https://latex.codecogs.com/svg.image?\begin{matrix}\Large&space; \text{D}_i &\sim \text{Normal}(\mu, \sigma) & \text{[likelihood]}\\ \mu_i &= \alpha + \beta_R R_i + \beta_A A_i & \text{[linear model]}\\ \alpha &\sim \text{Normal}(10, 10) & \text{[prior for }\alpha]\\ \beta_R &\sim \text{Normal}(0, 1) & \text{[prior for }\beta_R]\\ \beta_A &\sim \text{Normal}(0, 1) & \text{[prior for }\beta_A]\\ \sigma &\sim \text{Uniform}(0, 10) & \text{[prior for }\sigma]\\\end{matrix})
+
+![equation](http://latex.codecogs.com/gif.latex?O_t%3D%5Ctext%20%7B%20Onset%20event%20at%20time%20bin%20%7D%20t)
+![equation](http://latex.codecogs.com/gif.latex?s%3D%5Ctext%20%7B%20sensor%20reading%20%7D) 
+![equation](http://latex.codecogs.com/gif.latex?P%28s%20%7C%20O_t%20%29%3D%5Ctext%20%7B%20Probability%20of%20a%20sensor%20reading%20value%20when%20sleep%20onset%20is%20observed%20at%20a%20time%20bin%20%7D%20t)
+
+![](https://latex.codecogs.com/svg.image?\begin{matrix}D_i&\sim&space;Normal(\mu,\sigma)&&&\text{[Likelihood]}\\\mu_i&=\alpha&plus;\beta_R&space;R_i&plus;\beta_A&space;A_i&&&\text{[]}\\\end{matrix})
+
+![](https://latex.codecogs.com/svg.image?\begin{matrix}D_i&\sim&space;Normal(\mu,\sigma)&&&\text{[Likelihood]}\\\mu_i&=\alpha&plus;\beta_R&space;R_i&plus;\beta_AA_i&&&\text{[Linear&space;model]}\\\end{matrix})
+
+![](https://latex.codecogs.com/gif.image?\inline&space;\dpi{110}\begin{matrix}D_i&\sim&space;Normal(\mu,\sigma)&&&\text{[Likelihood]}\\\mu_i&=\alpha&plus;\beta_R&space;R_i&plus;\beta_AA_i&&&\text{[Linear&space;model]}\\\end{matrix})
 
 
+![equation](https://latex.codecogs.com/gif.image?%5Cinline%20%5Cdpi%7B110%7D%5Cbegin%7Bmatrix%7DD_i&%5Csim%20Normal(%5Cmu,%5Csigma)&&&%5Ctext%7B%5BLikelihood%5D%7D%5C%5C%5Cmu_i&=%5Calpha&plus;%5Cbeta_R%20R_i&plus;%5Cbeta_AA_i&&&%5Ctext%7B%5BLinear%20model%5D%7D%5C%5C%5Cend%7Bmatrix%7D)
