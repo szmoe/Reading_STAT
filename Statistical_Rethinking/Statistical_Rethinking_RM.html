@@ -585,7 +585,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>plausibility of p after D<sub>new</sub><span class="math inline">\(∝\)</span> ways p can produce D<sub>new</sub> × prior plausibility of p</p>
 <p>“The above just means that for any value p can take, we judge the plausibility of that value p as proportional to the number of ways it can get through the garden of forking data. This expression just summarizes the calculations you did in the tables of the previous section.</p>
 <p>Finally, we construct probabilities by standardizing the plausibility so that the sum of the plausibilities for all possible conjectures will be one. All you need to do in order to standardize is to add up all of the products, one for each value p can take, and then divide each product by the sum of products:”</p>
-<p><img src="https://latex.codecogs.com/svg.latex?%5CLarge&amp;space;%5Cdpi%7B110%7D%5Ctext%7Bplausibility%20of%20p%20after%20D%7D_%7Bnew%7D%20=%20%5Cfrac%7B%5Ctext%7Bways%20p%20can%20produce%20D%7D_%7Bnew%7D%20%5Ctimes%20%5Ctext%7Bprior%20plausibility%20p%7D%7D%7B%5Ctext%7Bsum%20of%20products%7D%7D" title="\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"></p>
+<p><img src="https://latex.codecogs.com/svg.latex?%5Cdpi%7B110%7D%5Ctext%7Bplausibility%20of%20p%20after%20D%7D_%7Bnew%7D%20=%20%5Cfrac%7B%5Ctext%7Bways%20p%20can%20produce%20D%7D_%7Bnew%7D%20%5Ctimes%20%5Ctext%7Bprior%20plausibility%20p%7D%7D%7B%5Ctext%7Bsum%20of%20products%7D%7D" title="\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"></p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -741,7 +741,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>OR the probability of mango both sweet and yellow is equal to the probability that mango is yellow given that it is sweet, multiplies by the probability that it is sweet: <code>Pr(s, y) = Pr(y|s) Pr(s)</code></p>
 <p>Now since both right-hand sides are equal to the same thing, we can set them equal to one another and solve for the posterior probability: Pr(s|y) = <span class="math inline">\(\frac{Pr(y|s)~Pr(s)}{Pr(y)}\)</span></p>
 <p><span style="color:brown"><strong><em>Bayes’ theorem</em></strong></span>: the probability of any particular value of p, considering the data, is equal to the product of the likelihood and prior, divided by this thing Pr(w), which I’ll call the <em>average likelihood</em>. In word form:</p>
-<p><img src="https://latex.codecogs.com/svg.latex?%5CLarge&amp;space;%5Cdpi%7B110%7D%5Ctext%7BPosterior%20=%7D%5Cfrac%7B%5Ctext%7BLikelihood%20x%20Prior%7D%7D%7B%5Ctext%7BAverage%20Likelihood%7D%7D" title="\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"></p>
+<p><img src="https://latex.codecogs.com/svg.latex?%5Cdpi%7B110%7D%5Ctext%7BPosterior%20=%7D%5Cfrac%7B%5Ctext%7BLikelihood%20x%20Prior%7D%7D%7B%5Ctext%7BAverage%20Likelihood%7D%7D" title="\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"></p>
 <p><span style="color:brown"><strong><em>Average Likelihood:</em></strong></span></p>
 <ul>
 <li><p>commonly called “evidence” or “probability of the data”</p></li>
@@ -946,7 +946,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="fu">precis</span><span class="op">(</span> <span class="va">globe.qa</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>       mean        sd      5.5%     94.5%
-p 0.6666666 0.1571338 0.4155365 0.9177968</code></pre>
+p 0.6666667 0.1571338 0.4155366 0.9177968</code></pre>
 </div>
 </div>
 <p><em>To use map, you provide a formula, a list of data, and a list of start values for the parameters. The formula defines the likelihood and prior.</em></p>
@@ -978,7 +978,7 @@ p 0.6666666 0.1571338 0.4155365 0.9177968</code></pre>
 <span><span class="fu">precis</span><span class="op">(</span> <span class="va">globe.qa1</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>       mean        sd      5.5%     94.5%
-p 0.6666662 0.1111104 0.4890902 0.8442421</code></pre>
+p 0.6666667 0.1111104 0.4890909 0.8442425</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1004,8 +1004,8 @@ p 0.6666662 0.1111104 0.4890902 0.8442421</code></pre>
 <span><span class="co"># display summary of quadratic approximation</span></span>
 <span><span class="fu">precis</span><span class="op">(</span> <span class="va">globe.qa2</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>       mean         sd      5.5%     94.5%
-p 0.6666669 0.07856687 0.5411018 0.7922319</code></pre>
+<pre><code>       mean        sd      5.5%     94.5%
+p 0.6666666 0.0785669 0.5411015 0.7922317</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1639,7 +1639,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">samples</span> <span class="op">&lt;</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">/</span> <span class="fl">1e4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 17.232</code></pre>
+<pre><code>[1] 17.2388</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The answer is the posterior probability below a parameter value of 0.5.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1649,7 +1649,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">samples</span> <span class="op">&gt;</span> <span class="fl">0.5</span> <span class="op">&amp;</span> <span class="va">samples</span> <span class="op">&lt;</span> <span class="fl">0.75</span><span class="op">)</span><span class="op">/</span> <span class="fl">1e4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 60.4448</code></pre>
+<pre><code>[1] 60.3826</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># So about 61% of the posterior probability lies between 0.5 and 0.75.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1703,7 +1703,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu">PI</span><span class="op">(</span><span class="va">samples2</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      25%       75% 
-0.7067067 0.9319319 </code></pre>
+0.7087087 0.9309309 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This interval assigns 25% of the probability mass above and below the interval. </span></span>
 <span><span class="co"># So it provides the central 50% probability. But in this example, it ends up excluding </span></span>
@@ -1753,7 +1753,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu">HPDI</span><span class="op">(</span><span class="va">samples2</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>     |0.5      0.5| 
-0.8428428 1.0000000 </code></pre>
+0.8408408 1.0000000 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This interval captures the parameters with highest posterior probability, </span></span>
 <span><span class="co"># as well as being noticeably narrower: </span></span>
@@ -1807,23 +1807,23 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu">HPDI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>     |0.8      0.8| 
-0.4694695 0.8238238 </code></pre>
+0.4744745 0.8298298 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">PI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      10%       90% 
-0.4504505 0.8098098 </code></pre>
+0.4504505 0.8128128 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute 95% HPDI and PI from samples</span></span>
 <span><span class="fu">HPDI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>    |0.95     0.95| 
-0.3763764 0.8988989 </code></pre>
+0.3663664 0.8928929 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">PI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>       3%       98% 
-0.3453453 0.8768769 </code></pre>
+0.3493493 0.8808809 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Add name for 80% HPDI and PI</span></span>
 <span><span class="va">hpdi_80</span> <span class="op">&lt;-</span> <span class="fu">HPDI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
@@ -1909,21 +1909,21 @@ inferences, then you’d be better off just plotting the entire posterior distri
 <details><summary>Code</summary><div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute MAP using samples from posterior</span></span>
 <span><span class="fu">chainmode</span><span class="op">(</span> <span class="va">samples2</span>, adj <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span> <span class="co"># rethinking</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9604384</code></pre>
+<pre><code>[1] 0.9587799</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">map_value</span> <span class="op">&lt;-</span> <span class="va">p_grid</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span> <span class="op">]</span></span>
 <span></span>
 <span><span class="co"># mean of the samples</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">samples2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8031479</code></pre>
+<pre><code>[1] 0.7991311</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mean_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">samples2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># median of the samples</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">samples2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8428428</code></pre>
+<pre><code>[1] 0.8398398</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb85"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">median_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">samples2</span><span class="op">)</span></span>
 <span></span>
@@ -2003,7 +2003,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 <span><span class="co"># Check with posterior median</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">samples2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8428428</code></pre>
+<pre><code>[1] 0.8398398</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The answer match with the value that minimizes the loss</span></span>
 <span></span>
@@ -2075,7 +2075,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">10</span>, size <span class="op">=</span> <span class="fl">2</span>, prob <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code> [1] 2 1 2 1 1 1 1 1 1 0</code></pre>
+<pre><code> [1] 2 1 1 1 1 2 2 2 2 0</code></pre>
 </div>
 </div>
 <p>Let’s generate 100,000 dummy observations, just to verify that each value (0, 1, or 2) appears in proportion to its likelihood:</p>
@@ -2086,7 +2086,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 </details><div class="cell-output cell-output-stdout">
 <pre><code>dummy_w
       0       1       2 
-0.09052 0.42174 0.48774 </code></pre>
+0.09041 0.41895 0.49064 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb104"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># values are very close to the likelihood values calculated above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -2098,7 +2098,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 </details><div class="cell-output cell-output-stdout">
 <pre><code>dummy_w_9
       0       1       2       3       4       5       6       7       8       9 
-0.00002 0.00041 0.00417 0.02046 0.07281 0.17045 0.26968 0.26477 0.15601 0.04122 </code></pre>
+0.00003 0.00040 0.00398 0.02200 0.07371 0.16821 0.26643 0.26710 0.15658 0.04156 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">simplehist</span><span class="op">(</span><span class="va">dummy_w_9</span>, xlab <span class="op">=</span> <span class="st">"dummy water count"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
@@ -11218,7 +11218,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb795-288"><a href="#cb795-288" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-289"><a href="#cb795-289" aria-hidden="true" tabindex="-1"></a>Finally, we construct probabilities by standardizing the plausibility so that the sum of the plausibilities for all possible conjectures will be one. All you need to do in order to standardize is to add up all of the products, one for each value p can take, and then divide each product by the sum of products:"</span>
 <span id="cb795-290"><a href="#cb795-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-291"><a href="#cb795-291" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\Large</span><span class="dv">&amp;space;</span><span class="st">\dpi{110}\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"</span><span class="er">title</span><span class="ot">=</span><span class="st">"\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"</span> <span class="kw">/&gt;</span></span>
+<span id="cb795-291"><a href="#cb795-291" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\dpi{110}\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"</span><span class="er">title</span><span class="ot">=</span><span class="st">"\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"</span> <span class="kw">/&gt;</span></span>
 <span id="cb795-292"><a href="#cb795-292" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-293"><a href="#cb795-293" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-294"><a href="#cb795-294" aria-hidden="true" tabindex="-1"></a><span class="in">```{r table, tidy=FALSE, include=TRUE, echo=FALSE}</span></span>
@@ -11378,7 +11378,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb795-452"><a href="#cb795-452" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-453"><a href="#cb795-453" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color:brown"</span><span class="kw">&gt;</span>***Bayes' theorem***<span class="kw">&lt;/span&gt;</span>: the probability of any particular value of p, considering the data, is equal to the product of the likelihood and prior, divided by this thing Pr(w), which I’ll call the *average likelihood*. In word form:</span>
 <span id="cb795-454"><a href="#cb795-454" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb795-455"><a href="#cb795-455" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\Large</span><span class="dv">&amp;space;</span><span class="st">\dpi{110}\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"</span><span class="er">title</span><span class="ot">=</span><span class="st">"\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"</span><span class="kw">/&gt;</span></span>
+<span id="cb795-455"><a href="#cb795-455" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\dpi{110}\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"</span><span class="er">title</span><span class="ot">=</span><span class="st">"\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"</span><span class="kw">/&gt;</span></span>
 <span id="cb795-456"><a href="#cb795-456" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb795-457"><a href="#cb795-457" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color:brown"</span><span class="kw">&gt;</span>***Average Likelihood:***<span class="kw">&lt;/span&gt;</span></span>
 <span id="cb795-458"><a href="#cb795-458" aria-hidden="true" tabindex="-1"></a></span>

@@ -218,7 +218,7 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 ![\large \frac{-b\pm\sqrt{b^2-4ac}}{2a}](https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D)
 
-![\Large \frac{-b\pm\sqrt{b^2-4ac}}{2a}](https://latex.codecogs.com/svg.latex?\Large&space;x=\frac{-b\pm\sqrt{b^2-4ac}}{2a})
+![](https://latex.codecogs.com/svg.latex?\mathbf{Pr(s|y)} = \frac{\mathbf{Pr(y|s)~Pr(s)}}{\mathbf{Pr(y)}})
 
 <img src="https://latex.codecogs.com/gif.image?\inline&space;\dpi{110}\begin{matrix}\text{D}_i &\sim&space;\text{Normal}(\mu, \sigma) &&& \text{[likelihood]}\\\mu_i &=&space; \alpha &plus; \beta_R R_i &plus; \beta_A A_i &&& \text{[linear model]}\\ \alpha &\sim&space; \text{Normal}(10, 10) &&& \text{[prior for }\alpha]\\ \beta_R &\sim&space; \text{Normal}(0, 1) &&& \text{[prior for }\beta_R]\\ \beta_A &\sim&space; \text{Normal}(0, 1) &&& \text{[prior for }\beta_A]\\ \sigma &\sim&space; \text{Uniform}(0, 10) &&& \text{[prior for }\sigma]\\\end{matrix}" />
 
@@ -231,4 +231,14 @@ inline text symbol $\mu$ or \(\mu\) or <img src="https://latex.codecogs.com/svg.
 
 <img src="https://latex.codecogs.com/gif.image?\Large&space;\dpi{110}\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"title="\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}" />
 
-<img src="https://latex.codecogs.com/svg.latex?\Large&space;\dpi{110}\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"title="\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"/>
+<img src="https://latex.codecogs.com/svg.latex?\dpi{220}\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"title="\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"/>
+
+<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\text{Posterior} = \frac{\textbf{Likelihood} \times \textbf{Prior}}{\text{Average Likelihood}}" title="\text{Posterior} = \frac{\textbf{Likelihood} \times \textbf{Prior}}{\text{Average Likelihood}}"/>
+
+<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\mathbf{Posterior} = \frac{\mathbf{Likelihood} \times \mathbf{Prior}}{\mathbf{Average\ Likelihood}}" title="\mathbf{Posterior} = \frac{\mathbf{Likelihood} \times \mathbf{Prior}}{\mathbf{Average\ Likelihood}}"/>
+
+Now since both right-hand sides are equal to the same thing, we can set them equal to one another and solve for the posterior probability: ![](https://latex.codecogs.com/svg.latex?\mathbf{Pr(s|y)} = \frac{\mathbf{Pr(y|s)~Pr(s)}}{\mathbf{Pr(y)}})
+
+![](https://latex.codecogs.com/svg.latex?\mathbf{Pr(w|n,p)} = \frac{\mathbf{n!}}{\mathbf{w! (n - w)!}}\mathbf{p^w (1 - p)^{n-w}})
+
+<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />

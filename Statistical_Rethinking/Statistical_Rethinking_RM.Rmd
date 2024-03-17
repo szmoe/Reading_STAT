@@ -288,7 +288,7 @@ plausibility of p after D~new~ $∝$ ways p can produce D~new~ × prior plausibi
 
 Finally, we construct probabilities by standardizing the plausibility so that the sum of the plausibilities for all possible conjectures will be one. All you need to do in order to standardize is to add up all of the products, one for each value p can take, and then divide each product by the sum of products:"
 
-<img src="https://latex.codecogs.com/svg.latex?\Large&space;\dpi{110}\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"title="\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}" />
+<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"title="\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}" />
 
 
 ```{r table, tidy=FALSE, include=TRUE, echo=FALSE}
@@ -450,7 +450,7 @@ Now since both right-hand sides are equal to the same thing, we can set them equ
 
 <span style="color:brown">***Bayes' theorem***</span>: the probability of any particular value of p, considering the data, is equal to the product of the likelihood and prior, divided by this thing Pr(w), which I’ll call the *average likelihood*. In word form:
 
-<img src="https://latex.codecogs.com/svg.latex?\Large&space;\dpi{110}\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"title="\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"/>
+<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"title="\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"/>
 
 <span style="color:brown">***Average Likelihood:***</span>
 
