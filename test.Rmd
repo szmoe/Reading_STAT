@@ -220,20 +220,38 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 ![](https://latex.codecogs.com/svg.latex?\mathbf{Pr(s|y)} = \frac{\mathbf{Pr(y|s)~Pr(s)}}{\mathbf{Pr(y)}})
 
-<img src="https://latex.codecogs.com/gif.image?\inline&space;\dpi{110}\begin{matrix}\text{D}_i &\sim&space;\text{Normal}(\mu, \sigma) &&& \text{[likelihood]}\\\mu_i &=&space; \alpha &plus; \beta_R R_i &plus; \beta_A A_i &&& \text{[linear model]}\\ \alpha &\sim&space; \text{Normal}(10, 10) &&& \text{[prior for }\alpha]\\ \beta_R &\sim&space; \text{Normal}(0, 1) &&& \text{[prior for }\beta_R]\\ \beta_A &\sim&space; \text{Normal}(0, 1) &&& \text{[prior for }\beta_A]\\ \sigma &\sim&space; \text{Uniform}(0, 10) &&& \text{[prior for }\sigma]\\\end{matrix}" />
 
 
-<img src="https://latex.codecogs.com/gif.image?\inline&space;\dpi{110}\begin{matrix}D_i&\sim&space;Normal(\mu,\sigma)&&&\text{[Likelihood]}\\\mu_i&=\alpha&plus;\beta_R&space;R_i&plus;\beta_AA_i&&&\text{[Linear&space;model]}\\\end{matrix}" />
 
-<img src="https://latex.codecogs.com/gif.image?\inline&space;\dpi{110}\begin{align*}D_i&\sim&space;Normal(\mu,\sigma)&&&\text{[Likelihood]}\\\mu_i&=\alpha&plus;\beta_R&space;R_i&plus;\beta_AA_i&&&\text{[Linear&space;model]}\\\end{align*}" title="\begin{align*}D_i&\sim Normal(\mu,\sigma)&&&\text{[Likelihood]}\\\mu_i&=\alpha+\beta_R R_i+\beta_AA_i&&&\text{[Linear model]}\\\end{align*}" />
 
-inline text symbol $\mu$ or \(\mu\) or <img src="https://latex.codecogs.com/svg.image?\mu" title="\mu" />
-
-<img src="https://latex.codecogs.com/gif.image?\Large&space;\dpi{110}\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"title="\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}" />
 
 <img src="https://latex.codecogs.com/svg.latex?\dpi{220}\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"title="\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"/>
 
 <img src="https://latex.codecogs.com/svg.latex?\dpi{110}\text{Posterior} = \frac{\textbf{Likelihood} \times \textbf{Prior}}{\text{Average Likelihood}}" title="\text{Posterior} = \frac{\textbf{Likelihood} \times \textbf{Prior}}{\text{Average Likelihood}}"/>
+
+
+test
+
+
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y \sim 1 + x\\\end{align*}" title="" />
+
+
+<div style="display: flex; justify-content: center;">
+    <img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim \text{Normal}(\mu_i, \sigma)\\ \mu_i &= \alpha + \beta x_i\\\end{align*}}" title="" />
+</div>
+
+
+
+
+
+
+new
+
+<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\inline&space;\dpi{110}\boldsymbol{\begin{align*}Pr(p|w,n) = \frac{Binomial(w|n,p) ~ Uniform(p|0,1)}{\int Binomial(w|n,p) ~ Uniform(p|0,1)dp}\\ \end{align*}" title="" />
+
+
+
+
 
 <img src="https://latex.codecogs.com/svg.latex?\dpi{110}\mathbf{Posterior} = \frac{\mathbf{Likelihood} \times \mathbf{Prior}}{\mathbf{Average\ Likelihood}}" title="\mathbf{Posterior} = \frac{\mathbf{Likelihood} \times \mathbf{Prior}}{\mathbf{Average\ Likelihood}}"/>
 
@@ -241,4 +259,13 @@ Now since both right-hand sides are equal to the same thing, we can set them equ
 
 ![](https://latex.codecogs.com/svg.latex?\mathbf{Pr(w|n,p)} = \frac{\mathbf{n!}}{\mathbf{w! (n - w)!}}\mathbf{p^w (1 - p)^{n-w}})
 
-<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />
+
+mu, sigma symbol
+
+<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" />
+
+
+
+![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta_{NWM} NWM_i + \beta_{OWM} OWM_i + \beta_S S_i + \beta_F F_i})
+
+

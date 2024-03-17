@@ -282,7 +282,7 @@ I made a mental note in the beginning that the bag contained 4 pears and 4 avoca
 
 *If p is the proportion of pear and D~new~ = {a,p,a,a}*
 
-plausibility of p after D~new~ $∝$ ways p can produce D~new~ × prior plausibility of p
+plausibility of p after D~new~ ∝ ways p can produce D~new~ × prior plausibility of p
 
 "The above just means that for any value p can take, we judge the plausibility of that value p as proportional to the number of ways it can get through the garden of forking data. This expression just summarizes the calculations you did in the tables of the previous section.
 
@@ -446,11 +446,12 @@ Example- the probability of mango both sweet and yellow is equal to the probabil
 
 OR the probability of mango both sweet and yellow is equal to the probability that mango is yellow given that it is sweet, multiplies by the probability that it is sweet: `Pr(s, y) = Pr(y|s) Pr(s)`
 
-Now since both right-hand sides are equal to the same thing, we can set them equal to one another and solve for the posterior probability: Pr(s|y) = $\frac{Pr(y|s)~Pr(s)}{Pr(y)}$
+Now since both right-hand sides are equal to the same thing, we can set them equal to one another and solve for the posterior probability: ![](https://latex.codecogs.com/svg.latex?\mathbf{Pr(s|y)} = \frac{\mathbf{Pr(y|s)~Pr(s)}}{\mathbf{Pr(y)}})
 
 <span style="color:brown">***Bayes' theorem***</span>: the probability of any particular value of p, considering the data, is equal to the product of the likelihood and prior, divided by this thing Pr(w), which I’ll call the *average likelihood*. In word form:
 
-<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"title="\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"/>
+<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\mathbf{Posterior} = \frac{\mathbf{Likelihood} \times \mathbf{Prior}}{\mathbf{Average\ Likelihood}}" title="\mathbf{Posterior} = \frac{\mathbf{Likelihood} \times \mathbf{Prior}}{\mathbf{Average\ Likelihood}}"/>
+
 
 <span style="color:brown">***Average Likelihood:***</span>
 
@@ -680,7 +681,7 @@ The procedure to carry out quadratic approximation in R contains two steps:
 
 ```{r quadratic approximation}
 
-globe.qa <- rethinking::map(           #  map is maximum a posteriori- the mode of the posterior distribution
+globe.qa <- rethinking::map(# map is maximum a posteriori- the mode of the posterior distribution
     alist(
         w ~ dbinom(9,p) ,  # binomial likelihood
         p ~ dunif(0,1)     # uniform prior
@@ -703,8 +704,8 @@ Since we already know the posterior, let’s compare to see how good the approxi
 w <- 6
 n <- 9
 curve( dbeta( x , w+1 , n-w+1 ) , from=0 , to=1 ) 
-# Use Laplace's rule of succession- add one to both w and n-w to avoid assigning zero probability, 
-# ensure at least there's one w and one n-w, even if none have been observed yet
+# Use Laplace's rule of succession- add one to both w and n-w to avoid assigning zero 
+# probability, ensure at least there's one w and one n-w, even if none have been observed yet
 
 # quadratic approximation
 curve( dnorm( x , 0.67 , 0.16 ) , lty=2 , add=TRUE )
@@ -716,7 +717,7 @@ curve( dnorm( x , 0.67 , 0.16 ) , lty=2 , add=TRUE )
 
 ```{r quadratic approximation1}
 
-globe.qa1 <- rethinking::map(           #  map is maximum a posteriori- the mode of the posterior distribution
+globe.qa1 <- rethinking::map(# map is maximum a posteriori- the mode of the posterior distribution
     alist(
         w ~ dbinom(18,p) ,  # binomial likelihood
         p ~ dunif(0,1)     # uniform prior
@@ -743,7 +744,7 @@ curve( dnorm( x , 0.67 , 0.11 ) , lty=2 , add=TRUE )
 
 ```{r quadratic approximation2}
 
-globe.qa2 <- rethinking::map(           #  map is maximum a posteriori- the mode of the posterior distribution
+globe.qa2 <- rethinking::map(# map is maximum a posteriori- the mode of the posterior distribution
     alist(
         w ~ dbinom(36,p) ,  # binomial likelihood
         p ~ dunif(0,1)     # uniform prior
@@ -1838,7 +1839,7 @@ Likelihood functions work in both directions. Given a realized observation, the 
 
 With the globe tossing model, the dummy data arises from a binomial likelihood:
 
-Pr(w|n,p) = $\frac{n!}{w!(n - w)!}$p^w^ (1 - p)^n-w^
+![](https://latex.codecogs.com/svg.latex?\mathbf{Pr(w|n,p)} = \frac{\mathbf{n!}}{\mathbf{w! (n - w)!}}\mathbf{p^w (1 - p)^{n-w}})
 
 where w is an observed count of “water” and n is the number of tosses. Suppose n = 2, two tosses of the globe. Then there are only three possible observations: 0 water, 1 water, 2 water. You can quickly compute the likelihood of each, for any given value of p. Let’s use p = 0.7, which is just about the true proportion of water on the Earth:
 
@@ -2618,11 +2619,12 @@ The justifications for using the Gaussian distribution- as a skeleton for hypoth
 
 <span style="color:brown"><span style="text-decoration:underline">**Gaussian distribution**</span>
 
-- The probability density of some value y, given a Gaussian (normal) distribution with mean $\mu$ and standard deviation $\sigma$, is:
+- The probability density of some value y, given a Gaussian (normal) distribution with mean $\mu$ and standard deviation <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, is:
 
-$$p(y|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(- \frac{(y-\mu)^2}{2\sigma^2}\right)$$
+![](https://latex.codecogs.com/svg.latex?\boldsymbol{p(y|\mu,\sigma)} = \boldsymbol{\frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(- \frac{(y-\mu)^2}{2\sigma^2}\right)})
 
-- (y − $\mu$)^2^ gives the normal distribution its fundamental shape, a quadratic shape. Once you exponentiate the quadratic shape, you get the classic bell curve. The rest of it just scales and standardizes the distribution so that it sums to one, as all probability distributions must. But an expression as simple as exp(−y^2^) yields the Gaussian prototype.
+
+- (y − <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" />)^2^ gives the normal distribution its fundamental shape, a quadratic shape. Once you exponentiate the quadratic shape, you get the classic bell curve. The rest of it just scales and standardizes the distribution so that it sums to one, as all probability distributions must. But an expression as simple as exp(−y^2^) yields the Gaussian prototype.
 
 - The value y in the Gaussian distribution can be any continuous value, as Gussian is a continuous distribution. 
 
@@ -2642,9 +2644,11 @@ dnorm(0, 0, 0.1)
 
 ```
 
-- The Gaussian distribution is routinely seen without $\sigma$ but with another parameter, $\tau$ . The parameter $\tau$ in this context is usually called precision and defined as $\tau$ = 1/$\sigma$^2^. This change of parameters gives us the equivalent formula (just substitute $\sigma$ = 1/ $\sqrt\tau$):
+- The Gaussian distribution is routinely seen without <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />but with another parameter, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\tau}" title="" /> . The parameter <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\tau}" title="" /> in this context is usually called precision and defined as <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\tau}" title="" /> = 1/<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />^2^. This change of parameters gives us the equivalent formula (just substitute <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" /> = 1/ <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sqrt\tau}" title="" />
+):
 
-$$p(y|\mu, \tau) = \sqrt\frac{\tau}{{2\pi}} \exp\left(- \frac{1}{2}\tau(y - \mu)^2 \right)$$
+![](https://latex.codecogs.com/svg.latex?\boldsymbol{p(y|\mu, \tau)} = \boldsymbol{ \sqrt\frac{\tau}{{2\pi}} \exp\left(- \frac{1}{2}\tau(y - \mu)^2 \right)})
+
 
 <br>
 
@@ -2663,23 +2667,18 @@ $$p(y|\mu, \tau) = \sqrt\frac{\tau}{{2\pi}} \exp\left(- \frac{1}{2}\tau(y - \mu)
 - After all these decisions are made, summarize the model: 
 
 
-$$
-\text{outcome}_i \sim \text{Normal}(\mu_i, \sigma) \\
-\mu_i = \beta \times \text{predictor}_i \\
-\beta \sim \text{Normal}(0, 10) \\
-\sigma \sim \text{HalfCauchy}(0, 1)
-$$
+<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\inline&space;\dpi{110}\boldsymbol{\begin{align*}outcome_i &\sim Normal(\mu_i, \sigma) \\ \mu_i &= \beta \times predictor_i \\ \beta &\sim Normal(0, 10) \\ \sigma &\sim HalfCauchy(0, 1)\end{align*}}" title="" />
+
 
 <div style="border: 1px solid #999; padding: 10px; background-color: #f9f9f9; margin: 10px 0;">
 
 outcome~i~                    = outcome variable for the i^th^ observation
 
-Normal($\mu$~i~, $\sigma$)    = normal distribution with mean $\mu$~i~ and standard deviation $\sigma$
+Normal(<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" />, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />)    = normal distribution with mean <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" /> and standard deviation <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />
 
-$\mu$~i~    = mean ($\mu$~i~) of the normal distribution for the i^th^ observation
+<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" />    = mean (<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" />) of the normal distribution for the i^th^ observation
 
-$\beta\times\text{predictor}$ = the product of a coefficient ($\beta$) and a predictor variable (predictor~i~)
-
+<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta\times\boldsymbol{predictor}}" title="" /> = the product of a coefficient (<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta}" title="" />) and a predictor variable (predictor~i~)
 
 </div>
 
@@ -2689,8 +2688,7 @@ $\beta\times\text{predictor}$ = the product of a coefficient ($\beta$) and a pre
 
 The model:
 
-$$\text{w} \sim \text{Binomial(n, p)}$$
-$$\text{p} \sim \text{Uniform(0, 1)}$$
+<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\inline&space;\dpi{110}\boldsymbol{\begin{align*}w \sim Binomial(n, p)\\ p \sim Uniform(0, 1)\\ \end{align*}}" title="" />
 
 ```
 w   = observed count of water samples
@@ -2716,13 +2714,15 @@ plausible under any model.
 
 To relate the mathematical format above to Bayes’ theorem, you could use the model definition to define the posterior distribution:
 
-$$\text{Pr(p|w,n)} = \frac{\text{Binomial(w|n,p) Uniform(p|0,1)}}{\int \text{Binomial(w|n,p) Uniform(p|0,1)dp}}$$
+<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\inline&space;\dpi{110}\boldsymbol{\begin{align*}Pr(p|w,n) = \frac{Binomial(w|n,p) ~ Uniform(p|0,1)}{\int Binomial(w|n,p) ~ Uniform(p|0,1)dp}\\ \end{align*}" title="" />
 
 <br>
 
-$$\text{posterior probability of any particular value of p} = \frac{likelihood \times prior}{\text{average likelihood}}$$
+![](https://latex.codecogs.com/svg.latex?\textbf{posterior probability of any particular value of p} \boldsymbol{=} \frac{\textbf{likelihood} \boldsymbol{\times} \textbf{prior}}{\textbf{average likelihood}})
+
 
 In R code form:
+
 ```{r c45}
 w <- 6; n <- 9;
 p_grid <- seq(from = 0, to = 1, length.out = 100)
@@ -2735,9 +2735,9 @@ plot(posterior~p_grid, type = "l")
 
 ## A Gaussian model of height
 
-There are an infinite number of possible Gaussian distributions. Some have small means. Others have large means. Some are wide, with a large $\sigma$. Others are narrow. We want our Bayesian machine to consider every possible distribution, each defined by a combination of $\mu$ and $\sigma$, and rank them by posterior plausibility. Posterior plausibility provides a measure of the logical compatibility of each possible distribution with the data and model.
+There are an infinite number of possible Gaussian distributions. Some have small means. Others have large means. Some are wide, with a large <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />. Others are narrow. We want our Bayesian machine to consider every possible distribution, each defined by a combination of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> and <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, and rank them by posterior plausibility. Posterior plausibility provides a measure of the logical compatibility of each possible distribution with the data and model.
 
-In practice we’ll use approximations to the formal analysis. So we won’t really consider every possible value of $\mu$ and $\sigma$.  The “estimate” here will be the entire posterior distribution, not any point within it. And as a result, the posterior distribution will be a distribution of Gaussian distributions. Yes, a distribution of distributions.
+In practice we’ll use approximations to the formal analysis. So we won’t really consider every possible value of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> and <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />.  The “estimate” here will be the entire posterior distribution, not any point within it. And as a result, the posterior distribution will be a distribution of Gaussian distributions. Yes, a distribution of distributions.
 
 <br>
 
@@ -2789,9 +2789,10 @@ dens(d2$height)
 
 Whatever the reason, adult heights are nearly always approximately normal. So it’s reasonable for the moment to adopt the stance that the model’s likelihood should be Gaussian. But be careful about choosing the Gaussian distribution only when the plotted outcome variable looks Gaussian to you. Gawking at the raw data, to try to decide how to model them, is usually not a good idea. The data could be a mixture of different Gaussian distributions, for example, and in that case you won’t be able to detect the underlying normality just by eyeballing the outcome distribution. Furthermore, the empirical distribution needn’t be actually Gaussian in order to justify using a Gaussian likelihood.
 
-There are an infinite number of Gaussain distributions , with an infinite number of different means and standard deviations. We’re ready to write down the general model and compute the plausibility of each combination of $\mu$ and $\sigma$. To define the heights as normally distributed with a mean $\mu$ and standard deviation $\sigma$, we write:
+There are an infinite number of Gaussain distributions , with an infinite number of different means and standard deviations. We’re ready to write down the general model and compute the plausibility of each combination of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> and <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />. To define the heights as normally distributed with a mean $\mu$ and standard deviation <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, we write:
 
-$$\text{h}_i \sim \text{Normal}(\mu, \sigma)$$                                  
+![](https://latex.codecogs.com/svg.latex?\boldsymbol{{h}_i \sim {Normal}(\mu, \sigma)})
+
 
 ```
 h             = the list of heights
@@ -2801,17 +2802,9 @@ subscript i   = index- each individual element of this list (row numbers)
 
 <br>
 
-Then, we add priors assuming Pr($\mu$, $\sigma$) = Pr($\mu$) Pr($\sigma$):
+Then, we add priors assuming Pr(<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" />, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />) = Pr(<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" />) Pr(<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />):
 
-$$
-\begin{align*}
-\text{h}_i &\sim \text{Normal}(\mu, \sigma) \ &&& [\text{Likelihood}]\\
-
-\mu &\sim \text{Normal}(178, 20) \ &&& [\mu \text{ prior}]\\
-
-\sigma &\sim \text{Uniform}(0, 50) \ &&& [\sigma \text{ prior}]
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\inline&space;\dpi{110}\boldsymbol{\begin{align*}\boldsymbol{h}_i &\sim \boldsymbol{Normal}(\boldsymbol{\mu}, \boldsymbol{\sigma}) && [\boldsymbol{Likelihood}]\\ \boldsymbol{\mu} &\sim \boldsymbol{Normal}(178, 20) && [\boldsymbol{\mu ~ prior}]\\ \boldsymbol{\sigma} &\sim \boldsymbol{Uniform}(0, 50) && [\boldsymbol{\sigma ~ prior}]\end{align*}}" title="" />
 
 <br>
 
@@ -3095,16 +3088,17 @@ start <- list(
 
 ```
 Note that the list of start values is a regular list, not an alist like the formula list is. 
-The two functions alist and list do the same basic thing: allow you to make a collection of arbitrary R objects. They differ in one important respect: list evaluates the code you embed inside it, while
-alist does not. So when you define a list of formulas, you should use alist, so the code isn’t 
-executed. But when you define a list of start values for parameters, you should use list, so 
-that code like mean(d2$height) will be evaluated to a numeric value.
+The two functions alist and list do the same basic thing: allow you to make a collection of 
+arbitrary R objects. They differ in one important respect: list evaluates the code you embed 
+inside it, while alist does not. So when you define a list of formulas, you should use alist, 
+so the code isn’t executed. But when you define a list of start values for parameters, you 
+should use list, so that code like mean(d2$height) will be evaluated to a numeric value.
 
 ```
 
 <br>
 
-See the effect of a more information prior for $\mu$:
+See the effect of a more information prior for <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" />:
 
 ```{r 4.29}
 
@@ -3217,7 +3211,7 @@ post <- mvrnorm( n=1e4 , mu=coef(m4.1) , Sigma=vcov(m4.1) )
 
 <br>
 
-<span style="color:purple">***Getting $\sigma$ right***</span>
+<span style="color:purple">***Getting <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" /> right***</span>
 
 - The quadratic assumption for σ can be problematic- more uncertainty at higher values. 
 
@@ -3363,7 +3357,7 @@ Plotting the implications of your estimates will allow you to inquire about seve
 
 <span style="color:purple">***What do parameters mean?***</span>
 
-Posterior probabilities of parameter values describe the relative compatibility of different states of the world with the data, ac- cording to the model.
+Posterior probabilities of parameter values describe the relative compatibility of different states of the world with the data, according to the model.
 
 <br>
 
@@ -3388,7 +3382,7 @@ precis(m4.3)
 
 <br>
 
-The numbers in the default precis output aren’t sufficient to describe the quadratic posterior completely. For that, we also require the variance-covariance matrix. We’re interested in correlations among parameters—we already have their variance in the table above—so let’s go straight to the correlation matrix:
+The numbers in the default precis output aren’t sufficient to describe the quadratic posterior completely. For that, we also require the variance-covariance matrix. We’re interested in correlations among parameters&mdash; we already have their variance in the table above&mdash; so let’s go straight to the correlation matrix:
 
 ```{r 4.41}
 
@@ -3469,9 +3463,9 @@ abline(a = coef(m4.3)["a"], b = coef(m4.3)["b"])
 
 #### Adding uncertainty around the mean
 
-The posterior distribution considers every possible regression line connecting height to weight. It assigns a relative plausibility to each. This means that each combination of $\alpha$ and $\beta$ has a posterior probability. It could be that there are many lines with nearly the same posterior probability as the MAP line. Or it could be instead that the posterior distribution is rather narrow near the MAP line.
+The posterior distribution considers every possible regression line connecting height to weight. It assigns a relative plausibility to each. This means that each combination of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha}" title="" /> and <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta}" title="" /> has a posterior probability. It could be that there are many lines with nearly the same posterior probability as the MAP line. Or it could be instead that the posterior distribution is rather narrow near the MAP line.
 
-So how can we get that uncertainty onto the plot? Together, a combination of $\alpha$ and $\beta$ define a line. And so we could sample a bunch of lines from the posterior distribution. Then we could display those lines on the plot, to visualize the uncertainty in the regression relationship.
+So how can we get that uncertainty onto the plot? Together, a combination of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha}" title="" /> and <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta}" title="" /> define a line. And so we could sample a bunch of lines from the posterior distribution. Then we could display those lines on the plot, to visualize the uncertainty in the regression relationship.
 
 ```{r 4.46}
 
@@ -3668,7 +3662,7 @@ dens(mu_at_50_3, col = rangi2, lwd = 2, xlab = "mu|weight = 50 (352 samples)")
 
 <br>
 
-Since the posterior for $\mu$ is a distribution, you can find intervals for it, just like for any posterior distribution. To find the 89% highest posterior density interval of $\mu$ at 50 kg, just use the HPDI command as usual:
+Since the posterior for <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> is a distribution, you can find intervals for it, just like for any posterior distribution. To find the 89% highest posterior density interval of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> at 50 kg, just use the HPDI command as usual:
 
 ```{r 4.52}
 
@@ -3684,7 +3678,7 @@ HPDI(mu_at_50_3, prob = 0.89)
 
 <br>
 
-We need to repeat the above calculation for every weight value on the horizontal axis, not just when it is 50 kg. We want to draw 89% HPDIs around the MAP slope. This can be done by using `link` function. What `link` will do is take your `map` model fit, sample from the posterior distribution, and then compute $\mu$ for each case in the data and sample from the posterior distribution.
+We need to repeat the above calculation for every weight value on the horizontal axis, not just when it is 50 kg. We want to draw 89% HPDIs around the MAP slope. This can be done by using `link` function. What `link` will do is take your `map` model fit, sample from the posterior distribution, and then compute <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> for each case in the data and sample from the posterior distribution.
 
 ```{r 4.53}
 
@@ -3698,7 +3692,7 @@ str(mu) # to compactly show data frame
 
 <br>
 
-Now we have a distribution of $\mu$ for each individual in the original data. We actually want something slightly different: a distribution of $\mu$ for each unique weight value on the horizontal axis.
+Now we have a distribution of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> for each individual in the original data. We actually want something slightly different: a distribution of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> for each unique weight value on the horizontal axis.
 
 ```{r 4.54}
 
@@ -3772,9 +3766,9 @@ shade( mu.HPDI , weight.seq )
 
 <span style="color:brown"><span style="text-decoration:underline">**Recipe for generating predictions and intervals from the posterior of a fit model**</span></span>
 
-(1) Use `link` to generate distributions of posterior values for $\mu$. The default behavior of `link` is to use the original data, so you have to pass it a list of new horizontal axis values you want to plot posterior predictions across.
+(1) Use `link` to generate distributions of posterior values for <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" />. The default behavior of `link` is to use the original data, so you have to pass it a list of new horizontal axis values you want to plot posterior predictions across.
 
-(2) Use summary functions like `mean` or `HPDI` or `PI` to find averages and lower and upper bounds of $\mu$ for each value of the predictor variable.
+(2) Use summary functions like `mean` or `HPDI` or `PI` to find averages and lower and upper bounds of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> for each value of the predictor variable.
 
 (3) Finally, use plotting functions like `lines` and `shade` to draw the lines and intervals. Or you might plot the distributions of the predictions, or do further numerical calculations with them. It’s really up to you.
 
@@ -3813,9 +3807,9 @@ mu.HPDI
 
 #### Prediction intervals
 
-Now let's generate an 89% prediction interval for actual heights, not just the average height, $\mu$ by incorporating the standard deviation $\sigma$ and its uncertainty as well. 
+Now let's generate an 89% prediction interval for actual heights, not just the average height, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> by incorporating the standard deviation <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" /> and its uncertainty as well. 
 
-Imagine simulating heights. For any unique weight value, you sample from a Gaussian distribution with the correct mean $\mu$ for that weight, using the correct value of $\sigma$ sampled from the same posterior distribution. If you do this for every sample from the posterior, for every weight value of interest, you end up with a collection of simulated heights that embody the uncertainty in the posterior as well as the uncertainty in the Gaussian likelihood.
+Imagine simulating heights. For any unique weight value, you sample from a Gaussian distribution with the correct mean <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> for that weight, using the correct value of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" /> sampled from the same posterior distribution. If you do this for every sample from the posterior, for every weight value of interest, you end up with a collection of simulated heights that embody the uncertainty in the posterior as well as the uncertainty in the Gaussian likelihood.
 
 ```{r 4.59}
 
@@ -3948,16 +3942,16 @@ plot(height ~ weight, d, col = col.alpha("black", 0.5))
 
 <br>
 
-Polynomial regression is one of the ways to model a curved relationship between two variables. In this context, “polynomial” means equations for $\mu_i$ that add additional terms with squares, cubes, and even higher powers of the predictor variable. There’s still only one predictor variable in the model, so this is still a bivariate regression. But the definition of $\mu_i$ has more parameters now.
+Polynomial regression is one of the ways to model a curved relationship between two variables. In this context, “polynomial” means equations for <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" /> that add additional terms with squares, cubes, and even higher powers of the predictor variable. There’s still only one predictor variable in the model, so this is still a bivariate regression. But the definition of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" /> has more parameters now.
 
 The most common polynomial regression, a parabolic model of the mean:
 
-$$\mu_i = \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i^2$$
+![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta_1 x_i + \beta_2 x_i^2})
 <br>
 
-The above is a parabolic (second order) polynomial. The $\alpha + \beta_1 \text{x}_i$ part is the same linear function of x in a linear regression, just with a little “1” subscript added to the parameter name, so we can tell it apart from the new parameter. The additional term uses the square of $x_i$ to construct a parabola, rather than a perfectly straight line. The new parameter $\beta_2$ measures the curvature of the relationship.
+The above is a parabolic (second order) polynomial. The <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha + \beta_1 x_i}" title="" /> part is the same linear function of x in a linear regression, just with a little “1” subscript added to the parameter name, so we can tell it apart from the new parameter. The additional term uses the square of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{x_i}" title="" /> to construct a parabola, rather than a perfectly straight line. The new parameter <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_2}" title="" /> measures the curvature of the relationship.
 
-The parabolic model of $\mu_i$ above is still called a “linear model” of the mean. What “linear” usually means in this context is that $\mu_i$ is a linear function of any single parameter. 
+The parabolic model of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" /> above is still called a “linear model” of the mean. What “linear” usually means in this context is that <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" /> is a linear function of any single parameter. 
 
 <br>
 
@@ -3981,18 +3975,9 @@ plot(height ~ weight.s, d, col = col.alpha("black", 0.5))
 
 <span style="color:brown"><span style="text-decoration:underline">**Parabolic regression**</span></span>
 
-To fit the parabolic model, just modify the definition of $\mu_i$. Here’s the model (with very weak priors):
+To fit the parabolic model, just modify the definition of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" />. Here’s the model (with very weak priors):
 
-$$
-\begin{align*}
-\text{h}_i & \sim \text{Normal}(\mu_i, \sigma) \ &&& \text{height} & \sim \text{dnorm(mu, sigma)} \\
-\mu_i & = \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i^2 \ &&& \text{mu} & \leftarrow \text{a + b1*weight.s + b2*weight.s^2} \\
-\alpha &\sim \text{Normal}(178, 100) \ &&& a &\sim \text{dnorm}(178, 100)\\
-\beta_1 &\sim \text{Normal}(0, 10) \ &&& b1 &\sim \text{dnorm}(0, 10)\\
-\beta_2 &\sim \text{Normal}(0, 10) \ &&& b2 &\sim \text{dnorm}(0,10)\\    
-\sigma &\sim \text{Uniform}(0, 50) \ &&& \text{sigma} &\sim \text{dunif}(0, 50)
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i&\sim&space;Normal(\mu_i,\sigma)&&&height&\sim&space;dnorm(mu,sigma)\\\mu_i&=\alpha&plus;\beta_1x_i&plus;\beta_2x_i^2&&&mu&\leftarrow&space;a&plus;b1\times&space;weight.s&plus;b2\times&space;weight.s^2\\\alpha&\sim&space;Normal(178,100)&&&a&\sim&space;dnorm(178,100)\\\beta_1&\sim&space;Normal(0,10)&&&b1&\sim&space;dnorm(0,10)\\\beta_2&\sim&space;Normal(0,10)&&&b2&\sim&space;dnorm(0,10)\\\sigma&\sim&space;Uniform(0,50)&&&sigma&\sim&space;dunif(0,50)\\\end{align*}" title="\begin{align*}h_i&\sim Normal(\mu_i,\sigma)&&&height&\sim dnorm(mu,sigma)\\\mu_i&=\alpha+\beta_1x_i+\beta_2x_i^2&&&mu&\leftarrow a+b1\times weight.s+b2\times weight.s^2\\\alpha&\sim Normal(178,100)&&&a&\sim dnorm(178,100)\\\beta_1&\sim Normal(0,10)&&&b1&\sim dnorm(0,10)\\\beta_2&\sim Normal(0,10)&&&b2&\sim dnorm(0,10)\\\sigma&\sim Uniform(0,50)&&&sigma&\sim dunif(0,50)\\\end{align*}}" />
 
 <br>
 
@@ -4069,8 +4054,7 @@ shade( height.PI , weight.seq )
 
 The model is (hiding the priors, but they are the same as before):
 
-$$\text{h}_i \sim \text{Normal}(\mu_i, \sigma)$$
-$$\mu_i = \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i^2 + \beta_3 \text{x}_i^3$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3\\\end{align*}" title="" />
 
 <br>
 
@@ -4217,7 +4201,7 @@ axis(side = 1 , at = at , labels = round(labels,1)) # 1=below, 2=left, 3=above, 
 
 <br>
 
-4E1. $\text{y}_i \sim \text{Normal}(\mu, \sigma)$
+4E1. <img src="https://latex.codecogs.com/svg.image?\boldsymbol{y_i \sim Normal(\mu, \sigma)}" title="" />
 
 <br>
 
@@ -4225,11 +4209,11 @@ axis(side = 1 , at = at , labels = round(labels,1)) # 1=below, 2=left, 3=above, 
 
 <br>
 
-4E3. $Pr(\mu, \sigma|y) = \frac{Normal(y|\mu,\sigma) Normal(\mu|0,10) Uniform(\sigma|0,10) }{\int \int Normal(y|\mu,\sigma) Normal(\mu|0,10) Uniform(\sigma|0,10)d\mu d\sigma}$
+4E3. <img src="https://latex.codecogs.com/svg.image?\boldsymbol{Pr(\mu, \sigma|y) = \frac{Normal(y|\mu,\sigma) Normal(\mu|0,10) Uniform(\sigma|0,10) }{\int \int Normal(y|\mu,\sigma) Normal(\mu|0,10) Uniform(\sigma|0,10)d\mu d\sigma}}" title="" />
 
 <br>
 
-4E4. $\mu_i = \alpha + \beta \text{x}_i$
+4E4. ![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta x_i})
 
 <br>
 
@@ -4282,46 +4266,26 @@ precis(m.4m2)
 <br>
 
 4M3. 
-$$\text{y}_i \sim \text{Normal}(\mu, \sigma)$$
-$$\mu = \alpha + \beta \text{x}_i $$
-$$\alpha \sim \text{Normal(0, 50)}$$
-$$\beta \sim \text{Normal(0, 10)}$$
-$$\sigma \sim \text{Uniform(0, 50)}$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim Normal(\mu, \sigma)\\\mu &= \alpha + \beta x_i\\\alpha &\sim Normal(0, 50)\\\beta &\sim Normal(0, 10)\\\sigma &\sim Uniform(0, 50)\\\end{align*}" title="" />
+
 
 <br>
 
 4M4. We don't know the age and gender of students. So, we will use uninformative priors, inclusive school age children to adult. 200 is chosen considering the adult height (may not be necessary?) and mean $\beta$ is zero considering height will not increase if the students are adult, but $\sigma$ is 40 to leave room for potential increase in height. 
 
-$$\text{h}_i \sim \text{Normal}(\mu, \sigma)$$
-$$\mu = \alpha + \beta \text{y}_i$$
-$$\alpha \sim \text{Normal}(0, 200)$$
-$$\beta \sim \text{Normal}(0, 40)$$
-$$\sigma \sim \text{Uniform}(0, 50)$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i &\sim Normal(\mu, \sigma)\\\mu &= \alpha + \beta y_i\\\alpha &\sim Normal(0, 200)\\\beta &\sim Normal(0, 40)\\\sigma &\sim Uniform(0, 50)\\\end{align*}" title="" />
 
 <br>
 
 4M5. Since average age is 120 cm, we will assume the students are around 7 years old, and estimate annual growth at 6-7 cm per year based on literature. 
 
-$$\text{h}_i \sim \text{Normal}(\mu, \sigma)$$
-$$\mu = \alpha + \beta \text{y}_i$$
-
-$$\alpha \sim \text{Normal}(120, 20)$$
-$$\beta \sim \text{Normal}(6, 10)$$
-
-$$\sigma \sim \text{Uniform}(0, 30)$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i &\sim Normal(\mu, \sigma)\\\mu &= \alpha + \beta y_i\\\alpha &\sim Normal(120, 20)\\\beta &\sim Normal(6, 10)\\\sigma &\sim Uniform(0, 30)\\\end{align*}" title="" />
 
 <br>
 
 4M6. If the variance  among heights for students of the same age is never more than 64cm:
 
-$$\text{h}_i \sim \text{Normal}(\mu, \sigma)$$
-
-$$\mu = \alpha + \beta \text{y}_i$$
-
-$$\alpha \sim \text{Normal}(120, 20)$$
-
-$$\beta \sim \text{Normal}(6, 10)$$
-$$\sigma \sim \text{Uniform}(0, 64)$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i &\sim Normal(\mu, \sigma)\\\mu &= \alpha + \beta y_i\\\alpha &\sim Normal(120, 20)\\\beta &\sim Normal(6, 10)\\\sigma &\sim Uniform(0, 64)\\\end{align*}" title="" />
 
 <br>
 
@@ -4804,15 +4768,7 @@ Multivariate regression uses more than one predictor variable to model an outcom
 Linear regression model for correlation between age at marriage and divorce rate:
 
 
-$$
-\begin{align*}
-\text{D}_i &\sim \text{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_A \text{A}_i \\
-\alpha &\sim \text{Normal}(10, 10) \\
-\beta_A &\sim \text{Normal}(0, 1) \\
-\sigma &\sim \text{Uniform}(0, 10)
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}D_i &\sim Normal(\mu_i, \sigma) \\\mu_i &= \alpha + \beta_A A_i \\\alpha &\sim Normal(10, 10) \\\beta_A &\sim Normal(0, 1) \\\sigma &\sim Uniform(0, 10)\\\end{align*}" title="" />
 
 
 ```
@@ -4933,7 +4889,7 @@ The parameter estimates corresponding to each predictor are the (often opaque) a
 
 ### Multivariate notation
 
-Multivariate regression formulas look a lot like the polynomial models- they add more parameters and variables to the definition of $\mu_i$. The strategy is straightforward:
+Multivariate regression formulas look a lot like the polynomial models- they add more parameters and variables to the definition of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" />. The strategy is straightforward:
 
 (1) Nominate the predictor variables you want in the linear model of the mean.
 
@@ -4943,16 +4899,7 @@ Multivariate regression formulas look a lot like the polynomial models- they add
 
 Example model that predicts divorce rate, using both marriage rate and age at marriage:
 
-$$
-\begin{align*}
-\text{D}_i &\sim \text{Normal}(\mu, \sigma)\ &&&  \text{[likelihood]}\\
-\mu_i &= \alpha + \beta_R R_i + \beta_A A_i\ &&&  \text{[linear model]}\\
-\alpha &\sim \text{Normal}(10, 10)\ &&&           \text{[prior for }\alpha]\\
-\beta_R &\sim \text{Normal}(0, 1)\ &&&            \text{[prior for }\beta_R]\\
-\beta_A &\sim \text{Normal}(0, 1)\ &&&            \text{[prior for }\beta_A]\\
-\sigma &\sim \text{Uniform}(0, 10)\ &&&           \text{[prior for }\sigma]
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}D_i &\sim Normal(\mu, \sigma)\ &&&  [likelihood]\\\mu_i &= \alpha + \beta_R R_i + \beta_A A_i\ &&&  [linear~model]\\\alpha &\sim Normal(10, 10)\ &&& [prior~for~\alpha]\\\beta_R &\sim Normal(0, 1)\ &&&  [prior~for~\beta_R]\\\beta_A &\sim Normal(0, 1)\ &&&   [prior~for~\beta_A]\\\sigma &\sim Uniform(0, 10)\ &&&  [prior~for~\sigma]\\\end{align*}" title="" />
 
 ```
 R = marriage rate 
@@ -4966,11 +4913,11 @@ A = age at marriage
 
 Linear model with n number of predictor variables:
 
-$$\mu_i = \alpha + \beta_1 \text{x}_{1i} + \beta_2 \text{x}_{2i} + ... + \beta_n \text{x}_{ni}$$
+![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_n x_{ni}})
 
 In compact form:
 
-$$\mu_i = \alpha + \sum_{j = 1}^{n} \beta_j \text{x}_{ji}$$
+![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \sum_{j = 1}^{n} \beta_j x_{ji}})
 
 
 ```
@@ -4984,7 +4931,7 @@ n = the number of predictor variables
 
 Both of these forms may be read as *the mean is a modeled as the sum of an intercept and an additive combination of the products of parameters and predictors.* Even more compactly, using matrix notation:
 
-$$m = Xb$$
+![](https://latex.codecogs.com/svg.latex?\boldsymbol{m = Xb})
 
 ```
 
@@ -5007,16 +4954,8 @@ the predicted means. In R notation, this operation is X %*% b.
 
 To fit this model to the divorce data, we just expand the linear model.
 
-$$
-\begin{align*}
-\text{D}_i &\sim \text{Normal}(\mu, \sigma)\ &&&  \text{Divorce} \sim \text{dnorm(mu, sigma)}\\
-\mu_i &= \alpha + \beta_R R_i + \beta_A A_i\ &&&  \text{mu} \leftarrow \text{a + bR}^* \text{Marriage.s + bA}^* \text{MedianAgeMarriage.s}\\
-\alpha &\sim \text{Normal}(10, 10)\ &&&           \text{a} \sim \text{dnorm}(10, 10)\\
-\beta_R &\sim \text{Normal}(0, 1)\ &&&            \text{bR} \sim \text{dnorm}(0, 1)\\
-\beta_A &\sim \text{Normal}(0, 1)\ &&&            \text{bA} \sim \text{dnorm}(0, 1)\\
-\sigma &\sim \text{Uniform}(0, 10)\ &&&           \text{sigma} \sim \text{dunif}(0, 10)
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}D_i &\sim Normal(\mu, \sigma)\ &&&  Divorce &\sim dnorm(mu, sigma)\\\mu_i &= \alpha + \beta_R R_i + \beta_A A_i\ &&&  mu &\leftarrow a + bR^*Marriage.s + bA^*MedianAgeMarriage.s\\\alpha &\sim Normal(10, 10)\ &&&  a &\sim dnorm(10, 10)\\ \beta_R &\sim Normal(0, 1)\ &&& bR &\sim dnorm(0, 1)\\\beta_A &\sim Normal(0, 1)\ &&& bA &\sim dnorm(0, 1)\\\sigma &\sim Uniform(0, 10)\ &&& sigma &\sim dunif(0, 10)\\\end{align*}" title="" />
+
 
 ```{r 5.4}
 
@@ -5061,7 +5000,7 @@ Three types of interpretive plots:
 
 #### Predictor residual plots
 
-A predictor variable residual is the average prediction error when we use all of the other predictor variables to model a predictor of interest. The benefit of computing these things is that, once plotted against the outcome, we have a bivariate regression of sorts that has already “controlled” for all of the other predictor variables. It just leaves in the variation that is not expected by the model of the mean, $\mu$, as a function of the other predictors.
+A predictor variable residual is the average prediction error when we use all of the other predictor variables to model a predictor of interest. The benefit of computing these things is that, once plotted against the outcome, we have a bivariate regression of sorts that has already “controlled” for all of the other predictor variables. It just leaves in the variation that is not expected by the model of the mean, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" />, as a function of the other predictors.
 
 In our multivariate model of divorce rate, we have two predictors: 
 
@@ -5071,15 +5010,7 @@ In our multivariate model of divorce rate, we have two predictors:
 
 To compute predictor residuals for either, we just use the other predictor to model it. The model for marraige rate:
 
-$$
-\begin{align*}
-\text{R}_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta \text{A}_i\\
-\alpha &\sim \text{Normal}(0, 10)\\
-\beta &\sim \text{Normal}(0, 1)\\
-\sigma &\sim \text{Uniform}(0, 10)
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}R_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta A_i\\\alpha &\sim Normal(0, 10)\\\beta &\sim Normal(0, 1)\\\sigma &\sim Uniform(0, 10)\\\end{align*}" title="" />
 
 
 ```{r 5.4a}
@@ -5712,16 +5643,7 @@ lines( np.seq , mu.PI[2,] , lty=2 )
 
 Now let’s see what happens when we add both predictor variables at the same time to the regression. This is the multivariate model, in math form:
 
-$$
-\begin{align*}
-\text{k}_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_n \text{n}_i + \beta_m \text{log}(\text{m}_i)\\
-\alpha &\sim \text{Normal}(0, 100)\\
-\beta_n &\sim \text{Normal}(0, 1)\\
-\beta_m &\sim \text{Normal}(0, 1)\\
-\sigma &\sim \text{Uniform}(0, 10)
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}k_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_n n_i + \beta_m log(m_i)\\\alpha &\sim Normal(0, 100)\\\beta_n &\sim Normal(0, 1)\\\beta_m &\sim Normal(0, 1)\\\sigma &\sim Uniform(0, 10)\\\end{align*}" title="" />
 
 \n
 
@@ -6045,12 +5967,7 @@ plot( bl ~ br , post , col=col.alpha(rangi2,0.1) , pch=16 )
 
 One way to think of this phenomenon is that you have approximated this likelihood:
 
-$$
-\begin{align*}
-\text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_1 x_i + \beta_2 x_i\\\end{align*}" title="" />
 
 
 ```
@@ -6062,15 +5979,10 @@ x   = single predictor (leg lengths)
 
 Here x is used twice, which is a perfect example of the problem caused by using the almost-identical leg lengths. From the computer’s perspective, this likelihood is really:
 
-$$
-\begin{align*}
-\text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + (\beta_1 + \beta_2) \text{x}_i
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + (\beta_1 + \beta_2) x_i\\\end{align*}" title="" />
 
 
-This means the posterior distribution ends up reporting the practically infinite combinations of $\beta_1$ and $\beta_2$ that make their sum close to the actual association of x with y.
+This means the posterior distribution ends up reporting the practically infinite combinations of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_1}" title="" /> and <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_2}" title="" /> that make their sum close to the actual association of x with y.
 
 ```{r 5.33}
 
@@ -6411,15 +6323,7 @@ str(d)
 
 The effect of a dummy variable is to turn a parameter on for those cases in the category. Simultaneously, the variable turns the same parameter off for those cases in another category. The model to fit is:
 
-$$
-\begin{align*}
-\text{h}_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_m \text{m}_i\\
-\alpha &\sim \text{Normal}(178, 100)\\
-\beta_m &\sim \text{Normal}(0, 10)\\
-\sigma &\sim \text{Uniform}(0, 50)
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_m m_i\\\alpha &\sim Normal(178, 100)\\\beta_m &\sim Normal(0, 10)\\\sigma &\sim Uniform(0, 50)\\\end{align*}" title="" />
 
 
 ```
@@ -6429,7 +6333,7 @@ m   = dummy variable indicating a male individual
 
 ```
 
-The parameter $\beta_m$ influences prediction only for those cases where $\text{m}_i$ = 1. When $\text{m}_i$ = 0, it has no effect on prediction, because it is multiplied by zero inside the linear model, $\alpha + \beta_m \text{m}_i$, canceling it out, whatever its value.
+The parameter <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_m}" title="" /> influences prediction only for those cases where <img src="https://latex.codecogs.com/svg.image?\boldsymbol{m_i}" title="" /> = 1. When <img src="https://latex.codecogs.com/svg.image?\boldsymbol{m_i}" title="" /> = 0, it has no effect on prediction, because it is multiplied by zero inside the linear model, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha + \beta_m m_i}" title="" />, canceling it out, whatever its value.
 
 ```{r 5.45}
 
@@ -6469,12 +6373,7 @@ PI(mu.male)
 
 Instead of using a parameter for the difference between males and females, we can make parameters specific to males and females:
 
-$$
-\begin{align*}
-\text{h}_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha_f(1 - \text{m}_i) + \alpha_m \text{m}_i\\
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha_f(1 - m_i) + \alpha_m m_i\\\end{align*}" title="" />
 
 
 ```
@@ -6484,7 +6383,7 @@ alpha_m   = average male height
 
 ```
 
-Plug in $\text{m}_i$ = 0 and $\text{m}_i$ = 1 to verify that either $\alpha_f$ or $\alpha_m$, but never both, is turned on for any individual case i. 
+Plug in <img src="https://latex.codecogs.com/svg.image?\boldsymbol{m_i}" title="" /> = 0 and <img src="https://latex.codecogs.com/svg.image?\boldsymbol{m_i}" title="" /> = 1 to verify that either <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha_f}" title="" /> or <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha_m}" title="" />, but never both, is turned on for any individual case i. 
 
 ```{r 5.47}
 
@@ -6503,9 +6402,9 @@ precis(m5.15b)
 
 ```
 
-The mathematical model can be rearranged where the old $\beta_m$ as the difference between the average male and female, $\alpha_m - \alpha_f$:
+The mathematical model can be rearranged where the old $\beta_m$ as the difference between the average male and female, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha_m - \alpha_f}" title="" />:
 
-$$\mu_i = \alpha_f + (\alpha_m - \alpha_f) \text{m}_i $$
+![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha_f + (\alpha_m - \alpha_f) m_i})
 
 <br>
 
@@ -6537,17 +6436,7 @@ The category `Ape` will be the default "intercept" category. In fact, if you try
 
 The model we aim to fit to the data is kcal.per.g regressed on the dummy variables for clade:
 
-$$
-\begin{align*}
-\text{k}_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_{NWM} \text{NWM}_i + \beta_{OWM} \text{OWM}_i + \beta_S \text{S}_i\\
-\alpha &\sim \text{Normal}(0.6, 10)\\
-\beta_{NWM} &\sim \text{Normal}(0, 1)\\
-\beta_{OWM} &\sim \text{Normal}(0, 1)\\
-\beta_S &\sim \text{Normal}(0, 1)\\
-\sigma &\sim \text{Uniform}(0, 10)
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}k_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_{NWM} NWM_i + \beta_{OWM} OWM_i + \beta_S S_i\\\alpha &\sim Normal(0.6, 10)\\\beta_{NWM} &\sim Normal(0, 1)\\\beta_{OWM} &\sim Normal(0, 1)\\\beta_S &\sim Normal(0, 1)\\\sigma &\sim Uniform(0, 10)\\\end{align*}" title="" />
 
 
 A linear model like this really defines four different linear models, each corresponding to a different category.
@@ -6602,7 +6491,7 @@ quantile( diff.NWM.OWM , probs=c(0.025,0.5,0.975) )
 
 Just add the predictor variables to the equation for the mean, as you normally would. For example, to add the influence of perc.fat to the model with dummies for the clades:
 
-$$\mu_i = \alpha + \beta_{NWM} \text{NWM}_i + \beta_{OWM} \text{OWM}_i + \beta_S \text{S}_i + \beta_F \text{F}_i$$
+![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta_{NWM} NWM_i + \beta_{OWM} OWM_i + \beta_S S_i + \beta_F F_i})
 
 ```
 Fi    = the percent fat for the i-th case in the data 
@@ -6650,27 +6539,18 @@ Gaussian regression models or ordinary least squares regression (OLS) is a way o
 
 ### Design formulas
 
-Design formulas (input format for models) take the expression for $\mu_i$ in the detailed mathematical form of a model and strip out the parameters, leaving only a series of predictor names, separated by + signs. These formulas are sufficient to describe the model’s design, provided all priors are flat.
+Design formulas (input format for models) take the expression for <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" /> in the detailed mathematical form of a model and strip out the parameters, leaving only a series of predictor names, separated by + signs. These formulas are sufficient to describe the model’s design, provided all priors are flat.
 
 The linear regression model:
 
-$$
-\begin{align*}
-\text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta \text{x}_i
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta x_i\\\end{align*}" title="" />
 
 
 <br>
 
 The corresponding design formula with the leading 1 on the right-hand side indicates the intercept, $\alpha$:
 
-$$
-\begin{align*}
-\text{y} \sim 1 + \text{x}
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y \sim 1 + x\\\end{align*}" title="" />
 
 
 <br> 
