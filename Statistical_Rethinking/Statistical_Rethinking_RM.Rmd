@@ -20,9 +20,8 @@ format:
     theme: sandstone
     highlight: tango
     smooth-scroll: true
-    markdown: kramdown
-kramdown:
-    math_engine: katex
+    mathjax: local
+    self_contained: false
 ---
 
 
@@ -453,7 +452,7 @@ Now since both right-hand sides are equal to the same thing, we can set them equ
 
 <span style="color:brown">***Bayes' theorem***</span>: the probability of any particular value of p, considering the data, is equal to the product of the likelihood and prior, divided by this thing Pr(w), which I’ll call the *average likelihood*. In word form:
 
-\\\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}\\
+$$\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}$$
 
 <span style="color:brown">***Average Likelihood:***</span>
 
@@ -2623,7 +2622,7 @@ The justifications for using the Gaussian distribution- as a skeleton for hypoth
 
 - The probability density of some value y, given a Gaussian (normal) distribution with mean $\mu$ and standard deviation $\sigma$, is:
 
-\\p(y|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(- \frac{(y-\mu)^2}{2\sigma^2}\right)\\
+$$p(y|\mu, \sigma) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(- \frac{(y-\mu)^2}{2\sigma^2}\right)$$
 
 - (y − $\mu$)^2^ gives the normal distribution its fundamental shape, a quadratic shape. Once you exponentiate the quadratic shape, you get the classic bell curve. The rest of it just scales and standardizes the distribution so that it sums to one, as all probability distributions must. But an expression as simple as exp(−y^2^) yields the Gaussian prototype.
 
@@ -2647,7 +2646,7 @@ dnorm(0, 0, 0.1)
 
 - The Gaussian distribution is routinely seen without $\sigma$ but with another parameter, $\tau$ . The parameter $\tau$ in this context is usually called precision and defined as $\tau$ = 1/$\sigma$^2^. This change of parameters gives us the equivalent formula (just substitute $\sigma$ = 1/ $\sqrt\tau$):
 
-\\p(y|\mu, \tau) = \sqrt\frac{\tau}{{2\pi}} \exp\left(- \frac{1}{2}\tau(y - \mu)^2 \right)\\
+$$p(y|\mu, \tau) = \sqrt\frac{\tau}{{2\pi}} \exp\left(- \frac{1}{2}\tau(y - \mu)^2 \right)$$
 
 <br>
 
@@ -2666,12 +2665,12 @@ dnorm(0, 0, 0.1)
 - After all these decisions are made, summarize the model: 
 
 
-\\
+$$
 \text{outcome}_i \sim \text{Normal}(\mu_i, \sigma) \\
 \mu_i = \beta \times \text{predictor}_i \\
 \beta \sim \text{Normal}(0, 10) \\
 \sigma \sim \text{HalfCauchy}(0, 1)
-\\
+$$
 
 <div style="border: 1px solid #999; padding: 10px; background-color: #f9f9f9; margin: 10px 0;">
 
@@ -2692,8 +2691,8 @@ $\beta\times\text{predictor}$ = the product of a coefficient ($\beta$) and a pre
 
 The model:
 
-\\\text{w} \sim \text{Binomial(n, p)}\\
-\\\text{p} \sim \text{Uniform(0, 1)}\\
+$$\text{w} \sim \text{Binomial(n, p)}$$
+$$\text{p} \sim \text{Uniform(0, 1)}$$
 
 ```
 w   = observed count of water samples
@@ -2719,11 +2718,11 @@ plausible under any model.
 
 To relate the mathematical format above to Bayes’ theorem, you could use the model definition to define the posterior distribution:
 
-\\\text{Pr(p|w,n)} = \frac{\text{Binomial(w|n,p) Uniform(p|0,1)}}{\int \text{Binomial(w|n,p) Uniform(p|0,1)dp}}\\
+$$\text{Pr(p|w,n)} = \frac{\text{Binomial(w|n,p) Uniform(p|0,1)}}{\int \text{Binomial(w|n,p) Uniform(p|0,1)dp}}$$
 
 <br>
 
-\\\text{posterior probability of any particular value of p} = \frac{likelihood \times prior}{\text{average likelihood}}\\
+$$\text{posterior probability of any particular value of p} = \frac{likelihood \times prior}{\text{average likelihood}}$$
 
 In R code form:
 ```{r c45}
@@ -2794,7 +2793,7 @@ Whatever the reason, adult heights are nearly always approximately normal. So it
 
 There are an infinite number of Gaussain distributions , with an infinite number of different means and standard deviations. We’re ready to write down the general model and compute the plausibility of each combination of $\mu$ and $\sigma$. To define the heights as normally distributed with a mean $\mu$ and standard deviation $\sigma$, we write:
 
-\\\text{h}_i \sim \text{Normal}(\mu, \sigma)\\                                  
+$$\text{h}_i \sim \text{Normal}(\mu, \sigma)$$                                  
 
 ```
 h             = the list of heights
@@ -2806,7 +2805,7 @@ subscript i   = index- each individual element of this list (row numbers)
 
 Then, we add priors assuming Pr($\mu$, $\sigma$) = Pr($\mu$) Pr($\sigma$):
 
-\\
+$$
 \begin{align*}
 \text{h}_i &\sim \text{Normal}(\mu, \sigma) \ &&& [\text{Likelihood}]\\
 
@@ -2814,8 +2813,7 @@ Then, we add priors assuming Pr($\mu$, $\sigma$) = Pr($\mu$) Pr($\sigma$):
 
 \sigma &\sim \text{Uniform}(0, 50) \ &&& [\sigma \text{ prior}]
 \end{align*}
-
-\\
+$$
 
 <br>
 
@@ -3029,17 +3027,13 @@ d2 <- d[ d$age >= 18 , ]
 
 - Define the model, using R's formula syntax:
 
-\\
-
+$$
 \begin{align*}
 \text{h}_i & \sim \text{Normal}(\mu, \sigma) \ &&& \text{[height} & \sim \text{dnorm(mu, sigma)}\text{]}\\
-
 \mu &\sim \text{Normal}(178, 20) \ &&& [\text{mu} &\sim \text{dnorm}(178, 20)]\\
-
 \sigma &\sim \text{Uniform}(0, 50) \ &&& [\text{sigma} &\sim \text{dunif}(0, 50)]
 \end{align*}
-
-\\
+$$
 
 <br>
 
@@ -3290,22 +3284,15 @@ All we have to do is incorporate our new model for the mean into the model speci
 
 Repeat model definition, with corresponding R code:
 
-\\
-
+$$
 \begin{align*}
 \text{h}_i & \sim \text{Normal}(\mu_i, \sigma) \ &&& \text{height} & \sim \text{dnorm(mu, sigma)} \\
-
 \mu_i & = \alpha + \beta x_i \ &&& \text{mu} & \leftarrow \text{a + b*weight} \\
-
 \alpha &\sim \text{Normal}(178, 100) \ &&& a &\sim \text{dnorm}(178, 100)\\
-
 \beta &\sim \text{Normal}(0, 10) \ &&& b &\sim \text{dnorm}(0, 10)\\
-
 \sigma &\sim \text{Uniform}(0, 50) \ &&& \text{sigma} &\sim \text{dunif}(0, 50)
-
 \end{align*}
-
-\\
+$$
 
 <br>
 
@@ -3967,7 +3954,7 @@ Polynomial regression is one of the ways to model a curved relationship between 
 
 The most common polynomial regression, a parabolic model of the mean:
 
-\\\mu_i = \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i^2\\
+$$\mu_i = \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i^2$$
 <br>
 
 The above is a parabolic (second order) polynomial. The $\alpha + \beta_1 \text{x}_i$ part is the same linear function of x in a linear regression, just with a little “1” subscript added to the parameter name, so we can tell it apart from the new parameter. The additional term uses the square of $x_i$ to construct a parabola, rather than a perfectly straight line. The new parameter $\beta_2$ measures the curvature of the relationship.
@@ -3998,25 +3985,16 @@ plot(height ~ weight.s, d, col = col.alpha("black", 0.5))
 
 To fit the parabolic model, just modify the definition of $\mu_i$. Here’s the model (with very weak priors):
 
-\\
-
+$$
 \begin{align*}
-
 \text{h}_i & \sim \text{Normal}(\mu_i, \sigma) \ &&& \text{height} & \sim \text{dnorm(mu, sigma)} \\
-
 \mu_i & = \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i^2 \ &&& \text{mu} & \leftarrow \text{a + b1*weight.s + b2*weight.s^2} \\
-
 \alpha &\sim \text{Normal}(178, 100) \ &&& a &\sim \text{dnorm}(178, 100)\\
-
 \beta_1 &\sim \text{Normal}(0, 10) \ &&& b1 &\sim \text{dnorm}(0, 10)\\
-
-\beta_2 &\sim \text{Normal}(0, 10) \ &&& b2 &\sim \text{dnorm}(0,10)\\         
-
+\beta_2 &\sim \text{Normal}(0, 10) \ &&& b2 &\sim \text{dnorm}(0,10)\\    
 \sigma &\sim \text{Uniform}(0, 50) \ &&& \text{sigma} &\sim \text{dunif}(0, 50)
-
 \end{align*}
-
-\\
+$$
 
 <br>
 
@@ -4093,8 +4071,8 @@ shade( height.PI , weight.seq )
 
 The model is (hiding the priors, but they are the same as before):
 
-\\\text{h}_i \sim \text{Normal}(\mu_i, \sigma)\\
-\\\mu_i = \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i^2 + \beta_3 \text{x}_i^3\\
+$$\text{h}_i \sim \text{Normal}(\mu_i, \sigma)$$
+$$\mu_i = \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i^2 + \beta_3 \text{x}_i^3$$
 
 <br>
 
@@ -4306,46 +4284,46 @@ precis(m.4m2)
 <br>
 
 4M3. 
-\\\text{y}_i \sim \text{Normal}(\mu, \sigma)\\
-\\\mu = \alpha + \beta \text{x}_i \\
-\\\alpha \sim \text{Normal(0, 50)}\\
-\\\beta \sim \text{Normal(0, 10)}\\
-\\\sigma \sim \text{Uniform(0, 50)}\\
+$$\text{y}_i \sim \text{Normal}(\mu, \sigma)$$
+$$\mu = \alpha + \beta \text{x}_i $$
+$$\alpha \sim \text{Normal(0, 50)}$$
+$$\beta \sim \text{Normal(0, 10)}$$
+$$\sigma \sim \text{Uniform(0, 50)}$$
 
 <br>
 
 4M4. We don't know the age and gender of students. So, we will use uninformative priors, inclusive school age children to adult. 200 is chosen considering the adult height (may not be necessary?) and mean $\beta$ is zero considering height will not increase if the students are adult, but $\sigma$ is 40 to leave room for potential increase in height. 
 
-\\\text{h}_i \sim \text{Normal}(\mu, \sigma)\\
-\\\mu = \alpha + \beta \text{y}_i\\
-\\\alpha \sim \text{Normal}(0, 200)\\
-\\\beta \sim \text{Normal}(0, 40)\\
-\\\sigma \sim \text{Uniform}(0, 50)\\
+$$\text{h}_i \sim \text{Normal}(\mu, \sigma)$$
+$$\mu = \alpha + \beta \text{y}_i$$
+$$\alpha \sim \text{Normal}(0, 200)$$
+$$\beta \sim \text{Normal}(0, 40)$$
+$$\sigma \sim \text{Uniform}(0, 50)$$
 
 <br>
 
 4M5. Since average age is 120 cm, we will assume the students are around 7 years old, and estimate annual growth at 6-7 cm per year based on literature. 
 
-\\\text{h}_i \sim \text{Normal}(\mu, \sigma)\\
-\\\mu = \alpha + \beta \text{y}_i\\
+$$\text{h}_i \sim \text{Normal}(\mu, \sigma)$$
+$$\mu = \alpha + \beta \text{y}_i$$
 
-\\\alpha \sim \text{Normal}(120, 20)\\
-\\\beta \sim \text{Normal}(6, 10)\\
+$$\alpha \sim \text{Normal}(120, 20)$$
+$$\beta \sim \text{Normal}(6, 10)$$
 
-\\\sigma \sim \text{Uniform}(0, 30)\\
+$$\sigma \sim \text{Uniform}(0, 30)$$
 
 <br>
 
 4M6. If the variance  among heights for students of the same age is never more than 64cm:
 
-\\\text{h}_i \sim \text{Normal}(\mu, \sigma)\\
+$$\text{h}_i \sim \text{Normal}(\mu, \sigma)$$
 
-\\\mu = \alpha + \beta \text{y}_i\\
+$$\mu = \alpha + \beta \text{y}_i$$
 
-\\\alpha \sim \text{Normal}(120, 20)\\
+$$\alpha \sim \text{Normal}(120, 20)$$
 
-\\\beta \sim \text{Normal}(6, 10)\\
-\\\sigma \sim \text{Uniform}(0, 64)\\
+$$\beta \sim \text{Normal}(6, 10)$$
+$$\sigma \sim \text{Uniform}(0, 64)$$
 
 <br>
 
@@ -4827,7 +4805,7 @@ Multivariate regression uses more than one predictor variable to model an outcom
 
 Linear regression model for correlation between age at marriage and divorce rate:
 
-\\
+$$
 \begin{align*}
 \text{D}_i &\sim \text{Normal}(\mu_i, \sigma) \\
 \mu_i &= \alpha + \beta_A \text{A}_i \\
@@ -4835,8 +4813,8 @@ Linear regression model for correlation between age at marriage and divorce rate
 \beta_A &\sim \text{Normal}(0, 1) \\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
+$$
 
-\\
 
 ```
 Di = the divorce rate for State i
@@ -4966,8 +4944,7 @@ Multivariate regression formulas look a lot like the polynomial models- they add
 
 Example model that predicts divorce rate, using both marriage rate and age at marriage:
 
-\\
-
+$$
 \begin{align*}
 \text{D}_i &\sim \text{Normal}(\mu, \sigma)\ &&&  \text{[likelihood]}\\
 \mu_i &= \alpha + \beta_R R_i + \beta_A A_i\ &&&  \text{[linear model]}\\
@@ -4976,8 +4953,7 @@ Example model that predicts divorce rate, using both marriage rate and age at ma
 \beta_A &\sim \text{Normal}(0, 1)\ &&&            \text{[prior for }\beta_A]\\
 \sigma &\sim \text{Uniform}(0, 10)\ &&&           \text{[prior for }\sigma]
 \end{align*}
-
-\\
+$$
 
 ```
 R = marriage rate 
@@ -4991,11 +4967,11 @@ A = age at marriage
 
 Linear model with n number of predictor variables:
 
-\\\mu_i = \alpha + \beta_1 \text{x}_{1i} + \beta_2 \text{x}_{2i} + ... + \beta_n \text{x}_{ni}\\
+$$\mu_i = \alpha + \beta_1 \text{x}_{1i} + \beta_2 \text{x}_{2i} + ... + \beta_n \text{x}_{ni}$$
 
 In compact form:
 
-\\\mu_i = \alpha + \sum_{j = 1}^{n} \beta_j \text{x}_{ji}\\
+$$\mu_i = \alpha + \sum_{j = 1}^{n} \beta_j \text{x}_{ji}$$
 
 
 ```
@@ -5009,7 +4985,7 @@ n = the number of predictor variables
 
 Both of these forms may be read as *the mean is a modeled as the sum of an intercept and an additive combination of the products of parameters and predictors.* Even more compactly, using matrix notation:
 
-\\m = Xb\\
+$$m = Xb$$
 
 ```
 
@@ -5032,8 +5008,7 @@ the predicted means. In R notation, this operation is X %*% b.
 
 To fit this model to the divorce data, we just expand the linear model.
 
-\\
-
+$$
 \begin{align*}
 \text{D}_i &\sim \text{Normal}(\mu, \sigma)\ &&&  \text{Divorce} \sim \text{dnorm(mu, sigma)}\\
 \mu_i &= \alpha + \beta_R R_i + \beta_A A_i\ &&&  \text{mu} \leftarrow \text{a + bR}^* \text{Marriage.s + bA}^* \text{MedianAgeMarriage.s}\\
@@ -5042,8 +5017,7 @@ To fit this model to the divorce data, we just expand the linear model.
 \beta_A &\sim \text{Normal}(0, 1)\ &&&            \text{bA} \sim \text{dnorm}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)\ &&&           \text{sigma} \sim \text{dunif}(0, 10)
 \end{align*}
-
-\\
+$$
 
 ```{r 5.4}
 
@@ -5098,7 +5072,7 @@ In our multivariate model of divorce rate, we have two predictors:
 
 To compute predictor residuals for either, we just use the other predictor to model it. The model for marraige rate:
 
-\\
+$$
 \begin{align*}
 \text{R}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta \text{A}_i\\
@@ -5106,8 +5080,7 @@ To compute predictor residuals for either, we just use the other predictor to mo
 \beta &\sim \text{Normal}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-
-\\
+$$
 
 
 ```{r 5.4a}
@@ -5740,7 +5713,7 @@ lines( np.seq , mu.PI[2,] , lty=2 )
 
 Now let’s see what happens when we add both predictor variables at the same time to the regression. This is the multivariate model, in math form:
 
-\\
+$$
 \begin{align*}
 \text{k}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_n \text{n}_i + \beta_m \text{log}(\text{m}_i)\\
@@ -5749,8 +5722,7 @@ Now let’s see what happens when we add both predictor variables at the same ti
 \beta_m &\sim \text{Normal}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-
-\\
+$$
 
 \n
 
@@ -6074,12 +6046,12 @@ plot( bl ~ br , post , col=col.alpha(rangi2,0.1) , pch=16 )
 
 One way to think of this phenomenon is that you have approximated this likelihood:
 
-\\
+$$
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_1 \text{x}_i + \beta_2 \text{x}_i
 \end{align*}
-\\
+$$
 
 
 ```
@@ -6091,13 +6063,12 @@ x   = single predictor (leg lengths)
 
 Here x is used twice, which is a perfect example of the problem caused by using the almost-identical leg lengths. From the computer’s perspective, this likelihood is really:
 
-\\
+$$
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + (\beta_1 + \beta_2) \text{x}_i
 \end{align*}
-
-\\
+$$
 
 
 This means the posterior distribution ends up reporting the practically infinite combinations of $\beta_1$ and $\beta_2$ that make their sum close to the actual association of x with y.
@@ -6441,7 +6412,7 @@ str(d)
 
 The effect of a dummy variable is to turn a parameter on for those cases in the category. Simultaneously, the variable turns the same parameter off for those cases in another category. The model to fit is:
 
-\\
+$$
 \begin{align*}
 \text{h}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_m \text{m}_i\\
@@ -6449,8 +6420,7 @@ The effect of a dummy variable is to turn a parameter on for those cases in the 
 \beta_m &\sim \text{Normal}(0, 10)\\
 \sigma &\sim \text{Uniform}(0, 50)
 \end{align*}
-
-\\
+$$
 
 
 ```
@@ -6500,12 +6470,12 @@ PI(mu.male)
 
 Instead of using a parameter for the difference between males and females, we can make parameters specific to males and females:
 
-\\
+$$
 \begin{align*}
 \text{h}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha_f(1 - \text{m}_i) + \alpha_m \text{m}_i\\
 \end{align*}
-\\
+$$
 
 
 ```
@@ -6536,7 +6506,7 @@ precis(m5.15b)
 
 The mathematical model can be rearranged where the old $\beta_m$ as the difference between the average male and female, $\alpha_m - \alpha_f$:
 
-\\\mu_i = \alpha_f + (\alpha_m - \alpha_f) \text{m}_i \\
+$$\mu_i = \alpha_f + (\alpha_m - \alpha_f) \text{m}_i $$
 
 <br>
 
@@ -6568,7 +6538,7 @@ The category `Ape` will be the default "intercept" category. In fact, if you try
 
 The model we aim to fit to the data is kcal.per.g regressed on the dummy variables for clade:
 
-\\
+$$
 \begin{align*}
 \text{k}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_{NWM} \text{NWM}_i + \beta_{OWM} \text{OWM}_i + \beta_S \text{S}_i\\
@@ -6578,8 +6548,7 @@ The model we aim to fit to the data is kcal.per.g regressed on the dummy variabl
 \beta_S &\sim \text{Normal}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-
-\\
+$$
 
 
 A linear model like this really defines four different linear models, each corresponding to a different category.
@@ -6634,7 +6603,7 @@ quantile( diff.NWM.OWM , probs=c(0.025,0.5,0.975) )
 
 Just add the predictor variables to the equation for the mean, as you normally would. For example, to add the influence of perc.fat to the model with dummies for the clades:
 
-\\\mu_i = \alpha + \beta_{NWM} \text{NWM}_i + \beta_{OWM} \text{OWM}_i + \beta_S \text{S}_i + \beta_F \text{F}_i\\
+$$\mu_i = \alpha + \beta_{NWM} \text{NWM}_i + \beta_{OWM} \text{OWM}_i + \beta_S \text{S}_i + \beta_F \text{F}_i$$
 
 ```
 Fi    = the percent fat for the i-th case in the data 
@@ -6686,50 +6655,46 @@ Design formulas (input format for models) take the expression for $\mu_i$ in the
 
 The linear regression model:
 
-\\
+$$
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta \text{x}_i
 \end{align*}
-
-\\
+$$
 
 
 <br>
 
 The corresponding design formula with the leading 1 on the right-hand side indicates the intercept, $\alpha$:
 
-\\
+$$
 \begin{align*}
 \text{y} \sim 1 + \text{x}
 \end{align*}
-
-\\
+$$
 
 
 <br> 
 
 The linear regression model with three predictors:
 
-\\
+$$
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_x \text{x}_i + \beta_z \text{Z}_i + \beta_w \text{W}_i
 \end{align*}
-
-\\
+$$
 
 
 <br>
 
 The corresponding design formula:
 
-\\
+$$
 \begin{align*}
 \text{y} \sim 1 + \text{x} + \text{z} + \text{w}
 \end{align*}
-
-\\
+$$
 
 
 <br>
@@ -6864,7 +6829,7 @@ glimmer( dist ~ speed , data=cars )
 
 The defining question of multiple regression is: 
 
-\\\text{What is the value of knowing each predictor, once we already know the other predictors?}\\
+$$\text{What is the value of knowing each predictor, once we already know the other predictors?}$$
 
 Implicit in this question are: 
 
@@ -6889,13 +6854,12 @@ Implicit in this question are:
 
 > 5E2. Write down a multiple regression to evaluate the claim: Animal diversity is linearly related to latitude, but only after controlling for plant diversity. You just need to write down the model definition.
 
-\\
+$$
 \begin{align*}
 \text{AD_i} &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_L \text{L}_i + \beta_D \text{D}_i
 \end{align*}
-
-\\
+$$
 
 
 ```
@@ -6912,13 +6876,12 @@ D     = Plant diversity
 > 5E3. Write down a multiple regression to evaluate the claim: Neither amount of funding nor size of laboratory is by itself a good predictor of time to PhD degree; but together these variables are both positively associated with time to degree. Write down the model definition and indicate which side of zero each slope parameter should be on.
 
 
-\\
+$$
 \begin{align*}
 T_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_F \text{F}_i + \beta_S \text{S}_i
 \end{align*}
-
-\\
+$$
 
 
 ```
@@ -7880,7 +7843,7 @@ Accuracy depends upon the definition of the target, and there is no unique best 
 
 The information theory provides a solution to the problem of how to measure distance of a model’s accuracy from a target. The basic insight is to ask: *How much is our uncertainty reduced by learning an outcome?*
 
-\\\textit{Information:}~\text{The reduction in uncertainty derived from learning an outcome.}\\
+$$\textit{Information:}~\text{The reduction in uncertainty derived from learning an outcome.}$$
 
 To use this definition, what we need is a principled way to quantify the uncertainty inherent in a probability distribution. There are many possible ways to measure uncertainty. The most common way begins by naming some properties a measure of uncertainty should possess. These are the three intuitive desiderata:
 
@@ -7892,7 +7855,7 @@ To use this definition, what we need is a principled way to quantify the uncerta
 
 Only one function ***Information Theory*** satisfies these desiderata. If there are *n* different possible events and each event *i* has probability *p~i~*, and we call the list of probabilities *p*, then the unique measure of uncertainty we seek is:
 
-\\H(p) = ~- \text{E log}(p_i) = -\sum_{i=1}^{n} p_i ~\text{log}(p_i)\\
+$$H(p) = ~- \text{E log}(p_i) = -\sum_{i=1}^{n} p_i ~\text{log}(p_i)$$
 
 ```
 
@@ -7902,7 +7865,7 @@ The uncertainty contained in a probability distribution is the average log-proba
 
 To compute the information entropy for the weather, suppose the true probabilities of rain and shine are p~1~ = 0.3 and p~2~ = 0.7, respectively. Then:
 
-\\H(p) = ~-(p_1 ~\text{log}(p_1) ~+~ p_2 ~\text{log}(p_2)) \approx 0.61 \\
+$$H(p) = ~-(p_1 ~\text{log}(p_1) ~+~ p_2 ~\text{log}(p_2)) \approx 0.61$$
 
 ```{r 6.9}
 
@@ -7933,15 +7896,15 @@ The only trick in computing *H* is to deal with the inevitable question of what 
 
 How can we use information entropy to say how far a model is from the target? The key lies in divergence:
 
-\\\textit{Divergence:} ~\text{The additional uncertainty induced by using probabilities from one distribution to describe another distribution.}\\
+$$\textit{Divergence:} ~\text{The additional uncertainty induced by using probabilities from one distribution to describe another distribution.}$$
 
 Suppose for example that the true distribution of events is *p~1~* = 0.3, *p~2~* = 0.7. If we believe instead that these events happen with probabilities *q~1~* = 0.25, *q~2~* = 0.75, how much additional uncertainty have we introduced, as a consequence of using *q* = {*q~1~*, *q~2~*} to approximate *p* = {*p~1~*, *p~2~*}? The formal answer to this question is based upon *H*, and has a similarly simple formula:
 
-\\D_{KL} (p, q) = \sum_i~ p_i ~(~\text{log}(p_i) - \text{log}(q_i)) = \sum_i~p_i ~\text{log} \left(\frac{p_i}{q_i}\right)\\
+$$D_{KL} (p, q) = \sum_i~ p_i ~(~\text{log}(p_i) - \text{log}(q_i)) = \sum_i~p_i ~\text{log} \left(\frac{p_i}{q_i}\right)$$
 
 In plainer language, the divergence is *the average difference in log probability between the target (p) and model (q)*. This divergence is just the difference between two entropies: The entropy of the target distribution *p* and the cross entropy arising from using *q* to predict *p*. When *p* = *q*, we know the actual probabilities of the events. In that case:
 
-\\D_{KL} (p, q) = D_{KL} (p, p) = \sum_i ~p_i  ~(~\text{log} (p_i) - \text{log}(p_i)) = 0\\
+$$D_{KL} (p, q) = D_{KL} (p, p) = \sum_i ~p_i  ~(~\text{log} (p_i) - \text{log}(p_i)) = 0$$
 
 
 There is no additional uncertainty induced when we use a probability distribution to represent itself. But more importantly, as *q* grows more different from *p*, the divergence $D_{KL}$ also grows. Suppose the true target distribution is p = {0.3, 0.7}. Suppose the approximating distribution *q* can be anything from *q* = {0.01, 0.99} to *q* = {0.99, 0.01}. The first of these probabilities, *q~1~*, is displayed on the horizontal axis, and the vertical displays the divergence $D_{KL}$(*p*, *q*). Only exactly where *q* = *p*, at *q~1~* = 0.3, does the divergence achieve a value of zero. Everyplace else, it grows.
@@ -8013,14 +7976,13 @@ grid.arrange(f1, f2, ncol = 2)
     - Divergence depends upon direction: $H(p, q)$ does not in general equal $H(q, p)$
     - It's just the difference between $H(p)$, the actual entropy of events, and $H(p, q)$: 
     
-\\
+$$
 \begin{align*}
 \ D_{KL} (p, q) &= H(p, q) ~- ~ H(p)\\
 &= ~- \sum_i p_i ~\text{log}(q_i) ~-~ \left(- \sum_i p_i ~\text{log}(p_i) \right)\\
 &= ~- \sum_i p_i ~\left( \text{log}(q_i) ~-~ \text{log}(p_i) \right)
 \end{align*}
-
-\\
+$$
 
 
 ***If we use a distribution with high entropy to approximate an unknown true distribution of events, we will reduce the distance to the truth and therefore the error.***
@@ -8035,7 +7997,7 @@ The point of all the preceding material about information theory and divergence 
 
 (2) How to estimate the divergence. Having identified the right measure of distance, we now need a way to estimate it in real statistical modeling tasks&mdash; a measure of model fit known as ***deviance*** which is defined as:
 
-\\D(q) = ~-2 \sum_i \text{log}(q_i)\\
+$$D(q) = ~-2 \sum_i \text{log}(q_i)$$
 
 ```
 i   = indexes each observation (case)
@@ -8117,13 +8079,12 @@ The above is a thought experiment. It allows us to explore the distinction betwe
 
 To visualize the results of the thought experiment, what we’ll do now is conduct the above thought experiment 10,000 times, for each of five different linear regression models. The model that generates the data is:
 
-\\
+$$
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, 1)\\
 \mu_i &\sim (0.15)\text{x}_{1,i} ~-~ (0.4)\text{x}_{2,i}
 \end{align*}
-
-\\
+$$
 
 
 
@@ -8209,7 +8170,7 @@ The root of overfitting is a model’s tendency to get overexcited by the traini
 
 The regularizing prior, when *tuned properly*, reduces overfitting while still allowing the model to learn the regular features of a sample. If the prior is too skeptical, however, then regular features will be missed, resulting in underfitting. For example, consider this Gaussian model:
 
-\\
+$$
 \begin{align*}
 \text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta \text{x}_i\\
@@ -8217,8 +8178,7 @@ The regularizing prior, when *tuned properly*, reduces overfitting while still a
 \beta &\sim \text{Normal}(0, 1)\\
 \sigma &\sim \text{Uniform}(0, 10)
 \end{align*}
-
-\\
+$$
 
 
 Assume, as is good practice, that the predictor x is standardized so that its standard deviation is 1 and its mean is zero. Then the prior on $\alpha$ is a nearly flat prior that has no practical effect on inference. 
@@ -8436,7 +8396,7 @@ dev_tibble2  %>%
 
 This is the phenomenon behind ***information criteria***. The most known information criterion is the ***Akaike information criterion***, abbreviated **AIC**. AIC provides a surprisingly simple estimate of the average out-of-sample deviance:
 
-\\\text{AIC} = D_{train} ~+~ 2p \\
+$$\text{AIC} = D_{train} ~+~ 2p$$
 
 ```
 p   = the number of free parameters to be estimated in the model
@@ -8480,7 +8440,7 @@ DIC is calculated from the posterior distribution of the training deviance. So d
 
 DIC is calculated as:
 
-\\\text{DIC} = D^{\overline{}} + (D^{\overline{}} - D\hat{}) = D^{\overline{}} + p_D \\
+$$\text{DIC} = D^{\overline{}} + (D^{\overline{}} - D\hat{}) = D^{\overline{}} + p_D$$
 
 ```
 D ̄ = the average of D
@@ -8503,7 +8463,7 @@ The distinguishing feature of WAIC is that it is *pointwise*. This means that un
 
 We compute the likelihood of $y_i$ for each set of parameters sampled from the posterior distribution. Then we average the likelihoods for each observation i and finally sum over all observations. This produces the first part of WAIC, the log-pointwise-predictive-density, lppd:
 
-\\\text{lppd} = \sum_{i=1}^N ~\text{log Pr}(y_i)\\
+$$\text{lppd} = \sum_{i=1}^N ~\text{log Pr}(y_i)$$
 
 ```
 Pr(y_i)   =  the average likelihood of observation i in the training sample
@@ -8519,7 +8479,7 @@ If you multiplied it by −2, it’d be similar to the deviance, in fact.
 
 The second piece of WAIC is the effective number of parameters $p_{WAIC}$. 
 
-\\p_{WAIC} = \sum_{i=1}^N ~V(y_i)\\
+$$p_{WAIC} = \sum_{i=1}^N ~V(y_i)$$
 
 ```
 p_WAIC    = the effective number of parameters
@@ -8532,7 +8492,7 @@ V(y_i)    = the variance in log-likelihood for observation i in the training sam
 
 Now WAIC is defined as:
 
-\\\text{WAIC} = ~-2 (\text{lppd}~-~ p_{WAIC})\\
+$$\text{WAIC} = ~-2 (\text{lppd}~-~ p_{WAIC})$$
 
 Because WAIC requires splitting up the data into independent observations i = 1...N, it is sometimes hard to define. Consider for example a model in which each prediction depends upon a previous observation. This happens, for example, in a *time series*. In a time series, a previous observation becomes a predictor variable for the next observation. So it’s not easy to think of each observation as independent of, or exchangeable with, the others. In such a case, you can of course compute WAIC as if each observation were independent of the others, but it’s not clear what the resulting value means.
 
@@ -8835,7 +8795,7 @@ plot( milk.models , SE=TRUE , dSE=TRUE )
  
 Akaike weights help by rescaling. A total weight of 1 is partitioned among the considered models, making it easier to compare their relative predictive accuracy. The weight for a model $i$ in a set of $m$ models is given by:
 
-\\ w_i = \frac{exp \left(- \frac{1}{2}dWAIC_i \right)}{\sum_{j=1}^m exp\left(- \frac{1}{2}dWAIC_j \right)}\\
+$$ w_i = \frac{exp \left(- \frac{1}{2}dWAIC_i \right)}{\sum_{j=1}^m exp\left(- \frac{1}{2}dWAIC_j \right)}$$
 
 
 The Akaike weight formula might look rather odd, but really all it is doing is putting WAIC on a probability scale, so it just undoes the multiplication by −2 and then exponentiates to reverse the log transformation. Then it standardizes by dividing by the total. So each weight will be a number from 0 to 1, and the weights together always sum to 1. ***Now larger values are better.***
@@ -9162,13 +9122,12 @@ text(4, 9.4, "not Africa", col = "black")
 
 A proper interaction effect is needed to recover the change in slope you saw at the start of this section. The likelihood for the model you just plotted, in math form, is:
 
-\\
+$$
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_R R_i + \beta_A A_i
 \end{align*}
-
-\\
+$$
 
 
 ```
@@ -9186,14 +9145,13 @@ Now you want to allow the relationship between Y and R to vary as a function of 
 
 <br>
 
-\\
+$$
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
 \mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
 \gamma_i &= \beta_R + \beta_{AR} A_i &&&    \text{[linear model of slope]}
 \end{align*}
-
-\\
+$$
 
 <br>
 
@@ -9232,13 +9190,12 @@ compare(m7.3, m7.4, m7.5)
 
 Instead of a model definition with more than one linear model, as you saw above, it’s conventional to multiply out any interaction effects, so that there is only one linear model. The equation for $\gamma$ can be substituted into the second line and expanded.
 
-\\
+$$
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
 \mu_i &= \alpha + \beta_R R_i + \beta_{AR} A_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]
 \end{align*}
-
-\\
+$$
 
 
 <br>
@@ -9320,14 +9277,13 @@ There are two basic reasons to be wary of interpreting tables of posterior means
 
 Unlike in the simple linear regression models, you can no longer read the influence of either predictor from the table of estimates in interaction models:
 
-\\
+$$
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
 \mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
 \gamma_i &= \beta_R + \beta_{AR} A_i &&&    \text{[linear model of slope]}
 \end{align*}
-
-\\
+$$
 
 
 <br>
@@ -9344,12 +9300,12 @@ Since $\gamma$ (gamma) doesn’t appear in this table&mdash; it wasn’t estimat
 
 For example, the ***MAP*** slope relating ruggedness to log-GDP within Africa is:
 
-\\\gamma = \beta_R + \beta_{AR}(1) = −0.18 + 0.35 = 0.17\\
+$$\gamma = \beta_R + \beta_{AR}(1) = −0.18 + 0.35 = 0.17$$
 <br>
 
 And outside of Africa:
 
-\\\gamma = \beta_R + \beta_{AR}(0) = -0.18\\
+$$\gamma = \beta_R + \beta_{AR}(0) = -0.18$$
 
 So the relationship between ruggedness and log-GDP is essentially reversed inside and out-side of Africa.
 
@@ -9417,38 +9373,35 @@ We’ll plot the ruggedness and GDP example again, but with the reverse phrasing
 
 Consider yet again the mathematical form of the likelihood:
 
-\\
+$$
 \begin{align*}
 \ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
 \mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
 \gamma_i &\sim \beta_R + \beta_{AR} A_i &&&   \text{[linear model of slope]}
 \end{align*}
-
-\\
+$$
 
 
 <br>
 
 Let’s expand $\gamma_i$ into the expression for $\mu_i$:
 
-\\
+$$
 \begin{align*}
 \mu_i &= \alpha + (\beta_R + \beta_{AR} A_i) R_i + \beta_A A_i\\
 &= \alpha + \beta_R R_i + \beta_{AR} A_i R_i + \beta_A A_i
 \end{align*}
-
-\\
+$$
 
 <br>
 
 Now factor together the terms with $A_i$ in them:
 
-\\
+$$
 \begin{align*}
 \mu_i &= \alpha + \beta_R R_i + \underbrace{(\beta_A + \beta_{AR}R_i)}_G A_i
 \end{align*}
-
-\\
+$$
 
 
 <br>
@@ -9542,26 +9495,24 @@ Example focusing on just two models:
 
 The main effect likelihood is:
 
-\\
+$$
 \begin{align*}
 \ B_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_W W_i + \beta_S S_i
 \end{align*}
-
-\\
+$$
 
 
 <br>
 
 And the full interaction likelihood is:
 
-\\
+$$
 \begin{align*}
 \ B_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_W W_i + \beta_S S_i + \beta_{WS} W_i S_i
 \end{align*}
-
-\\
+$$
 
 
 ```
@@ -9711,7 +9662,7 @@ Estimation failed with the un-centered predictor variables, because there was a 
 
 In the un-centered models, the interaction effect is applied to every case, and so none of the parameters in $\mu$ makes sense alone. This is because neither of the predictors in those models, `shade` and `water`, are ever zero. As a result the interaction parameter always factors into generating a prediction. Consider for example a tulip at the average moisture and shade levels, 2 in each case. The expected blooms for such a tulip is:
 
-\\\mu_i|_{S_i=2, W_i=2} = \alpha + \beta_W(2) + \beta_S (2) + \beta_{WS}(2 \times 2)\\
+$$\mu_i|_{S_i=2, W_i=2} = \alpha + \beta_W(2) + \beta_S (2) + \beta_{WS}(2 \times 2)$$
 
 ```{r 7.25}
 
@@ -9859,13 +9810,12 @@ To specify interaction models using design formulas, like those used by `lm` and
 
 For example, here’s a model with an interaction between $x$ and $z$:
 
-\\
+$$
 \begin{align*}
 \ y_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_x x_i + \beta_z z_i + \beta_{xz} x_i z_i
 \end{align*}
-
-\\
+$$
 
 <br>
 
@@ -9883,13 +9833,12 @@ m7.x <- lm( y ~ x*z , data=d )
 
 If you do not want the main effects in the model, you must explicitly subtract them from the formula. For example, here’s a model with an interaction, but without one of the main effects (when you know a priori that there is no direct effect of $z$ on the outcome, when $\beta_z$ = 0 by assumption):
 
-\\
+$$
 \begin{align*}
 \ y_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_x x_i + \beta_{xz} x_i z_i
 \end{align*}
-
-\\
+$$
 
 
 ```{r 7.31}
@@ -9903,12 +9852,12 @@ m7.x <- lm( y ~ x + x*z - z , data=d )
 
 For higher-order interactions, just multiply more predictors together. The design formula always implies all of the lower-order interactions, even though you don’t explicitly state them. For example, this model has a three-way interaction between $x$, $z$, and $w$, as well as three two-way interactions and all three main effects:
 
-\\
+$$
 \begin{align*}
 y_i &\sim \text{Normal}(\mu_i, \sigma)\\
 \mu_i &= \alpha + \beta_x x_i + \beta_z z_i + \beta_w w_i + \beta_{xz} x_i z_i + \beta_{xw} x_i w_i + \beta_{zw} z_i w_i + \beta_{xzw} x_i z_i w_i 
 \end{align*}
-\\
+$$
 
 ```{r 7.32}
 
