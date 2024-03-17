@@ -151,9 +151,9 @@ Ai = State i’s median age at marriage
 <span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/precis.html">precis</a></span><span class="op">(</span><span class="va">m5.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>           mean        sd      5.5%      94.5%
-a      9.688106 0.2045175  9.361248 10.0149647
-bA    -1.042903 0.2025427 -1.366605 -0.7192001
-sigma  1.446460 0.1447835  1.215068  1.6778518</code></pre>
+a      9.688130 0.2045107  9.361282 10.0149775
+bA    -1.042933 0.2025359 -1.366625 -0.7192414
+sigma  1.446411 0.1447713  1.215039  1.6777838</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># each additional standard deviation of delay in marriage (1.24 years- the difference between</span></span>
 <span><span class="co"># two data points after converting back to natural scale) predicts a decrease of </span></span>
@@ -201,9 +201,9 @@ sigma  1.446460 0.1447835  1.215068  1.6778518</code></pre>
 <span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/precis.html">precis</a></span><span class="op">(</span><span class="va">m5.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>           mean        sd      5.5%     94.5%
-a     9.6881940 0.2364383 9.3103199 10.066068
-bR    0.6437479 0.2324704 0.2722152  1.015281
-sigma 1.6723390 0.1673153 1.4049368  1.939741</code></pre>
+a     9.6881755 0.2364319 9.3103117 10.066039
+bR    0.6437522 0.2324644 0.2722292  1.015275
+sigma 1.6722932 0.1673039 1.4049093  1.939677</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This shows an increase of 0.6 divorces for every additional standard deviation </span></span>
 <span><span class="co"># of marriage rate (3.8). this relationship isn’t as strong as the previous one.</span></span>
@@ -298,6 +298,8 @@ A = age at marriage
 <p><img src="https://latex.codecogs.com/gif.image?%5Cinline&amp;space;%5Cdpi%7B110%7D%5Cbegin%7Bmatrix%7DD_i&amp;%5Csim&amp;space;Normal(%5Cmu,%5Csigma)&amp;&amp;&amp;%5Ctext%7B%5BLikelihood%5D%7D%5C%5C%5Cmu_i&amp;=%5Calpha&amp;plus;%5Cbeta_R&amp;space;R_i&amp;plus;%5Cbeta_AA_i&amp;&amp;&amp;%5Ctext%7B%5BLinear&amp;space;model%5D%7D%5C%5C%5Cend%7Bmatrix%7D"></p>
 <p><img src="https://latex.codecogs.com/gif.image?%5Cinline&amp;space;%5Cdpi%7B110%7D%5Cbegin%7Balign*%7DD_i&amp;%5Csim&amp;space;Normal(%5Cmu,%5Csigma)&amp;&amp;&amp;%5Ctext%7B%5BLikelihood%5D%7D%5C%5C%5Cmu_i&amp;=%5Calpha&amp;plus;%5Cbeta_R&amp;space;R_i&amp;plus;%5Cbeta_AA_i&amp;&amp;&amp;%5Ctext%7B%5BLinear&amp;space;model%5D%7D%5C%5C%5Cend%7Balign*%7D" title="\begin{align*}D_i&amp;\sim Normal(\mu,\sigma)&amp;&amp;&amp;\text{[Likelihood]}\\\mu_i&amp;=\alpha+\beta_R R_i+\beta_AA_i&amp;&amp;&amp;\text{[Linear model]}\\\end{align*}"></p>
 <p>inline text symbol <span class="math inline">\(\mu\)</span> or () or <img src="https://latex.codecogs.com/svg.image?%5Cmu" title="\mu"></p>
+<p><img src="https://latex.codecogs.com/gif.image?%5CLarge&amp;space;%5Cdpi%7B110%7D%5Ctext%7Bplausibility%20of%20p%20after%20D%7D_%7Bnew%7D%20=%20%5Cfrac%7B%5Ctext%7Bways%20p%20can%20produce%20D%7D_%7Bnew%7D%20%5Ctimes%20%5Ctext%7Bprior%20plausibility%20p%7D%7D%7B%5Ctext%7Bsum%20of%20products%7D%7D" title="\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"></p>
+<p><img src="https://latex.codecogs.com/svg.latex?%5CLarge&amp;space;%5Cdpi%7B110%7D%5Ctext%7BPosterior%20=%7D%5Cfrac%7B%5Ctext%7BLikelihood%20x%20Prior%7D%7D%7B%5Ctext%7BAverage%20Likelihood%7D%7D" title="\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"></p>
 <!-- -->
 
 </section></main><!-- /main column --><script id="quarto-html-after-body" type="application/javascript">
@@ -813,7 +815,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/gif.image?\inline</span><span class="dv">&amp;space;</span><span class="st">\dpi{110}\begin{align*}D_i</span><span class="er">&amp;</span><span class="st">\sim</span><span class="dv">&amp;space;</span><span class="st">Normal(\mu,\sigma)</span><span class="er">&amp;&amp;&amp;</span><span class="st">\text{[Likelihood]}\\\mu_i</span><span class="er">&amp;</span><span class="st">=\alpha</span><span class="dv">&amp;plus;</span><span class="st">\beta_R</span><span class="dv">&amp;space;</span><span class="st">R_i</span><span class="dv">&amp;plus;</span><span class="st">\beta_AA_i</span><span class="er">&amp;&amp;&amp;</span><span class="st">\text{[Linear</span><span class="dv">&amp;space;</span><span class="st">model]}\\\end{align*}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">"\begin{align*}D_i</span><span class="er">&amp;</span><span class="st">\sim Normal(\mu,\sigma)</span><span class="er">&amp;&amp;&amp;</span><span class="st">\text{[Likelihood]}\\\mu_i</span><span class="er">&amp;</span><span class="st">=\alpha+\beta_R R_i+\beta_AA_i</span><span class="er">&amp;&amp;&amp;</span><span class="st">\text{[Linear model]}\\\end{align*}"</span> <span class="kw">/&gt;</span></span>
 <span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a>inline text symbol $\mu$ or <span class="sc">\(</span>\mu<span class="sc">\)</span> or <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.image?\mu"</span> <span class="er">title</span><span class="ot">=</span><span class="st">"\mu"</span> <span class="kw">/&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a>inline text symbol $\mu$ or <span class="sc">\(</span>\mu<span class="sc">\)</span> or <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.image?\mu"</span> <span class="er">title</span><span class="ot">=</span><span class="st">"\mu"</span> <span class="kw">/&gt;</span></span>
+<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/gif.image?\Large</span><span class="dv">&amp;space;</span><span class="st">\dpi{110}\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"</span><span class="er">title</span><span class="ot">=</span><span class="st">"\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"</span> <span class="kw">/&gt;</span></span>
+<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\Large</span><span class="dv">&amp;space;</span><span class="st">\dpi{110}\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"</span><span class="er">title</span><span class="ot">=</span><span class="st">"\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"</span><span class="kw">/&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

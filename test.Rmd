@@ -228,3 +228,7 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 <img src="https://latex.codecogs.com/gif.image?\inline&space;\dpi{110}\begin{align*}D_i&\sim&space;Normal(\mu,\sigma)&&&\text{[Likelihood]}\\\mu_i&=\alpha&plus;\beta_R&space;R_i&plus;\beta_AA_i&&&\text{[Linear&space;model]}\\\end{align*}" title="\begin{align*}D_i&\sim Normal(\mu,\sigma)&&&\text{[Likelihood]}\\\mu_i&=\alpha+\beta_R R_i+\beta_AA_i&&&\text{[Linear model]}\\\end{align*}" />
 
 inline text symbol $\mu$ or \(\mu\) or <img src="https://latex.codecogs.com/svg.image?\mu" title="\mu" />
+
+<img src="https://latex.codecogs.com/gif.image?\Large&space;\dpi{110}\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"title="\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}" />
+
+<img src="https://latex.codecogs.com/svg.latex?\Large&space;\dpi{110}\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"title="\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"/>
