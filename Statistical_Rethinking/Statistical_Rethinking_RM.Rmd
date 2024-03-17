@@ -288,7 +288,7 @@ plausibility of p after D~new~ ∝ ways p can produce D~new~ × prior plausibili
 
 Finally, we construct probabilities by standardizing the plausibility so that the sum of the plausibilities for all possible conjectures will be one. All you need to do in order to standardize is to add up all of the products, one for each value p can take, and then divide each product by the sum of products:"
 
-<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}"title="\text{plausibility of p after D}_{new} = \frac{\text{ways p can produce D}_{new} \times \text{prior plausibility p}}{\text{sum of products}}" />
+<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\textbf{plausibility of p after D}_{\textbf{new}} \boldsymbol{=} \frac{\textbf{ways p can produce D}_{\textbf{new}} \boldsymbol{\times} \textbf{prior plausibility p}}{\textbf{sum of products}}"title="" />
 
 
 ```{r table, tidy=FALSE, include=TRUE, echo=FALSE}
@@ -452,6 +452,7 @@ Now since both right-hand sides are equal to the same thing, we can set them equ
 
 <img src="https://latex.codecogs.com/svg.latex?\dpi{110}\mathbf{Posterior} = \frac{\mathbf{Likelihood} \times \mathbf{Prior}}{\mathbf{Average\ Likelihood}}" title="\mathbf{Posterior} = \frac{\mathbf{Likelihood} \times \mathbf{Prior}}{\mathbf{Average\ Likelihood}}"/>
 
+<br>
 
 <span style="color:brown">***Average Likelihood:***</span>
 
@@ -1747,7 +1748,7 @@ The value for median, mean, and mode (MAP) are different. In this case, ***use a
 - Different loss functions imply different point estimates
 
 - The loss is proportional to the distance of your decision from the true value
-  - Loss $\propto$ d - p, where d is the decision and p is the correct answer or true value 
+  - Loss <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\propto}" title="" /> d - p, where d is the decision and p is the correct answer or true value 
 
 \n
 
@@ -2619,10 +2620,11 @@ The justifications for using the Gaussian distribution- as a skeleton for hypoth
 
 <span style="color:brown"><span style="text-decoration:underline">**Gaussian distribution**</span>
 
-- The probability density of some value y, given a Gaussian (normal) distribution with mean $\mu$ and standard deviation <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, is:
+- The probability density of some value y, given a Gaussian (normal) distribution with mean <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> and standard deviation <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, is:
 
 ![](https://latex.codecogs.com/svg.latex?\boldsymbol{p(y|\mu,\sigma)} = \boldsymbol{\frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(- \frac{(y-\mu)^2}{2\sigma^2}\right)})
 
+<br>
 
 - (y − <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" />)^2^ gives the normal distribution its fundamental shape, a quadratic shape. Once you exponentiate the quadratic shape, you get the classic bell curve. The rest of it just scales and standardizes the distribution so that it sums to one, as all probability distributions must. But an expression as simple as exp(−y^2^) yields the Gaussian prototype.
 
@@ -2669,6 +2671,7 @@ dnorm(0, 0, 0.1)
 
 <img src="https://latex.codecogs.com/svg.latex?\dpi{110}\inline&space;\dpi{110}\boldsymbol{\begin{align*}outcome_i &\sim Normal(\mu_i, \sigma) \\ \mu_i &= \beta \times predictor_i \\ \beta &\sim Normal(0, 10) \\ \sigma &\sim HalfCauchy(0, 1)\end{align*}}" title="" />
 
+<br>
 
 <div style="border: 1px solid #999; padding: 10px; background-color: #f9f9f9; margin: 10px 0;">
 
@@ -2689,6 +2692,8 @@ Normal(<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title=
 The model:
 
 <img src="https://latex.codecogs.com/svg.latex?\dpi{110}\inline&space;\dpi{110}\boldsymbol{\begin{align*}w \sim Binomial(n, p)\\ p \sim Uniform(0, 1)\\ \end{align*}}" title="" />
+
+<br>
 
 ```
 w   = observed count of water samples
@@ -2789,10 +2794,11 @@ dens(d2$height)
 
 Whatever the reason, adult heights are nearly always approximately normal. So it’s reasonable for the moment to adopt the stance that the model’s likelihood should be Gaussian. But be careful about choosing the Gaussian distribution only when the plotted outcome variable looks Gaussian to you. Gawking at the raw data, to try to decide how to model them, is usually not a good idea. The data could be a mixture of different Gaussian distributions, for example, and in that case you won’t be able to detect the underlying normality just by eyeballing the outcome distribution. Furthermore, the empirical distribution needn’t be actually Gaussian in order to justify using a Gaussian likelihood.
 
-There are an infinite number of Gaussain distributions , with an infinite number of different means and standard deviations. We’re ready to write down the general model and compute the plausibility of each combination of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> and <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />. To define the heights as normally distributed with a mean $\mu$ and standard deviation <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, we write:
+There are an infinite number of Gaussain distributions , with an infinite number of different means and standard deviations. We’re ready to write down the general model and compute the plausibility of each combination of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> and <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />. To define the heights as normally distributed with a mean <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> and standard deviation <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, we write:
 
 ![](https://latex.codecogs.com/svg.latex?\boldsymbol{{h}_i \sim {Normal}(\mu, \sigma)})
 
+<br>
 
 ```
 h             = the list of heights
@@ -2942,7 +2948,7 @@ HPDI(sample.sigma)
 
 <br>
 
-<span style="color:brown"><span style="text-decoration:underline">**Sample size and the normality of $\sigma$'s posterior**</span>
+<span style="color:brown"><span style="text-decoration:underline">**Sample size and the normality of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />'s posterior**</span>
 
 - Repeat the above analysis using only a fraction of the original data to demonstrate the posterior is not always so Gaussian in shape
 
@@ -3005,7 +3011,7 @@ dens( sample2.sigma , norm.comp=TRUE, col = "purple" )
 
 <br>
 
-<span style="color:brown; text-decoration:underline">**Use `map` to find the values of $\mu$ and $\sigma$ that maximize the posterior probability:**</span>
+<span style="color:brown; text-decoration:underline">**Use `map` to find the values of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> and <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" /> that maximize the posterior probability:**</span>
 
 ```{r 4.24}
 
@@ -3018,13 +3024,7 @@ d2 <- d[ d$age >= 18 , ]
 
 - Define the model, using R's formula syntax:
 
-$$
-\begin{align*}
-\text{h}_i & \sim \text{Normal}(\mu, \sigma) \ &&& \text{[height} & \sim \text{dnorm(mu, sigma)}\text{]}\\
-\mu &\sim \text{Normal}(178, 20) \ &&& [\text{mu} &\sim \text{dnorm}(178, 20)]\\
-\sigma &\sim \text{Uniform}(0, 50) \ &&& [\text{sigma} &\sim \text{dunif}(0, 50)]
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i&\sim&space;Normal(\mu_i,\sigma)&&&[height\sim&space;dnorm(mu,sigma)]\\\mu&\sim&space;Normal(178,20)&&&[mu\sim&space;dnorm(178,20)]\\\sigma&\sim&space;Uniform(0,50)&&&[sigma\sim&space;dunif(0,50)]\\\end{align*}" title="\begin{align*}h_i&\sim Normal(\mu_i,\sigma)&&&[height\sim dnorm(mu,sigma)]\\\mu&\sim Normal(178,20)&&&[mu\sim dnorm(178,20)]\\\sigma&\sim Uniform(0,50)&&&[sigma\sim dunif(0,50)]\\\end{align*}" />
 
 <br>
 
@@ -3276,15 +3276,7 @@ All we have to do is incorporate our new model for the mean into the model speci
 
 Repeat model definition, with corresponding R code:
 
-$$
-\begin{align*}
-\text{h}_i & \sim \text{Normal}(\mu_i, \sigma) \ &&& \text{height} & \sim \text{dnorm(mu, sigma)} \\
-\mu_i & = \alpha + \beta x_i \ &&& \text{mu} & \leftarrow \text{a + b*weight} \\
-\alpha &\sim \text{Normal}(178, 100) \ &&& a &\sim \text{dnorm}(178, 100)\\
-\beta &\sim \text{Normal}(0, 10) \ &&& b &\sim \text{dnorm}(0, 10)\\
-\sigma &\sim \text{Uniform}(0, 50) \ &&& \text{sigma} &\sim \text{dunif}(0, 50)
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i &\sim Normal(\mu_i, \sigma) \ &&& height &\sim dnorm(mu, sigma) \\\mu_i &= \alpha + \beta x_i \ &&& mu &\leftarrow a + b \times weight \\\alpha &\sim Normal(178, 100) \ &&& a &\sim dnorm(178, 100)\\\beta &\sim Normal(0, 10) \ &&& b &\sim dnorm(0, 10)\\\sigma &\sim Uniform(0, 50) \ &&& sigma &\sim dunif(0, 50)\\\end{align*}" title="" />
 
 <br>
 
@@ -4271,7 +4263,7 @@ precis(m.4m2)
 
 <br>
 
-4M4. We don't know the age and gender of students. So, we will use uninformative priors, inclusive school age children to adult. 200 is chosen considering the adult height (may not be necessary?) and mean $\beta$ is zero considering height will not increase if the students are adult, but $\sigma$ is 40 to leave room for potential increase in height. 
+4M4. We don't know the age and gender of students. So, we will use uninformative priors, inclusive school age children to adult. 200 is chosen considering the adult height (may not be necessary?) and mean <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta}" title="" /> is zero considering height will not increase if the students are adult, but <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" /> is 40 to leave room for potential increase in height. 
 
 <img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i &\sim Normal(\mu, \sigma)\\\mu &= \alpha + \beta y_i\\\alpha &\sim Normal(0, 200)\\\beta &\sim Normal(0, 40)\\\sigma &\sim Uniform(0, 50)\\\end{align*}" title="" />
 
@@ -4770,6 +4762,7 @@ Linear regression model for correlation between age at marriage and divorce rate
 
 <img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}D_i &\sim Normal(\mu_i, \sigma) \\\mu_i &= \alpha + \beta_A A_i \\\alpha &\sim Normal(10, 10) \\\beta_A &\sim Normal(0, 1) \\\sigma &\sim Uniform(0, 10)\\\end{align*}" title="" />
 
+<br>
 
 ```
 Di = the divorce rate for State i
@@ -4901,6 +4894,8 @@ Example model that predicts divorce rate, using both marriage rate and age at ma
 
 <img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}D_i &\sim Normal(\mu, \sigma)\ &&&  [likelihood]\\\mu_i &= \alpha + \beta_R R_i + \beta_A A_i\ &&&  [linear~model]\\\alpha &\sim Normal(10, 10)\ &&& [prior~for~\alpha]\\\beta_R &\sim Normal(0, 1)\ &&&  [prior~for~\beta_R]\\\beta_A &\sim Normal(0, 1)\ &&&   [prior~for~\beta_A]\\\sigma &\sim Uniform(0, 10)\ &&&  [prior~for~\sigma]\\\end{align*}" title="" />
 
+<br>
+
 ```
 R = marriage rate 
 
@@ -4914,6 +4909,8 @@ A = age at marriage
 Linear model with n number of predictor variables:
 
 ![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta_1 x_{1i} + \beta_2 x_{2i} + ... + \beta_n x_{ni}})
+
+<br>
 
 In compact form:
 
@@ -5645,7 +5642,7 @@ Now let’s see what happens when we add both predictor variables at the same ti
 
 <img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}k_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_n n_i + \beta_m log(m_i)\\\alpha &\sim Normal(0, 100)\\\beta_n &\sim Normal(0, 1)\\\beta_m &\sim Normal(0, 1)\\\sigma &\sim Uniform(0, 10)\\\end{align*}" title="" />
 
-\n
+<br>
 
 ```
 k   = kcal.per.g
@@ -5969,6 +5966,7 @@ One way to think of this phenomenon is that you have approximated this likelihoo
 
 <img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_1 x_i + \beta_2 x_i\\\end{align*}" title="" />
 
+<br>
 
 ```
 y   = outcome (height)
@@ -5981,6 +5979,7 @@ Here x is used twice, which is a perfect example of the problem caused by using 
 
 <img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + (\beta_1 + \beta_2) x_i\\\end{align*}" title="" />
 
+<br>
 
 This means the posterior distribution ends up reporting the practically infinite combinations of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_1}" title="" /> and <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_2}" title="" /> that make their sum close to the actual association of x with y.
 
@@ -6325,6 +6324,7 @@ The effect of a dummy variable is to turn a parameter on for those cases in the 
 
 <img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_m m_i\\\alpha &\sim Normal(178, 100)\\\beta_m &\sim Normal(0, 10)\\\sigma &\sim Uniform(0, 50)\\\end{align*}" title="" />
 
+<br>
 
 ```
 h   = height
@@ -6375,6 +6375,7 @@ Instead of using a parameter for the difference between males and females, we ca
 
 <img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha_f(1 - m_i) + \alpha_m m_i\\\end{align*}" title="" />
 
+<br>
 
 ```
 alpha_f   = average female height
@@ -6402,7 +6403,7 @@ precis(m5.15b)
 
 ```
 
-The mathematical model can be rearranged where the old $\beta_m$ as the difference between the average male and female, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha_m - \alpha_f}" title="" />:
+The mathematical model can be rearranged where the old <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_m}" title="" /> as the difference between the average male and female, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha_m - \alpha_f}" title="" />:
 
 ![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha_f + (\alpha_m - \alpha_f) m_i})
 
@@ -6438,6 +6439,7 @@ The model we aim to fit to the data is kcal.per.g regressed on the dummy variabl
 
 <img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}k_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_{NWM} NWM_i + \beta_{OWM} OWM_i + \beta_S S_i\\\alpha &\sim Normal(0.6, 10)\\\beta_{NWM} &\sim Normal(0, 1)\\\beta_{OWM} &\sim Normal(0, 1)\\\beta_S &\sim Normal(0, 1)\\\sigma &\sim Uniform(0, 10)\\\end{align*}" title="" />
 
+<br>
 
 A linear model like this really defines four different linear models, each corresponding to a different category.
 
@@ -6548,7 +6550,7 @@ The linear regression model:
 
 <br>
 
-The corresponding design formula with the leading 1 on the right-hand side indicates the intercept, $\alpha$:
+The corresponding design formula with the leading 1 on the right-hand side indicates the intercept, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha}" title="" />:
 
 <img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y \sim 1 + x\\\end{align*}" title="" />
 
@@ -6557,24 +6559,13 @@ The corresponding design formula with the leading 1 on the right-hand side indic
 
 The linear regression model with three predictors:
 
-$$
-\begin{align*}
-\text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_x \text{x}_i + \beta_z \text{Z}_i + \beta_w \text{W}_i
-\end{align*}
-$$
-
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_x x_i + \beta_z Z_i + \beta_w W_i\\\end{align*}" title="" />
 
 <br>
 
 The corresponding design formula:
 
-$$
-\begin{align*}
-\text{y} \sim 1 + \text{x} + \text{z} + \text{w}
-\end{align*}
-$$
-
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y \sim 1 + x + z + w\\\end{align*}" title="" />
 
 <br>
 
@@ -6621,7 +6612,7 @@ precis(m5.18a)
 
 ```
 
-When you omit the explicit intercept, `lm` assumes you wanted one. If you really do not want an intercept— equivalent to fixing $\alpha = 0$— then you can use one of these forms:
+When you omit the explicit intercept, `lm` assumes you wanted one. If you really do not want an intercept&mdash; equivalent to fixing <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha = 0}" title="" />&mdash; then you can use one of these forms:
 
 ```{r 5.58}
 
@@ -6680,17 +6671,17 @@ m5.24 <- lm( y ~ 1 + x + I(x^2) + I(x^3) , data=d )
 
 <br>
 
-#### No estimate for $\sigma$
+#### No estimate for <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />
 
-Using `lm` will not provide a posterior distribution for the standard deviation $\sigma$— it won’t be reported in the table of estimates. If you ask for a summary of the model fit, `lm` will report the “residual standard error,” which is a slightly different estimate of $\sigma$, but without any uncertainty information like a standard deviation (or standard error).
+Using `lm` will not provide a posterior distribution for the standard deviation <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />&mdash; it won’t be reported in the table of estimates. If you ask for a summary of the model fit, `lm` will report the “residual standard error,” which is a slightly different estimate of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, but without any uncertainty information like a standard deviation (or standard error).
 
-Use `map` if you need $\sigma$- get some sense of the uncertainty of the estimate. As a bonus, you can use informative priors then, as well.
+Use `map` if you need <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />&mdash; get some sense of the uncertainty of the estimate. As a bonus, you can use informative priors then, as well.
 
 <br>
 
 ### Building `map` formulas from `lm` formulas
 
-The `rethinking` package provides a function, `glimmer`, that translates design formulas into `map`-style model formulas.
+The `rethinking` package provides a function, `glimmer`, that translates design formulas into `map`&mdash; style model formulas.
 
 ```{r 5.62}
 
@@ -6708,7 +6699,7 @@ glimmer( dist ~ speed , data=cars )
 
 The defining question of multiple regression is: 
 
-$$\text{What is the value of knowing each predictor, once we already know the other predictors?}$$
+![\large](https://latex.codecogs.com/svg.latex?\textit{\textbf{What is the value of knowing each predictor, once we already know the other predictors?}})
 
 Implicit in this question are: 
 
@@ -6726,20 +6717,16 @@ Implicit in this question are:
 
 > 5E1. Which of the linear models below are multiple linear regressions?
 
-(2) $\mu_i = \beta_x \text{x}_i + \beta_z \text{Z}_i$
-(4) $\mu_i = \alpha + \beta_x \text{x}_i + \beta_z \text{Z}_i$
+(2) ![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \beta_x x_i + \beta_z Z_i})
+(4) ![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta_x x_i + \beta_z Z_i})
 
 <br>
 
 > 5E2. Write down a multiple regression to evaluate the claim: Animal diversity is linearly related to latitude, but only after controlling for plant diversity. You just need to write down the model definition.
 
-$$
-\begin{align*}
-\text{AD_i} &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_L \text{L}_i + \beta_D \text{D}_i
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}AD_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_L L_i + \beta_D D_i\\\end{align*}" title="" />
 
+<br>
 
 ```
 AD    = Animal diversity
@@ -6755,13 +6742,9 @@ D     = Plant diversity
 > 5E3. Write down a multiple regression to evaluate the claim: Neither amount of funding nor size of laboratory is by itself a good predictor of time to PhD degree; but together these variables are both positively associated with time to degree. Write down the model definition and indicate which side of zero each slope parameter should be on.
 
 
-$$
-\begin{align*}
-T_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_F \text{F}_i + \beta_S \text{S}_i
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}T_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_F F_i + \beta_S S_i\\\end{align*}" title="" />
 
+<br>
 
 ```
 T   = Time to PhD degree
@@ -6779,7 +6762,7 @@ If considered individually, both will be almost zero.
 
 > 5E4. Suppose you have a single categorical predictor with 4 levels (unique values), labeled A, B, C and D. Let Ai be an indicator variable that is 1 where case i is in category A. Also suppose Bi, Ci, and Di for the other categories. Now which of the following linear models are inferentially equivalent ways to include the categorical variable in a regression? Models are inferentially equivalent when it’s possible to compute one posterior distribution from the posterior distribution of another model.
 
-I exclude choice 2 as it contains all variables plus one extra unidentified interceptor variable. I use `Accident` dataset to check the similarity among posterior distributions of the models in choices 1, 3, 4, and 5. As seen below, the mean ($\mu$) values of dummy variables A, B, C and D are similar across the models 1, 3, 4 and 5. Hence, choice 1, 3, 4 and 5 are the correct answers to the question. The slight difference between model 1,3 and model 4,5 is because I used informative priors for model 4 and 5, and flat priors for model 1 and 3. 
+I exclude choice 2 as it contains all variables plus one extra unidentified interceptor variable. I use `Accident` dataset to check the similarity among posterior distributions of the models in choices 1, 3, 4, and 5. As seen below, the mean (<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" />) values of dummy variables A, B, C and D are similar across the models 1, 3, 4 and 5. Hence, choice 1, 3, 4 and 5 are the correct answers to the question. The slight difference between model 1,3 and model 4,5 is because I used informative priors for model 4 and 5, and flat priors for model 1 and 3. 
 
 ```{r 5E4}
 
@@ -6976,7 +6959,7 @@ pairs(~ chance.star + rain.ppt + umbrella.sales, data = d, col = "firebrick")
 
 Instead of adjusting each data point to get the desired relationship (like in 5M1 which took quite a while to manipulate the data), I used the book's code to create a data set for simulating a masked relationship. In the example below, the number of trees in the area (`tree.number`) is positively associated with good air quality (`pm.air`), while the number of factory in the area (`factory.number`) is negatively associated with good air quality(`pm.air`). The `factory.number` and `tree.number` have a correlation strength of 0.5.
 
-When the predictors are fitted separately to the model, the $\beta$ coefficients for `tree.number` and `factory.number` are 0.52 and -0.47, in relation to the outcome `pm.air`. But when the predictors are fitted together in the model, stronger associations with outcome variable are seen with each of the predictors (0.99 for `tree.number` and -0.97 for `factory.number`). 
+When the predictors are fitted separately to the model, the <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta}" title="" /> coefficients for `tree.number` and `factory.number` are 0.52 and -0.47, in relation to the outcome `pm.air`. But when the predictors are fitted together in the model, stronger associations with outcome variable are seen with each of the predictors (0.99 for `tree.number` and -0.97 for `factory.number`). 
 
 
 ```{r 5M2}
@@ -7722,7 +7705,7 @@ Accuracy depends upon the definition of the target, and there is no unique best 
 
 The information theory provides a solution to the problem of how to measure distance of a model’s accuracy from a target. The basic insight is to ask: *How much is our uncertainty reduced by learning an outcome?*
 
-$$\textit{Information:}~\text{The reduction in uncertainty derived from learning an outcome.}$$
+![\large](https://latex.codecogs.com/svg.latex?\textbf{\textit{Information:} The reduction in uncertainty derived from learning an outcome.})
 
 To use this definition, what we need is a principled way to quantify the uncertainty inherent in a probability distribution. There are many possible ways to measure uncertainty. The most common way begins by naming some properties a measure of uncertainty should possess. These are the three intuitive desiderata:
 
@@ -7734,7 +7717,9 @@ To use this definition, what we need is a principled way to quantify the uncerta
 
 Only one function ***Information Theory*** satisfies these desiderata. If there are *n* different possible events and each event *i* has probability *p~i~*, and we call the list of probabilities *p*, then the unique measure of uncertainty we seek is:
 
-$$H(p) = ~- \text{E log}(p_i) = -\sum_{i=1}^{n} p_i ~\text{log}(p_i)$$
+![\large](https://latex.codecogs.com/svg.latex?\mathbf{H(p) = ~- E~log(p_i) = -\sum_{i=1}^{n} p_i ~log(p_i)})
+
+<br>
 
 ```
 
@@ -7744,7 +7729,9 @@ The uncertainty contained in a probability distribution is the average log-proba
 
 To compute the information entropy for the weather, suppose the true probabilities of rain and shine are p~1~ = 0.3 and p~2~ = 0.7, respectively. Then:
 
-$$H(p) = ~-(p_1 ~\text{log}(p_1) ~+~ p_2 ~\text{log}(p_2)) \approx 0.61$$
+![\large](https://latex.codecogs.com/svg.latex?\mathbf{H(p) = ~-(p_1 ~log(p_1) ~+~ p_2 ~log(p_2)) \approx 0.61})
+
+<br>
 
 ```{r 6.9}
 
@@ -7761,7 +7748,7 @@ The entropy values by themselves don’t mean much to us, though. Instead we can
 
 The logarithms above are natural logs (base *e*), but changing the base rescales without any effect on inference. Binary logarithms, base 2, are just as common. As long as all of the entropies you compare use the same base, you’ll be fine.
 
-The only trick in computing *H* is to deal with the inevitable question of what to do when *p~i~* = 0. The log(0) = −$\infty$, which won’t do. So just assume that 0 log(0) = 0, when you compute *H*. In other words, events that never happen drop out. It may make more sense to just remember that when an event never happens, there’s no point in keeping it in the model.
+The only trick in computing *H* is to deal with the inevitable question of what to do when *p~i~* = 0. The log(0) = −<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\infty}" title="" />, which won’t do. So just assume that 0 log(0) = 0, when you compute *H*. In other words, events that never happen drop out. It may make more sense to just remember that when an event never happens, there’s no point in keeping it in the model.
 
 <br>
 
@@ -7775,20 +7762,26 @@ The only trick in computing *H* is to deal with the inevitable question of what 
 
 How can we use information entropy to say how far a model is from the target? The key lies in divergence:
 
-$$\textit{Divergence:} ~\text{The additional uncertainty induced by using probabilities from one distribution to describe another distribution.}$$
+![\large](https://latex.codecogs.com/svg.latex?\textbf{\textit{Divergence:} ~The additional uncertainty induced by using probabilities from one distribution to describe another distribution.})
+
+<br>
 
 Suppose for example that the true distribution of events is *p~1~* = 0.3, *p~2~* = 0.7. If we believe instead that these events happen with probabilities *q~1~* = 0.25, *q~2~* = 0.75, how much additional uncertainty have we introduced, as a consequence of using *q* = {*q~1~*, *q~2~*} to approximate *p* = {*p~1~*, *p~2~*}? The formal answer to this question is based upon *H*, and has a similarly simple formula:
 
-$$D_{KL} (p, q) = \sum_i~ p_i ~(~\text{log}(p_i) - \text{log}(q_i)) = \sum_i~p_i ~\text{log} \left(\frac{p_i}{q_i}\right)$$
+![\large](https://latex.codecogs.com/svg.latex?\mathbf{D_{KL} (p, q) = \sum_i~ p_i ~(~log(p_i) - log(q_i)) = \sum_i~p_i ~log \left(\frac{p_i}{q_i}\right)})
+
+<br>
 
 In plainer language, the divergence is *the average difference in log probability between the target (p) and model (q)*. This divergence is just the difference between two entropies: The entropy of the target distribution *p* and the cross entropy arising from using *q* to predict *p*. When *p* = *q*, we know the actual probabilities of the events. In that case:
 
-$$D_{KL} (p, q) = D_{KL} (p, p) = \sum_i ~p_i  ~(~\text{log} (p_i) - \text{log}(p_i)) = 0$$
+![\large](https://latex.codecogs.com/svg.latex?\mathbf{D_{KL} (p, q) = D_{KL} (p, p) = \sum_i ~p_i  ~(~log (p_i) - log(p_i)) = 0})
+
+<br>
 
 
-There is no additional uncertainty induced when we use a probability distribution to represent itself. But more importantly, as *q* grows more different from *p*, the divergence $D_{KL}$ also grows. Suppose the true target distribution is p = {0.3, 0.7}. Suppose the approximating distribution *q* can be anything from *q* = {0.01, 0.99} to *q* = {0.99, 0.01}. The first of these probabilities, *q~1~*, is displayed on the horizontal axis, and the vertical displays the divergence $D_{KL}$(*p*, *q*). Only exactly where *q* = *p*, at *q~1~* = 0.3, does the divergence achieve a value of zero. Everyplace else, it grows.
+There is no additional uncertainty induced when we use a probability distribution to represent itself. But more importantly, as *q* grows more different from *p*, the divergence <img src="https://latex.codecogs.com/svg.image?\boldsymbol{D_{KL}}" title="" /> also grows. Suppose the true target distribution is p = {0.3, 0.7}. Suppose the approximating distribution *q* can be anything from *q* = {0.01, 0.99} to *q* = {0.99, 0.01}. The first of these probabilities, *q~1~*, is displayed on the horizontal axis, and the vertical displays the divergence <img src="https://latex.codecogs.com/svg.image?\boldsymbol{D_{KL}}" title="" />(*p*, *q*). Only exactly where *q* = *p*, at *q~1~* = 0.3, does the divergence achieve a value of zero. Everyplace else, it grows.
 
-Divergence can help us contrast different approximations to *p*. As an approximating function *q* becomes more accurate, $D_{KL}$(*p*, *q*) will shrink. So if we have a pair of candidate distributions, then the candidate that minimizes the divergence will be closest to the target. Since predictive models specify probabilities of events (observations), we can use divergence to compare the accuracy of models.
+Divergence can help us contrast different approximations to *p*. As an approximating function *q* becomes more accurate, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{D_{KL}}" title="" />(*p*, *q*) will shrink. So if we have a pair of candidate distributions, then the candidate that minimizes the divergence will be closest to the target. Since predictive models specify probabilities of events (observations), we can use divergence to compare the accuracy of models.
 
 ```{r f6.6}
 
@@ -7845,23 +7838,19 @@ grid.arrange(f1, f2, ncol = 2)
 
 - ***Cross entropy:*** 
     - The use of a probability distribution *q* to predict events from another distribution *p* 
-    - $H(p, q) = ~-\sum_i p_i ~\text{log}(q_i)$
+    - <img src="https://latex.codecogs.com/svg.image?\boldsymbol{H(p, q) = ~-\sum_i p_i ~log(q_i)}" title="" />
     - Events arise according to the *p'*s, but they are expected according to the *q'*s, so the entropy is inflated, depending upon how different *p* and *q* are
     
 \n
 
 - ***Divergence:***
     - The *additional* entropy induced by using *q* (measuring how far *q* is from the target *p*, in units of entropy)
-    - Divergence depends upon direction: $H(p, q)$ does not in general equal $H(q, p)$
-    - It's just the difference between $H(p)$, the actual entropy of events, and $H(p, q)$: 
+    - Divergence depends upon direction: *H(p, q)* does not in general equal *H(q, p)*
+    - It's just the difference between *H(p)*, the actual entropy of events, and *H(p, q)*: 
     
-$$
-\begin{align*}
-\ D_{KL} (p, q) &= H(p, q) ~- ~ H(p)\\
-&= ~- \sum_i p_i ~\text{log}(q_i) ~-~ \left(- \sum_i p_i ~\text{log}(p_i) \right)\\
-&= ~- \sum_i p_i ~\left( \text{log}(q_i) ~-~ \text{log}(p_i) \right)
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}\ D_{KL} (p, q) &= H(p, q) ~- ~ H(p)\\&= ~- \sum_i p_i ~log(q_i) ~-~ \left(- \sum_i p_i ~log(p_i) \right)\\&= ~- \sum_i p_i ~\left( log(q_i) ~-~ log(p_i) \right)\\\end{align*}" title="" />
+
+<br>
 
 
 ***If we use a distribution with high entropy to approximate an unknown true distribution of events, we will reduce the distance to the truth and therefore the error.***
@@ -7876,7 +7865,9 @@ The point of all the preceding material about information theory and divergence 
 
 (2) How to estimate the divergence. Having identified the right measure of distance, we now need a way to estimate it in real statistical modeling tasks&mdash; a measure of model fit known as ***deviance*** which is defined as:
 
-$$D(q) = ~-2 \sum_i \text{log}(q_i)$$
+![\large](https://latex.codecogs.com/svg.latex?\mathbf{D(q) = ~-2 \sum_i log(q_i)})
+
+<br>
 
 ```
 i   = indexes each observation (case)
@@ -7958,13 +7949,9 @@ The above is a thought experiment. It allows us to explore the distinction betwe
 
 To visualize the results of the thought experiment, what we’ll do now is conduct the above thought experiment 10,000 times, for each of five different linear regression models. The model that generates the data is:
 
-$$
-\begin{align*}
-\text{y}_i &\sim \text{Normal}(\mu_i, 1)\\
-\mu_i &\sim (0.15)\text{x}_{1,i} ~-~ (0.4)\text{x}_{2,i}
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim Normal(\mu_i, 1)\\\mu_i &\sim (0.15)x_{1,i} ~-~ (0.4)x_{2,i}\\\end{align*}" title="" />
 
+<br>
 
 
 ```{r 6.12, eval=FALSE}
@@ -8049,20 +8036,13 @@ The root of overfitting is a model’s tendency to get overexcited by the traini
 
 The regularizing prior, when *tuned properly*, reduces overfitting while still allowing the model to learn the regular features of a sample. If the prior is too skeptical, however, then regular features will be missed, resulting in underfitting. For example, consider this Gaussian model:
 
-$$
-\begin{align*}
-\text{y}_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta \text{x}_i\\
-\alpha &\sim \text{Normal}(0, 100)\\
-\beta &\sim \text{Normal}(0, 1)\\
-\sigma &\sim \text{Uniform}(0, 10)
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta x_i\\\alpha &\sim Normal(0, 100)\\\beta &\sim Normal(0, 1)\\\sigma &\sim Uniform(0, 10)\\\end{align*}" title="" />
 
+<br>
 
-Assume, as is good practice, that the predictor x is standardized so that its standard deviation is 1 and its mean is zero. Then the prior on $\alpha$ is a nearly flat prior that has no practical effect on inference. 
+Assume, as is good practice, that the predictor x is standardized so that its standard deviation is 1 and its mean is zero. Then the prior on <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha}" title="" /> is a nearly flat prior that has no practical effect on inference. 
 
-But the prior on $\beta$ is narrower and is meant to regularize. The prior $\beta$ ∼ Normal(0, 1) says that, before seeing the data, the machine should be very skeptical of values above 2 and below −2, as a Gaussian prior with a standard deviation of 1 assigns only 5% plausibility to values above and below 2 standard deviations. Because the predictor variable x is standardized, you can interpret this as meaning that a change of 1 standard deviation in x is very unlikely to produce 2 units of change in the outcome.
+But the prior on <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta}" title="" /> is narrower and is meant to regularize. The prior <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta}" title="" /> ∼ Normal(0, 1) says that, before seeing the data, the machine should be very skeptical of values above 2 and below −2, as a Gaussian prior with a standard deviation of 1 assigns only 5% plausibility to values above and below 2 standard deviations. Because the predictor variable x is standardized, you can interpret this as meaning that a change of 1 standard deviation in x is very unlikely to produce 2 units of change in the outcome.
 
 ```{r f6.8}
 
@@ -8275,7 +8255,9 @@ dev_tibble2  %>%
 
 This is the phenomenon behind ***information criteria***. The most known information criterion is the ***Akaike information criterion***, abbreviated **AIC**. AIC provides a surprisingly simple estimate of the average out-of-sample deviance:
 
-$$\text{AIC} = D_{train} ~+~ 2p$$
+![\large](https://latex.codecogs.com/svg.latex?\mathbf{AIC = D_{train} ~+~ 2p})
+
+<br>
 
 ```
 p   = the number of free parameters to be estimated in the model
@@ -8302,7 +8284,7 @@ Since flat priors are hardly ever the best priors, we’ll want something more g
 <span style="color:purple">***Two common and more-general criteria***</span>
 
 - ***Deviance Information Criterion (DIC)***
-    - accommodates informative priors, but still assumes that the posterior is multivariate Gaussian and that $N \gg k$
+    - accommodates informative priors, but still assumes that the posterior is multivariate Gaussian and that <img src="https://latex.codecogs.com/svg.image?\boldsymbol{N \gg k}" title="" />
     
 \n
 
@@ -8319,7 +8301,9 @@ DIC is calculated from the posterior distribution of the training deviance. So d
 
 DIC is calculated as:
 
-$$\text{DIC} = D^{\overline{}} + (D^{\overline{}} - D\hat{}) = D^{\overline{}} + p_D$$
+![\large](https://latex.codecogs.com/svg.latex?\mathbf{DIC = \overline{D} + (\overline{D} - \hat{D}) = \overline{D} + p_D})
+
+<br>
 
 ```
 D ̄ = the average of D
@@ -8340,9 +8324,11 @@ WAIC is also calculated by taking averages of log-likelihood over the posterior 
 
 The distinguishing feature of WAIC is that it is *pointwise*. This means that uncertainty in prediction is considered case-by-case, or point-by-point, in the data. WAIC assesses flexibility of a model with respect to fitting each observation, and then sums up across all observations.
 
-We compute the likelihood of $y_i$ for each set of parameters sampled from the posterior distribution. Then we average the likelihoods for each observation i and finally sum over all observations. This produces the first part of WAIC, the log-pointwise-predictive-density, lppd:
+We compute the likelihood of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{y_i}" title="" /> for each set of parameters sampled from the posterior distribution. Then we average the likelihoods for each observation i and finally sum over all observations. This produces the first part of WAIC, the log-pointwise-predictive-density, lppd:
 
-$$\text{lppd} = \sum_{i=1}^N ~\text{log Pr}(y_i)$$
+![\large](https://latex.codecogs.com/svg.latex?\mathbf{lppd = \sum_{i=1}^N ~log Pr(y_i)})
+
+<br>
 
 ```
 Pr(y_i)   =  the average likelihood of observation i in the training sample
@@ -8356,9 +8342,11 @@ If you multiplied it by −2, it’d be similar to the deviance, in fact.
 ```
 <br>
 
-The second piece of WAIC is the effective number of parameters $p_{WAIC}$. 
+The second piece of WAIC is the effective number of parameters *p~{WAIC}~*. 
 
-$$p_{WAIC} = \sum_{i=1}^N ~V(y_i)$$
+![\large](https://latex.codecogs.com/svg.latex?\mathbf{p_{WAIC} = \sum_{i=1}^N ~V(y_i)})
+
+<br>
 
 ```
 p_WAIC    = the effective number of parameters
@@ -8371,7 +8359,9 @@ V(y_i)    = the variance in log-likelihood for observation i in the training sam
 
 Now WAIC is defined as:
 
-$$\text{WAIC} = ~-2 (\text{lppd}~-~ p_{WAIC})$$
+![\large](https://latex.codecogs.com/svg.latex?\mathbf{WAIC = ~-2 (lppd~-~ p_{WAIC})})
+
+<br>
 
 Because WAIC requires splitting up the data into independent observations i = 1...N, it is sometimes hard to define. Consider for example a model in which each prediction depends upon a previous observation. This happens, for example, in a *time series*. In a time series, a previous observation becomes a predictor variable for the next observation. So it’s not easy to think of each observation as independent of, or exchangeable with, the others. In such a case, you can of course compute WAIC as if each observation were independent of the others, but it’s not clear what the resulting value means.
 
@@ -8549,9 +8539,9 @@ As an example, we’ll repeat the analysis of predicting kilocalories per gram o
 
 (4) a model with neither predictor (just an intercept)
 
-Fitting the four models, using map, is straightforward. The only thing that differs among these models is the equation for $\mu_i$ (mu). 
+Fitting the four models, using map, is straightforward. The only thing that differs among these models is the equation for <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> (mu). 
 
-A way to constrain the standard deviation of the outcome, $\sigma$, to be positive is to estimate the logarithm of $\sigma$, which can be any real number. Then inside the likelihood function we just exponentiate it. Since $exp(x) > 0$ for any real number $x$, this effectively bounds $\sigma$ to positive reals.
+A way to constrain the standard deviation of the outcome, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, to be positive is to estimate the logarithm of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, which can be any real number. Then inside the likelihood function we just exponentiate it. Since *exp(x) > 0* for any real number *x*, this effectively bounds <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" /> to positive reals.
 
 ```{r 6.21}
 
@@ -8672,9 +8662,11 @@ plot( milk.models , SE=TRUE , dSE=TRUE )
  
  <br>
  
-Akaike weights help by rescaling. A total weight of 1 is partitioned among the considered models, making it easier to compare their relative predictive accuracy. The weight for a model $i$ in a set of $m$ models is given by:
+Akaike weights help by rescaling. A total weight of 1 is partitioned among the considered models, making it easier to compare their relative predictive accuracy. The weight for a model *i* in a set of *m* models is given by:
 
-$$ w_i = \frac{exp \left(- \frac{1}{2}dWAIC_i \right)}{\sum_{j=1}^m exp\left(- \frac{1}{2}dWAIC_j \right)}$$
+![\large](https://latex.codecogs.com/svg.latex?\mathbf{w_i = \frac{exp \left(- \frac{1}{2}dWAIC_i \right)}{\sum_{j=1}^m exp\left(- \frac{1}{2}dWAIC_j \right)}})
+
+<br>
 
 
 The Akaike weight formula might look rather odd, but really all it is doing is putting WAIC on a probability scale, so it just undoes the multiplication by −2 and then exponentiates to reverse the log transformation. Then it standardizes by dividing by the total. So each weight will be a number from 0 to 1, and the weights together always sum to 1. ***Now larger values are better.***
@@ -8689,7 +8681,7 @@ A model’s weight is an estimate of the probability that the model will make th
 
 <span style="color:purple">***Heuristic explanation of the Akaike weight***</span>
 
-- First, regard WAIC as the expected deviance of a model on future data. That is to say that WAIC gives us an estimate of E($D_{test}$). 
+- First, regard WAIC as the expected deviance of a model on future data. That is to say that WAIC gives us an estimate of E(D~{test}~). 
 
 - Akaike weights convert these deviance values, which are log-likelihoods, to plain likelihoods and then standardize them all. This is just like Bayes’ theorem uses a sum in the denominator to standardize the product of the likelihood and prior. 
 
@@ -8911,7 +8903,7 @@ shade(mu.PI, rugged.seq)
 
 The plots above cheat, because they split the data into two data frames. But it’s not a good idea to split the data in this way. Here are four, of many, reasons.
 
-- There are usually some parameters, such as $\sigma$, that the model says do not depend in any way upon an African identity for each nation. By splitting the data table, you are hurting the accuracy of the estimates for these parameters, because you are essentially making two less-accurate estimates instead of pooling all of the evidence into one estimate. In effect, you have accidentally assumed that variance differs between African and non-African nations. Now, there’s nothing wrong with that sort of assumption. But you want to avoid accidental assumptions.
+- There are usually some parameters, such as <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, that the model says do not depend in any way upon an African identity for each nation. By splitting the data table, you are hurting the accuracy of the estimates for these parameters, because you are essentially making two less-accurate estimates instead of pooling all of the evidence into one estimate. In effect, you have accidentally assumed that variance differs between African and non-African nations. Now, there’s nothing wrong with that sort of assumption. But you want to avoid accidental assumptions.
 
 - In order to acquire probability statements about the variable you used to split the data, `cont_africa` in this case, you need to include it in the model. Otherwise, you have only the weakest sort of statistical argument. Isn’t there uncertainty about the predictive value of distinguishing between African and non-African nations? Of course there is. Unless you analyze all of the data in a single model, you can’t easily quantify that uncertainty. If you just let the posterior distribution do the work for you, you’ll have a useful measure of that uncertainty.
 
@@ -9001,12 +8993,9 @@ text(4, 9.4, "not Africa", col = "black")
 
 A proper interaction effect is needed to recover the change in slope you saw at the start of this section. The likelihood for the model you just plotted, in math form, is:
 
-$$
-\begin{align*}
-\ Y_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_R R_i + \beta_A A_i
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}Y_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_R R_i + \beta_A A_i\\\end{align*}" title="" />
+
+<br>
 
 
 ```
@@ -9020,21 +9009,15 @@ R   = rugged
 
 <br>
 
-Now you want to allow the relationship between Y and R to vary as a function of A. Within the model, this relationship is measured by the slope $\beta_R$. Following the same strategy of replacing parameters with linear models, the most straightforward way to make $\beta_R$ depend upon $A$ is just to define the slope $\beta_R$ as a linear model itself, one that includes $A$.
+Now you want to allow the relationship between Y and R to vary as a function of A. Within the model, this relationship is measured by the slope <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_R}" title="" />. Following the same strategy of replacing parameters with linear models, the most straightforward way to make <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_R}" title="" /> depend upon *A* is just to define the slope <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_R}" title="" /> as a linear model itself, one that includes *A*.
 
 <br>
 
-$$
-\begin{align*}
-\ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
-\mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
-\gamma_i &= \beta_R + \beta_{AR} A_i &&&    \text{[linear model of slope]}
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}Y_i &\sim Normal(\mu_i, \sigma) &&&    [likelihood]\\\mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&   [linear~model~of~\mu]\\\gamma_i &= \beta_R + \beta_{AR} A_i &&&    [linear~model~of~slope]\\\end{align*}" title="" />
 
 <br>
 
-By defining the relationship between GDP and ruggedness in this way, you are explicitly modeling the hypothesis that the slope between GDP and ruggedness depends&mdash; is *conditional*&mdash; upon whether or not a nation is in Africa. The parameter $\beta_{AR}$ defines the strength of this dependency. If you set $\beta_{AR}$ = 0, then you get the previous model back. If instead $\beta_{AR}$ > 0, then African nations have a more positive slope between GDP and ruggedness. If $\beta_{AR}$ < 0, African nations have a more negative slope. For any nation not in Africa, $A_i$ = 0 and so the interaction parameter $\beta_{AR}$ has no effect on prediction for that nation.
+By defining the relationship between GDP and ruggedness in this way, you are explicitly modeling the hypothesis that the slope between GDP and ruggedness depends&mdash; is *conditional*&mdash; upon whether or not a nation is in Africa. The parameter <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_{AR}}" title="" /> defines the strength of this dependency. If you set <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_{AR}}" title="" /> = 0, then you get the previous model back. If instead <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_{AR}}" title="" /> > 0, then African nations have a more positive slope between GDP and ruggedness. If <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_{AR}}" title="" /> < 0, African nations have a more negative slope. For any nation not in Africa, A~i~ = 0 and so the interaction parameter <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_{AR}}" title="" /> has no effect on prediction for that nation.
 
 <br>
 
@@ -9067,14 +9050,9 @@ compare(m7.3, m7.4, m7.5)
 
 <span style="color:purple">***Conventional form of interaction***</span>
 
-Instead of a model definition with more than one linear model, as you saw above, it’s conventional to multiply out any interaction effects, so that there is only one linear model. The equation for $\gamma$ can be substituted into the second line and expanded.
+Instead of a model definition with more than one linear model, as you saw above, it’s conventional to multiply out any interaction effects, so that there is only one linear model. The equation for <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\gamma}" title="" /> can be substituted into the second line and expanded.
 
-$$
-\begin{align*}
-\ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
-\mu_i &= \alpha + \beta_R R_i + \beta_{AR} A_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}Y_i &\sim Normal(\mu_i, \sigma) &&&    [likelihood]\\\mu_i &= \alpha + \beta_R R_i + \beta_{AR} A_i R_i + \beta_A A_i &&&    [linear~model~of~\mu]\\\end{align*}" title="" />
 
 
 <br>
@@ -9156,18 +9134,11 @@ There are two basic reasons to be wary of interpreting tables of posterior means
 
 Unlike in the simple linear regression models, you can no longer read the influence of either predictor from the table of estimates in interaction models:
 
-$$
-\begin{align*}
-\ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
-\mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
-\gamma_i &= \beta_R + \beta_{AR} A_i &&&    \text{[linear model of slope]}
-\end{align*}
-$$
-
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}\ Y_i &\sim Normal(\mu_i, \sigma) &&&    [likelihood]\\\mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    [linear~model~of~\mu]\\\gamma_i &= \beta_R + \beta_{AR} A_i &&&    [linear~model~of~slope]\\\end{align*}" title="" />
 
 <br>
 
-Now the change in $\mu_i$ that results from a unit change in $R_i$ is given by $\gamma_i$. And since $\gamma_i$ is a function of three things&mdash; $\beta_R$, $\beta_{AR}$, and $A_i$&mdash; we have to know all three in order to know the influence of $R_i$ on the outcome. The only time the slope $\beta_R$ has its old meaning is when $A_i = 0$, which makes $\gamma_i = \beta_R$. Otherwise, to compute the influence of $R_i$ on the outcome, we have to simultaneously consider two parameters and another predictor variable.
+Now the change in <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" /> that results from a unit change in *R~i~* is given by <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\gamma_i}" title="" />. And since <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\gamma_i}" title="" /> is a function of three things&mdash; <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_R}" title="" />, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_{AR}}" title="" />, and *A~i~*&mdash; we have to know all three in order to know the influence of *R~i~* on the outcome. The only time the slope <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_R}" title="" /> has its old meaning is when *A~i~ = 0*, which makes <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\gamma_i = \beta_R}" title="" />. Otherwise, to compute the influence of *R~i~* on the outcome, we have to simultaneously consider two parameters and another predictor variable.
 
 ```{r 7.12}
 
@@ -9175,16 +9146,19 @@ precis(m7.5)
 
 ```
 
-Since $\gamma$ (gamma) doesn’t appear in this table&mdash; it wasn’t estimated&mdash; we have to compute it ourselves. 
+Since <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\gamma}" title="" /> (gamma) doesn’t appear in this table&mdash; it wasn’t estimated&mdash; we have to compute it ourselves. 
 
 For example, the ***MAP*** slope relating ruggedness to log-GDP within Africa is:
 
-$$\gamma = \beta_R + \beta_{AR}(1) = −0.18 + 0.35 = 0.17$$
+![\large ](https://latex.codecogs.com/svg.latex?\boldsymbol{\gamma = \beta_R + \beta_{AR}(1) = -0.18 + 0.35 = 0.17})
+
 <br>
 
 And outside of Africa:
 
-$$\gamma = \beta_R + \beta_{AR}(0) = -0.18$$
+![\large ](https://latex.codecogs.com/svg.latex?\boldsymbol{\gamma = \beta_R + \beta_{AR}(0) = -0.18})
+
+<br>
 
 So the relationship between ruggedness and log-GDP is essentially reversed inside and out-side of Africa.
 
@@ -9192,7 +9166,7 @@ So the relationship between ruggedness and log-GDP is essentially reversed insid
 
 #### Incorporating uncertainty
 
-Anything calculated using parameters has a distribution. Since $\gamma$ depends upon parameters, and those parameters have a posterior distribution, $\gamma$ must also have a posterior distribution.
+Anything calculated using parameters has a distribution. Since <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\gamma}" title="" /> depends upon parameters, and those parameters have a posterior distribution, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\gamma}" title="" /> must also have a posterior distribution.
 
 ```{r 7.13}
 
@@ -9252,40 +9226,23 @@ We’ll plot the ruggedness and GDP example again, but with the reverse phrasing
 
 Consider yet again the mathematical form of the likelihood:
 
-$$
-\begin{align*}
-\ Y_i &\sim \text{Normal}(\mu_i, \sigma) &&&    \text{[likelihood]}\\
-\mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    \text{[linear model of}~\mu]\\
-\gamma_i &\sim \beta_R + \beta_{AR} A_i &&&   \text{[linear model of slope]}
-\end{align*}
-$$
-
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}Y_i &\sim Normal(\mu_i, \sigma) &&&    [likelihood]\\\mu_i &= \alpha + \gamma_i R_i + \beta_A A_i &&&    [linear~model~of~\mu]\\\gamma_i &\sim \beta_R + \beta_{AR} A_i &&&   [linear~model~of~slope]\\\end{align*}" title="" />
 
 <br>
 
-Let’s expand $\gamma_i$ into the expression for $\mu_i$:
+Let’s expand <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\gamma_i}" title="" /> into the expression for <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" />:
 
-$$
-\begin{align*}
-\mu_i &= \alpha + (\beta_R + \beta_{AR} A_i) R_i + \beta_A A_i\\
-&= \alpha + \beta_R R_i + \beta_{AR} A_i R_i + \beta_A A_i
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}\mu_i &= \alpha + (\beta_R + \beta_{AR} A_i) R_i + \beta_A A_i\\ &= \alpha + \beta_R R_i + \beta_{AR} A_i R_i + \beta_A A_i\\\end{align*}" title="" />
 
 <br>
 
-Now factor together the terms with $A_i$ in them:
+Now factor together the terms with *A~i~* in them:
 
-$$
-\begin{align*}
-\mu_i &= \alpha + \beta_R R_i + \underbrace{(\beta_A + \beta_{AR}R_i)}_G A_i
-\end{align*}
-$$
-
+![\large ](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta_R R_i + \underbrace{(\beta_A + \beta_{AR}R_i)}_G A_i})
 
 <br>
 
-The term labeled $G$ looks a lot like $\gamma_i$ in the original form. This is the same model of $\mu_i$, but re-expressed so that the linear interaction applies to $A_i$&mdash; prove that linear interactions are symmetric. Within the model, there’s no basis to prefer one interpretation over the other, because in fact they are the same interpretation. But when we reason causally about models, our minds tend to prefer one interpretation over the other, because it’s usually easier to imagine manipulating one of the predictor variables instead of the other&mdash; hard to imagine manipulating which continent a nation is on, but it's easy to imagine manipulating terrain ruggedness.
+The term labeled *G* looks a lot like <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\gamma_i}" title="" /> in the original form. This is the same model of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" />, but re-expressed so that the linear interaction applies to *A~i~*&mdash; prove that linear interactions are symmetric. Within the model, there’s no basis to prefer one interpretation over the other, because in fact they are the same interpretation. But when we reason causally about models, our minds tend to prefer one interpretation over the other, because it’s usually easier to imagine manipulating one of the predictor variables instead of the other&mdash; hard to imagine manipulating which continent a nation is on, but it's easy to imagine manipulating terrain ruggedness.
 
 <br>
 
@@ -9374,25 +9331,15 @@ Example focusing on just two models:
 
 The main effect likelihood is:
 
-$$
-\begin{align*}
-\ B_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_W W_i + \beta_S S_i
-\end{align*}
-$$
-
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}B_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_W W_i + \beta_S S_i\\\end{align*}" title="" />
 
 <br>
 
 And the full interaction likelihood is:
 
-$$
-\begin{align*}
-\ B_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_W W_i + \beta_S S_i + \beta_{WS} W_i S_i
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}B_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_W W_i + \beta_S S_i + \beta_{WS} W_i S_i\\\end{align*}" title="" />
 
+<br>
 
 ```
 B_i    = the value of bloom on row i 
@@ -9533,15 +9480,17 @@ coeftab(m7.8,m7.9)
 
 #### Estimation worked better
 
-Estimation failed with the un-centered predictor variables, because there was a long way to go from the `start` values you provided to map and the `MAP` values it was seeking. When the predictors are centered, the MAP value for $\alpha$ is just the empirical mean for the outcome. That is also the `start` value given to `map`. With un-centered predictors, the MAP value for $\alpha$ lies a long way from the empirical mean. Hence, the long search that failed.
+Estimation failed with the un-centered predictor variables, because there was a long way to go from the `start` values you provided to map and the `MAP` values it was seeking. When the predictors are centered, the MAP value for <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha}" title="" /> is just the empirical mean for the outcome. That is also the `start` value given to `map`. With un-centered predictors, the MAP value for <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\alpha}" title="" /> lies a long way from the empirical mean. Hence, the long search that failed.
 
 <br>
 
 #### Estimates changed less across models
 
-In the un-centered models, the interaction effect is applied to every case, and so none of the parameters in $\mu$ makes sense alone. This is because neither of the predictors in those models, `shade` and `water`, are ever zero. As a result the interaction parameter always factors into generating a prediction. Consider for example a tulip at the average moisture and shade levels, 2 in each case. The expected blooms for such a tulip is:
+In the un-centered models, the interaction effect is applied to every case, and so none of the parameters in <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> makes sense alone. This is because neither of the predictors in those models, `shade` and `water`, are ever zero. As a result the interaction parameter always factors into generating a prediction. Consider for example a tulip at the average moisture and shade levels, 2 in each case. The expected blooms for such a tulip is:
 
-$$\mu_i|_{S_i=2, W_i=2} = \alpha + \beta_W(2) + \beta_S (2) + \beta_{WS}(2 \times 2)$$
+![\large ](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i|_{S_i=2, W_i=2} = \alpha + \beta_W(2) + \beta_S (2) + \beta_{WS}(2 \times 2)})
+
+<br>
 
 ```{r 7.25}
 
@@ -9687,14 +9636,9 @@ for ( s in -1:1 ) {
 
 To specify interaction models using design formulas, like those used by `lm` and other automated model fitting functions, you just strip out the parameters from the linear model.
 
-For example, here’s a model with an interaction between $x$ and $z$:
+For example, here’s a model with an interaction between *x* and *z*:
 
-$$
-\begin{align*}
-\ y_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_x x_i + \beta_z z_i + \beta_{xz} x_i z_i
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_x x_i + \beta_z z_i + \beta_{xz} x_i z_i\\\end{align*}" title="" />
 
 <br>
 
@@ -9710,14 +9654,11 @@ m7.x <- lm( y ~ x*z , data=d )
 
 <br>
 
-If you do not want the main effects in the model, you must explicitly subtract them from the formula. For example, here’s a model with an interaction, but without one of the main effects (when you know a priori that there is no direct effect of $z$ on the outcome, when $\beta_z$ = 0 by assumption):
+If you do not want the main effects in the model, you must explicitly subtract them from the formula. For example, here’s a model with an interaction, but without one of the main effects (when you know a priori that there is no direct effect of *z* on the outcome, when <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\beta_z}" title="" /> = 0 by assumption):
 
-$$
-\begin{align*}
-\ y_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_x x_i + \beta_{xz} x_i z_i
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_x x_i + \beta_{xz} x_i z_i\\\end{align*}" title="" />
+
+<br>
 
 
 ```{r 7.31}
@@ -9729,14 +9670,11 @@ m7.x <- lm( y ~ x + x*z - z , data=d )
 
 <br>
 
-For higher-order interactions, just multiply more predictors together. The design formula always implies all of the lower-order interactions, even though you don’t explicitly state them. For example, this model has a three-way interaction between $x$, $z$, and $w$, as well as three two-way interactions and all three main effects:
+For higher-order interactions, just multiply more predictors together. The design formula always implies all of the lower-order interactions, even though you don’t explicitly state them. For example, this model has a three-way interaction between *x*, *z*, and *w*, as well as three two-way interactions and all three main effects:
 
-$$
-\begin{align*}
-y_i &\sim \text{Normal}(\mu_i, \sigma)\\
-\mu_i &= \alpha + \beta_x x_i + \beta_z z_i + \beta_w w_i + \beta_{xz} x_i z_i + \beta_{xw} x_i w_i + \beta_{zw} z_i w_i + \beta_{xzw} x_i z_i w_i 
-\end{align*}
-$$
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim Normal(\mu_i, \sigma)\\\mu_i &= \alpha + \beta_x x_i + \beta_z z_i + \beta_w w_i + \beta_{xz} x_i z_i + \beta_{xw} x_i w_i + \beta_{zw} z_i w_i + \beta_{xzw} x_i z_i w_i \\\end{align*}" title="" />
+
+<br>
 
 ```{r 7.32}
 

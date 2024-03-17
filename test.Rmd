@@ -218,8 +218,10 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 ![\large \frac{-b\pm\sqrt{b^2-4ac}}{2a}](https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D)
 
-![](https://latex.codecogs.com/svg.latex?\mathbf{Pr(s|y)} = \frac{\mathbf{Pr(y|s)~Pr(s)}}{\mathbf{Pr(y)}})
+wrong
 
+
+![\large ](https://latex.codecogs.com/svg.latex?\boldsymbol{\gamma = \beta_R + \beta_{AR}(1) = -0.18 + 0.35 = 0.17})
 
 
 
@@ -233,13 +235,10 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 test
 
 
-<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y \sim 1 + x\\\end{align*}" title="" />
 
 
-<div style="display: flex; justify-content: center;">
-    <img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}y_i &\sim \text{Normal}(\mu_i, \sigma)\\ \mu_i &= \alpha + \beta x_i\\\end{align*}}" title="" />
-</div>
 
+<img src="https://latex.codecogs.com/svg.latex?\inline&space;\dpi{110}\boldsymbol{\begin{align*}h_i &\sim Normal(\mu_i, \sigma) \ &&& height &\sim dnorm(mu, sigma) \\\mu_i &= \alpha + \beta x_i \ &&& mu &\leftarrow a + b \times weight \\\alpha &\sim Normal(178, 100) \ &&& a &\sim dnorm(178, 100)\\\beta &\sim Normal(0, 10) \ &&& b &\sim dnorm(0, 10)\\\sigma &\sim Uniform(0, 50) \ &&& sigma &\sim dunif(0, 50)\\\end{align*}" title="" />
 
 
 
@@ -257,15 +256,16 @@ new
 
 Now since both right-hand sides are equal to the same thing, we can set them equal to one another and solve for the posterior probability: ![](https://latex.codecogs.com/svg.latex?\mathbf{Pr(s|y)} = \frac{\mathbf{Pr(y|s)~Pr(s)}}{\mathbf{Pr(y)}})
 
-![](https://latex.codecogs.com/svg.latex?\mathbf{Pr(w|n,p)} = \frac{\mathbf{n!}}{\mathbf{w! (n - w)!}}\mathbf{p^w (1 - p)^{n-w}})
+![\large](https://latex.codecogs.com/svg.latex?\mathbf{w_i = \frac{exp \left(- \frac{1}{2}dWAIC_i \right)}{\sum_{j=1}^m exp\left(- \frac{1}{2}dWAIC_j \right)}})
+
 
 
 mu, sigma symbol
 
-<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu_i}" title="" />
+<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />
 
+take
 
+![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta_x x_i + \beta_z Z_i})
 
-![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta_{NWM} NWM_i + \beta_{OWM} OWM_i + \beta_S S_i + \beta_F F_i})
-
-
+<img src="https://latex.codecogs.com/svg.latex?\dpi{110}\textbf{plausibility of p after D}_{\textbf{new}} \boldsymbol{=} \frac{\textbf{ways p can produce D}_{\textbf{new}} \boldsymbol{\times} \textbf{prior plausibility p}}{\textbf{sum of products}}"title="" />
