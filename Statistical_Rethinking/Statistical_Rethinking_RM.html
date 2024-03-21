@@ -955,7 +955,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="fu">precis</span><span class="op">(</span> <span class="va">globe.qa</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>       mean        sd      5.5%     94.5%
-p 0.6666664 0.1571338 0.4155362 0.9177966</code></pre>
+p 0.6666663 0.1571339 0.4155361 0.9177966</code></pre>
 </div>
 </div>
 <p><em>To use map, you provide a formula, a list of data, and a list of start values for the parameters. The formula defines the likelihood and prior.</em></p>
@@ -987,7 +987,7 @@ p 0.6666664 0.1571338 0.4155362 0.9177966</code></pre>
 <span><span class="fu">precis</span><span class="op">(</span> <span class="va">globe.qa1</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>       mean        sd      5.5%     94.5%
-p 0.6666662 0.1111104 0.4890903 0.8442422</code></pre>
+p 0.6666662 0.1111104 0.4890902 0.8442421</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1014,7 +1014,7 @@ p 0.6666662 0.1111104 0.4890903 0.8442422</code></pre>
 <span><span class="fu">precis</span><span class="op">(</span> <span class="va">globe.qa2</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>       mean         sd      5.5%     94.5%
-p 0.6666664 0.07856692 0.5411013 0.7922315</code></pre>
+p 0.6666669 0.07856687 0.5411018 0.7922319</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1648,7 +1648,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">samples</span> <span class="op">&lt;</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">/</span> <span class="fl">1e4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 17.2077</code></pre>
+<pre><code>[1] 17.15</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The answer is the posterior probability below a parameter value of 0.5.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1658,7 +1658,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">samples</span> <span class="op">&gt;</span> <span class="fl">0.5</span> <span class="op">&amp;</span> <span class="va">samples</span> <span class="op">&lt;</span> <span class="fl">0.75</span><span class="op">)</span><span class="op">/</span> <span class="fl">1e4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 60.4227</code></pre>
+<pre><code>[1] 60.6002</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># So about 61% of the posterior probability lies between 0.5 and 0.75.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1676,7 +1676,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">samples</span>, <span class="fl">0.8</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      80% 
-0.7607608 </code></pre>
+0.7597598 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Lower 80% posterior probability exists below a parameter value of about 0.75. </span></span>
 <span></span>
@@ -1712,7 +1712,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu">PI</span><span class="op">(</span><span class="va">samples2</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      25%       75% 
-0.7077077 0.9299299 </code></pre>
+0.7017017 0.9299299 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This interval assigns 25% of the probability mass above and below the interval. </span></span>
 <span><span class="co"># So it provides the central 50% probability. But in this example, it ends up excluding </span></span>
@@ -1762,7 +1762,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu">HPDI</span><span class="op">(</span><span class="va">samples2</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>     |0.5      0.5| 
-0.8448448 1.0000000 </code></pre>
+0.8398398 1.0000000 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This interval captures the parameters with highest posterior probability, </span></span>
 <span><span class="co"># as well as being noticeably narrower: </span></span>
@@ -1816,23 +1816,23 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu">HPDI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>     |0.8      0.8| 
-0.4774775 0.8398398 </code></pre>
+0.4674675 0.8298298 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">PI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      10%       90% 
-0.4464464 0.8168168 </code></pre>
+0.4494494 0.8138138 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute 95% HPDI and PI from samples</span></span>
 <span><span class="fu">HPDI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>    |0.95     0.95| 
-0.3573574 0.8838839 </code></pre>
+0.3693694 0.8888889 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">PI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>       3%       98% 
-0.3473473 0.8798799 </code></pre>
+0.3503504 0.8768769 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Add name for 80% HPDI and PI</span></span>
 <span><span class="va">hpdi_80</span> <span class="op">&lt;-</span> <span class="fu">HPDI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
@@ -1918,14 +1918,14 @@ inferences, then you’d be better off just plotting the entire posterior distri
 <details><summary>Code</summary><div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute MAP using samples from posterior</span></span>
 <span><span class="fu">chainmode</span><span class="op">(</span> <span class="va">samples2</span>, adj <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span> <span class="co"># rethinking</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9880137</code></pre>
+<pre><code>[1] 0.984019</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">map_value</span> <span class="op">&lt;-</span> <span class="va">p_grid</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span> <span class="op">]</span></span>
 <span></span>
 <span><span class="co"># mean of the samples</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">samples2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8017638</code></pre>
+<pre><code>[1] 0.8003801</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mean_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">samples2</span><span class="op">)</span></span>
 <span></span>
@@ -2084,7 +2084,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">10</span>, size <span class="op">=</span> <span class="fl">2</span>, prob <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code> [1] 1 1 2 2 1 0 1 2 0 1</code></pre>
+<pre><code> [1] 1 1 2 2 2 1 1 2 2 1</code></pre>
 </div>
 </div>
 <p>Let’s generate 100,000 dummy observations, just to verify that each value (0, 1, or 2) appears in proportion to its likelihood:</p>
@@ -2095,7 +2095,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 </details><div class="cell-output cell-output-stdout">
 <pre><code>dummy_w
       0       1       2 
-0.08873 0.41821 0.49306 </code></pre>
+0.09116 0.41989 0.48895 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb104"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># values are very close to the likelihood values calculated above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -2107,7 +2107,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 </details><div class="cell-output cell-output-stdout">
 <pre><code>dummy_w_9
       0       1       2       3       4       5       6       7       8       9 
-0.00001 0.00047 0.00413 0.01988 0.07367 0.17232 0.26640 0.26689 0.15591 0.04032 </code></pre>
+0.00001 0.00041 0.00416 0.02150 0.07299 0.17244 0.26834 0.26589 0.15513 0.03913 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">simplehist</span><span class="op">(</span><span class="va">dummy_w_9</span>, xlab <span class="op">=</span> <span class="st">"dummy water count"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
@@ -10355,7 +10355,13 @@ sigma  0.9326834 0.05058191  0.8518438  1.01352311</code></pre>
 <section id="preparation" class="level3"><h3 class="anchored" data-anchor-id="preparation">Preparation</h3>
 <p>But now we’ll also fit this model using Hamiltonian Monte Carlo. This means there will be no more quadratic approximation— if the posterior distribution is non-Gaussian, then we’ll get whatever non-Gaussian shape it has. You can use exactly the same formula list as before, but you need to do two additional things.</p>
 <ol type="1">
-<li>Preprocess all variable transformations. - If the outcome is transformed somehow, like by taking the logarithm, then do this before fitting the model by constructing a new variable in the data frame. - Likewise, if any predictor variables are transformed, including squaring and cubing and such to build polynomial models, then compute these transformed values before fitting the model.</li>
+<li>
+<p>Preprocess all variable transformations.</p>
+<ul>
+<li><p>If the outcome is transformed somehow, like by taking the logarithm, then do this before fitting the model by constructing a new variable in the data frame.</p></li>
+<li><p>Likewise, if any predictor variables are transformed, including squaring and cubing and such to build polynomial models, then compute these transformed values before fitting the model.</p></li>
+</ul>
+</li>
 </ol>
 <ol start="2" type="1">
 <li>Once you’ve got all the variables ready, make a new trimmed down data frame that contains only the variables you will actually use to fit the model. Technically, you don’t have to do this. But doing so avoids common problems. For example, if any of the unused variables have missing values, NA, then Stan will refuse to work.</li>
@@ -10786,6 +10792,7 @@ sigma 2.02126018 2.027476  0.7008276 4.653070  417.832 1.006408</code></pre>
 <details><summary>Code</summary><div class="sourceCode" id="cb815"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Much better values with weakly informative priors for alpha and sigma. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<p><br></p>
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb816"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Use akjurz's codes using brms</span></span>
 <span><span class="co"># As with rethinking, brms can take data in the form of a list. Recall however, </span></span>
@@ -10898,18 +10905,33 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <details><summary>Code</summary><div class="sourceCode" id="cb822"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compare posterior and priors for model b8.3</span></span>
 <span><span class="co">#post %&gt;%</span></span>
 <span>  <span class="co">#select(b_Intercept) %&gt;%</span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">post</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">b_Intercept</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span> <span class="va">d1</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">post</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">b_Intercept</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">stat_density</span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"line"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_line</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">post</span><span class="op">$</span><span class="va">b_Intercept</span><span class="op">)</span>,</span>
 <span>                                      to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">post</span><span class="op">$</span><span class="va">b_Intercept</span><span class="op">)</span>,</span>
 <span>                                      length.out <span class="op">=</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>            <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>            color <span class="op">=</span> <span class="fu">ipsum_pal</span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_ipsum</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">theme_ipsum</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># post %&gt;%</span></span>
+<span><span class="co">#  select(sigma) %&gt;%</span></span>
+<span>  </span>
+<span> <span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">post</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">stat_density</span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"line"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                                      to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">post</span><span class="op">$</span><span class="va">sigma</span><span class="op">)</span>,</span>
+<span>                                      length.out <span class="op">=</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>            <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html">dcauchy</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, location <span class="op">=</span> <span class="fl">0</span>, scale <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>            color <span class="op">=</span> <span class="fu">ipsum_pal</span><span class="op">(</span><span class="op">)</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">coord_cartesian</span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_ipsum</span><span class="op">(</span><span class="op">)</span></span>
+<span>  </span>
+<span> <span class="fu">grid.arrange</span><span class="op">(</span><span class="va">d1</span>, <span class="va">d2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <p><img src="Statistical_Rethinking_RM_files/figure-html/akjurz_8.13-3.png" class="img-fluid" width="672"></p>
 </div>
-<details><summary>Code</summary><div class="sourceCode" id="cb823"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Prior (dashed) and posterior (blue) for the model with weakly informative priors.</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb823"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span> <span class="co"># Prior (dashed) and posterior (solid black) for the model with weakly informative priors.</span></span>
 <span><span class="co"># Even with only two observations, the likelihood easily overcomes these priors. </span></span>
 <span><span class="co"># Yet the model cannot be successfully estimated without them.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -21104,411 +21126,411 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb824-9905"><a href="#cb824-9905" aria-hidden="true" tabindex="-1"></a>But now we’ll also fit this model using Hamiltonian Monte Carlo. This means there will be no more quadratic approximation<span class="dv">&amp;mdash;</span> if the posterior distribution is non-Gaussian, then we’ll get whatever non-Gaussian shape it has. You can use exactly the same formula list as before, but you need to do two additional things.</span>
 <span id="cb824-9906"><a href="#cb824-9906" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb824-9907"><a href="#cb824-9907" aria-hidden="true" tabindex="-1"></a>(1) Preprocess all variable transformations.</span>
-<span id="cb824-9908"><a href="#cb824-9908" aria-hidden="true" tabindex="-1"></a><span class="ss">        - </span>If the outcome is transformed somehow, like by taking the logarithm, then do this before fitting the model by constructing a new variable in the data frame. </span>
-<span id="cb824-9909"><a href="#cb824-9909" aria-hidden="true" tabindex="-1"></a><span class="ss">        - </span>Likewise, if any predictor variables are transformed, including squaring and cubing and such to build polynomial models, then compute these transformed values before fitting the model.</span>
-<span id="cb824-9910"><a href="#cb824-9910" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb824-9911"><a href="#cb824-9911" aria-hidden="true" tabindex="-1"></a>\n</span>
-<span id="cb824-9912"><a href="#cb824-9912" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9913"><a href="#cb824-9913" aria-hidden="true" tabindex="-1"></a>(2) Once you’ve got all the variables ready, make a new trimmed down data frame that contains only the variables you will actually use to fit the model. Technically, you don’t have to do this. But doing so avoids common problems. For example, if any of the unused variables have missing values, NA, then Stan will refuse to work.</span>
+<span id="cb824-9908"><a href="#cb824-9908" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-9909"><a href="#cb824-9909" aria-hidden="true" tabindex="-1"></a><span class="in">      - If the outcome is transformed somehow, like by taking the logarithm, then do this before fitting the model by constructing a new variable in the data frame. </span></span>
+<span id="cb824-9910"><a href="#cb824-9910" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb824-9911"><a href="#cb824-9911" aria-hidden="true" tabindex="-1"></a><span class="in">      - Likewise, if any predictor variables are transformed, including squaring and cubing and such to build polynomial models, then compute these transformed values before fitting the model.</span></span>
+<span id="cb824-9912"><a href="#cb824-9912" aria-hidden="true" tabindex="-1"></a><span class="in">        </span></span>
+<span id="cb824-9913"><a href="#cb824-9913" aria-hidden="true" tabindex="-1"></a>\n</span>
 <span id="cb824-9914"><a href="#cb824-9914" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9915"><a href="#cb824-9915" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.4}</span></span>
+<span id="cb824-9915"><a href="#cb824-9915" aria-hidden="true" tabindex="-1"></a>(2) Once you’ve got all the variables ready, make a new trimmed down data frame that contains only the variables you will actually use to fit the model. Technically, you don’t have to do this. But doing so avoids common problems. For example, if any of the unused variables have missing values, NA, then Stan will refuse to work.</span>
 <span id="cb824-9916"><a href="#cb824-9916" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9917"><a href="#cb824-9917" aria-hidden="true" tabindex="-1"></a>dd.trim <span class="ot">&lt;-</span> dd[ , <span class="fu">c</span>(<span class="st">"log_gdp"</span>,<span class="st">"rugged"</span>,<span class="st">"cont_africa"</span>) ]</span>
-<span id="cb824-9918"><a href="#cb824-9918" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dd.trim)</span>
-<span id="cb824-9919"><a href="#cb824-9919" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9920"><a href="#cb824-9920" aria-hidden="true" tabindex="-1"></a><span class="co"># The data frame dd.trim contains only the three variables we’re using.</span></span>
-<span id="cb824-9921"><a href="#cb824-9921" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb824-9922"><a href="#cb824-9922" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9923"><a href="#cb824-9923" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb824-9917"><a href="#cb824-9917" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.4}</span></span>
+<span id="cb824-9918"><a href="#cb824-9918" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-9919"><a href="#cb824-9919" aria-hidden="true" tabindex="-1"></a>dd.trim <span class="ot">&lt;-</span> dd[ , <span class="fu">c</span>(<span class="st">"log_gdp"</span>,<span class="st">"rugged"</span>,<span class="st">"cont_africa"</span>) ]</span>
+<span id="cb824-9920"><a href="#cb824-9920" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dd.trim)</span>
+<span id="cb824-9921"><a href="#cb824-9921" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-9922"><a href="#cb824-9922" aria-hidden="true" tabindex="-1"></a><span class="co"># The data frame dd.trim contains only the three variables we’re using.</span></span>
+<span id="cb824-9923"><a href="#cb824-9923" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb824-9924"><a href="#cb824-9924" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9925"><a href="#cb824-9925" aria-hidden="true" tabindex="-1"></a><span class="fu">### Estimation</span></span>
+<span id="cb824-9925"><a href="#cb824-9925" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 <span id="cb824-9926"><a href="#cb824-9926" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9927"><a href="#cb824-9927" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.5}</span></span>
+<span id="cb824-9927"><a href="#cb824-9927" aria-hidden="true" tabindex="-1"></a><span class="fu">### Estimation</span></span>
 <span id="cb824-9928"><a href="#cb824-9928" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9929"><a href="#cb824-9929" aria-hidden="true" tabindex="-1"></a><span class="co"># Get samples from the posterior distribution using HMC</span></span>
-<span id="cb824-9930"><a href="#cb824-9930" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(m8<span class="fl">.1</span>stan <span class="ot">&lt;-</span> <span class="fu">ulam</span>(</span>
-<span id="cb824-9931"><a href="#cb824-9931" aria-hidden="true" tabindex="-1"></a>    <span class="fu">alist</span>(</span>
-<span id="cb824-9932"><a href="#cb824-9932" aria-hidden="true" tabindex="-1"></a>        log_gdp <span class="sc">~</span> <span class="fu">dnorm</span>( mu , sigma ) ,</span>
-<span id="cb824-9933"><a href="#cb824-9933" aria-hidden="true" tabindex="-1"></a>        mu <span class="ot">&lt;-</span> a <span class="sc">+</span> bR<span class="sc">*</span>rugged <span class="sc">+</span> bA<span class="sc">*</span>cont_africa <span class="sc">+</span> bAR<span class="sc">*</span>rugged<span class="sc">*</span>cont_africa ,</span>
-<span id="cb824-9934"><a href="#cb824-9934" aria-hidden="true" tabindex="-1"></a>        a <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">100</span>),</span>
-<span id="cb824-9935"><a href="#cb824-9935" aria-hidden="true" tabindex="-1"></a>        bR <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
-<span id="cb824-9936"><a href="#cb824-9936" aria-hidden="true" tabindex="-1"></a>        bA <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
-<span id="cb824-9937"><a href="#cb824-9937" aria-hidden="true" tabindex="-1"></a>        bAR <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
-<span id="cb824-9938"><a href="#cb824-9938" aria-hidden="true" tabindex="-1"></a>        sigma <span class="sc">~</span> <span class="fu">dcauchy</span>(<span class="dv">0</span>,<span class="dv">2</span>) <span class="co"># a weakly regularizing prior for standard deviations</span></span>
-<span id="cb824-9939"><a href="#cb824-9939" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9940"><a href="#cb824-9940" aria-hidden="true" tabindex="-1"></a><span class="co"># The uniform prior on sigma has been changed to a half-Cauchy prior. </span></span>
-<span id="cb824-9941"><a href="#cb824-9941" aria-hidden="true" tabindex="-1"></a><span class="co"># The Cauchy distribution is a useful thick-tailed probability distribution </span></span>
-<span id="cb824-9942"><a href="#cb824-9942" aria-hidden="true" tabindex="-1"></a><span class="co"># related to the Student t distribution.</span></span>
-<span id="cb824-9943"><a href="#cb824-9943" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9944"><a href="#cb824-9944" aria-hidden="true" tabindex="-1"></a>), <span class="at">data=</span>dd.trim))</span>
+<span id="cb824-9929"><a href="#cb824-9929" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.5}</span></span>
+<span id="cb824-9930"><a href="#cb824-9930" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-9931"><a href="#cb824-9931" aria-hidden="true" tabindex="-1"></a><span class="co"># Get samples from the posterior distribution using HMC</span></span>
+<span id="cb824-9932"><a href="#cb824-9932" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(m8<span class="fl">.1</span>stan <span class="ot">&lt;-</span> <span class="fu">ulam</span>(</span>
+<span id="cb824-9933"><a href="#cb824-9933" aria-hidden="true" tabindex="-1"></a>    <span class="fu">alist</span>(</span>
+<span id="cb824-9934"><a href="#cb824-9934" aria-hidden="true" tabindex="-1"></a>        log_gdp <span class="sc">~</span> <span class="fu">dnorm</span>( mu , sigma ) ,</span>
+<span id="cb824-9935"><a href="#cb824-9935" aria-hidden="true" tabindex="-1"></a>        mu <span class="ot">&lt;-</span> a <span class="sc">+</span> bR<span class="sc">*</span>rugged <span class="sc">+</span> bA<span class="sc">*</span>cont_africa <span class="sc">+</span> bAR<span class="sc">*</span>rugged<span class="sc">*</span>cont_africa ,</span>
+<span id="cb824-9936"><a href="#cb824-9936" aria-hidden="true" tabindex="-1"></a>        a <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">100</span>),</span>
+<span id="cb824-9937"><a href="#cb824-9937" aria-hidden="true" tabindex="-1"></a>        bR <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
+<span id="cb824-9938"><a href="#cb824-9938" aria-hidden="true" tabindex="-1"></a>        bA <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
+<span id="cb824-9939"><a href="#cb824-9939" aria-hidden="true" tabindex="-1"></a>        bAR <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>,<span class="dv">10</span>),</span>
+<span id="cb824-9940"><a href="#cb824-9940" aria-hidden="true" tabindex="-1"></a>        sigma <span class="sc">~</span> <span class="fu">dcauchy</span>(<span class="dv">0</span>,<span class="dv">2</span>) <span class="co"># a weakly regularizing prior for standard deviations</span></span>
+<span id="cb824-9941"><a href="#cb824-9941" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-9942"><a href="#cb824-9942" aria-hidden="true" tabindex="-1"></a><span class="co"># The uniform prior on sigma has been changed to a half-Cauchy prior. </span></span>
+<span id="cb824-9943"><a href="#cb824-9943" aria-hidden="true" tabindex="-1"></a><span class="co"># The Cauchy distribution is a useful thick-tailed probability distribution </span></span>
+<span id="cb824-9944"><a href="#cb824-9944" aria-hidden="true" tabindex="-1"></a><span class="co"># related to the Student t distribution.</span></span>
 <span id="cb824-9945"><a href="#cb824-9945" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9946"><a href="#cb824-9946" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.1</span>stan)</span>
+<span id="cb824-9946"><a href="#cb824-9946" aria-hidden="true" tabindex="-1"></a>), <span class="at">data=</span>dd.trim))</span>
 <span id="cb824-9947"><a href="#cb824-9947" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9948"><a href="#cb824-9948" aria-hidden="true" tabindex="-1"></a><span class="co"># The interval boundaries in the table are highest posterior density intervals (HPDI), </span></span>
-<span id="cb824-9949"><a href="#cb824-9949" aria-hidden="true" tabindex="-1"></a><span class="co"># not ordinary percentile intervals (PI).</span></span>
-<span id="cb824-9950"><a href="#cb824-9950" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9951"><a href="#cb824-9951" aria-hidden="true" tabindex="-1"></a><span class="co"># n_eff and Rhat provide MCMC diagnostic criteria, to help you tell how well estimation worked.</span></span>
-<span id="cb824-9952"><a href="#cb824-9952" aria-hidden="true" tabindex="-1"></a><span class="co"># n_eff is a crude estimate of the number of independent samples you managed to get.</span></span>
-<span id="cb824-9953"><a href="#cb824-9953" aria-hidden="true" tabindex="-1"></a><span class="co"># Rhat is a complicated estimate of the convergence of the Markov chains to the target </span></span>
-<span id="cb824-9954"><a href="#cb824-9954" aria-hidden="true" tabindex="-1"></a><span class="co"># distribution. It should approach 1.00 from above, when all is well.</span></span>
-<span id="cb824-9955"><a href="#cb824-9955" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9956"><a href="#cb824-9956" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb824-9948"><a href="#cb824-9948" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.1</span>stan)</span>
+<span id="cb824-9949"><a href="#cb824-9949" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-9950"><a href="#cb824-9950" aria-hidden="true" tabindex="-1"></a><span class="co"># The interval boundaries in the table are highest posterior density intervals (HPDI), </span></span>
+<span id="cb824-9951"><a href="#cb824-9951" aria-hidden="true" tabindex="-1"></a><span class="co"># not ordinary percentile intervals (PI).</span></span>
+<span id="cb824-9952"><a href="#cb824-9952" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-9953"><a href="#cb824-9953" aria-hidden="true" tabindex="-1"></a><span class="co"># n_eff and Rhat provide MCMC diagnostic criteria, to help you tell how well estimation worked.</span></span>
+<span id="cb824-9954"><a href="#cb824-9954" aria-hidden="true" tabindex="-1"></a><span class="co"># n_eff is a crude estimate of the number of independent samples you managed to get.</span></span>
+<span id="cb824-9955"><a href="#cb824-9955" aria-hidden="true" tabindex="-1"></a><span class="co"># Rhat is a complicated estimate of the convergence of the Markov chains to the target </span></span>
+<span id="cb824-9956"><a href="#cb824-9956" aria-hidden="true" tabindex="-1"></a><span class="co"># distribution. It should approach 1.00 from above, when all is well.</span></span>
 <span id="cb824-9957"><a href="#cb824-9957" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9958"><a href="#cb824-9958" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb824-9958"><a href="#cb824-9958" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb824-9959"><a href="#cb824-9959" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9960"><a href="#cb824-9960" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sampling agian, in parallel</span></span>
+<span id="cb824-9960"><a href="#cb824-9960" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 <span id="cb824-9961"><a href="#cb824-9961" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9962"><a href="#cb824-9962" aria-hidden="true" tabindex="-1"></a>Once you have compiled your Stan model, you can draw more samples from it anytime, running as many independent Markov chains as you like. And you can easily parallelize those chains, as well. To run four independent Markov chains for the model above, and to distribute them across separate processors in your computer, just pass the previous fit back to map2stan:</span>
+<span id="cb824-9962"><a href="#cb824-9962" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sampling agian, in parallel</span></span>
 <span id="cb824-9963"><a href="#cb824-9963" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9964"><a href="#cb824-9964" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.7}</span></span>
-<span id="cb824-9965"><a href="#cb824-9965" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(m8<span class="fl">.1</span>stan_4chains <span class="ot">&lt;-</span> <span class="fu">update</span>( m8<span class="fl">.1</span>stan , <span class="at">chains=</span><span class="dv">4</span> , <span class="at">cores=</span><span class="dv">4</span> ))</span>
-<span id="cb824-9966"><a href="#cb824-9966" aria-hidden="true" tabindex="-1"></a><span class="co"># map2stan doesn't work anymore- use update() here. </span></span>
-<span id="cb824-9967"><a href="#cb824-9967" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.1</span>stan_4chains)</span>
-<span id="cb824-9968"><a href="#cb824-9968" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9969"><a href="#cb824-9969" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb824-9964"><a href="#cb824-9964" aria-hidden="true" tabindex="-1"></a>Once you have compiled your Stan model, you can draw more samples from it anytime, running as many independent Markov chains as you like. And you can easily parallelize those chains, as well. To run four independent Markov chains for the model above, and to distribute them across separate processors in your computer, just pass the previous fit back to map2stan:</span>
+<span id="cb824-9965"><a href="#cb824-9965" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-9966"><a href="#cb824-9966" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.7}</span></span>
+<span id="cb824-9967"><a href="#cb824-9967" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(m8<span class="fl">.1</span>stan_4chains <span class="ot">&lt;-</span> <span class="fu">update</span>( m8<span class="fl">.1</span>stan , <span class="at">chains=</span><span class="dv">4</span> , <span class="at">cores=</span><span class="dv">4</span> ))</span>
+<span id="cb824-9968"><a href="#cb824-9968" aria-hidden="true" tabindex="-1"></a><span class="co"># map2stan doesn't work anymore- use update() here. </span></span>
+<span id="cb824-9969"><a href="#cb824-9969" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.1</span>stan_4chains)</span>
 <span id="cb824-9970"><a href="#cb824-9970" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9971"><a href="#cb824-9971" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb824-9971"><a href="#cb824-9971" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb824-9972"><a href="#cb824-9972" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9973"><a href="#cb824-9973" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
+<span id="cb824-9973"><a href="#cb824-9973" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 <span id="cb824-9974"><a href="#cb824-9974" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9975"><a href="#cb824-9975" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.8}</span></span>
+<span id="cb824-9975"><a href="#cb824-9975" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualization</span></span>
 <span id="cb824-9976"><a href="#cb824-9976" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9977"><a href="#cb824-9977" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull out the samples</span></span>
-<span id="cb824-9978"><a href="#cb824-9978" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">extract.samples</span>( m8<span class="fl">.1</span>stan )</span>
-<span id="cb824-9979"><a href="#cb824-9979" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(post)</span>
-<span id="cb824-9980"><a href="#cb824-9980" aria-hidden="true" tabindex="-1"></a><span class="co"># Samples are in a list- not in a data.frame (useful for multilevel models)</span></span>
-<span id="cb824-9981"><a href="#cb824-9981" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9982"><a href="#cb824-9982" aria-hidden="true" tabindex="-1"></a><span class="co"># For now, if it doesn’t behave like you expect it to, you can coerce it to a data frame </span></span>
-<span id="cb824-9983"><a href="#cb824-9983" aria-hidden="true" tabindex="-1"></a>post<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(post)</span>
-<span id="cb824-9984"><a href="#cb824-9984" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9985"><a href="#cb824-9985" aria-hidden="true" tabindex="-1"></a><span class="co"># To plot all these samples at once, provided there aren’t too many parameters</span></span>
-<span id="cb824-9986"><a href="#cb824-9986" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(post)</span>
-<span id="cb824-9987"><a href="#cb824-9987" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9988"><a href="#cb824-9988" aria-hidden="true" tabindex="-1"></a><span class="co"># To display parameter names and parameter correlations</span></span>
-<span id="cb824-9989"><a href="#cb824-9989" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(m8<span class="fl">.1</span>stan)</span>
-<span id="cb824-9990"><a href="#cb824-9990" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairs plot of the samples produced by Stan. The diagonal shows a density estimate for </span></span>
-<span id="cb824-9991"><a href="#cb824-9991" aria-hidden="true" tabindex="-1"></a><span class="co"># each parameter. Below the diagonal, correlations between parameters are shown.</span></span>
-<span id="cb824-9992"><a href="#cb824-9992" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9993"><a href="#cb824-9993" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb824-9977"><a href="#cb824-9977" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.8}</span></span>
+<span id="cb824-9978"><a href="#cb824-9978" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-9979"><a href="#cb824-9979" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull out the samples</span></span>
+<span id="cb824-9980"><a href="#cb824-9980" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">extract.samples</span>( m8<span class="fl">.1</span>stan )</span>
+<span id="cb824-9981"><a href="#cb824-9981" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(post)</span>
+<span id="cb824-9982"><a href="#cb824-9982" aria-hidden="true" tabindex="-1"></a><span class="co"># Samples are in a list- not in a data.frame (useful for multilevel models)</span></span>
+<span id="cb824-9983"><a href="#cb824-9983" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-9984"><a href="#cb824-9984" aria-hidden="true" tabindex="-1"></a><span class="co"># For now, if it doesn’t behave like you expect it to, you can coerce it to a data frame </span></span>
+<span id="cb824-9985"><a href="#cb824-9985" aria-hidden="true" tabindex="-1"></a>post<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(post)</span>
+<span id="cb824-9986"><a href="#cb824-9986" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-9987"><a href="#cb824-9987" aria-hidden="true" tabindex="-1"></a><span class="co"># To plot all these samples at once, provided there aren’t too many parameters</span></span>
+<span id="cb824-9988"><a href="#cb824-9988" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(post)</span>
+<span id="cb824-9989"><a href="#cb824-9989" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-9990"><a href="#cb824-9990" aria-hidden="true" tabindex="-1"></a><span class="co"># To display parameter names and parameter correlations</span></span>
+<span id="cb824-9991"><a href="#cb824-9991" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(m8<span class="fl">.1</span>stan)</span>
+<span id="cb824-9992"><a href="#cb824-9992" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairs plot of the samples produced by Stan. The diagonal shows a density estimate for </span></span>
+<span id="cb824-9993"><a href="#cb824-9993" aria-hidden="true" tabindex="-1"></a><span class="co"># each parameter. Below the diagonal, correlations between parameters are shown.</span></span>
 <span id="cb824-9994"><a href="#cb824-9994" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9995"><a href="#cb824-9995" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb824-9995"><a href="#cb824-9995" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb824-9996"><a href="#cb824-9996" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9997"><a href="#cb824-9997" aria-hidden="true" tabindex="-1"></a><span class="fu">### Using the samples</span></span>
+<span id="cb824-9997"><a href="#cb824-9997" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 <span id="cb824-9998"><a href="#cb824-9998" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-9999"><a href="#cb824-9999" aria-hidden="true" tabindex="-1"></a>If you have the samples from the posterior and you know the model, you can do anything: simulate predictions, compute differences between parameters, and calculate DIC and WAIC.</span>
+<span id="cb824-9999"><a href="#cb824-9999" aria-hidden="true" tabindex="-1"></a><span class="fu">### Using the samples</span></span>
 <span id="cb824-10000"><a href="#cb824-10000" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10001"><a href="#cb824-10001" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.11}</span></span>
+<span id="cb824-10001"><a href="#cb824-10001" aria-hidden="true" tabindex="-1"></a>If you have the samples from the posterior and you know the model, you can do anything: simulate predictions, compute differences between parameters, and calculate DIC and WAIC.</span>
 <span id="cb824-10002"><a href="#cb824-10002" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10003"><a href="#cb824-10003" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m8<span class="fl">.1</span>stan)</span>
-<span id="cb824-10004"><a href="#cb824-10004" aria-hidden="true" tabindex="-1"></a><span class="co"># map2stan does not work anymore and ulam doesn't compute WAIC and DIC </span></span>
-<span id="cb824-10005"><a href="#cb824-10005" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10006"><a href="#cb824-10006" aria-hidden="true" tabindex="-1"></a><span class="do">## Use brms (copy Akjurz's codes)</span></span>
-<span id="cb824-10007"><a href="#cb824-10007" aria-hidden="true" tabindex="-1"></a><span class="co"># Run HMC model</span></span>
-<span id="cb824-10008"><a href="#cb824-10008" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(b8<span class="fl">.1</span> <span class="ot">&lt;-</span></span>
-<span id="cb824-10009"><a href="#cb824-10009" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span>(<span class="at">data =</span> dd, <span class="at">family =</span> gaussian,</span>
-<span id="cb824-10010"><a href="#cb824-10010" aria-hidden="true" tabindex="-1"></a>      log_gdp <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> rugged <span class="sc">+</span> cont_africa <span class="sc">+</span> rugged<span class="sc">:</span>cont_africa,</span>
-<span id="cb824-10011"><a href="#cb824-10011" aria-hidden="true" tabindex="-1"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb824-10012"><a href="#cb824-10012" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> b),</span>
-<span id="cb824-10013"><a href="#cb824-10013" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="fu">cauchy</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class =</span> sigma)),</span>
-<span id="cb824-10014"><a href="#cb824-10014" aria-hidden="true" tabindex="-1"></a>      <span class="at">seed =</span> <span class="dv">8</span>))</span>
-<span id="cb824-10015"><a href="#cb824-10015" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10016"><a href="#cb824-10016" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(b8<span class="fl">.1</span>)</span>
+<span id="cb824-10003"><a href="#cb824-10003" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.11}</span></span>
+<span id="cb824-10004"><a href="#cb824-10004" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10005"><a href="#cb824-10005" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m8<span class="fl">.1</span>stan)</span>
+<span id="cb824-10006"><a href="#cb824-10006" aria-hidden="true" tabindex="-1"></a><span class="co"># map2stan does not work anymore and ulam doesn't compute WAIC and DIC </span></span>
+<span id="cb824-10007"><a href="#cb824-10007" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10008"><a href="#cb824-10008" aria-hidden="true" tabindex="-1"></a><span class="do">## Use brms (copy Akjurz's codes)</span></span>
+<span id="cb824-10009"><a href="#cb824-10009" aria-hidden="true" tabindex="-1"></a><span class="co"># Run HMC model</span></span>
+<span id="cb824-10010"><a href="#cb824-10010" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(b8<span class="fl">.1</span> <span class="ot">&lt;-</span></span>
+<span id="cb824-10011"><a href="#cb824-10011" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span>(<span class="at">data =</span> dd, <span class="at">family =</span> gaussian,</span>
+<span id="cb824-10012"><a href="#cb824-10012" aria-hidden="true" tabindex="-1"></a>      log_gdp <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> rugged <span class="sc">+</span> cont_africa <span class="sc">+</span> rugged<span class="sc">:</span>cont_africa,</span>
+<span id="cb824-10013"><a href="#cb824-10013" aria-hidden="true" tabindex="-1"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb824-10014"><a href="#cb824-10014" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> b),</span>
+<span id="cb824-10015"><a href="#cb824-10015" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="fu">cauchy</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">class =</span> sigma)),</span>
+<span id="cb824-10016"><a href="#cb824-10016" aria-hidden="true" tabindex="-1"></a>      <span class="at">seed =</span> <span class="dv">8</span>))</span>
 <span id="cb824-10017"><a href="#cb824-10017" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10018"><a href="#cb824-10018" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate waic</span></span>
-<span id="cb824-10019"><a href="#cb824-10019" aria-hidden="true" tabindex="-1"></a><span class="fu">waic</span>(b8<span class="fl">.1</span>)</span>
-<span id="cb824-10020"><a href="#cb824-10020" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10021"><a href="#cb824-10021" aria-hidden="true" tabindex="-1"></a><span class="co"># use loo (leave-one-out) cross-validation</span></span>
-<span id="cb824-10022"><a href="#cb824-10022" aria-hidden="true" tabindex="-1"></a>(l_b8<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">loo</span>(b8<span class="fl">.1</span>))</span>
-<span id="cb824-10023"><a href="#cb824-10023" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10024"><a href="#cb824-10024" aria-hidden="true" tabindex="-1"></a><span class="co"># And the recommended workflow since brms version 2.8.0 is to save the information </span></span>
-<span id="cb824-10025"><a href="#cb824-10025" aria-hidden="true" tabindex="-1"></a><span class="co"># criteria information with your brm() fit objects with the add_criterion() function.</span></span>
-<span id="cb824-10026"><a href="#cb824-10026" aria-hidden="true" tabindex="-1"></a>b8<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">add_criterion</span>(b8<span class="fl">.1</span>, <span class="fu">c</span>(<span class="st">"waic"</span>, <span class="st">"loo"</span>))</span>
-<span id="cb824-10027"><a href="#cb824-10027" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10028"><a href="#cb824-10028" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve information </span></span>
-<span id="cb824-10029"><a href="#cb824-10029" aria-hidden="true" tabindex="-1"></a>b8<span class="fl">.1</span><span class="sc">$</span>waic</span>
-<span id="cb824-10030"><a href="#cb824-10030" aria-hidden="true" tabindex="-1"></a>b8<span class="fl">.1</span><span class="sc">$</span>loo</span>
-<span id="cb824-10031"><a href="#cb824-10031" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10032"><a href="#cb824-10032" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb824-10018"><a href="#cb824-10018" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(b8<span class="fl">.1</span>)</span>
+<span id="cb824-10019"><a href="#cb824-10019" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10020"><a href="#cb824-10020" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate waic</span></span>
+<span id="cb824-10021"><a href="#cb824-10021" aria-hidden="true" tabindex="-1"></a><span class="fu">waic</span>(b8<span class="fl">.1</span>)</span>
+<span id="cb824-10022"><a href="#cb824-10022" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10023"><a href="#cb824-10023" aria-hidden="true" tabindex="-1"></a><span class="co"># use loo (leave-one-out) cross-validation</span></span>
+<span id="cb824-10024"><a href="#cb824-10024" aria-hidden="true" tabindex="-1"></a>(l_b8<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">loo</span>(b8<span class="fl">.1</span>))</span>
+<span id="cb824-10025"><a href="#cb824-10025" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10026"><a href="#cb824-10026" aria-hidden="true" tabindex="-1"></a><span class="co"># And the recommended workflow since brms version 2.8.0 is to save the information </span></span>
+<span id="cb824-10027"><a href="#cb824-10027" aria-hidden="true" tabindex="-1"></a><span class="co"># criteria information with your brm() fit objects with the add_criterion() function.</span></span>
+<span id="cb824-10028"><a href="#cb824-10028" aria-hidden="true" tabindex="-1"></a>b8<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">add_criterion</span>(b8<span class="fl">.1</span>, <span class="fu">c</span>(<span class="st">"waic"</span>, <span class="st">"loo"</span>))</span>
+<span id="cb824-10029"><a href="#cb824-10029" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10030"><a href="#cb824-10030" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve information </span></span>
+<span id="cb824-10031"><a href="#cb824-10031" aria-hidden="true" tabindex="-1"></a>b8<span class="fl">.1</span><span class="sc">$</span>waic</span>
+<span id="cb824-10032"><a href="#cb824-10032" aria-hidden="true" tabindex="-1"></a>b8<span class="fl">.1</span><span class="sc">$</span>loo</span>
 <span id="cb824-10033"><a href="#cb824-10033" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10034"><a href="#cb824-10034" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb824-10034"><a href="#cb824-10034" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb824-10035"><a href="#cb824-10035" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10036"><a href="#cb824-10036" aria-hidden="true" tabindex="-1"></a><span class="fu">### Checking the chain </span></span>
+<span id="cb824-10036"><a href="#cb824-10036" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 <span id="cb824-10037"><a href="#cb824-10037" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10038"><a href="#cb824-10038" aria-hidden="true" tabindex="-1"></a>A trace plot<span class="dv">&amp;mdash;</span> the most broadly useful tool for diagnosing malfunction<span class="dv">&amp;mdash;</span> merely plots the samples in sequential order, joined by a line. Looking at the trace plot of each parameter can help to diagnose many common problems. A trace plot isn’t the last thing analysts do to inspect MCMC output. But it’s nearly always the first.</span>
+<span id="cb824-10038"><a href="#cb824-10038" aria-hidden="true" tabindex="-1"></a><span class="fu">### Checking the chain </span></span>
 <span id="cb824-10039"><a href="#cb824-10039" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10040"><a href="#cb824-10040" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.12}</span></span>
+<span id="cb824-10040"><a href="#cb824-10040" aria-hidden="true" tabindex="-1"></a>A trace plot<span class="dv">&amp;mdash;</span> the most broadly useful tool for diagnosing malfunction<span class="dv">&amp;mdash;</span> merely plots the samples in sequential order, joined by a line. Looking at the trace plot of each parameter can help to diagnose many common problems. A trace plot isn’t the last thing analysts do to inspect MCMC output. But it’s nearly always the first.</span>
 <span id="cb824-10041"><a href="#cb824-10041" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10042"><a href="#cb824-10042" aria-hidden="true" tabindex="-1"></a><span class="co"># In the terrain ruggedness example, the trace plot shows a very healthy chain.</span></span>
-<span id="cb824-10043"><a href="#cb824-10043" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(b8<span class="fl">.1</span>) <span class="co"># m8.1stan doesn't work</span></span>
-<span id="cb824-10044"><a href="#cb824-10044" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10045"><a href="#cb824-10045" aria-hidden="true" tabindex="-1"></a><span class="do">## Use akjurz's codes to do trace plots</span></span>
+<span id="cb824-10042"><a href="#cb824-10042" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.12}</span></span>
+<span id="cb824-10043"><a href="#cb824-10043" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10044"><a href="#cb824-10044" aria-hidden="true" tabindex="-1"></a><span class="co"># In the terrain ruggedness example, the trace plot shows a very healthy chain.</span></span>
+<span id="cb824-10045"><a href="#cb824-10045" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(b8<span class="fl">.1</span>) <span class="co"># m8.1stan doesn't work</span></span>
 <span id="cb824-10046"><a href="#cb824-10046" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10047"><a href="#cb824-10047" aria-hidden="true" tabindex="-1"></a><span class="co"># use bayesplot’s mcmc_trace() to show only trace plots with our custom theme. </span></span>
-<span id="cb824-10048"><a href="#cb824-10048" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that mcmc_trace() works with data frames, not brmfit objects. There’s a further </span></span>
-<span id="cb824-10049"><a href="#cb824-10049" aria-hidden="true" tabindex="-1"></a><span class="co"># complication. Recall how we made post (i.e., post &lt;- posterior_samples(b8.1)). </span></span>
-<span id="cb824-10050"><a href="#cb824-10050" aria-hidden="true" tabindex="-1"></a><span class="co"># Our post data frame carries no information on chains. To retain that information, </span></span>
-<span id="cb824-10051"><a href="#cb824-10051" aria-hidden="true" tabindex="-1"></a><span class="co"># we’ll need to add an add_chain = T argument to our posterior_samples() function.</span></span>
-<span id="cb824-10052"><a href="#cb824-10052" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">posterior_samples</span>(b8<span class="fl">.1</span>, <span class="at">add_chain =</span> T)</span>
-<span id="cb824-10053"><a href="#cb824-10053" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10054"><a href="#cb824-10054" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_trace</span>(post[, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">7</span>)],  <span class="co"># we need to include column 7 because it contains the chain info </span></span>
-<span id="cb824-10055"><a href="#cb824-10055" aria-hidden="true" tabindex="-1"></a>           <span class="at">facet_args =</span> <span class="fu">list</span>(<span class="at">ncol =</span> <span class="dv">3</span>), </span>
-<span id="cb824-10056"><a href="#cb824-10056" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> .<span class="dv">15</span>) <span class="sc">+</span></span>
-<span id="cb824-10057"><a href="#cb824-10057" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"My custom trace plots"</span>) <span class="sc">+</span></span>
-<span id="cb824-10058"><a href="#cb824-10058" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_ipsum</span>() <span class="sc">+</span></span>
-<span id="cb824-10059"><a href="#cb824-10059" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>() <span class="sc">+</span></span>
-<span id="cb824-10060"><a href="#cb824-10060" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">95</span>, .<span class="dv">2</span>))</span>
-<span id="cb824-10061"><a href="#cb824-10061" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a clean, healthy Markov chain, both stationary and well-mixing.</span></span>
-<span id="cb824-10062"><a href="#cb824-10062" aria-hidden="true" tabindex="-1"></a><span class="do">## Only one chain is shown here. Graphs are not displayed properly. </span></span>
-<span id="cb824-10063"><a href="#cb824-10063" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10064"><a href="#cb824-10064" aria-hidden="true" tabindex="-1"></a><span class="co"># The bayesplot package offers a variety of diagnostic plots. Here we make </span></span>
-<span id="cb824-10065"><a href="#cb824-10065" aria-hidden="true" tabindex="-1"></a><span class="co"># autocorrelation plots for all model parameters, one for each HMC chain.</span></span>
-<span id="cb824-10066"><a href="#cb824-10066" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_acf</span>(post, </span>
-<span id="cb824-10067"><a href="#cb824-10067" aria-hidden="true" tabindex="-1"></a>         <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">"b_Intercept"</span>, <span class="st">"b_rugged"</span>, <span class="st">"b_cont_africa"</span>, </span>
-<span id="cb824-10068"><a href="#cb824-10068" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"b_rugged:cont_africa"</span>, <span class="st">"sigma"</span>),</span>
-<span id="cb824-10069"><a href="#cb824-10069" aria-hidden="true" tabindex="-1"></a>         <span class="at">lags =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb824-10070"><a href="#cb824-10070" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_ipsum</span>() <span class="sc">+</span></span>
-<span id="cb824-10071"><a href="#cb824-10071" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>()</span>
-<span id="cb824-10072"><a href="#cb824-10072" aria-hidden="true" tabindex="-1"></a><span class="co"># That’s just what we like to see–nice L-shaped autocorrelation plots. Those are </span></span>
-<span id="cb824-10073"><a href="#cb824-10073" aria-hidden="true" tabindex="-1"></a><span class="co"># the kinds of shapes you’d expect when you have reasonably large effective samples.</span></span>
-<span id="cb824-10074"><a href="#cb824-10074" aria-hidden="true" tabindex="-1"></a><span class="do">## Only one chain is displayed here and Ip_ (is that a graph for prior?) shouldn't be showing.</span></span>
-<span id="cb824-10075"><a href="#cb824-10075" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10076"><a href="#cb824-10076" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb824-10047"><a href="#cb824-10047" aria-hidden="true" tabindex="-1"></a><span class="do">## Use akjurz's codes to do trace plots</span></span>
+<span id="cb824-10048"><a href="#cb824-10048" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10049"><a href="#cb824-10049" aria-hidden="true" tabindex="-1"></a><span class="co"># use bayesplot’s mcmc_trace() to show only trace plots with our custom theme. </span></span>
+<span id="cb824-10050"><a href="#cb824-10050" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that mcmc_trace() works with data frames, not brmfit objects. There’s a further </span></span>
+<span id="cb824-10051"><a href="#cb824-10051" aria-hidden="true" tabindex="-1"></a><span class="co"># complication. Recall how we made post (i.e., post &lt;- posterior_samples(b8.1)). </span></span>
+<span id="cb824-10052"><a href="#cb824-10052" aria-hidden="true" tabindex="-1"></a><span class="co"># Our post data frame carries no information on chains. To retain that information, </span></span>
+<span id="cb824-10053"><a href="#cb824-10053" aria-hidden="true" tabindex="-1"></a><span class="co"># we’ll need to add an add_chain = T argument to our posterior_samples() function.</span></span>
+<span id="cb824-10054"><a href="#cb824-10054" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">posterior_samples</span>(b8<span class="fl">.1</span>, <span class="at">add_chain =</span> T)</span>
+<span id="cb824-10055"><a href="#cb824-10055" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10056"><a href="#cb824-10056" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_trace</span>(post[, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">7</span>)],  <span class="co"># we need to include column 7 because it contains the chain info </span></span>
+<span id="cb824-10057"><a href="#cb824-10057" aria-hidden="true" tabindex="-1"></a>           <span class="at">facet_args =</span> <span class="fu">list</span>(<span class="at">ncol =</span> <span class="dv">3</span>), </span>
+<span id="cb824-10058"><a href="#cb824-10058" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> .<span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb824-10059"><a href="#cb824-10059" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"My custom trace plots"</span>) <span class="sc">+</span></span>
+<span id="cb824-10060"><a href="#cb824-10060" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_ipsum</span>() <span class="sc">+</span></span>
+<span id="cb824-10061"><a href="#cb824-10061" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>() <span class="sc">+</span></span>
+<span id="cb824-10062"><a href="#cb824-10062" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">95</span>, .<span class="dv">2</span>))</span>
+<span id="cb824-10063"><a href="#cb824-10063" aria-hidden="true" tabindex="-1"></a><span class="co"># This is a clean, healthy Markov chain, both stationary and well-mixing.</span></span>
+<span id="cb824-10064"><a href="#cb824-10064" aria-hidden="true" tabindex="-1"></a><span class="do">## Only one chain is shown here. Graphs are not displayed properly. </span></span>
+<span id="cb824-10065"><a href="#cb824-10065" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10066"><a href="#cb824-10066" aria-hidden="true" tabindex="-1"></a><span class="co"># The bayesplot package offers a variety of diagnostic plots. Here we make </span></span>
+<span id="cb824-10067"><a href="#cb824-10067" aria-hidden="true" tabindex="-1"></a><span class="co"># autocorrelation plots for all model parameters, one for each HMC chain.</span></span>
+<span id="cb824-10068"><a href="#cb824-10068" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_acf</span>(post, </span>
+<span id="cb824-10069"><a href="#cb824-10069" aria-hidden="true" tabindex="-1"></a>         <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">"b_Intercept"</span>, <span class="st">"b_rugged"</span>, <span class="st">"b_cont_africa"</span>, </span>
+<span id="cb824-10070"><a href="#cb824-10070" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"b_rugged:cont_africa"</span>, <span class="st">"sigma"</span>),</span>
+<span id="cb824-10071"><a href="#cb824-10071" aria-hidden="true" tabindex="-1"></a>         <span class="at">lags =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb824-10072"><a href="#cb824-10072" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_ipsum</span>() <span class="sc">+</span></span>
+<span id="cb824-10073"><a href="#cb824-10073" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>()</span>
+<span id="cb824-10074"><a href="#cb824-10074" aria-hidden="true" tabindex="-1"></a><span class="co"># That’s just what we like to see–nice L-shaped autocorrelation plots. Those are </span></span>
+<span id="cb824-10075"><a href="#cb824-10075" aria-hidden="true" tabindex="-1"></a><span class="co"># the kinds of shapes you’d expect when you have reasonably large effective samples.</span></span>
+<span id="cb824-10076"><a href="#cb824-10076" aria-hidden="true" tabindex="-1"></a><span class="do">## Only one chain is displayed here and Ip_ (is that a graph for prior?) shouldn't be showing.</span></span>
 <span id="cb824-10077"><a href="#cb824-10077" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10078"><a href="#cb824-10078" aria-hidden="true" tabindex="-1"></a>Typically we look for two things in these trace plots: stationarity and good mixing. Stationarity refers to the path staying within the posterior distribution. Notice that these traces, for example, all stick around a very stable central tendency, the center of gravity of each dimension of the posterior. Another way to think of this is that the mean value of the chain is quite stable from beginning to end.</span>
+<span id="cb824-10078"><a href="#cb824-10078" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb824-10079"><a href="#cb824-10079" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10080"><a href="#cb824-10080" aria-hidden="true" tabindex="-1"></a>A well-mixing chain means that each successive sample within each parameter is not highly correlated with the sample before it. Visually, you can see this by the rapid zig-zag motion of each path, as the trace traverses the posterior distribution without getting mired anyplace.</span>
+<span id="cb824-10080"><a href="#cb824-10080" aria-hidden="true" tabindex="-1"></a>Typically we look for two things in these trace plots: stationarity and good mixing. Stationarity refers to the path staying within the posterior distribution. Notice that these traces, for example, all stick around a very stable central tendency, the center of gravity of each dimension of the posterior. Another way to think of this is that the mean value of the chain is quite stable from beginning to end.</span>
 <span id="cb824-10081"><a href="#cb824-10081" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10082"><a href="#cb824-10082" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb824-10082"><a href="#cb824-10082" aria-hidden="true" tabindex="-1"></a>A well-mixing chain means that each successive sample within each parameter is not highly correlated with the sample before it. Visually, you can see this by the rapid zig-zag motion of each path, as the trace traverses the posterior distribution without getting mired anyplace.</span>
 <span id="cb824-10083"><a href="#cb824-10083" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10084"><a href="#cb824-10084" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color:brown"</span><span class="kw">&gt;&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"text-decoration:underline"</span><span class="kw">&gt;</span>**Raw stan model code**<span class="kw">&lt;/span&gt;</span></span>
+<span id="cb824-10084"><a href="#cb824-10084" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 <span id="cb824-10085"><a href="#cb824-10085" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10086"><a href="#cb824-10086" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model_block, eval=FALSE, echo=TRUE}</span></span>
+<span id="cb824-10086"><a href="#cb824-10086" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color:brown"</span><span class="kw">&gt;&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"text-decoration:underline"</span><span class="kw">&gt;</span>**Raw stan model code**<span class="kw">&lt;/span&gt;</span></span>
 <span id="cb824-10087"><a href="#cb824-10087" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10088"><a href="#cb824-10088" aria-hidden="true" tabindex="-1"></a><span class="do">## Stan code</span></span>
-<span id="cb824-10089"><a href="#cb824-10089" aria-hidden="true" tabindex="-1"></a><span class="co"># It is essentially the formula list you provided to map2stan, but in reverse order. </span></span>
-<span id="cb824-10090"><a href="#cb824-10090" aria-hidden="true" tabindex="-1"></a><span class="co"># The first line, vector[N] mu; names a symbol to hold the linear model. The rest of </span></span>
-<span id="cb824-10091"><a href="#cb824-10091" aria-hidden="true" tabindex="-1"></a><span class="co"># the code reiterates your formulas, beginning with priors and then computing the </span></span>
-<span id="cb824-10092"><a href="#cb824-10092" aria-hidden="true" tabindex="-1"></a><span class="co"># value of mu for each observation (nation). Finally, the last line comprises the </span></span>
-<span id="cb824-10093"><a href="#cb824-10093" aria-hidden="true" tabindex="-1"></a><span class="co"># likelihood. Given this kind of model definition, Stan will define and sample from </span></span>
-<span id="cb824-10094"><a href="#cb824-10094" aria-hidden="true" tabindex="-1"></a><span class="co"># the HMC chain or chains you ask for.</span></span>
-<span id="cb824-10095"><a href="#cb824-10095" aria-hidden="true" tabindex="-1"></a>model{</span>
-<span id="cb824-10096"><a href="#cb824-10096" aria-hidden="true" tabindex="-1"></a>    vector[N] mu;</span>
-<span id="cb824-10097"><a href="#cb824-10097" aria-hidden="true" tabindex="-1"></a>    sigma <span class="sc">~</span> <span class="fu">cauchy</span>( <span class="dv">0</span> , <span class="dv">2</span> );</span>
-<span id="cb824-10098"><a href="#cb824-10098" aria-hidden="true" tabindex="-1"></a>    bAR <span class="sc">~</span> <span class="fu">normal</span>( <span class="dv">0</span> , <span class="dv">10</span> );</span>
-<span id="cb824-10099"><a href="#cb824-10099" aria-hidden="true" tabindex="-1"></a>    bA <span class="sc">~</span> <span class="fu">normal</span>( <span class="dv">0</span> , <span class="dv">10</span> );</span>
-<span id="cb824-10100"><a href="#cb824-10100" aria-hidden="true" tabindex="-1"></a>    bR <span class="sc">~</span> <span class="fu">normal</span>( <span class="dv">0</span> , <span class="dv">10</span> );</span>
-<span id="cb824-10101"><a href="#cb824-10101" aria-hidden="true" tabindex="-1"></a>   a <span class="sc">~</span> <span class="fu">normal</span>( <span class="dv">0</span> , <span class="dv">100</span> );</span>
-<span id="cb824-10102"><a href="#cb824-10102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ( i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N ) {</span>
-<span id="cb824-10103"><a href="#cb824-10103" aria-hidden="true" tabindex="-1"></a>        mu[i] <span class="ot">&lt;-</span> a <span class="sc">+</span> bR <span class="sc">*</span> rugged[i] <span class="sc">+</span> bA <span class="sc">*</span> cont_africa[i] <span class="sc">+</span></span>
-<span id="cb824-10104"><a href="#cb824-10104" aria-hidden="true" tabindex="-1"></a>                 bAR <span class="sc">*</span> rugged[i] <span class="sc">*</span> cont_africa[i];</span>
-<span id="cb824-10105"><a href="#cb824-10105" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb824-10106"><a href="#cb824-10106" aria-hidden="true" tabindex="-1"></a>    log_gdp <span class="sc">~</span> <span class="fu">normal</span>( mu , sigma );</span>
+<span id="cb824-10088"><a href="#cb824-10088" aria-hidden="true" tabindex="-1"></a><span class="in">```{r model_block, eval=FALSE, echo=TRUE}</span></span>
+<span id="cb824-10089"><a href="#cb824-10089" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10090"><a href="#cb824-10090" aria-hidden="true" tabindex="-1"></a><span class="do">## Stan code</span></span>
+<span id="cb824-10091"><a href="#cb824-10091" aria-hidden="true" tabindex="-1"></a><span class="co"># It is essentially the formula list you provided to map2stan, but in reverse order. </span></span>
+<span id="cb824-10092"><a href="#cb824-10092" aria-hidden="true" tabindex="-1"></a><span class="co"># The first line, vector[N] mu; names a symbol to hold the linear model. The rest of </span></span>
+<span id="cb824-10093"><a href="#cb824-10093" aria-hidden="true" tabindex="-1"></a><span class="co"># the code reiterates your formulas, beginning with priors and then computing the </span></span>
+<span id="cb824-10094"><a href="#cb824-10094" aria-hidden="true" tabindex="-1"></a><span class="co"># value of mu for each observation (nation). Finally, the last line comprises the </span></span>
+<span id="cb824-10095"><a href="#cb824-10095" aria-hidden="true" tabindex="-1"></a><span class="co"># likelihood. Given this kind of model definition, Stan will define and sample from </span></span>
+<span id="cb824-10096"><a href="#cb824-10096" aria-hidden="true" tabindex="-1"></a><span class="co"># the HMC chain or chains you ask for.</span></span>
+<span id="cb824-10097"><a href="#cb824-10097" aria-hidden="true" tabindex="-1"></a>model{</span>
+<span id="cb824-10098"><a href="#cb824-10098" aria-hidden="true" tabindex="-1"></a>    vector[N] mu;</span>
+<span id="cb824-10099"><a href="#cb824-10099" aria-hidden="true" tabindex="-1"></a>    sigma <span class="sc">~</span> <span class="fu">cauchy</span>( <span class="dv">0</span> , <span class="dv">2</span> );</span>
+<span id="cb824-10100"><a href="#cb824-10100" aria-hidden="true" tabindex="-1"></a>    bAR <span class="sc">~</span> <span class="fu">normal</span>( <span class="dv">0</span> , <span class="dv">10</span> );</span>
+<span id="cb824-10101"><a href="#cb824-10101" aria-hidden="true" tabindex="-1"></a>    bA <span class="sc">~</span> <span class="fu">normal</span>( <span class="dv">0</span> , <span class="dv">10</span> );</span>
+<span id="cb824-10102"><a href="#cb824-10102" aria-hidden="true" tabindex="-1"></a>    bR <span class="sc">~</span> <span class="fu">normal</span>( <span class="dv">0</span> , <span class="dv">10</span> );</span>
+<span id="cb824-10103"><a href="#cb824-10103" aria-hidden="true" tabindex="-1"></a>   a <span class="sc">~</span> <span class="fu">normal</span>( <span class="dv">0</span> , <span class="dv">100</span> );</span>
+<span id="cb824-10104"><a href="#cb824-10104" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ( i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N ) {</span>
+<span id="cb824-10105"><a href="#cb824-10105" aria-hidden="true" tabindex="-1"></a>        mu[i] <span class="ot">&lt;-</span> a <span class="sc">+</span> bR <span class="sc">*</span> rugged[i] <span class="sc">+</span> bA <span class="sc">*</span> cont_africa[i] <span class="sc">+</span></span>
+<span id="cb824-10106"><a href="#cb824-10106" aria-hidden="true" tabindex="-1"></a>                 bAR <span class="sc">*</span> rugged[i] <span class="sc">*</span> cont_africa[i];</span>
 <span id="cb824-10107"><a href="#cb824-10107" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb824-10108"><a href="#cb824-10108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10109"><a href="#cb824-10109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb824-10108"><a href="#cb824-10108" aria-hidden="true" tabindex="-1"></a>    log_gdp <span class="sc">~</span> <span class="fu">normal</span>( mu , sigma );</span>
+<span id="cb824-10109"><a href="#cb824-10109" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb824-10110"><a href="#cb824-10110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10111"><a href="#cb824-10111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r akjurz}</span></span>
+<span id="cb824-10111"><a href="#cb824-10111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb824-10112"><a href="#cb824-10112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10113"><a href="#cb824-10113" aria-hidden="true" tabindex="-1"></a><span class="co"># The stancode() function works in brms much like it does in rethinking.</span></span>
-<span id="cb824-10114"><a href="#cb824-10114" aria-hidden="true" tabindex="-1"></a>brms<span class="sc">::</span><span class="fu">stancode</span>(b8<span class="fl">.1</span>)</span>
-<span id="cb824-10115"><a href="#cb824-10115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10116"><a href="#cb824-10116" aria-hidden="true" tabindex="-1"></a><span class="co"># You can also get that information with b8.1$model or b8.1$fit@stanmodel.</span></span>
-<span id="cb824-10117"><a href="#cb824-10117" aria-hidden="true" tabindex="-1"></a><span class="co"># b8.1$model</span></span>
-<span id="cb824-10118"><a href="#cb824-10118" aria-hidden="true" tabindex="-1"></a><span class="co"># b8.1$fit@stanmodel</span></span>
-<span id="cb824-10119"><a href="#cb824-10119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10120"><a href="#cb824-10120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb824-10113"><a href="#cb824-10113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r akjurz}</span></span>
+<span id="cb824-10114"><a href="#cb824-10114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10115"><a href="#cb824-10115" aria-hidden="true" tabindex="-1"></a><span class="co"># The stancode() function works in brms much like it does in rethinking.</span></span>
+<span id="cb824-10116"><a href="#cb824-10116" aria-hidden="true" tabindex="-1"></a>brms<span class="sc">::</span><span class="fu">stancode</span>(b8<span class="fl">.1</span>)</span>
+<span id="cb824-10117"><a href="#cb824-10117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10118"><a href="#cb824-10118" aria-hidden="true" tabindex="-1"></a><span class="co"># You can also get that information with b8.1$model or b8.1$fit@stanmodel.</span></span>
+<span id="cb824-10119"><a href="#cb824-10119" aria-hidden="true" tabindex="-1"></a><span class="co"># b8.1$model</span></span>
+<span id="cb824-10120"><a href="#cb824-10120" aria-hidden="true" tabindex="-1"></a><span class="co"># b8.1$fit@stanmodel</span></span>
 <span id="cb824-10121"><a href="#cb824-10121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10122"><a href="#cb824-10122" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb824-10122"><a href="#cb824-10122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb824-10123"><a href="#cb824-10123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10124"><a href="#cb824-10124" aria-hidden="true" tabindex="-1"></a><span class="fu">## Care and feeding of your Markov chain </span></span>
+<span id="cb824-10124"><a href="#cb824-10124" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 <span id="cb824-10125"><a href="#cb824-10125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10126"><a href="#cb824-10126" aria-hidden="true" tabindex="-1"></a><span class="fu">### How many samples do you need?</span></span>
+<span id="cb824-10126"><a href="#cb824-10126" aria-hidden="true" tabindex="-1"></a><span class="fu">## Care and feeding of your Markov chain </span></span>
 <span id="cb824-10127"><a href="#cb824-10127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10128"><a href="#cb824-10128" aria-hidden="true" tabindex="-1"></a>You can control the number of samples from the chain by using the <span class="in">`iter`</span> and <span class="in">`warmup`</span> parameters. The defaults are 2000 for <span class="in">`iter`</span> and <span class="in">`warmup`</span> is set to <span class="in">`iter`</span>/2, which gives you 1000 <span class="in">`warmup`</span> samples and 1000 real samples to use for inference. But these defaults are just meant to get you started, to make sure the chain gets started okay. Then you can decide on other values for <span class="in">`iter`</span> and <span class="in">`warmup`</span>.</span>
+<span id="cb824-10128"><a href="#cb824-10128" aria-hidden="true" tabindex="-1"></a><span class="fu">### How many samples do you need?</span></span>
 <span id="cb824-10129"><a href="#cb824-10129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10130"><a href="#cb824-10130" aria-hidden="true" tabindex="-1"></a>So how many samples do we need for accurate inference about the posterior distribution? It depends. First, what really matters is the effective number of samples, not the raw number. The effective number of samples is an estimate of the number of independent samples from the posterior distribution. Markov chains are typically autocorrelated, so that sequential samples are not entirely independent. Stan chains tend to be less autocorrelated than those produced by other engines, but there is always some autocorrelation. Stan provides an estimate of effective number of samples as <span class="in">`n_eff`</span>.</span>
+<span id="cb824-10130"><a href="#cb824-10130" aria-hidden="true" tabindex="-1"></a>You can control the number of samples from the chain by using the <span class="in">`iter`</span> and <span class="in">`warmup`</span> parameters. The defaults are 2000 for <span class="in">`iter`</span> and <span class="in">`warmup`</span> is set to <span class="in">`iter`</span>/2, which gives you 1000 <span class="in">`warmup`</span> samples and 1000 real samples to use for inference. But these defaults are just meant to get you started, to make sure the chain gets started okay. Then you can decide on other values for <span class="in">`iter`</span> and <span class="in">`warmup`</span>.</span>
 <span id="cb824-10131"><a href="#cb824-10131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10132"><a href="#cb824-10132" aria-hidden="true" tabindex="-1"></a>Second, what do you want to know? If all you want are posterior means, it doesn’t take many samples at all to get very good estimates. Even a couple hundred samples will do. But if you care about the exact shape in the extreme tails of the posterior, the 99th percentile or so, then you’ll need many many more. So there is no universally useful number of samples to aim for.</span>
+<span id="cb824-10132"><a href="#cb824-10132" aria-hidden="true" tabindex="-1"></a>So how many samples do we need for accurate inference about the posterior distribution? It depends. First, what really matters is the effective number of samples, not the raw number. The effective number of samples is an estimate of the number of independent samples from the posterior distribution. Markov chains are typically autocorrelated, so that sequential samples are not entirely independent. Stan chains tend to be less autocorrelated than those produced by other engines, but there is always some autocorrelation. Stan provides an estimate of effective number of samples as <span class="in">`n_eff`</span>.</span>
 <span id="cb824-10133"><a href="#cb824-10133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10134"><a href="#cb824-10134" aria-hidden="true" tabindex="-1"></a>The <span class="in">`warmup`</span> setting is more subtle. On the one hand, you want to have the shortest <span class="in">`warmup`</span> period necessary, so you can get on with real sampling. But on the other hand, more <span class="in">`warmup`</span> can mean more efficient sampling. With Stan models, typically you can devote as much as half of your total samples, the <span class="in">`iter`</span> value, to <span class="in">`warmup`</span> and come out very well. But for simple models like those you’ve fit so far, much less <span class="in">`warmup`</span> is really needed. Models can vary a lot in the shape of their posterior distributions, so again there is no universally best answer. But if you are having trouble, you might try increasing the <span class="in">`warmup`</span>. If not, you might try reducing it.</span>
+<span id="cb824-10134"><a href="#cb824-10134" aria-hidden="true" tabindex="-1"></a>Second, what do you want to know? If all you want are posterior means, it doesn’t take many samples at all to get very good estimates. Even a couple hundred samples will do. But if you care about the exact shape in the extreme tails of the posterior, the 99th percentile or so, then you’ll need many many more. So there is no universally useful number of samples to aim for.</span>
 <span id="cb824-10135"><a href="#cb824-10135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10136"><a href="#cb824-10136" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb824-10136"><a href="#cb824-10136" aria-hidden="true" tabindex="-1"></a>The <span class="in">`warmup`</span> setting is more subtle. On the one hand, you want to have the shortest <span class="in">`warmup`</span> period necessary, so you can get on with real sampling. But on the other hand, more <span class="in">`warmup`</span> can mean more efficient sampling. With Stan models, typically you can devote as much as half of your total samples, the <span class="in">`iter`</span> value, to <span class="in">`warmup`</span> and come out very well. But for simple models like those you’ve fit so far, much less <span class="in">`warmup`</span> is really needed. Models can vary a lot in the shape of their posterior distributions, so again there is no universally best answer. But if you are having trouble, you might try increasing the <span class="in">`warmup`</span>. If not, you might try reducing it.</span>
 <span id="cb824-10137"><a href="#cb824-10137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10138"><a href="#cb824-10138" aria-hidden="true" tabindex="-1"></a><span class="fu">### How many chains do you need?</span></span>
+<span id="cb824-10138"><a href="#cb824-10138" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 <span id="cb824-10139"><a href="#cb824-10139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10140"><a href="#cb824-10140" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When debugging a model, use a single chain. </span>
+<span id="cb824-10140"><a href="#cb824-10140" aria-hidden="true" tabindex="-1"></a><span class="fu">### How many chains do you need?</span></span>
 <span id="cb824-10141"><a href="#cb824-10141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10142"><a href="#cb824-10142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When deciding whether the chains are valid, you need more than one chain. </span>
-<span id="cb824-10143"><a href="#cb824-10143" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Using 3 or 4 chains is conventional, and quite often more than enough to reassure us that the sampling is working properly.</span>
-<span id="cb824-10144"><a href="#cb824-10144" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb824-10145"><a href="#cb824-10145" aria-hidden="true" tabindex="-1"></a>\n</span>
-<span id="cb824-10146"><a href="#cb824-10146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10147"><a href="#cb824-10147" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When you begin the final run that you’ll make inferences from, you only really need one chain. But using more than one chain is fine, as well. It just doesn’t matter, once you’re sure it’s working.</span>
-<span id="cb824-10148"><a href="#cb824-10148" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>More chains cost you an extra samples of <span class="in">`warmup`</span> that just get thrown away. And since warmup is typically the slowest part of the chain, these extra samples cost a disproportionate amount of your computer’s time.</span>
-<span id="cb824-10149"><a href="#cb824-10149" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>On the other hand, if you run the chains on different computers or processor cores within a single computer, then you might prefer more chains, because you can spread the load and finish the whole job faster.</span>
-<span id="cb824-10150"><a href="#cb824-10150" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb824-10151"><a href="#cb824-10151" aria-hidden="true" tabindex="-1"></a>\n</span>
-<span id="cb824-10152"><a href="#cb824-10152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10153"><a href="#cb824-10153" aria-hidden="true" tabindex="-1"></a>*For typical regression models, you can live by the motto four short chains to check, one long chain for inference.* (Things may still go wrong) </span>
+<span id="cb824-10142"><a href="#cb824-10142" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When debugging a model, use a single chain. </span>
+<span id="cb824-10143"><a href="#cb824-10143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10144"><a href="#cb824-10144" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When deciding whether the chains are valid, you need more than one chain. </span>
+<span id="cb824-10145"><a href="#cb824-10145" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Using 3 or 4 chains is conventional, and quite often more than enough to reassure us that the sampling is working properly.</span>
+<span id="cb824-10146"><a href="#cb824-10146" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb824-10147"><a href="#cb824-10147" aria-hidden="true" tabindex="-1"></a>\n</span>
+<span id="cb824-10148"><a href="#cb824-10148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10149"><a href="#cb824-10149" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When you begin the final run that you’ll make inferences from, you only really need one chain. But using more than one chain is fine, as well. It just doesn’t matter, once you’re sure it’s working.</span>
+<span id="cb824-10150"><a href="#cb824-10150" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>More chains cost you an extra samples of <span class="in">`warmup`</span> that just get thrown away. And since warmup is typically the slowest part of the chain, these extra samples cost a disproportionate amount of your computer’s time.</span>
+<span id="cb824-10151"><a href="#cb824-10151" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>On the other hand, if you run the chains on different computers or processor cores within a single computer, then you might prefer more chains, because you can spread the load and finish the whole job faster.</span>
+<span id="cb824-10152"><a href="#cb824-10152" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb824-10153"><a href="#cb824-10153" aria-hidden="true" tabindex="-1"></a>\n</span>
 <span id="cb824-10154"><a href="#cb824-10154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10155"><a href="#cb824-10155" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb824-10155"><a href="#cb824-10155" aria-hidden="true" tabindex="-1"></a>*For typical regression models, you can live by the motto four short chains to check, one long chain for inference.* (Things may still go wrong) </span>
 <span id="cb824-10156"><a href="#cb824-10156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10157"><a href="#cb824-10157" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color:brown"</span><span class="kw">&gt;&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"text-decoration:underline"</span><span class="kw">&gt;</span>**Convergence diagnostics**<span class="kw">&lt;/span&gt;</span></span>
+<span id="cb824-10157"><a href="#cb824-10157" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 <span id="cb824-10158"><a href="#cb824-10158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10159"><a href="#cb824-10159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The default diagnostic output from Stan includes two metrics, <span class="in">`n_eff`</span> and <span class="in">`Rhat`</span>. </span>
-<span id="cb824-10160"><a href="#cb824-10160" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`n_eff`</span> is a measure of the effective number of samples. </span>
-<span id="cb824-10161"><a href="#cb824-10161" aria-hidden="true" tabindex="-1"></a><span class="ss">        - </span>When <span class="in">`n_eff`</span>is much lower than the actual number of iterations (minus warmup) of your chains, it means the chains are inefficient, but possibly still okay. </span>
-<span id="cb824-10162"><a href="#cb824-10162" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`Rhat`</span> is the Gelman-Rubin convergence diagnostic, <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.image?\boldsymbol{\hat{R}}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">""</span> <span class="kw">/&gt;</span>. </span>
-<span id="cb824-10163"><a href="#cb824-10163" aria-hidden="true" tabindex="-1"></a><span class="ss">        -  </span>When Rhat is above 1.00, it usually indicates that the chain has not yet converged, and probably you shouldn’t trust the samples. If you draw more iterations, it could be fine, or it could never converge. For example, Rhat can reach 1.00 even for an invalid chain. So view it perhaps as a signal of danger, but never of safety. For conventional models, these metrics typically work well.</span>
-<span id="cb824-10164"><a href="#cb824-10164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10165"><a href="#cb824-10165" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb824-10159"><a href="#cb824-10159" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color:brown"</span><span class="kw">&gt;&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"text-decoration:underline"</span><span class="kw">&gt;</span>**Convergence diagnostics**<span class="kw">&lt;/span&gt;</span></span>
+<span id="cb824-10160"><a href="#cb824-10160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10161"><a href="#cb824-10161" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The default diagnostic output from Stan includes two metrics, <span class="in">`n_eff`</span> and <span class="in">`Rhat`</span>. </span>
+<span id="cb824-10162"><a href="#cb824-10162" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`n_eff`</span> is a measure of the effective number of samples. </span>
+<span id="cb824-10163"><a href="#cb824-10163" aria-hidden="true" tabindex="-1"></a><span class="ss">        - </span>When <span class="in">`n_eff`</span>is much lower than the actual number of iterations (minus warmup) of your chains, it means the chains are inefficient, but possibly still okay. </span>
+<span id="cb824-10164"><a href="#cb824-10164" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="in">`Rhat`</span> is the Gelman-Rubin convergence diagnostic, <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.image?\boldsymbol{\hat{R}}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">""</span> <span class="kw">/&gt;</span>. </span>
+<span id="cb824-10165"><a href="#cb824-10165" aria-hidden="true" tabindex="-1"></a><span class="ss">        -  </span>When Rhat is above 1.00, it usually indicates that the chain has not yet converged, and probably you shouldn’t trust the samples. If you draw more iterations, it could be fine, or it could never converge. For example, Rhat can reach 1.00 even for an invalid chain. So view it perhaps as a signal of danger, but never of safety. For conventional models, these metrics typically work well.</span>
 <span id="cb824-10166"><a href="#cb824-10166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10167"><a href="#cb824-10167" aria-hidden="true" tabindex="-1"></a><span class="fu">### Taming a wild chain</span></span>
+<span id="cb824-10167"><a href="#cb824-10167" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 <span id="cb824-10168"><a href="#cb824-10168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10169"><a href="#cb824-10169" aria-hidden="true" tabindex="-1"></a>One common problem with some models is that there are broad, flat regions of the posterior density. This happens most often, as you might guess, when one uses flat priors. The problem this can generate is a wild, wandering Markov chain that erratically samples extremely positive and extremely negative parameter values.</span>
+<span id="cb824-10169"><a href="#cb824-10169" aria-hidden="true" tabindex="-1"></a><span class="fu">### Taming a wild chain</span></span>
 <span id="cb824-10170"><a href="#cb824-10170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10171"><a href="#cb824-10171" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.13, message=FALSE, warning=FALSE}</span></span>
+<span id="cb824-10171"><a href="#cb824-10171" aria-hidden="true" tabindex="-1"></a>One common problem with some models is that there are broad, flat regions of the posterior density. This happens most often, as you might guess, when one uses flat priors. The problem this can generate is a wild, wandering Markov chain that erratically samples extremely positive and extremely negative parameter values.</span>
 <span id="cb824-10172"><a href="#cb824-10172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10173"><a href="#cb824-10173" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb824-10174"><a href="#cb824-10174" aria-hidden="true" tabindex="-1"></a>output<span class="ot">&lt;-</span> <span class="fu">capture.output</span>(m8<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">ulam</span>(</span>
-<span id="cb824-10175"><a href="#cb824-10175" aria-hidden="true" tabindex="-1"></a>    <span class="fu">alist</span>(</span>
-<span id="cb824-10176"><a href="#cb824-10176" aria-hidden="true" tabindex="-1"></a>        y <span class="sc">~</span> <span class="fu">dnorm</span>( mu , sigma ) ,</span>
-<span id="cb824-10177"><a href="#cb824-10177" aria-hidden="true" tabindex="-1"></a>        mu <span class="ot">&lt;-</span> alpha,</span>
-<span id="cb824-10178"><a href="#cb824-10178" aria-hidden="true" tabindex="-1"></a>        alpha <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="sc">-</span><span class="fl">1e20</span>, <span class="fl">1e20</span>),</span>
-<span id="cb824-10179"><a href="#cb824-10179" aria-hidden="true" tabindex="-1"></a>        sigma <span class="sc">~</span> <span class="fu">dunif</span>(<span class="dv">0</span>, <span class="fl">1e20</span>)</span>
-<span id="cb824-10180"><a href="#cb824-10180" aria-hidden="true" tabindex="-1"></a>), <span class="co"># I add in priors coz ulam shows error without priors</span></span>
-<span id="cb824-10181"><a href="#cb824-10181" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span><span class="fu">list</span>(<span class="at">y=</span>y) , </span>
-<span id="cb824-10182"><a href="#cb824-10182" aria-hidden="true" tabindex="-1"></a><span class="at">start=</span><span class="fu">list</span>(<span class="at">alpha=</span><span class="dv">0</span>,<span class="at">sigma=</span><span class="dv">1</span>) , <span class="at">chains=</span><span class="dv">2</span> , <span class="at">iter=</span><span class="dv">4000</span> , <span class="at">warmup=</span><span class="dv">1000</span> ))</span>
-<span id="cb824-10183"><a href="#cb824-10183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10184"><a href="#cb824-10184" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.2</span>)</span>
-<span id="cb824-10185"><a href="#cb824-10185" aria-hidden="true" tabindex="-1"></a><span class="co"># The mean of −1 and 1 is zero, so we’re hoping to get a mean value for alpha around zero. </span></span>
-<span id="cb824-10186"><a href="#cb824-10186" aria-hidden="true" tabindex="-1"></a><span class="co"># Instead we get crazy values and implausibly wide confidence intervals. </span></span>
-<span id="cb824-10187"><a href="#cb824-10187" aria-hidden="true" tabindex="-1"></a><span class="co"># Inference for sigma is no better. The number of effective samples, n_eff, is very small. </span></span>
-<span id="cb824-10188"><a href="#cb824-10188" aria-hidden="true" tabindex="-1"></a><span class="co"># And Rhat should approach 1.00 in a healthy set of chains. Even a value of 1.01 is suspicious. </span></span>
-<span id="cb824-10189"><a href="#cb824-10189" aria-hidden="true" tabindex="-1"></a><span class="co"># An Rhat of 1.10 indicates a catastrophe.</span></span>
-<span id="cb824-10190"><a href="#cb824-10190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10191"><a href="#cb824-10191" aria-hidden="true" tabindex="-1"></a><span class="do">## I can't do trace plots with ulam.</span></span>
-<span id="cb824-10192"><a href="#cb824-10192" aria-hidden="true" tabindex="-1"></a><span class="do">## Error: cannot coerce class ‘structure("ulam", package = "rethinking")’ to a data.frame</span></span>
-<span id="cb824-10193"><a href="#cb824-10193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10194"><a href="#cb824-10194" aria-hidden="true" tabindex="-1"></a><span class="do">## Add a very weakly informative prior</span></span>
-<span id="cb824-10195"><a href="#cb824-10195" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(m8<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">ulam</span>(</span>
-<span id="cb824-10196"><a href="#cb824-10196" aria-hidden="true" tabindex="-1"></a>    <span class="fu">alist</span>(</span>
-<span id="cb824-10197"><a href="#cb824-10197" aria-hidden="true" tabindex="-1"></a>        y <span class="sc">~</span> <span class="fu">dnorm</span>( mu , sigma ) , <span class="co"># y_i ∼ Normal(μ, σ)</span></span>
-<span id="cb824-10198"><a href="#cb824-10198" aria-hidden="true" tabindex="-1"></a>        mu <span class="ot">&lt;-</span> alpha ,             <span class="co"># μ = α</span></span>
-<span id="cb824-10199"><a href="#cb824-10199" aria-hidden="true" tabindex="-1"></a>        alpha <span class="sc">~</span> <span class="fu">dnorm</span>( <span class="dv">1</span> , <span class="dv">10</span> ) , <span class="co"># α ∼ Normal(1, 10)</span></span>
-<span id="cb824-10200"><a href="#cb824-10200" aria-hidden="true" tabindex="-1"></a>        sigma <span class="sc">~</span> <span class="fu">dcauchy</span>( <span class="dv">0</span> , <span class="dv">1</span> )  <span class="co"># σ ∼ HalfCauchy(0, 1)</span></span>
-<span id="cb824-10201"><a href="#cb824-10201" aria-hidden="true" tabindex="-1"></a>),</span>
-<span id="cb824-10202"><a href="#cb824-10202" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span><span class="fu">list</span>(<span class="at">y=</span>y) , <span class="at">start=</span><span class="fu">list</span>(<span class="at">alpha=</span><span class="dv">0</span>,<span class="at">sigma=</span><span class="dv">1</span>) , </span>
-<span id="cb824-10203"><a href="#cb824-10203" aria-hidden="true" tabindex="-1"></a><span class="at">chains=</span><span class="dv">2</span> , <span class="at">iter=</span><span class="dv">4000</span> , <span class="at">warmup=</span><span class="dv">1000</span> ))</span>
-<span id="cb824-10204"><a href="#cb824-10204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10205"><a href="#cb824-10205" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.3</span>)</span>
-<span id="cb824-10206"><a href="#cb824-10206" aria-hidden="true" tabindex="-1"></a><span class="co"># Much better values with weakly informative priors for alpha and sigma. </span></span>
-<span id="cb824-10207"><a href="#cb824-10207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb824-10208"><a href="#cb824-10208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10209"><a href="#cb824-10209" aria-hidden="true" tabindex="-1"></a><span class="in">```{r akjurz_8.13}</span></span>
+<span id="cb824-10173"><a href="#cb824-10173" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 8.13, message=FALSE, warning=FALSE}</span></span>
+<span id="cb824-10174"><a href="#cb824-10174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10175"><a href="#cb824-10175" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb824-10176"><a href="#cb824-10176" aria-hidden="true" tabindex="-1"></a>output<span class="ot">&lt;-</span> <span class="fu">capture.output</span>(m8<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">ulam</span>(</span>
+<span id="cb824-10177"><a href="#cb824-10177" aria-hidden="true" tabindex="-1"></a>    <span class="fu">alist</span>(</span>
+<span id="cb824-10178"><a href="#cb824-10178" aria-hidden="true" tabindex="-1"></a>        y <span class="sc">~</span> <span class="fu">dnorm</span>( mu , sigma ) ,</span>
+<span id="cb824-10179"><a href="#cb824-10179" aria-hidden="true" tabindex="-1"></a>        mu <span class="ot">&lt;-</span> alpha,</span>
+<span id="cb824-10180"><a href="#cb824-10180" aria-hidden="true" tabindex="-1"></a>        alpha <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="sc">-</span><span class="fl">1e20</span>, <span class="fl">1e20</span>),</span>
+<span id="cb824-10181"><a href="#cb824-10181" aria-hidden="true" tabindex="-1"></a>        sigma <span class="sc">~</span> <span class="fu">dunif</span>(<span class="dv">0</span>, <span class="fl">1e20</span>)</span>
+<span id="cb824-10182"><a href="#cb824-10182" aria-hidden="true" tabindex="-1"></a>), <span class="co"># I add in priors coz ulam shows error without priors</span></span>
+<span id="cb824-10183"><a href="#cb824-10183" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span><span class="fu">list</span>(<span class="at">y=</span>y) , </span>
+<span id="cb824-10184"><a href="#cb824-10184" aria-hidden="true" tabindex="-1"></a><span class="at">start=</span><span class="fu">list</span>(<span class="at">alpha=</span><span class="dv">0</span>,<span class="at">sigma=</span><span class="dv">1</span>) , <span class="at">chains=</span><span class="dv">2</span> , <span class="at">iter=</span><span class="dv">4000</span> , <span class="at">warmup=</span><span class="dv">1000</span> ))</span>
+<span id="cb824-10185"><a href="#cb824-10185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10186"><a href="#cb824-10186" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.2</span>)</span>
+<span id="cb824-10187"><a href="#cb824-10187" aria-hidden="true" tabindex="-1"></a><span class="co"># The mean of −1 and 1 is zero, so we’re hoping to get a mean value for alpha around zero. </span></span>
+<span id="cb824-10188"><a href="#cb824-10188" aria-hidden="true" tabindex="-1"></a><span class="co"># Instead we get crazy values and implausibly wide confidence intervals. </span></span>
+<span id="cb824-10189"><a href="#cb824-10189" aria-hidden="true" tabindex="-1"></a><span class="co"># Inference for sigma is no better. The number of effective samples, n_eff, is very small. </span></span>
+<span id="cb824-10190"><a href="#cb824-10190" aria-hidden="true" tabindex="-1"></a><span class="co"># And Rhat should approach 1.00 in a healthy set of chains. Even a value of 1.01 is suspicious. </span></span>
+<span id="cb824-10191"><a href="#cb824-10191" aria-hidden="true" tabindex="-1"></a><span class="co"># An Rhat of 1.10 indicates a catastrophe.</span></span>
+<span id="cb824-10192"><a href="#cb824-10192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10193"><a href="#cb824-10193" aria-hidden="true" tabindex="-1"></a><span class="do">## I can't do trace plots with ulam.</span></span>
+<span id="cb824-10194"><a href="#cb824-10194" aria-hidden="true" tabindex="-1"></a><span class="do">## Error: cannot coerce class ‘structure("ulam", package = "rethinking")’ to a data.frame</span></span>
+<span id="cb824-10195"><a href="#cb824-10195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10196"><a href="#cb824-10196" aria-hidden="true" tabindex="-1"></a><span class="do">## Add a very weakly informative prior</span></span>
+<span id="cb824-10197"><a href="#cb824-10197" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(m8<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">ulam</span>(</span>
+<span id="cb824-10198"><a href="#cb824-10198" aria-hidden="true" tabindex="-1"></a>    <span class="fu">alist</span>(</span>
+<span id="cb824-10199"><a href="#cb824-10199" aria-hidden="true" tabindex="-1"></a>        y <span class="sc">~</span> <span class="fu">dnorm</span>( mu , sigma ) , <span class="co"># y_i ∼ Normal(μ, σ)</span></span>
+<span id="cb824-10200"><a href="#cb824-10200" aria-hidden="true" tabindex="-1"></a>        mu <span class="ot">&lt;-</span> alpha ,             <span class="co"># μ = α</span></span>
+<span id="cb824-10201"><a href="#cb824-10201" aria-hidden="true" tabindex="-1"></a>        alpha <span class="sc">~</span> <span class="fu">dnorm</span>( <span class="dv">1</span> , <span class="dv">10</span> ) , <span class="co"># α ∼ Normal(1, 10)</span></span>
+<span id="cb824-10202"><a href="#cb824-10202" aria-hidden="true" tabindex="-1"></a>        sigma <span class="sc">~</span> <span class="fu">dcauchy</span>( <span class="dv">0</span> , <span class="dv">1</span> )  <span class="co"># σ ∼ HalfCauchy(0, 1)</span></span>
+<span id="cb824-10203"><a href="#cb824-10203" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb824-10204"><a href="#cb824-10204" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span><span class="fu">list</span>(<span class="at">y=</span>y) , <span class="at">start=</span><span class="fu">list</span>(<span class="at">alpha=</span><span class="dv">0</span>,<span class="at">sigma=</span><span class="dv">1</span>) , </span>
+<span id="cb824-10205"><a href="#cb824-10205" aria-hidden="true" tabindex="-1"></a><span class="at">chains=</span><span class="dv">2</span> , <span class="at">iter=</span><span class="dv">4000</span> , <span class="at">warmup=</span><span class="dv">1000</span> ))</span>
+<span id="cb824-10206"><a href="#cb824-10206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10207"><a href="#cb824-10207" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m8<span class="fl">.3</span>)</span>
+<span id="cb824-10208"><a href="#cb824-10208" aria-hidden="true" tabindex="-1"></a><span class="co"># Much better values with weakly informative priors for alpha and sigma. </span></span>
+<span id="cb824-10209"><a href="#cb824-10209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb824-10210"><a href="#cb824-10210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10211"><a href="#cb824-10211" aria-hidden="true" tabindex="-1"></a><span class="do">## Use akjurz's codes using brms</span></span>
-<span id="cb824-10212"><a href="#cb824-10212" aria-hidden="true" tabindex="-1"></a><span class="co"># As with rethinking, brms can take data in the form of a list. Recall however, </span></span>
-<span id="cb824-10213"><a href="#cb824-10213" aria-hidden="true" tabindex="-1"></a><span class="co"># that in order to specify starting values, you need to specify a list of lists </span></span>
-<span id="cb824-10214"><a href="#cb824-10214" aria-hidden="true" tabindex="-1"></a><span class="co"># with an inits argument rather than with start.</span></span>
-<span id="cb824-10215"><a href="#cb824-10215" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(b8<span class="fl">.2</span> <span class="ot">&lt;-</span></span>
-<span id="cb824-10216"><a href="#cb824-10216" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span>(<span class="at">data =</span> <span class="fu">list</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)), </span>
-<span id="cb824-10217"><a href="#cb824-10217" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> gaussian,</span>
-<span id="cb824-10218"><a href="#cb824-10218" aria-hidden="true" tabindex="-1"></a>      y <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb824-10219"><a href="#cb824-10219" aria-hidden="true" tabindex="-1"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">uniform</span>(<span class="sc">-</span><span class="fl">1e10</span>, <span class="fl">1e10</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb824-10220"><a href="#cb824-10220" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="fu">uniform</span>(<span class="dv">0</span>, <span class="fl">1e10</span>), <span class="at">class =</span> sigma)),</span>
-<span id="cb824-10221"><a href="#cb824-10221" aria-hidden="true" tabindex="-1"></a>      <span class="at">inits =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">Intercept =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="dv">1</span>),</span>
-<span id="cb824-10222"><a href="#cb824-10222" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">list</span>(<span class="at">Intercept =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="dv">1</span>)),</span>
-<span id="cb824-10223"><a href="#cb824-10223" aria-hidden="true" tabindex="-1"></a>      <span class="at">iter =</span> <span class="dv">4000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">2</span>,</span>
-<span id="cb824-10224"><a href="#cb824-10224" aria-hidden="true" tabindex="-1"></a>      <span class="at">seed =</span> <span class="dv">8</span>))</span>
-<span id="cb824-10225"><a href="#cb824-10225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10226"><a href="#cb824-10226" aria-hidden="true" tabindex="-1"></a><span class="co"># Those were some silly flat priors. Check the damage.</span></span>
-<span id="cb824-10227"><a href="#cb824-10227" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">posterior_samples</span>(b8<span class="fl">.2</span>, <span class="at">add_chain =</span> T)</span>
-<span id="cb824-10228"><a href="#cb824-10228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10229"><a href="#cb824-10229" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_trace</span>(post[, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">4</span>)],</span>
-<span id="cb824-10230"><a href="#cb824-10230" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> .<span class="dv">25</span>) <span class="sc">+</span></span>
-<span id="cb824-10231"><a href="#cb824-10231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title    =</span> <span class="st">"My version of Figure 8.5.a."</span>,</span>
-<span id="cb824-10232"><a href="#cb824-10232" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"These trace plots do not look like the fuzzy caterpillars we usually hope for."</span>) <span class="sc">+</span></span>
-<span id="cb824-10233"><a href="#cb824-10233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_ipsum</span>() <span class="sc">+</span></span>
-<span id="cb824-10234"><a href="#cb824-10234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>() <span class="sc">+</span></span>
-<span id="cb824-10235"><a href="#cb824-10235" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">85</span>, <span class="fl">1.5</span>),</span>
-<span id="cb824-10236"><a href="#cb824-10236" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>)</span>
-<span id="cb824-10237"><a href="#cb824-10237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10238"><a href="#cb824-10238" aria-hidden="true" tabindex="-1"></a><span class="do">## Second chain is missing and Ip_ graph is not supposed to show. </span></span>
-<span id="cb824-10239"><a href="#cb824-10239" aria-hidden="true" tabindex="-1"></a><span class="do">## I unloaded `rethinking` and tried to use `brms` only to solve the problem.</span></span>
-<span id="cb824-10240"><a href="#cb824-10240" aria-hidden="true" tabindex="-1"></a><span class="do">## With only `brms`, I got errors that the functions used in akjurz's codes are deprecated.</span></span>
-<span id="cb824-10241"><a href="#cb824-10241" aria-hidden="true" tabindex="-1"></a><span class="do">## It seems both reference codes from the rethinking 1st edition and akjurz's webpage are outdated.</span></span>
-<span id="cb824-10242"><a href="#cb824-10242" aria-hidden="true" tabindex="-1"></a><span class="do">## So, I will focus on the theory and texts only for now. </span></span>
-<span id="cb824-10243"><a href="#cb824-10243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10244"><a href="#cb824-10244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10245"><a href="#cb824-10245" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(b8<span class="fl">.2</span>)</span>
-<span id="cb824-10246"><a href="#cb824-10246" aria-hidden="true" tabindex="-1"></a><span class="co"># Ludicrous numbers, super wide CI and Rhat is higher than 1 (1.23)</span></span>
+<span id="cb824-10211"><a href="#cb824-10211" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb824-10212"><a href="#cb824-10212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10213"><a href="#cb824-10213" aria-hidden="true" tabindex="-1"></a><span class="in">```{r akjurz_8.13}</span></span>
+<span id="cb824-10214"><a href="#cb824-10214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10215"><a href="#cb824-10215" aria-hidden="true" tabindex="-1"></a><span class="do">## Use akjurz's codes using brms</span></span>
+<span id="cb824-10216"><a href="#cb824-10216" aria-hidden="true" tabindex="-1"></a><span class="co"># As with rethinking, brms can take data in the form of a list. Recall however, </span></span>
+<span id="cb824-10217"><a href="#cb824-10217" aria-hidden="true" tabindex="-1"></a><span class="co"># that in order to specify starting values, you need to specify a list of lists </span></span>
+<span id="cb824-10218"><a href="#cb824-10218" aria-hidden="true" tabindex="-1"></a><span class="co"># with an inits argument rather than with start.</span></span>
+<span id="cb824-10219"><a href="#cb824-10219" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(b8<span class="fl">.2</span> <span class="ot">&lt;-</span></span>
+<span id="cb824-10220"><a href="#cb824-10220" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span>(<span class="at">data =</span> <span class="fu">list</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)), </span>
+<span id="cb824-10221"><a href="#cb824-10221" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> gaussian,</span>
+<span id="cb824-10222"><a href="#cb824-10222" aria-hidden="true" tabindex="-1"></a>      y <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb824-10223"><a href="#cb824-10223" aria-hidden="true" tabindex="-1"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">uniform</span>(<span class="sc">-</span><span class="fl">1e10</span>, <span class="fl">1e10</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb824-10224"><a href="#cb824-10224" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="fu">uniform</span>(<span class="dv">0</span>, <span class="fl">1e10</span>), <span class="at">class =</span> sigma)),</span>
+<span id="cb824-10225"><a href="#cb824-10225" aria-hidden="true" tabindex="-1"></a>      <span class="at">inits =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">Intercept =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="dv">1</span>),</span>
+<span id="cb824-10226"><a href="#cb824-10226" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">list</span>(<span class="at">Intercept =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="dv">1</span>)),</span>
+<span id="cb824-10227"><a href="#cb824-10227" aria-hidden="true" tabindex="-1"></a>      <span class="at">iter =</span> <span class="dv">4000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">2</span>,</span>
+<span id="cb824-10228"><a href="#cb824-10228" aria-hidden="true" tabindex="-1"></a>      <span class="at">seed =</span> <span class="dv">8</span>))</span>
+<span id="cb824-10229"><a href="#cb824-10229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10230"><a href="#cb824-10230" aria-hidden="true" tabindex="-1"></a><span class="co"># Those were some silly flat priors. Check the damage.</span></span>
+<span id="cb824-10231"><a href="#cb824-10231" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">posterior_samples</span>(b8<span class="fl">.2</span>, <span class="at">add_chain =</span> T)</span>
+<span id="cb824-10232"><a href="#cb824-10232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10233"><a href="#cb824-10233" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_trace</span>(post[, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">4</span>)],</span>
+<span id="cb824-10234"><a href="#cb824-10234" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> .<span class="dv">25</span>) <span class="sc">+</span></span>
+<span id="cb824-10235"><a href="#cb824-10235" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title    =</span> <span class="st">"My version of Figure 8.5.a."</span>,</span>
+<span id="cb824-10236"><a href="#cb824-10236" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"These trace plots do not look like the fuzzy caterpillars we usually hope for."</span>) <span class="sc">+</span></span>
+<span id="cb824-10237"><a href="#cb824-10237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_ipsum</span>() <span class="sc">+</span></span>
+<span id="cb824-10238"><a href="#cb824-10238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>() <span class="sc">+</span></span>
+<span id="cb824-10239"><a href="#cb824-10239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">85</span>, <span class="fl">1.5</span>),</span>
+<span id="cb824-10240"><a href="#cb824-10240" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>)</span>
+<span id="cb824-10241"><a href="#cb824-10241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10242"><a href="#cb824-10242" aria-hidden="true" tabindex="-1"></a><span class="do">## Second chain is missing and Ip_ graph is not supposed to show. </span></span>
+<span id="cb824-10243"><a href="#cb824-10243" aria-hidden="true" tabindex="-1"></a><span class="do">## I unloaded `rethinking` and tried to use `brms` only to solve the problem.</span></span>
+<span id="cb824-10244"><a href="#cb824-10244" aria-hidden="true" tabindex="-1"></a><span class="do">## With only `brms`, I got errors that the functions used in akjurz's codes are deprecated.</span></span>
+<span id="cb824-10245"><a href="#cb824-10245" aria-hidden="true" tabindex="-1"></a><span class="do">## It seems both reference codes from the rethinking 1st edition and akjurz's webpage are outdated.</span></span>
+<span id="cb824-10246"><a href="#cb824-10246" aria-hidden="true" tabindex="-1"></a><span class="do">## So, I will focus on the theory and texts only for now. </span></span>
 <span id="cb824-10247"><a href="#cb824-10247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10248"><a href="#cb824-10248" aria-hidden="true" tabindex="-1"></a><span class="do">## With reasonable priors</span></span>
-<span id="cb824-10249"><a href="#cb824-10249" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(b8<span class="fl">.3</span> <span class="ot">&lt;-</span></span>
-<span id="cb824-10250"><a href="#cb824-10250" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span>(<span class="at">data =</span> <span class="fu">list</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)), </span>
-<span id="cb824-10251"><a href="#cb824-10251" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> gaussian,</span>
-<span id="cb824-10252"><a href="#cb824-10252" aria-hidden="true" tabindex="-1"></a>      y <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb824-10253"><a href="#cb824-10253" aria-hidden="true" tabindex="-1"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb824-10254"><a href="#cb824-10254" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="fu">cauchy</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> sigma)),</span>
-<span id="cb824-10255"><a href="#cb824-10255" aria-hidden="true" tabindex="-1"></a>      <span class="at">inits =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">Intercept =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="dv">1</span>),</span>
-<span id="cb824-10256"><a href="#cb824-10256" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">list</span>(<span class="at">Intercept =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="dv">1</span>)),</span>
-<span id="cb824-10257"><a href="#cb824-10257" aria-hidden="true" tabindex="-1"></a>      <span class="at">iter =</span> <span class="dv">4000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">2</span>,</span>
-<span id="cb824-10258"><a href="#cb824-10258" aria-hidden="true" tabindex="-1"></a>      <span class="at">seed =</span> <span class="dv">8</span>))</span>
-<span id="cb824-10259"><a href="#cb824-10259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10260"><a href="#cb824-10260" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(b8<span class="fl">.3</span>)</span>
-<span id="cb824-10261"><a href="#cb824-10261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10262"><a href="#cb824-10262" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate trace plots</span></span>
-<span id="cb824-10263"><a href="#cb824-10263" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">posterior_samples</span>(b8<span class="fl">.3</span>, <span class="at">add_chain =</span> T)</span>
-<span id="cb824-10264"><a href="#cb824-10264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10265"><a href="#cb824-10265" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_trace</span>(post[, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">4</span>)],</span>
-<span id="cb824-10266"><a href="#cb824-10266" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> .<span class="dv">25</span>) <span class="sc">+</span></span>
-<span id="cb824-10267"><a href="#cb824-10267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title     =</span> <span class="st">"My version of Figure 8.5.b"</span>,</span>
-<span id="cb824-10268"><a href="#cb824-10268" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle  =</span> <span class="st">"Oh man. This looks so much better."</span>) <span class="sc">+</span></span>
-<span id="cb824-10269"><a href="#cb824-10269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_ipsum</span>() <span class="sc">+</span></span>
-<span id="cb824-10270"><a href="#cb824-10270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>() <span class="sc">+</span></span>
-<span id="cb824-10271"><a href="#cb824-10271" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">85</span>, <span class="fl">1.5</span>),</span>
-<span id="cb824-10272"><a href="#cb824-10272" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>)</span>
-<span id="cb824-10273"><a href="#cb824-10273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10274"><a href="#cb824-10274" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare posterior and priors for model b8.3</span></span>
-<span id="cb824-10275"><a href="#cb824-10275" aria-hidden="true" tabindex="-1"></a><span class="co">#post %&gt;%</span></span>
-<span id="cb824-10276"><a href="#cb824-10276" aria-hidden="true" tabindex="-1"></a>  <span class="co">#select(b_Intercept) %&gt;%</span></span>
-<span id="cb824-10277"><a href="#cb824-10277" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(post, <span class="fu">aes</span>(<span class="at">x =</span> b_Intercept)) <span class="sc">+</span></span>
-<span id="cb824-10278"><a href="#cb824-10278" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_density</span>(<span class="at">geom =</span> <span class="st">"line"</span>) <span class="sc">+</span></span>
-<span id="cb824-10279"><a href="#cb824-10279" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fu">min</span>(post<span class="sc">$</span>b_Intercept),</span>
-<span id="cb824-10280"><a href="#cb824-10280" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">to =</span> <span class="fu">max</span>(post<span class="sc">$</span>b_Intercept),</span>
-<span id="cb824-10281"><a href="#cb824-10281" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">length.out =</span> <span class="dv">50</span>)),</span>
-<span id="cb824-10282"><a href="#cb824-10282" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> <span class="fu">dnorm</span>(<span class="at">x =</span> x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">10</span>)),</span>
-<span id="cb824-10283"><a href="#cb824-10283" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="fu">ipsum_pal</span>()(<span class="dv">1</span>), <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb824-10284"><a href="#cb824-10284" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>()</span>
-<span id="cb824-10285"><a href="#cb824-10285" aria-hidden="true" tabindex="-1"></a><span class="co"># Prior (dashed) and posterior (blue) for the model with weakly informative priors.</span></span>
-<span id="cb824-10286"><a href="#cb824-10286" aria-hidden="true" tabindex="-1"></a><span class="co"># Even with only two observations, the likelihood easily overcomes these priors. </span></span>
-<span id="cb824-10287"><a href="#cb824-10287" aria-hidden="true" tabindex="-1"></a><span class="co"># Yet the model cannot be successfully estimated without them.</span></span>
-<span id="cb824-10288"><a href="#cb824-10288" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb824-10289"><a href="#cb824-10289" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb824-10290"><a href="#cb824-10290" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb824-10291"><a href="#cb824-10291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10292"><a href="#cb824-10292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10293"><a href="#cb824-10293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10294"><a href="#cb824-10294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10295"><a href="#cb824-10295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb824-10296"><a href="#cb824-10296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10297"><a href="#cb824-10297" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb824-10298"><a href="#cb824-10298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10299"><a href="#cb824-10299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10300"><a href="#cb824-10300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10301"><a href="#cb824-10301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10302"><a href="#cb824-10302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10303"><a href="#cb824-10303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10304"><a href="#cb824-10304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10305"><a href="#cb824-10305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10306"><a href="#cb824-10306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10307"><a href="#cb824-10307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10248"><a href="#cb824-10248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10249"><a href="#cb824-10249" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(b8<span class="fl">.2</span>)</span>
+<span id="cb824-10250"><a href="#cb824-10250" aria-hidden="true" tabindex="-1"></a><span class="co"># Ludicrous numbers, super wide CI and Rhat is higher than 1 (1.23)</span></span>
+<span id="cb824-10251"><a href="#cb824-10251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10252"><a href="#cb824-10252" aria-hidden="true" tabindex="-1"></a><span class="do">## With reasonable priors</span></span>
+<span id="cb824-10253"><a href="#cb824-10253" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">capture.output</span>(b8<span class="fl">.3</span> <span class="ot">&lt;-</span></span>
+<span id="cb824-10254"><a href="#cb824-10254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">brm</span>(<span class="at">data =</span> <span class="fu">list</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)), </span>
+<span id="cb824-10255"><a href="#cb824-10255" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> gaussian,</span>
+<span id="cb824-10256"><a href="#cb824-10256" aria-hidden="true" tabindex="-1"></a>      y <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb824-10257"><a href="#cb824-10257" aria-hidden="true" tabindex="-1"></a>      <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb824-10258"><a href="#cb824-10258" aria-hidden="true" tabindex="-1"></a>                <span class="fu">prior</span>(<span class="fu">cauchy</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">class =</span> sigma)),</span>
+<span id="cb824-10259"><a href="#cb824-10259" aria-hidden="true" tabindex="-1"></a>      <span class="at">inits =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">Intercept =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="dv">1</span>),</span>
+<span id="cb824-10260"><a href="#cb824-10260" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">list</span>(<span class="at">Intercept =</span> <span class="dv">0</span>, <span class="at">sigma =</span> <span class="dv">1</span>)),</span>
+<span id="cb824-10261"><a href="#cb824-10261" aria-hidden="true" tabindex="-1"></a>      <span class="at">iter =</span> <span class="dv">4000</span>, <span class="at">warmup =</span> <span class="dv">1000</span>, <span class="at">chains =</span> <span class="dv">2</span>,</span>
+<span id="cb824-10262"><a href="#cb824-10262" aria-hidden="true" tabindex="-1"></a>      <span class="at">seed =</span> <span class="dv">8</span>))</span>
+<span id="cb824-10263"><a href="#cb824-10263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10264"><a href="#cb824-10264" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(b8<span class="fl">.3</span>)</span>
+<span id="cb824-10265"><a href="#cb824-10265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10266"><a href="#cb824-10266" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate trace plots</span></span>
+<span id="cb824-10267"><a href="#cb824-10267" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">posterior_samples</span>(b8<span class="fl">.3</span>, <span class="at">add_chain =</span> T)</span>
+<span id="cb824-10268"><a href="#cb824-10268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10269"><a href="#cb824-10269" aria-hidden="true" tabindex="-1"></a><span class="fu">mcmc_trace</span>(post[, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">4</span>)],</span>
+<span id="cb824-10270"><a href="#cb824-10270" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> .<span class="dv">25</span>) <span class="sc">+</span></span>
+<span id="cb824-10271"><a href="#cb824-10271" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title     =</span> <span class="st">"My version of Figure 8.5.b"</span>,</span>
+<span id="cb824-10272"><a href="#cb824-10272" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle  =</span> <span class="st">"Oh man. This looks so much better."</span>) <span class="sc">+</span></span>
+<span id="cb824-10273"><a href="#cb824-10273" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_ipsum</span>() <span class="sc">+</span></span>
+<span id="cb824-10274"><a href="#cb824-10274" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>() <span class="sc">+</span></span>
+<span id="cb824-10275"><a href="#cb824-10275" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">85</span>, <span class="fl">1.5</span>),</span>
+<span id="cb824-10276"><a href="#cb824-10276" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>)</span>
+<span id="cb824-10277"><a href="#cb824-10277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10278"><a href="#cb824-10278" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare posterior and priors for model b8.3</span></span>
+<span id="cb824-10279"><a href="#cb824-10279" aria-hidden="true" tabindex="-1"></a><span class="co">#post %&gt;%</span></span>
+<span id="cb824-10280"><a href="#cb824-10280" aria-hidden="true" tabindex="-1"></a>  <span class="co">#select(b_Intercept) %&gt;%</span></span>
+<span id="cb824-10281"><a href="#cb824-10281" aria-hidden="true" tabindex="-1"></a> d1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(post, <span class="fu">aes</span>(<span class="at">x =</span> b_Intercept)) <span class="sc">+</span></span>
+<span id="cb824-10282"><a href="#cb824-10282" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_density</span>(<span class="at">geom =</span> <span class="st">"line"</span>) <span class="sc">+</span></span>
+<span id="cb824-10283"><a href="#cb824-10283" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fu">min</span>(post<span class="sc">$</span>b_Intercept),</span>
+<span id="cb824-10284"><a href="#cb824-10284" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">to =</span> <span class="fu">max</span>(post<span class="sc">$</span>b_Intercept),</span>
+<span id="cb824-10285"><a href="#cb824-10285" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">length.out =</span> <span class="dv">50</span>)),</span>
+<span id="cb824-10286"><a href="#cb824-10286" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> <span class="fu">dnorm</span>(<span class="at">x =</span> x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">10</span>)),</span>
+<span id="cb824-10287"><a href="#cb824-10287" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="fu">ipsum_pal</span>()(<span class="dv">1</span>), <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb824-10288"><a href="#cb824-10288" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>()</span>
+<span id="cb824-10289"><a href="#cb824-10289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10290"><a href="#cb824-10290" aria-hidden="true" tabindex="-1"></a><span class="co"># post %&gt;%</span></span>
+<span id="cb824-10291"><a href="#cb824-10291" aria-hidden="true" tabindex="-1"></a><span class="co">#  select(sigma) %&gt;%</span></span>
+<span id="cb824-10292"><a href="#cb824-10292" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb824-10293"><a href="#cb824-10293" aria-hidden="true" tabindex="-1"></a> d2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(post, <span class="fu">aes</span>(<span class="at">x =</span> sigma)) <span class="sc">+</span></span>
+<span id="cb824-10294"><a href="#cb824-10294" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_density</span>(<span class="at">geom =</span> <span class="st">"line"</span>) <span class="sc">+</span></span>
+<span id="cb824-10295"><a href="#cb824-10295" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>,</span>
+<span id="cb824-10296"><a href="#cb824-10296" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">to =</span> <span class="fu">max</span>(post<span class="sc">$</span>sigma),</span>
+<span id="cb824-10297"><a href="#cb824-10297" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">length.out =</span> <span class="dv">50</span>)),</span>
+<span id="cb824-10298"><a href="#cb824-10298" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> <span class="fu">dcauchy</span>(<span class="at">x =</span> x, <span class="at">location =</span> <span class="dv">0</span>, <span class="at">scale =</span> <span class="dv">1</span>)<span class="sc">*</span><span class="dv">2</span>),</span>
+<span id="cb824-10299"><a href="#cb824-10299" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="fu">ipsum_pal</span>()(<span class="dv">2</span>)[<span class="dv">2</span>], <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb824-10300"><a href="#cb824-10300" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb824-10301"><a href="#cb824-10301" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_ipsum</span>()</span>
+<span id="cb824-10302"><a href="#cb824-10302" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb824-10303"><a href="#cb824-10303" aria-hidden="true" tabindex="-1"></a> <span class="fu">grid.arrange</span>(d1, d2, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb824-10304"><a href="#cb824-10304" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb824-10305"><a href="#cb824-10305" aria-hidden="true" tabindex="-1"></a> <span class="co"># Prior (dashed) and posterior (solid black) for the model with weakly informative priors.</span></span>
+<span id="cb824-10306"><a href="#cb824-10306" aria-hidden="true" tabindex="-1"></a><span class="co"># Even with only two observations, the likelihood easily overcomes these priors. </span></span>
+<span id="cb824-10307"><a href="#cb824-10307" aria-hidden="true" tabindex="-1"></a><span class="co"># Yet the model cannot be successfully estimated without them.</span></span>
 <span id="cb824-10308"><a href="#cb824-10308" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb824-10309"><a href="#cb824-10309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10310"><a href="#cb824-10310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10310"><a href="#cb824-10310" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb824-10311"><a href="#cb824-10311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10312"><a href="#cb824-10312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10312"><a href="#cb824-10312" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 <span id="cb824-10313"><a href="#cb824-10313" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb824-10314"><a href="#cb824-10314" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb824-10315"><a href="#cb824-10315" aria-hidden="true" tabindex="-1"></a></span>
@@ -21531,7 +21553,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb824-10332"><a href="#cb824-10332" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb824-10333"><a href="#cb824-10333" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb824-10334"><a href="#cb824-10334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-10335"><a href="#cb824-10335" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb824-10335"><a href="#cb824-10335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10336"><a href="#cb824-10336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10337"><a href="#cb824-10337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10338"><a href="#cb824-10338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10339"><a href="#cb824-10339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10340"><a href="#cb824-10340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10341"><a href="#cb824-10341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10342"><a href="#cb824-10342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10343"><a href="#cb824-10343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10344"><a href="#cb824-10344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10345"><a href="#cb824-10345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10346"><a href="#cb824-10346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10347"><a href="#cb824-10347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10348"><a href="#cb824-10348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10349"><a href="#cb824-10349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb824-10350"><a href="#cb824-10350" aria-hidden="true" tabindex="-1"></a>---</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -9903,8 +9903,10 @@ precis(m8.1)
 But now we’ll also fit this model using Hamiltonian Monte Carlo. This means there will be no more quadratic approximation&mdash; if the posterior distribution is non-Gaussian, then we’ll get whatever non-Gaussian shape it has. You can use exactly the same formula list as before, but you need to do two additional things.
 
 (1) Preprocess all variable transformations.
-        - If the outcome is transformed somehow, like by taking the logarithm, then do this before fitting the model by constructing a new variable in the data frame. 
-        - Likewise, if any predictor variables are transformed, including squaring and cubing and such to build polynomial models, then compute these transformed values before fitting the model.
+
+      - If the outcome is transformed somehow, like by taking the logarithm, then do this before fitting the model by constructing a new variable in the data frame. 
+        
+      - Likewise, if any predictor variables are transformed, including squaring and cubing and such to build polynomial models, then compute these transformed values before fitting the model.
         
 \n
 
@@ -10204,6 +10206,8 @@ precis(m8.3)
 # Much better values with weakly informative priors for alpha and sigma. 
 ```
 
+<br>
+
 ```{r akjurz_8.13}
 
 ## Use akjurz's codes using brms
@@ -10272,7 +10276,7 @@ mcmc_trace(post[, c(1:2, 4)],
 # Compare posterior and priors for model b8.3
 #post %>%
   #select(b_Intercept) %>%
-  ggplot(post, aes(x = b_Intercept)) +
+ d1 <- ggplot(post, aes(x = b_Intercept)) +
   stat_density(geom = "line") +
   geom_line(data = data.frame(x = seq(from = min(post$b_Intercept),
                                       to = max(post$b_Intercept),
@@ -10280,14 +10284,25 @@ mcmc_trace(post[, c(1:2, 4)],
             aes(x = x, y = dnorm(x = x, mean = 0, sd = 10)),
             color = ipsum_pal()(1), linetype = 2) +
   theme_ipsum()
-# Prior (dashed) and posterior (blue) for the model with weakly informative priors.
+
+# post %>%
+#  select(sigma) %>%
+  
+ d2 <- ggplot(post, aes(x = sigma)) +
+  stat_density(geom = "line") +
+  geom_line(data = data.frame(x = seq(from = 0,
+                                      to = max(post$sigma),
+                                      length.out = 50)),
+            aes(x = x, y = dcauchy(x = x, location = 0, scale = 1)*2),
+            color = ipsum_pal()(2)[2], linetype = 2) +
+  coord_cartesian(xlim = c(0, 10)) +
+  theme_ipsum()
+  
+ grid.arrange(d1, d2, ncol = 2)
+ 
+ # Prior (dashed) and posterior (solid black) for the model with weakly informative priors.
 # Even with only two observations, the likelihood easily overcomes these priors. 
 # Yet the model cannot be successfully estimated without them.
-  
-  
-  
-
-
 
 
 ```
