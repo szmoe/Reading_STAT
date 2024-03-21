@@ -2799,7 +2799,7 @@ Whatever the reason, adult heights are nearly always approximately normal. So it
 
 There are an infinite number of Gaussain distributions , with an infinite number of different means and standard deviations. We’re ready to write down the general model and compute the plausibility of each combination of <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> and <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />. To define the heights as normally distributed with a mean <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\mu}" title="" /> and standard deviation <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, we write:
 
-![](https://latex.codecogs.com/svg.latex?\boldsymbol{{h}_i \sim {Normal}(\mu, \sigma)})
+![](https://latex.codecogs.com/svg.latex?\boldsymbol{{h}_i \sim {Normal}}(\mu, \sigma)})
 
 <br>
 
