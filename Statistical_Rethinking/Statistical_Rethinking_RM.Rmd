@@ -25,6 +25,7 @@ format:
 
 ```{r setup, include=FALSE, message  = FALSE, warning = F}
 knitr::opts_chunk$set(echo = TRUE,  message = FALSE,  warning = FALSE,  tidy = TRUE)
+
 library(rethinking)
 library(ggplot2)
 library(dplyr)
@@ -39,6 +40,8 @@ library(tidyverse)
 library(rstan)
 library(cmdstanr)
 library(brms)
+library(bayesplot)
+library(hrbrthemes)
 ```
 
 # Chapter 1: The Golem of Prague
@@ -10010,8 +10013,294 @@ output <- capture.output(b8.1 <-
 
 print(b8.1)
 
+# Calculate waic
+waic(b8.1)
+
+# use loo (leave-one-out) cross-validation
+(l_b8.1 <- loo(b8.1))
+
+# And the recommended workflow since brms version 2.8.0 is to save the information 
+# criteria information with your brm() fit objects with the add_criterion() function.
+b8.1 <- add_criterion(b8.1, c("waic", "loo"))
+
+# retrieve information 
+b8.1$waic
+b8.1$loo
 
 ```
+
+<br>
+
+### Checking the chain 
+
+A trace plot&mdash; the most broadly useful tool for diagnosing malfunction&mdash; merely plots the samples in sequential order, joined by a line. Looking at the trace plot of each parameter can help to diagnose many common problems. A trace plot isn’t the last thing analysts do to inspect MCMC output. But it’s nearly always the first.
+
+```{r 8.12}
+
+# In the terrain ruggedness example, the trace plot shows a very healthy chain.
+plot(b8.1) # m8.1stan doesn't work
+
+## Use akjurz's codes to do trace plots
+
+# use bayesplot’s mcmc_trace() to show only trace plots with our custom theme. 
+# Note that mcmc_trace() works with data frames, not brmfit objects. There’s a further 
+# complication. Recall how we made post (i.e., post <- posterior_samples(b8.1)). 
+# Our post data frame carries no information on chains. To retain that information, 
+# we’ll need to add an add_chain = T argument to our posterior_samples() function.
+post <- posterior_samples(b8.1, add_chain = T)
+
+mcmc_trace(post[, c(1:5, 7)],  # we need to include column 7 because it contains the chain info 
+           facet_args = list(ncol = 3), 
+           size = .15) +
+  labs(title = "My custom trace plots") +
+  scale_fill_ipsum() +
+  theme_ipsum() +
+  theme(legend.position = c(.95, .2))
+# This is a clean, healthy Markov chain, both stationary and well-mixing.
+## Only one chain is shown here. Graphs are not displayed properly. 
+
+# The bayesplot package offers a variety of diagnostic plots. Here we make 
+# autocorrelation plots for all model parameters, one for each HMC chain.
+mcmc_acf(post, 
+         pars = c("b_Intercept", "b_rugged", "b_cont_africa", 
+                  "b_rugged:cont_africa", "sigma"),
+         lags = 5) +
+  scale_color_ipsum() +
+  theme_ipsum()
+# That’s just what we like to see–nice L-shaped autocorrelation plots. Those are 
+# the kinds of shapes you’d expect when you have reasonably large effective samples.
+## Only one chain is displayed here and Ip_ (is that a graph for prior?) shouldn't be showing.
+
+```
+
+Typically we look for two things in these trace plots: stationarity and good mixing. Stationarity refers to the path staying within the posterior distribution. Notice that these traces, for example, all stick around a very stable central tendency, the center of gravity of each dimension of the posterior. Another way to think of this is that the mean value of the chain is quite stable from beginning to end.
+
+A well-mixing chain means that each successive sample within each parameter is not highly correlated with the sample before it. Visually, you can see this by the rapid zig-zag motion of each path, as the trace traverses the posterior distribution without getting mired anyplace.
+
+<br>
+
+<span style="color:brown"><span style="text-decoration:underline">**Raw stan model code**</span>
+
+```{r model_block, eval=FALSE, echo=TRUE}
+
+## Stan code
+# It is essentially the formula list you provided to map2stan, but in reverse order. 
+# The first line, vector[N] mu; names a symbol to hold the linear model. The rest of 
+# the code reiterates your formulas, beginning with priors and then computing the 
+# value of mu for each observation (nation). Finally, the last line comprises the 
+# likelihood. Given this kind of model definition, Stan will define and sample from 
+# the HMC chain or chains you ask for.
+model{
+    vector[N] mu;
+    sigma ~ cauchy( 0 , 2 );
+    bAR ~ normal( 0 , 10 );
+    bA ~ normal( 0 , 10 );
+    bR ~ normal( 0 , 10 );
+   a ~ normal( 0 , 100 );
+    for ( i in 1:N ) {
+        mu[i] <- a + bR * rugged[i] + bA * cont_africa[i] +
+                 bAR * rugged[i] * cont_africa[i];
+}
+    log_gdp ~ normal( mu , sigma );
+}
+
+```
+
+```{r akjurz}
+
+# The stancode() function works in brms much like it does in rethinking.
+brms::stancode(b8.1)
+
+# You can also get that information with b8.1$model or b8.1$fit@stanmodel.
+# b8.1$model
+# b8.1$fit@stanmodel
+
+```
+
+<br>
+
+## Care and feeding of your Markov chain 
+
+### How many samples do you need?
+
+You can control the number of samples from the chain by using the `iter` and `warmup` parameters. The defaults are 2000 for `iter` and `warmup` is set to `iter`/2, which gives you 1000 `warmup` samples and 1000 real samples to use for inference. But these defaults are just meant to get you started, to make sure the chain gets started okay. Then you can decide on other values for `iter` and `warmup`.
+
+So how many samples do we need for accurate inference about the posterior distribution? It depends. First, what really matters is the effective number of samples, not the raw number. The effective number of samples is an estimate of the number of independent samples from the posterior distribution. Markov chains are typically autocorrelated, so that sequential samples are not entirely independent. Stan chains tend to be less autocorrelated than those produced by other engines, but there is always some autocorrelation. Stan provides an estimate of effective number of samples as `n_eff`.
+
+Second, what do you want to know? If all you want are posterior means, it doesn’t take many samples at all to get very good estimates. Even a couple hundred samples will do. But if you care about the exact shape in the extreme tails of the posterior, the 99th percentile or so, then you’ll need many many more. So there is no universally useful number of samples to aim for.
+
+The `warmup` setting is more subtle. On the one hand, you want to have the shortest `warmup` period necessary, so you can get on with real sampling. But on the other hand, more `warmup` can mean more efficient sampling. With Stan models, typically you can devote as much as half of your total samples, the `iter` value, to `warmup` and come out very well. But for simple models like those you’ve fit so far, much less `warmup` is really needed. Models can vary a lot in the shape of their posterior distributions, so again there is no universally best answer. But if you are having trouble, you might try increasing the `warmup`. If not, you might try reducing it.
+
+<br>
+
+### How many chains do you need?
+
+- When debugging a model, use a single chain. 
+
+- When deciding whether the chains are valid, you need more than one chain. 
+    - Using 3 or 4 chains is conventional, and quite often more than enough to reassure us that the sampling is working properly.
+    
+\n
+
+- When you begin the final run that you’ll make inferences from, you only really need one chain. But using more than one chain is fine, as well. It just doesn’t matter, once you’re sure it’s working.
+    - More chains cost you an extra samples of `warmup` that just get thrown away. And since warmup is typically the slowest part of the chain, these extra samples cost a disproportionate amount of your computer’s time.
+    - On the other hand, if you run the chains on different computers or processor cores within a single computer, then you might prefer more chains, because you can spread the load and finish the whole job faster.
+    
+\n
+
+*For typical regression models, you can live by the motto four short chains to check, one long chain for inference.* (Things may still go wrong) 
+
+<br>
+
+<span style="color:brown"><span style="text-decoration:underline">**Convergence diagnostics**</span>
+
+- The default diagnostic output from Stan includes two metrics, `n_eff` and `Rhat`. 
+    - `n_eff` is a measure of the effective number of samples. 
+        - When `n_eff`is much lower than the actual number of iterations (minus warmup) of your chains, it means the chains are inefficient, but possibly still okay. 
+    - `Rhat` is the Gelman-Rubin convergence diagnostic, <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\hat{R}}" title="" />. 
+        -  When Rhat is above 1.00, it usually indicates that the chain has not yet converged, and probably you shouldn’t trust the samples. If you draw more iterations, it could be fine, or it could never converge. For example, Rhat can reach 1.00 even for an invalid chain. So view it perhaps as a signal of danger, but never of safety. For conventional models, these metrics typically work well.
+
+<br>
+
+### Taming a wild chain
+
+One common problem with some models is that there are broad, flat regions of the posterior density. This happens most often, as you might guess, when one uses flat priors. The problem this can generate is a wild, wandering Markov chain that erratically samples extremely positive and extremely negative parameter values.
+
+```{r 8.13, message=FALSE, warning=FALSE}
+
+y <- c(-1,1)
+output<- capture.output(m8.2 <- ulam(
+    alist(
+        y ~ dnorm( mu , sigma ) ,
+        mu <- alpha,
+        alpha ~ dnorm(-1e20, 1e20),
+        sigma ~ dunif(0, 1e20)
+), # I add in priors coz ulam shows error without priors
+data=list(y=y) , 
+start=list(alpha=0,sigma=1) , chains=2 , iter=4000 , warmup=1000 ))
+
+precis(m8.2)
+# The mean of −1 and 1 is zero, so we’re hoping to get a mean value for alpha around zero. 
+# Instead we get crazy values and implausibly wide confidence intervals. 
+# Inference for sigma is no better. The number of effective samples, n_eff, is very small. 
+# And Rhat should approach 1.00 in a healthy set of chains. Even a value of 1.01 is suspicious. 
+# An Rhat of 1.10 indicates a catastrophe.
+
+## I can't do trace plots with ulam.
+## Error: cannot coerce class ‘structure("ulam", package = "rethinking")’ to a data.frame
+
+## Add a very weakly informative prior
+output <- capture.output(m8.3 <- ulam(
+    alist(
+        y ~ dnorm( mu , sigma ) , # y_i ∼ Normal(μ, σ)
+        mu <- alpha ,             # μ = α
+        alpha ~ dnorm( 1 , 10 ) , # α ∼ Normal(1, 10)
+        sigma ~ dcauchy( 0 , 1 )  # σ ∼ HalfCauchy(0, 1)
+),
+data=list(y=y) , start=list(alpha=0,sigma=1) , 
+chains=2 , iter=4000 , warmup=1000 ))
+
+precis(m8.3)
+# Much better values with weakly informative priors for alpha and sigma. 
+```
+
+```{r akjurz_8.13}
+
+## Use akjurz's codes using brms
+# As with rethinking, brms can take data in the form of a list. Recall however, 
+# that in order to specify starting values, you need to specify a list of lists 
+# with an inits argument rather than with start.
+output <- capture.output(b8.2 <-
+  brm(data = list(y = c(-1, 1)), 
+      family = gaussian,
+      y ~ 1,
+      prior = c(prior(uniform(-1e10, 1e10), class = Intercept),
+                prior(uniform(0, 1e10), class = sigma)),
+      inits = list(list(Intercept = 0, sigma = 1),
+                   list(Intercept = 0, sigma = 1)),
+      iter = 4000, warmup = 1000, chains = 2,
+      seed = 8))
+
+# Those were some silly flat priors. Check the damage.
+post <- posterior_samples(b8.2, add_chain = T)
+
+mcmc_trace(post[, c(1:2, 4)],
+           size = .25) +
+  labs(title    = "My version of Figure 8.5.a.",
+       subtitle = "These trace plots do not look like the fuzzy caterpillars we usually hope for.") +
+  scale_color_ipsum() +
+  theme_ipsum() +
+  theme(legend.position = c(.85, 1.5),
+        legend.direction = "horizontal")
+
+## Second chain is missing and Ip_ graph is not supposed to show. 
+## I unloaded `rethinking` and tried to use `brms` only to solve the problem.
+## With only `brms`, I got errors that the functions used in akjurz's codes are deprecated.
+## It seems both reference codes from the rethinking 1st edition and akjurz's webpage are outdated.
+## So, I will focus on the theory and texts only for now. 
+
+
+print(b8.2)
+# Ludicrous numbers, super wide CI and Rhat is higher than 1 (1.23)
+
+## With reasonable priors
+output <- capture.output(b8.3 <-
+  brm(data = list(y = c(-1, 1)), 
+      family = gaussian,
+      y ~ 1,
+      prior = c(prior(normal(0, 10), class = Intercept),
+                prior(cauchy(0, 1), class = sigma)),
+      inits = list(list(Intercept = 0, sigma = 1),
+                   list(Intercept = 0, sigma = 1)),
+      iter = 4000, warmup = 1000, chains = 2,
+      seed = 8))
+
+print(b8.3)
+
+# Generate trace plots
+post <- posterior_samples(b8.3, add_chain = T)
+
+mcmc_trace(post[, c(1:2, 4)],
+           size = .25) +
+  labs(title     = "My version of Figure 8.5.b",
+       subtitle  = "Oh man. This looks so much better.") +
+  scale_color_ipsum() +
+  theme_ipsum() +
+  theme(legend.position = c(.85, 1.5),
+        legend.direction = "horizontal")
+
+# Compare posterior and priors for model b8.3
+#post %>%
+  #select(b_Intercept) %>%
+  ggplot(post, aes(x = b_Intercept)) +
+  stat_density(geom = "line") +
+  geom_line(data = data.frame(x = seq(from = min(post$b_Intercept),
+                                      to = max(post$b_Intercept),
+                                      length.out = 50)),
+            aes(x = x, y = dnorm(x = x, mean = 0, sd = 10)),
+            color = ipsum_pal()(1), linetype = 2) +
+  theme_ipsum()
+# Prior (dashed) and posterior (blue) for the model with weakly informative priors.
+# Even with only two observations, the likelihood easily overcomes these priors. 
+# Yet the model cannot be successfully estimated without them.
+  
+  
+  
+
+
+
+
+```
+
+<br>
+
+
+
+
+
+
+
+
 
 
 
