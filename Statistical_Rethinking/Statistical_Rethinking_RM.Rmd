@@ -42,6 +42,8 @@ library(cmdstanr)
 library(brms)
 library(bayesplot)
 library(hrbrthemes)
+library(tidybayes)
+library(coda)
 ```
 
 # Chapter 1: The Golem of Prague
@@ -9741,55 +9743,52 @@ The king’s advisor, a Mr Metropolis, engineered a clever solution to these dem
 
 (4) When there are more seashells than stones, King Markov always moves to the proposal island. But if there are fewer shells than stones, he discards a number of stones equal to the number of shells. So for example, if there are 4 shells and 6 stones, he ends up with 4 shells and 6 − 4 = 2 stones. Then he places the shells and the remaining stones in a bag. He reaches in and randomly pulls out one object. If it is a shell, he moves to the proposal island. Otherwise, he stays put another week. As a result, the probability that he moves is equal to the number of shells divided by the original number of stones.
 
-```{r 8.1, eval=FALSE}
+```{r 8.1, fig.height=6, fig.width=10}
 
-## Simulate King Markov’s journey
+## Simulate King Markov’s journey (Use akjurz's codes)
 
-# Set number of weeks to simulate
+set.seed(8)
+
 num_weeks <- 1e5
-
-# Define an empty history vector
-positions <- rep(0,num_weeks)
-
-# Define a starting island position (the biggest island, number 10)
-current <- 10
-
-for ( i in 1:num_weeks ) {
-    # record current position
-    positions[i] <- current
-    
-    # flip coin to generate proposal
-    proposal <- current + sample( c(-1,1) , size=1 )
-    
-    # now make sure he loops around the archipelago
-    if ( proposal < 1 ) proposal <- 10
-    if ( proposal > 10 ) proposal <- 1
-    
-    # move?
-    prob_move <- proposal/current
-    current <- ifelse( runif(1) < prob_move , proposal , current )
+positions <- rep(0, num_weeks)
+current   <- 10
+for (i in 1:num_weeks) {
+  # record current position
+  positions[i] <- current
+  # flip coin to generate proposal
+  proposal <- current + sample(c(-1, 1), size = 1)
+  # now make sure he loops around the archipelago
+  if (proposal < 1) proposal <- 10
+  if (proposal > 10) proposal <- 1
+  # move?
+  prob_move <- proposal / current
+  current   <- ifelse(runif(1) < prob_move, proposal, current)
 }
 
-# Plot the data (follow ajkurz's codes)
-tibble(week   = 1:1e5,
+d1 <-tibble(week   = 1:1e5,
        island = positions) %>%
 
   ggplot(aes(x = week, y = island)) +
   geom_point(shape = 1) +
   scale_x_continuous(breaks = seq(from = 0, to = 100, by = 20)) +
   scale_y_continuous(breaks = seq(from = 0, to = 10, by = 2)) +
-  coord_cartesian(xlim = 0:100,
-                  ylim = 1:10) +
+ coord_cartesian(xlim = c(0,100),
+                  ylim = c(1,10)) +
   labs(title    = "Behold: The Metropolis algorithm in action!",
        subtitle = "The dots show the king's path over the first 100 weeks.") +
-  theme_bw()
+  theme_ipsum()
 
+d2 <-tibble(week   = 1:1e5,
+       island = positions) %>%
+  mutate(island = factor(island)) %>%
 
+  ggplot(aes(x = island)) +
+  geom_bar() +
+  labs(title    = "Old Metropolis shines in the long run.",
+       subtitle = "Sure enough, the time the king spent on each island was\nproportional to its population size.") +
+  theme_ipsum()
 
-
-
-
-
+grid.arrange(d1, d2, ncol = 2)
 # Results of the king following the Metropolis algorithm. The left-hand plot shows 
 # the king’s position (vertical axis) across first 100 weeks (horizontal axis). 
 # In any particular week, it’s nearly impossible to say where the king will be. 
@@ -9926,24 +9925,36 @@ str(dd.trim)
 
 ```{r 8.5}
 
+## Use akjurz's codes (ulam stops working today, so I changed all ulam codes, so doc render)
 # Get samples from the posterior distribution using HMC
-output <- capture.output(m8.1stan <- ulam(
-    alist(
-        log_gdp ~ dnorm( mu , sigma ) ,
-        mu <- a + bR*rugged + bA*cont_africa + bAR*rugged*cont_africa ,
-        a ~ dnorm(0,100),
-        bR ~ dnorm(0,10),
-        bA ~ dnorm(0,10),
-        bAR ~ dnorm(0,10),
-        sigma ~ dcauchy(0,2) # a weakly regularizing prior for standard deviations
+output <- capture.output(b8.1 <-
+  brm(data = dd, family = gaussian,
+      log_gdp ~ 1 + rugged + cont_africa + rugged:cont_africa,
+      prior = c(prior(normal(0, 100), class = Intercept),
+                prior(normal(0, 10), class = b),
+                prior(cauchy(0, 2), class = sigma)),
+      seed = 8)) # a weakly regularizing prior for standard deviations
 
-# The uniform prior on sigma has been changed to a half-Cauchy prior. 
+# The uniform prior on sigma has been changed to a half-Cauchy prior. (cauchy)
 # The Cauchy distribution is a useful thick-tailed probability distribution 
 # related to the Student t distribution.
 
-), data=dd.trim))
+print(b8.1)
+## The brms::brm() function defaults to chains = 4. It also defaults to cores = 1, 
+## iter = 2000, warmup = 1000. 
+## McElreath’s rethinking::precis() returns highest posterior density intervals (HPDIs) 
+## when summarizing map2stan() models. Not so with brms. If you want HPDIs, 
+## you’ll have to use the convenience functions from the tidybayes package.
 
-precis(m8.1stan)
+# library(tidybayes)
+
+post <- posterior_samples(b8.1)
+
+post %>% 
+  gather() %>% 
+  group_by(key) %>% 
+  mean_hdi(value, .width = .89)
+
 
 # The interval boundaries in the table are highest posterior density intervals (HPDI), 
 # not ordinary percentile intervals (PI).
@@ -9961,11 +9972,14 @@ precis(m8.1stan)
 
 Once you have compiled your Stan model, you can draw more samples from it anytime, running as many independent Markov chains as you like. And you can easily parallelize those chains, as well. To run four independent Markov chains for the model above, and to distribute them across separate processors in your computer, just pass the previous fit back to map2stan:
 
-```{r 8.7}
-output <- capture.output(m8.1stan_4chains <- update( m8.1stan , chains=4 , cores=4 ))
-# map2stan doesn't work anymore- use update() here. 
-precis(m8.1stan_4chains)
+```{r 8.7, message=FALSE, warning=FALSE}
+## Here we sample in parallel by adding cores = 4.
+output <- capture.output(b8.1_4chains_4cores <- update(b8.1, 
+         cores = 4))
 
+## This model sampled so fast that it really didn’t matter if we sampled in 
+## parallel or not. It will for others.
+print(b8.1_4chains_4cores)
 ```
 
 <br>
@@ -9974,19 +9988,17 @@ precis(m8.1stan_4chains)
 
 ```{r 8.8}
 
-# Pull out the samples
-post <- extract.samples( m8.1stan )
+## Unlike the way rethinking’s extract.samples() yields a list, 
+## brms’s posterior_samples() returns a data frame.
+post <- posterior_samples(b8.1)
 str(post)
-# Samples are in a list- not in a data.frame (useful for multilevel models)
 
-# For now, if it doesn’t behave like you expect it to, you can coerce it to a data frame 
-post<-as.data.frame(post)
+## As with McElreath’s rethinking, brms allows users to put the post data frame 
+## or the brmsfit object directly in pairs().
 
 # To plot all these samples at once, provided there aren’t too many parameters
-pairs(post)
-
-# To display parameter names and parameter correlations
-pairs(m8.1stan)
+pairs(b8.1,
+      off_diag_args = list(size = 1/5, alpha = 1/5))
 # Pairs plot of the samples produced by Stan. The diagonal shows a density estimate for 
 # each parameter. Below the diagonal, correlations between parameters are shown.
 
@@ -9999,9 +10011,6 @@ pairs(m8.1stan)
 If you have the samples from the posterior and you know the model, you can do anything: simulate predictions, compute differences between parameters, and calculate DIC and WAIC.
 
 ```{r 8.11}
-
-show(m8.1stan)
-# map2stan does not work anymore and ulam doesn't compute WAIC and DIC 
 
 ## Use brms (copy Akjurz's codes)
 # Run HMC model
@@ -10043,23 +10052,21 @@ A trace plot&mdash; the most broadly useful tool for diagnosing malfunction&mdas
 plot(b8.1) # m8.1stan doesn't work
 
 ## Use akjurz's codes to do trace plots
+p1 <-
+  as_draws_df(b8.1) %>% 
+  mcmc_trace(pars = vars(0:sigma),
+             linewidth = 0.25)
 
-# use bayesplot’s mcmc_trace() to show only trace plots with our custom theme. 
-# Note that mcmc_trace() works with data frames, not brmfit objects. There’s a further 
-# complication. Recall how we made post (i.e., post <- posterior_samples(b8.1)). 
-# Our post data frame carries no information on chains. To retain that information, 
-# we’ll need to add an add_chain = T argument to our posterior_samples() function.
+(
+  (p1) &
+    scale_color_ipsum() &
+    theme(legend.position = "right")
+)
+
 post <- posterior_samples(b8.1, add_chain = T)
 
-mcmc_trace(post[, c(1:5, 7)],  # we need to include column 7 because it contains the chain info 
-           facet_args = list(ncol = 3), 
-           size = .15) +
-  labs(title = "My custom trace plots") +
-  scale_fill_ipsum() +
-  theme_ipsum() +
-  theme(legend.position = c(.95, .2))
 # This is a clean, healthy Markov chain, both stationary and well-mixing.
-## Only one chain is shown here. Graphs are not displayed properly. 
+
 
 # The bayesplot package offers a variety of diagnostic plots. Here we make 
 # autocorrelation plots for all model parameters, one for each HMC chain.
@@ -10168,44 +10175,6 @@ The `warmup` setting is more subtle. On the one hand, you want to have the short
 
 One common problem with some models is that there are broad, flat regions of the posterior density. This happens most often, as you might guess, when one uses flat priors. The problem this can generate is a wild, wandering Markov chain that erratically samples extremely positive and extremely negative parameter values.
 
-```{r 8.13, message=FALSE, warning=FALSE}
-
-y <- c(-1,1)
-output<- capture.output(m8.2 <- ulam(
-    alist(
-        y ~ dnorm( mu , sigma ) ,
-        mu <- alpha,
-        alpha ~ dnorm(-1e20, 1e20),
-        sigma ~ dunif(0, 1e20)
-), # I add in priors coz ulam shows error without priors
-data=list(y=y) , 
-start=list(alpha=0,sigma=1) , chains=2 , iter=4000 , warmup=1000 ))
-
-precis(m8.2)
-# The mean of −1 and 1 is zero, so we’re hoping to get a mean value for alpha around zero. 
-# Instead we get crazy values and implausibly wide confidence intervals. 
-# Inference for sigma is no better. The number of effective samples, n_eff, is very small. 
-# And Rhat should approach 1.00 in a healthy set of chains. Even a value of 1.01 is suspicious. 
-# An Rhat of 1.10 indicates a catastrophe.
-
-## I can't do trace plots with ulam.
-## Error: cannot coerce class ‘structure("ulam", package = "rethinking")’ to a data.frame
-
-## Add a very weakly informative prior
-output <- capture.output(m8.3 <- ulam(
-    alist(
-        y ~ dnorm( mu , sigma ) , # y_i ∼ Normal(μ, σ)
-        mu <- alpha ,             # μ = α
-        alpha ~ dnorm( 1 , 10 ) , # α ∼ Normal(1, 10)
-        sigma ~ dcauchy( 0 , 1 )  # σ ∼ HalfCauchy(0, 1)
-),
-data=list(y=y) , start=list(alpha=0,sigma=1) , 
-chains=2 , iter=4000 , warmup=1000 ))
-
-precis(m8.3)
-# Much better values with weakly informative priors for alpha and sigma. 
-```
-
 <br>
 
 ```{r akjurz_8.13}
@@ -10226,23 +10195,10 @@ output <- capture.output(b8.2 <-
       seed = 8))
 
 # Those were some silly flat priors. Check the damage.
-post <- posterior_samples(b8.2, add_chain = T)
-
-mcmc_trace(post[, c(1:2, 4)],
-           size = .25) +
-  labs(title    = "My version of Figure 8.5.a.",
-       subtitle = "These trace plots do not look like the fuzzy caterpillars we usually hope for.") +
-  scale_color_ipsum() +
-  theme_ipsum() +
-  theme(legend.position = c(.85, 1.5),
-        legend.direction = "horizontal")
-
-## Second chain is missing and Ip_ graph is not supposed to show. 
-## I unloaded `rethinking` and tried to use `brms` only to solve the problem.
-## With only `brms`, I got errors that the functions used in akjurz's codes are deprecated.
-## It seems both reference codes from the rethinking 1st edition and akjurz's webpage are outdated.
-## So, I will focus on the theory and texts only for now. 
-
+ p1 <-
+  as_draws_df(b8.2) %>% 
+  mcmc_trace(pars = vars(0:sigma),
+             linewidth = 0.25)
 
 print(b8.2)
 # Ludicrous numbers, super wide CI and Rhat is higher than 1 (1.23)
@@ -10262,18 +10218,24 @@ output <- capture.output(b8.3 <-
 print(b8.3)
 
 # Generate trace plots
-post <- posterior_samples(b8.3, add_chain = T)
+ p2 <-
+  as_draws_df(b8.3) %>% 
+  mcmc_trace(pars = vars(0:sigma),
+             linewidth = 0.25)
 
-mcmc_trace(post[, c(1:2, 4)],
-           size = .25) +
-  labs(title     = "My version of Figure 8.5.b",
-       subtitle  = "Oh man. This looks so much better.") +
-  scale_color_ipsum() +
-  theme_ipsum() +
-  theme(legend.position = c(.85, 1.5),
-        legend.direction = "horizontal")
+(
+  (p1/p2) &
+    scale_color_ipsum() &
+    theme(legend.position = "right")
+) 
+# Diagnosing and healing a sick Markov chain. 
+# Top row: Trace plot from two independent chains defined by model b8.2. These chains 
+# are not stationary and should not be used for inference. 
+# Bottom row: Adding weakly informative priors (see b8.3) clears up the condition right away. 
+# These chains are fine to use for inference.
 
 # Compare posterior and priors for model b8.3
+post <- as_draws_df(b8.3)
 #post %>%
   #select(b_Intercept) %>%
  d1 <- ggplot(post, aes(x = b_Intercept)) +
@@ -10300,7 +10262,7 @@ mcmc_trace(post[, c(1:2, 4)],
   
  grid.arrange(d1, d2, ncol = 2)
  
- # Prior (dashed) and posterior (solid black) for the model with weakly informative priors.
+# Prior (dashed) and posterior (solid black) for the model with weakly informative priors.
 # Even with only two observations, the likelihood easily overcomes these priors. 
 # Yet the model cannot be successfully estimated without them.
 
@@ -10309,38 +10271,518 @@ mcmc_trace(post[, c(1:2, 4)],
 
 <br>
 
+<span style="color:brown"><span style="text-decoration:underline">**Cauchy distribution**</span>
+
+-  The Cauchy (ko-shee) distribution gives the distribution of the ratio of two random Gaussian draws.  
+        - Its parameters are a location <img src="https://latex.codecogs.com/svg.image?\boldsymbol{x_0}" title="" /> and a scale <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\gamma}" title="" />. The location says where the center is, and the scale defines how stretched out the distribution is. 
+        - Cauchy has no defined mean nor variance, so the location and scale are not its mean and standard deviation. The reason the Cauchy has no mean and variance is that it is a very thick-tailed distribution. At any moment in a Cauchy sampling process, it is possible to draw an extreme value that overwhelms all of the previous draws. The consequence of this fact is that the sequence never converges to a stable mean and variance. It just keeps moving.
+        
+\n
+
+- Half-Cauchy is a Cauchy defined over the positive reals only. This is because they are applied to a parameter, usually <img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />, that is strictly positive.
+
+```{r 8.16}
+# The code below samples 10,000 values from a Cauchy distribution. 
+# Then it computes and plots the running mean at each sample. 
+# Run this simulation a few times to see how the trace of the mean is highly unpredictable.
+
+y <- rcauchy(1e4,0,5)
+mu <- sapply( 1:length(y) , function(i) sum(y[1:i])/i )
+plot(mu,type="l")
+# The distribution of mu changes significantly with each run. 
+```
+
+<br>
+
+### Non-identifiable parameters
+
+The non-identifiable parameters (created by higly correlated predictors) can be identified by using a little prior information.
+
+```{r 8.17, fig.height=5}
+
+# To construct a non-identifiable model, we first simulate 100 observations from 
+# a Gaussian distribution with mean zero and standard deviation 1.
+y <- rnorm( 100 , mean=0 , sd=1 )
+
+# Fit the model (use akjurz's codes)
+output <- capture.output(b8.4 <-
+  brm(data = list(y           = y,
+                  intercept_1 = 1,
+                  intercept_2 = 1), 
+      family = gaussian,
+      y ~ 0 + intercept_1 + intercept_2,
+      prior = c(prior(uniform(-1e10, 1e10), class = b),
+                prior(cauchy(0, 1), class = sigma)),
+      inits = list(list(intercept_1 = 0, intercept_2 = 0, sigma = 1),
+                   list(intercept_1 = 0, intercept_2 = 0, sigma = 1)),
+      iter = 4000, warmup = 1000, chains = 2,
+      seed = 8))
+
+print(b8.4)
+# The estimates look suspicious, and the n_eff and Rhat values are terrible. 
+# The means for a1 and a2 are almost exactly the same distance from zero, 
+# but on opposite sides. And the standard deviations of the chains are massive. 
+# This is of course a result of the fact that we cannot simultaneously estimate 
+# a1 and a2, but only their sum.
+
+## Use weak priors
+output <- capture.output(b8.5 <-
+  brm(data = list(y           = y,
+                  intercept_1 = 1,
+                  intercept_2 = 1),
+      family = gaussian,
+      y ~ 0 + intercept_1 + intercept_2,
+      prior = c(prior(normal(0, 10), class = b),
+                prior(cauchy(0, 1), class = sigma)),
+      inits = list(list(intercept_1 = 0, intercept_2 = 0, sigma = 1),
+                   list(intercept_1 = 0, intercept_2 = 0, sigma = 1)),
+      iter = 4000, warmup = 1000, chains = 2,
+      seed = 8))
+
+print(b8.5)
+# The estimates for a1 and a2 are better identified now.
+
+# Combine trace plots
+
+  p1 <-
+  as_draws_df(b8.4) %>% 
+  mcmc_trace(pars = vars(0:sigma),
+             linewidth = 0.25)
+
+p2 <-
+  as_draws_df(b8.5) %>% 
+  mcmc_trace(pars = vars(0:sigma),
+             linewidth = 0.25)
+
+(
+  (p1 / p2) &
+    scale_color_ipsum() &
+    theme(legend.position = "right")
+)
+
+## Top row: A chain with wandering parameters, b8.4. 
+## Bottom row: Same model but now with weakly informative priors, b8.5.
+# With flat priors sampling may take 8 times as long as it does for model with weak priors. 
+# Often, a model that is very slow to sample is under-identified. This is an aspect of the 
+# `folk theorem of statistical computing`: When you are having trouble fitting a model, 
+# it often indicates a bad model.
+
+```
+
+<br>
+
+## Practice
+
+### Easy
+
+> 8E1. Which of the following is a requirement of the simple Metropolis algorithm?
+
+(3) The proposal distribution must be symmetric.
+
+<br>
+
+> 8E2. Gibbs sampling is more efficient than the Metropolis algorithm. How does it achieve this extra
+efficiency? Are there any limitations to the Gibbs sampling strategy?
+
+Gibbs sampling allows asymmetric proposal distributions, making handling of parameters easier and requiring fewer steps (and samples) to generate a good estimate of posterior distribution. 
+
+Gibbs sampling is inefficient for complex models with many parameters, and it requires combinations of priors and likelihoods known as conjugate pairs. 
+
+<br>
+
+> 8E3. Which sort of parameters can Hamiltonian Monte Carlo not handle? Can you explain why?
+
+Hamiltonian Monte Caro cannot handle discrete parameters as it requires continuous parameters to glide through the log-posterior smoothly, and it makes use of differential equations that apply to continuous variables. 
+
+<br>
+
+> 8E4. Explain the difference between the effective number of samples, n_eff as calculated by Stan, and the actual number of samples.
+
+The effective number of samples is an estimate of the number of independent samples from the posterior distribution that would provide similar information as the actual number of samples generated by simulations. 
+
+
+<br>
+
+> 8E5. Which value should Rhat approach, when a chain is sampling the posterior distribution correctly?
+
+One.
+
+
+<br>
+
+> 8E6. Sketch a good trace plot for a Markov chain, one that is effectively sampling from the posterior distribution. What is good about its shape? Then sketch a trace plot for a malfunctioning Markov chain. What about its shape indicates malfunction?
+
+
+```{r 8E6}
+
+output <- capture.output(goodplot <-
+  brm(data = list(y = c(-1, 1)), 
+      family = gaussian,
+      y ~ 1,
+      prior = c(prior(uniform(0, 10), class = Intercept),
+                prior(uniform(0, 10), class = sigma)),
+      inits = list(list(Intercept = 0, sigma = 1),
+                   list(Intercept = 0, sigma = 1)),
+      iter = 4000, warmup = 1000, chains = 2,
+      seed = 8))
+
+output <- capture.output(badplot <-
+  brm(data = list(y = c(-1, 1)), 
+      family = gaussian,
+      y ~ 1,
+      prior = c(prior(uniform(-1e20, 1e20), class = Intercept),
+                prior(uniform(0, 1e20), class = sigma)),
+      inits = list(list(Intercept = 0, sigma = 1),
+                   list(Intercept = 0, sigma = 1)),
+      iter = 4000, warmup = 1000, chains = 2,
+      seed = 8))
+p1 <-
+  as_draws_df(goodplot) %>% 
+  mcmc_trace(pars = vars(b_Intercept:sigma),
+             linewidth = 0.25)
+
+p2 <-
+  as_draws_df(badplot) %>% 
+  mcmc_trace(pars = vars(b_Intercept:sigma),
+             linewidth = 0.25)
+
+(
+  (p1 / p2) &
+    scale_color_ipsum() &
+    theme(legend.position = "right")
+) +
+  plot_annotation(subtitle = "Good trace plot (Top) and Bad trace plot (Bottom)")
+```
+
+The chains in good trace plot for a Markov chain (top row) are stationary and well-mixing, whereas the chains in the bad trace plot (bottom) are not converging to posterior distribution&mdash; chain 1 wanders off to extreme values and chain 2 is completely flat. 
+
+<br>
+
+### Medium
+
+> 8M1. Re-estimate the terrain ruggedness model from the chapter, but now using a uniform prior and an exponential prior for the standard deviation, sigma. The uniform prior should be dunif(0,10) and the exponential should be dexp(1). Do the different priors have any detectible influence on the posterior distribution?
+
+```{r 8M1}
+
+# Load data
+data("rugged")
+d <- rugged
+
+# make log version of outcome
+d$log_gdp <- log( d$rgdppc_2000 )
+
+# extract countries with GDP data
+dd <- d[ complete.cases(d$rgdppc_2000) , ]
+
+output <- capture.output(uniform <-
+  brm(data = dd, family = gaussian,
+      log_gdp ~ 1 + rugged + cont_africa + rugged:cont_africa,
+      prior = c(prior(normal(0, 100), class = Intercept),
+                prior(normal(0, 10), class = b),
+                prior(uniform(0, 10), class = sigma)),
+      seed = 8))
+
+print(uniform)
+
+output <- capture.output(exponential <-
+  brm(data = dd, family = gaussian,
+      log_gdp ~ 1 + rugged + cont_africa + rugged:cont_africa,
+      prior = c(prior(normal(0, 100), class = Intercept),
+                prior(normal(0, 10), class = b),
+                prior(exponential(1), class = sigma)),
+      seed = 8))
+
+print(exponential)
+
+p1 <-
+  as_draws_df(uniform) %>% 
+  mcmc_trace(pars = vars(b_Intercept:sigma),
+             linewidth = 0.25)
+
+p2 <-
+  as_draws_df(exponential) %>% 
+  mcmc_trace(pars = vars(b_Intercept:sigma),
+             linewidth = 0.25)
+
+(
+  (p1 / p2) &
+    scale_color_ipsum() &
+    theme(legend.position = "right")
+)
 
 
 
 
+```
+
+<br>
 
 
+```{r 8M1c}
+
+# Sigmas for priors
+curve( dcauchy(x,0,2) , from=0 , to=10 ,
+    xlab="sigma" , ylab="Density" , ylim=c(0,1),  
+    main = "Comparison of Sigmas for Prior Distributions" )
+curve( dunif(x,0,10) , add=TRUE , col="red" )
+curve( dexp(x,1) , add=TRUE , col="blue" )
+legend("topright", legend = c("Cauchy (scale = 2)", 
+                              "Cauchy (scale = 10)", "Exponential (rate = 1)"), 
+       col = c("black", "red", "blue"), lty = 1)
+
+# Compare sigmas for posterior distribution
+sigma_o <- as_draws_df(b8.1)
+sigma_u <- as_draws_df(uniform)
+sigma_e <- as_draws_df(exponential)
+
+dens( sigma_o[[5]] , xlab="sigma" , xlim=c(0.5,1.5), ylim=c(0,8),
+      main = "Comparison of Sigmas for Posterior Distributions")
+dens( sigma_u[[5]] , add=TRUE , col = "red" )
+dens( sigma_e[[5]] , add=TRUE , col = "blue" )
+legend("topright", legend = c("Cauchy (scale = 2)", "Cauchy (scale = 10)", 
+                              "Exponential (rate = 1)"), 
+       col = c("black", "red", "blue"), lty = 1)
+
+```
 
 
+I used `uniform` and `exponential` instead of `dunif` and `dexp`, since I'm using `brms`. The different priors do not have any detectable influence on the posterior distribution, as seen in the `print` results and figures.
+
+<br>
+
+<span style="color:gray">***Given answer:***</span> 
+
+All three posterior distributions are very similar. Why? There’s a lot of data, relative to the difference in priors.
+
+<br>
+
+> 8M2. The Cauchy and exponential priors from the terrain ruggedness model are very weak. They can be made more informative by reducing their scale. Compare the dcauchy and dexp priors for progressively smaller values of the scaling parameter. As these priors become stronger, how does each influence the posterior distribution?
+
+```{r 8M2, fig.height=8}
+
+# Original
+output <- capture.output(b8.1 <-
+  brm(data = dd, family = gaussian,
+      log_gdp ~ 1 + rugged + cont_africa + rugged:cont_africa,
+      prior = c(prior(normal(0, 100), class = Intercept),
+                prior(normal(0, 10), class = b),
+                prior(cauchy(0, 2), class = sigma)),
+      seed = 8))
+
+print(b8.1)
+
+# Stronger prior with cauchy
+output <- capture.output(uniform1 <-
+  brm(data = dd, family = gaussian,
+      log_gdp ~ 1 + rugged + cont_africa + rugged:cont_africa,
+      prior = c(prior(normal(0, 100), class = Intercept),
+                prior(normal(0, 10), class = b),
+                prior(cauchy(0, 1), class = sigma)), # weaker prior with bigger sd
+      seed = 8))
+
+print(uniform1)
+
+# Stronger prior with exponential
+output <- capture.output(exponential2 <-
+  brm(data = dd, family = gaussian,
+      log_gdp ~ 1 + rugged + cont_africa + rugged:cont_africa,
+      prior = c(prior(normal(0, 100), class = Intercept),
+                prior(normal(0, 10), class = b),
+                prior(exponential(10), class = sigma)), # stronger prior with bigger expo
+      seed = 8))
+
+print(exponential2)
+
+p1 <-
+  as_draws_df(b8.1) %>% 
+  mcmc_trace(pars = vars(b_Intercept:sigma),
+             linewidth = 0.25)
+
+p2 <-
+  as_draws_df(uniform1) %>% 
+  mcmc_trace(pars = vars(b_Intercept:sigma),
+             linewidth = 0.25)
+
+p3 <-
+  as_draws_df(exponential2) %>% 
+  mcmc_trace(pars = vars(b_Intercept:sigma),
+             linewidth = 0.25)
+
+(
+  (p1 / p2/ p3) &
+    scale_color_ipsum() &
+    theme(legend.position = "right")
+)
+
+```
+
+<br>
+
+```{r c8v}
+
+# Sigmas for priors
+curve( dcauchy(x,0,2) , from=0 , to=10 ,
+    xlab="sigma" , ylab="Density" , ylim=c(0,1),  
+    main = "Comparison of Sigmas for Prior Distributions" )
+curve( dcauchy(x,0,1) , add=TRUE , col="red" )
+curve( dexp(x,10) , add=TRUE , col="blue" )
+legend("topright", legend = c("Cauchy (scale = 2)", 
+                              "Cauchy (scale = 1)", "Exponential (rate = 2)"), 
+       col = c("black", "red", "blue"), lty = 1)
+
+# Compare sigmas for posterior distribution
+sigma <- as_draws_df(b8.1)
+sigma_1 <- as_draws_df(uniform1)
+sigma_2 <- as_draws_df(exponential2)
+
+dens( sigma[[5]] , xlab="sigma" , xlim=c(0.5,1.5), ylim=c(0,10),
+      main = "Comparison of Sigmas for Posterior Distributions")
+dens( sigma_1[[5]] , add=TRUE , col = "red" )
+dens( sigma_2[[5]] , add=TRUE , col = "blue" )
+legend("topright", legend = c("Cauchy (scale = 2)", "Cauchy (scale = 1)", 
+                              "Exponential (rate = 10)"), 
+       col = c("black", "red", "blue"), lty = 1)
+
+```
+
+Not very different with slightly stronger priors. Set much stronger prior for exponential:
+
+```{r 8M2.1, fig.height=8}
+
+# Original
+output <- capture.output(b8.1 <-
+  brm(data = dd, family = gaussian,
+      log_gdp ~ 1 + rugged + cont_africa + rugged:cont_africa,
+      prior = c(prior(normal(0, 100), class = Intercept),
+                prior(normal(0, 10), class = b),
+                prior(cauchy(0, 2), class = sigma)),
+      seed = 8))
+
+print(b8.1)
+
+# Stronger prior with cauchy
+
+output <- capture.output(uniform_new <-
+  brm(data = dd, family = gaussian,
+      log_gdp ~ 1 + rugged + cont_africa + rugged:cont_africa,
+      prior = c(prior(normal(0, 100), class = Intercept),
+                prior(normal(0, 10), class = b),
+                prior(cauchy(0, 0.1), class = sigma)), 
+      seed = 8))
+
+print(uniform_new)
+
+output <- capture.output(exponential_new <-
+  brm(data = dd, family = gaussian,
+      log_gdp ~ 1 + rugged + cont_africa + rugged:cont_africa,
+      prior = c(prior(normal(0, 100), class = Intercept),
+                prior(normal(0, 10), class = b),
+                prior(exponential(100), class = sigma)),
+      seed = 8))
+
+print(exponential_new)
+
+p1 <-
+  as_draws_df(b8.1) %>% 
+  mcmc_trace(pars = vars(b_Intercept:sigma),
+             linewidth = 0.25)
+
+p2 <-
+  as_draws_df(uniform_new) %>% 
+  mcmc_trace(pars = vars(b_Intercept:sigma),
+             linewidth = 0.25)
+
+p3 <-
+  as_draws_df(exponential_new) %>% 
+  mcmc_trace(pars = vars(b_Intercept:sigma),
+             linewidth = 0.25)
+
+(
+  (p1 / p2 / p3) &
+    scale_color_ipsum() &
+    theme(legend.position = "right")
+)
+
+```
+
+<br>
+
+```{r curv1}
+# Sigmas for priors
+curve( dcauchy(x,0,2) , from=0 , to=10 ,
+    xlab="sigma" , ylab="Density" , ylim=c(0,1),  
+    main = "Comparison of Sigmas for Prior Distributions" )
+curve( dcauchy(x,0,0.1) , add=TRUE , col="red" )
+curve( dexp(x,100) , add=TRUE , col="blue" )
+legend("topright", legend = c("Cauchy (scale = 2)", 
+                              "Cauchy (scale = 0.1)", "Exponential (rate = 100)"), 
+       col = c("black", "red", "blue"), lty = 1)
+
+# Compare sigmas for posterior distribution
+sigma_original <- as_draws_df(b8.1)
+sigma_uniform <- as_draws_df(uniform_new)
+sigma_exponential <- as_draws_df(exponential_new)
+
+dens( sigma_original[[5]] , xlab="sigma" , xlim=c(0.5,1.5), ylim=c(0,13),
+      main = "Comparison of Sigmas for Posterior Distributions")
+dens( sigma_uniform[[5]] , add=TRUE , col = "red" )
+dens( sigma_exponential[[5]] , add=TRUE , col = "blue" )
+legend("topright", legend = c("Cauchy (scale = 2)", "Cauchy (scale = 0.1)", 
+                              "Exponential (rate = 100)"), 
+       col = c("black", "red", "blue"), lty = 1)
+
+```
 
 
+<br>
 
+> 8M3. Re-estimate one of the Stan models from the chapter, but at different numbers of warmup iterations. Be sure to use the same number of sampling iterations in each case. Compare the n_eff values. How much warmup is enough?
 
+```{r 8M3}
 
+# Function to fit model and calculate effective sample size
+fit.model.function <- function(warmup) {
+  # Fit the model
+  output <- capture.output(model <- brm(data = list(y = c(-1, 1)), 
+               family = gaussian,
+               y ~ 1,
+               prior = c(prior(normal(0, 10), class = Intercept),
+                         prior(cauchy(0, 1), class = sigma)),
+               inits = list(list(Intercept = 0, sigma = 1),
+                            list(Intercept = 0, sigma = 1)),
+               iter = 4000, warmup = warmup, chains = 2,
+               seed = 8))
+  
+  # Extract MCMC samples
+  mcmc_samples <- as.mcmc(model)
+  
+  # Calculate effective sample size
+  ess <- effectiveSize(mcmc_samples)
+  
+  return(ess)
+}
 
+# List of warm-up values
+warmup_values <- c(1, 5, 10, 100, 500, 1000)
 
+# Loop through each warm-up value and fit the model
+output <- capture.output(ess_values <- sapply(warmup_values, function(warmup) {
+  fit.model.function(warmup)
+}))
 
+ess_values
 
+## A warmup value of 5 is enough for this model. 
 
+```
 
+<br>
 
+### Hard
 
+> 8H1. Run the model below and then inspect the posterior distribution and explain what it is accomplishing. Compare the samples for the parameters a and b. Can you explain the different trace plots, using what you know about the Cauchy distribution?
 
-
-
-
-
-
-
-
-
-
-
+```{r 8H1}
 
 
 

@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.450">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="SM">
-<meta name="dcterms.date" content="2024-03-17">
+<meta name="dcterms.date" content="2024-03-24">
 <title>Statistical_Rethinking_RM</title>
 <style>
 code{white-space: pre-wrap;}
@@ -71,22 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
 <div id="quarto-sidebar-toc-left" class="sidebar toc-left">
-  <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
-   
-  <ul>
-<li>
-<a href="#spurious-association" id="toc-spurious-association" class="nav-link active" data-scroll-target="#spurious-association">Spurious association</a>
-  <ul>
-<li><a href="#multivariate-notation" id="toc-multivariate-notation" class="nav-link" data-scroll-target="#multivariate-notation">Multivariate notation</a></li>
-  </ul>
-</li>
-  <li><a href="#including-plots" id="toc-including-plots" class="nav-link" data-scroll-target="#including-plots">Including Plots</a></li>
-  </ul></nav>
+  
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
 </div>
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Statistical_Rethinking_RM</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Statistical_Rethinking_RM</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -103,7 +93,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 17, 2024</p>
+      <p class="date">March 24, 2024</p>
     </div>
   </div>
   
@@ -111,181 +101,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><section id="spurious-association" class="level2"><h2 class="anchored" data-anchor-id="spurious-association">Spurious association</h2>
-<p>Linear regression model for correlation between age at marriage and divorce rate:</p>
-<p><span class="math display">\[\begin{align*}
-\text{D}_i &amp;\sim \text{Normal}(\mu_i, \sigma) \\
-\mu_i &amp;= \alpha + \beta_A \text{A}_i \\
-\alpha &amp;\sim \text{Normal}(10, 10) \\
-\beta_A &amp;\sim \text{Normal}(0, 1) \\
-\sigma &amp;\sim \text{Uniform}(0, 10)
-\end{align*}\]</span></p>
-<pre><code>Di = the divorce rate for State i
-
-Ai = State i’s median age at marriage
-</code></pre>
-<div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">rethinking</span><span class="op">)</span></span>
-<span><span class="co"># load data</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">WaffleDivorce</span><span class="op">)</span></span>
-<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">WaffleDivorce</span></span>
-<span></span>
-<span><span class="co">## Median age at marriage vs. divorce rate</span></span>
-<span><span class="co"># standardize predictor</span></span>
-<span><span class="va">d</span><span class="op">$</span><span class="va">MedianAgeMarriage.s</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">MedianAgeMarriage</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">MedianAgeMarriage</span><span class="op">)</span><span class="op">)</span><span class="op">/</span></span>
-<span>    <span class="fu">sd</span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">MedianAgeMarriage</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># fit model</span></span>
-<span><span class="va">m5.1</span> <span class="op">&lt;-</span> <span class="fu">rethinking</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/quap.html">map</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html">alist</a></span><span class="op">(</span></span>
-<span>        <span class="va">Divorce</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span> <span class="va">mu</span> , <span class="va">sigma</span> <span class="op">)</span> ,</span>
-<span>        <span class="va">mu</span> <span class="op">&lt;-</span> <span class="va">a</span> <span class="op">+</span> <span class="va">bA</span> <span class="op">*</span> <span class="va">MedianAgeMarriage.s</span> ,</span>
-<span>        <span class="va">a</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span> <span class="fl">10</span> , <span class="fl">10</span> <span class="op">)</span> ,</span>
-<span>        <span class="va">bA</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span> <span class="fl">0</span> , <span class="fl">1</span> <span class="op">)</span> ,</span>
-<span>        <span class="va">sigma</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">dunif</a></span><span class="op">(</span> <span class="fl">0</span> , <span class="fl">10</span> <span class="op">)</span></span>
-<span><span class="op">)</span> , data <span class="op">=</span> <span class="va">d</span> <span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Check precis output</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/precis.html">precis</a></span><span class="op">(</span><span class="va">m5.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code>           mean        sd      5.5%      94.5%
-a      9.688130 0.2045094  9.361285 10.0149760
-bA    -1.042933 0.2025347 -1.366623 -0.7192432
-sigma  1.446402 0.1447690  1.215034  1.6777713</code></pre>
-</div>
-<details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># each additional standard deviation of delay in marriage (1.24 years- the difference between</span></span>
-<span><span class="co"># two data points after converting back to natural scale) predicts a decrease of </span></span>
-<span><span class="co"># about one divorce per thousand adults, with a 89% interval from about −1.4 to −0.7.</span></span>
-<span><span class="co"># So it’s reliably negative, even though the magnitude of the difference may vary quite a lot—</span></span>
-<span><span class="co"># the upper bound is half the lower bound. Of course there’s nothing special about the interval</span></span>
-<span><span class="co"># boundaries, but the magnitude of the difference means that even though the association here </span></span>
-<span><span class="co"># (conditional on model and data) is implausibly positive, it could be both much stronger </span></span>
-<span><span class="co"># or weaker than the mean.</span></span>
-<span></span>
-<span><span class="co"># compute percentile interval of mean</span></span>
-<span><span class="va">MAM.seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span> from<span class="op">=</span><span class="op">-</span><span class="fl">3</span> , to<span class="op">=</span><span class="fl">3.5</span> , length.out<span class="op">=</span><span class="fl">30</span> <span class="op">)</span></span>
-<span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/link.html">link</a></span><span class="op">(</span> <span class="va">m5.1</span> , data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>MedianAgeMarriage.s<span class="op">=</span><span class="va">MAM.seq</span><span class="op">)</span> <span class="op">)</span></span>
-<span><span class="va">mu.PI</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span> <span class="va">mu</span> , <span class="fl">2</span> , <span class="va">PI</span> <span class="op">)</span></span>
-<span></span>
-<span><span class="co"># plot it all</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span> <span class="va">Divorce</span> <span class="op">~</span> <span class="va">MedianAgeMarriage.s</span> , data<span class="op">=</span><span class="va">d</span> , col<span class="op">=</span><span class="va">rangi2</span> , main <span class="op">=</span> <span class="st">"Standardized scale"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span> <span class="va">m5.1</span> <span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/shade.html">shade</a></span><span class="op">(</span> <span class="va">mu.PI</span> , <span class="va">MAM.seq</span> <span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Convert to natural scale</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span> <span class="va">Divorce</span> <span class="op">~</span> <span class="va">MedianAgeMarriage.s</span> , data<span class="op">=</span><span class="va">d</span> , col<span class="op">=</span><span class="va">rangi2</span>, xaxt <span class="op">=</span> <span class="st">"n"</span>,</span>
-<span>      xlab <span class="op">=</span><span class="st">"MedianAgeMarriage"</span>, main <span class="op">=</span> <span class="st">"Natural scale"</span><span class="op">)</span></span>
-<span><span class="va">at</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="va">at</span><span class="op">*</span><span class="fu">sd</span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">MedianAgeMarriage</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">MedianAgeMarriage</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span>side <span class="op">=</span> <span class="fl">1</span> , at <span class="op">=</span> <span class="va">at</span> , labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">labels</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span> <span class="va">m5.1</span> <span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/shade.html">shade</a></span><span class="op">(</span> <span class="va">mu.PI</span> , <span class="va">MAM.seq</span> <span class="op">)</span></span>
-<span></span>
-<span><span class="co">## Marriage rate vs. divorce rate</span></span>
-<span><span class="co"># standardize predictor (marriage rate)</span></span>
-<span><span class="va">d</span><span class="op">$</span><span class="va">Marriage.s</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">Marriage</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">Marriage</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fu">sd</span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">Marriage</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># fit model</span></span>
-<span><span class="va">m5.2</span> <span class="op">&lt;-</span> <span class="fu">rethinking</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/quap.html">map</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html">alist</a></span><span class="op">(</span></span>
-<span>        <span class="va">Divorce</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span> <span class="va">mu</span> , <span class="va">sigma</span> <span class="op">)</span> ,</span>
-<span>        <span class="va">mu</span> <span class="op">&lt;-</span> <span class="va">a</span> <span class="op">+</span> <span class="va">bR</span> <span class="op">*</span> <span class="va">Marriage.s</span> ,</span>
-<span>        <span class="va">a</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span> <span class="fl">10</span> , <span class="fl">10</span> <span class="op">)</span> ,</span>
-<span>        <span class="va">bR</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span> <span class="fl">0</span> , <span class="fl">1</span> <span class="op">)</span> ,</span>
-<span>    <span class="va">sigma</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">dunif</a></span><span class="op">(</span> <span class="fl">0</span> , <span class="fl">10</span> <span class="op">)</span></span>
-<span><span class="op">)</span> , data <span class="op">=</span> <span class="va">d</span> <span class="op">)</span></span>
-<span></span>
-<span><span class="co"># check precis output</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/precis.html">precis</a></span><span class="op">(</span><span class="va">m5.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code>           mean        sd      5.5%     94.5%
-a     9.6880766 0.2364441 9.3101932 10.065960
-bR    0.6437461 0.2324758 0.2722048  1.015287
-sigma 1.6723799 0.1673256 1.4049614  1.939798</code></pre>
-</div>
-<details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This shows an increase of 0.6 divorces for every additional standard deviation </span></span>
-<span><span class="co"># of marriage rate (3.8). this relationship isn’t as strong as the previous one.</span></span>
-<span></span>
-<span><span class="co"># compute percentile interval of mean</span></span>
-<span><span class="va">MAM.seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span> from<span class="op">=</span><span class="op">-</span><span class="fl">3</span> , to<span class="op">=</span><span class="fl">3</span> , length.out<span class="op">=</span><span class="fl">30</span> <span class="op">)</span></span>
-<span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/link.html">link</a></span><span class="op">(</span> <span class="va">m5.2</span> , data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Marriage.s<span class="op">=</span><span class="va">MAM.seq</span><span class="op">)</span> <span class="op">)</span></span>
-<span><span class="va">mu.PI</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span> <span class="va">mu</span> , <span class="fl">2</span> , <span class="va">PI</span> <span class="op">)</span></span>
-<span></span>
-<span><span class="co"># plot it all</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span> <span class="va">Divorce</span> <span class="op">~</span> <span class="va">Marriage.s</span> , data<span class="op">=</span><span class="va">d</span> , col<span class="op">=</span><span class="va">rangi2</span> <span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span> <span class="va">m5.2</span> <span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/shade.html">shade</a></span><span class="op">(</span> <span class="va">mu.PI</span> , <span class="va">MAM.seq</span> <span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Convert to natural scale</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span> <span class="va">Divorce</span> <span class="op">~</span> <span class="va">Marriage.s</span> , data<span class="op">=</span><span class="va">d</span> , col<span class="op">=</span><span class="va">rangi2</span>, xaxt <span class="op">=</span> <span class="st">"n"</span>,</span>
-<span>      xlab <span class="op">=</span><span class="st">"Marriage"</span><span class="op">)</span></span>
-<span><span class="va">at</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="op">-</span><span class="fl">2</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="va">at</span><span class="op">*</span><span class="fu">sd</span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">Marriage</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">Marriage</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span>side <span class="op">=</span> <span class="fl">1</span> , at <span class="op">=</span> <span class="va">at</span> , labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">labels</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span> <span class="va">m5.2</span> <span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/rethinking/man/shade.html">shade</a></span><span class="op">(</span> <span class="va">mu.PI</span> , <span class="va">MAM.seq</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
-<p><img src="test_files/figure-html/5.1-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p><br></p>
-<p>Merely comparing parameter means between different bivariate regressions is no way to decide which predictor is better. Both of these predictors could provide independent value, or they could be redundant, or one could eliminate the value of the other. So we’ll build a multivariate model with the goal of measuring the partial value of each predictor. The question we want answered is:</p>
-<p><strong><em>What is the predictive value of a variable, once I already know all of the other predictor variables?</em></strong></p>
-<p>So for example once you fit a multivariate regression to predict divorce using both marriage rate and age at marriage, the model answers the questions:</p>
-<ol type="1">
-<li><p>After I already know marriage rate, what additional value is there in also knowing age at marriage?</p></li>
-<li><p>After I already know age at marriage, what additional value is there in also knowing marriage rate?</p></li>
-</ol>
-<p>The parameter estimates corresponding to each predictor are the (often opaque) answers to these questions.</p>
-<p><br></p>
-<section id="multivariate-notation" class="level3"><h3 class="anchored" data-anchor-id="multivariate-notation">Multivariate notation</h3>
-<p>Multivariate regression formulas look a lot like the polynomial models- they add more parameters and variables to the definition of <span class="math inline">\(\mu_i\)</span>. The strategy is straightforward:</p>
-<ol type="1">
-<li><p>Nominate the predictor variables you want in the linear model of the mean.</p></li>
-<li><p>For each predictor, make a parameter that will measure its association with the outcome.</p></li>
-<li><p>Multiply the parameter by the variable and add that term to the linear model.</p></li>
-</ol>
-<p>Example model that predicts divorce rate, using both marriage rate and age at marriage:</p>
-<span class="math display">\[\begin{matrix}
-\text{D}_i &amp;\sim \text{Normal}(\mu, \sigma)\ &amp;&amp;&amp;  \text{[likelihood]}\\
-\mu_i &amp;= \alpha + \beta_R R_i + \beta_A A_i\ &amp;&amp;&amp;  \text{[linear model]}\\
-\alpha &amp;\sim \text{Normal}(10, 10)\ &amp;&amp;&amp;           \text{[prior for }\alpha]\\
-\beta_R &amp;\sim \text{Normal}(0, 1)\ &amp;&amp;&amp;            \text{[prior for }\beta_R]\\
-\beta_A &amp;\sim \text{Normal}(0, 1)\ &amp;&amp;&amp;            \text{[prior for }\beta_A]\\
-\sigma &amp;\sim \text{Uniform}(0, 10)\ &amp;&amp;&amp;           \text{[prior for }\sigma]
-\end{matrix}\]</span>
-<pre><code>R = marriage rate 
-
-A = age at marriage
-</code></pre>
-<p><br></p>
-<p><span style="color:brown"><span style="text-decoration:underline"><strong>Compact notation and the design matrix</strong></span></span></p>
-<p>Linear model with n number of predictor variables:</p>
-<p><span class="math display">\[\mu_i = \alpha + \beta_1 \text{x}_{1i} + \beta_2 \text{x}_{2i} + ... + \beta_n \text{x}_{ni}\]</span> ## R Markdown</p>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code>     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  </code></pre>
-</div>
-</div>
-</section></section><section id="including-plots" class="level2"><h2 class="anchored" data-anchor-id="including-plots">Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="test_files/figure-html/pressure-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+</header><p>Linear model with n number of predictor variables:</p>
+<p><span class="math display">\[\mu_i = \alpha + \beta_1 \text{x}_{1i} + \beta_2 \text{x}_{2i} + ... + \beta_n \text{x}_{ni}\]</span></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><embed src="https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D" class="img-fluid"></p>
 <figcaption class="figure-caption"></figcaption></figure>
@@ -308,13 +125,14 @@ A = age at marriage
 <figcaption class="figure-caption"></figcaption></figure>
 </div>
 <p>mu, sigma symbol</p>
-<p><img src="https://latex.codecogs.com/svg.image?%5Cboldsymbol%7B%5Csigma%7D" title=""></p>
+<p><img src="https://latex.codecogs.com/svg.image?%5Cboldsymbol%7B%5Cgamma%7D" title=""></p>
 <p>take</p>
 <p><img src="https://latex.codecogs.com/svg.latex?%5Cboldsymbol%7B%5Cmu_i%20=%20%5Calpha%20+%20%5Cbeta_x%20x_i%20+%20%5Cbeta_z%20Z_i%7D" class="img-fluid"></p>
 <p><img src="https://latex.codecogs.com/svg.latex?%5Cdpi%7B110%7D%5Ctextbf%7Bplausibility%20of%20p%20after%20D%7D_%7B%5Ctextbf%7Bnew%7D%7D%20%5Cboldsymbol%7B=%7D%20%5Cfrac%7B%5Ctextbf%7Bways%20p%20can%20produce%20D%7D_%7B%5Ctextbf%7Bnew%7D%7D%20%5Cboldsymbol%7B%5Ctimes%7D%20%5Ctextbf%7Bprior%20plausibility%20p%7D%7D%7B%5Ctextbf%7Bsum%20of%20products%7D%7D" title=""></p>
 <!-- -->
 
-</section></main><!-- /main column --><script id="quarto-html-after-body" type="application/javascript">
+
+</main><!-- /main column --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -598,277 +416,96 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb10" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Statistical_Rethinking_RM"</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "SM"</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "`r format(Sys.time(), '%B %d, %Y')`"</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc_float: true</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Contents"</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 5</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">    number_sections: true</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">    fig_caption: true</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">    code-summary: 'Show code'</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">    code-link: true</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">    code_highlight: tango</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">    code_download: true</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: sandstone</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight: tango</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">    smooth-scroll: true</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">    mathjax: local</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">    self_contained: false</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Spurious association</span></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>Linear regression model for correlation between age at marriage and divorce rate:</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>\begin{align*}</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>\text{D}_i &amp;\sim \text{Normal}(\mu_i, \sigma) <span class="sc">\\</span></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>\mu_i &amp;= \alpha + \beta_A \text{A}_i <span class="sc">\\</span></span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>\alpha &amp;\sim \text{Normal}(10, 10) <span class="sc">\\</span></span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>\beta_A &amp;\sim \text{Normal}(0, 1) <span class="sc">\\</span></span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>\sigma &amp;\sim \text{Uniform}(0, 10)</span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>\end{align*}</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="in">Di = the divorce rate for State i</span></span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="in">Ai = State i’s median age at marriage</span></span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r 5.1, message=FALSE, warning=FALSE}</span></span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>))</span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rethinking)</span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(WaffleDivorce)</span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> WaffleDivorce</span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="do">## Median age at marriage vs. divorce rate</span></span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a><span class="co"># standardize predictor</span></span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>d<span class="sc">$</span>MedianAgeMarriage.s <span class="ot">&lt;-</span> (d<span class="sc">$</span>MedianAgeMarriage<span class="sc">-</span><span class="fu">mean</span>(d<span class="sc">$</span>MedianAgeMarriage))<span class="sc">/</span></span>
-<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sd</span>(d<span class="sc">$</span>MedianAgeMarriage)</span>
-<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model</span></span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>m5<span class="fl">.1</span> <span class="ot">&lt;-</span> rethinking<span class="sc">::</span><span class="fu">map</span>(</span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>    <span class="fu">alist</span>(</span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>        Divorce <span class="sc">~</span> <span class="fu">dnorm</span>( mu , sigma ) ,</span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>        mu <span class="ot">&lt;-</span> a <span class="sc">+</span> bA <span class="sc">*</span> MedianAgeMarriage.s ,</span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>        a <span class="sc">~</span> <span class="fu">dnorm</span>( <span class="dv">10</span> , <span class="dv">10</span> ) ,</span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>        bA <span class="sc">~</span> <span class="fu">dnorm</span>( <span class="dv">0</span> , <span class="dv">1</span> ) ,</span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>        sigma <span class="sc">~</span> <span class="fu">dunif</span>( <span class="dv">0</span> , <span class="dv">10</span> )</span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>) , <span class="at">data =</span> d )</span>
-<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Check precis output</span></span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m5<span class="fl">.1</span>)</span>
-<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a><span class="co"># each additional standard deviation of delay in marriage (1.24 years- the difference between</span></span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a><span class="co"># two data points after converting back to natural scale) predicts a decrease of </span></span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a><span class="co"># about one divorce per thousand adults, with a 89% interval from about −1.4 to −0.7.</span></span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a><span class="co"># So it’s reliably negative, even though the magnitude of the difference may vary quite a lot—</span></span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a><span class="co"># the upper bound is half the lower bound. Of course there’s nothing special about the interval</span></span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a><span class="co"># boundaries, but the magnitude of the difference means that even though the association here </span></span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a><span class="co"># (conditional on model and data) is implausibly positive, it could be both much stronger </span></span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a><span class="co"># or weaker than the mean.</span></span>
-<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a><span class="co"># compute percentile interval of mean</span></span>
-<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>MAM.seq <span class="ot">&lt;-</span> <span class="fu">seq</span>( <span class="at">from=</span><span class="sc">-</span><span class="dv">3</span> , <span class="at">to=</span><span class="fl">3.5</span> , <span class="at">length.out=</span><span class="dv">30</span> )</span>
-<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">link</span>( m5<span class="fl">.1</span> , <span class="at">data=</span><span class="fu">data.frame</span>(<span class="at">MedianAgeMarriage.s=</span>MAM.seq) )</span>
-<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>mu.PI <span class="ot">&lt;-</span> <span class="fu">apply</span>( mu , <span class="dv">2</span> , PI )</span>
-<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a><span class="co"># plot it all</span></span>
-<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( Divorce <span class="sc">~</span> MedianAgeMarriage.s , <span class="at">data=</span>d , <span class="at">col=</span>rangi2 , <span class="at">main =</span> <span class="st">"Standardized scale"</span>)</span>
-<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( m5<span class="fl">.1</span> )</span>
-<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a><span class="fu">shade</span>( mu.PI , MAM.seq )</span>
-<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to natural scale</span></span>
-<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( Divorce <span class="sc">~</span> MedianAgeMarriage.s , <span class="at">data=</span>d , <span class="at">col=</span>rangi2, <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
-<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span><span class="st">"MedianAgeMarriage"</span>, <span class="at">main =</span> <span class="st">"Natural scale"</span>)</span>
-<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>at <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
-<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> at<span class="sc">*</span><span class="fu">sd</span>(d<span class="sc">$</span>MedianAgeMarriage) <span class="sc">+</span> <span class="fu">mean</span>(d<span class="sc">$</span>MedianAgeMarriage)</span>
-<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="at">side =</span> <span class="dv">1</span> , <span class="at">at =</span> at , <span class="at">labels =</span> <span class="fu">round</span>(labels,<span class="dv">2</span>))</span>
-<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( m5<span class="fl">.1</span> )</span>
-<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a><span class="fu">shade</span>( mu.PI , MAM.seq )</span>
-<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a><span class="do">## Marriage rate vs. divorce rate</span></span>
-<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a><span class="co"># standardize predictor (marriage rate)</span></span>
-<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>d<span class="sc">$</span>Marriage.s <span class="ot">&lt;-</span> (d<span class="sc">$</span>Marriage <span class="sc">-</span> <span class="fu">mean</span>(d<span class="sc">$</span>Marriage))<span class="sc">/</span><span class="fu">sd</span>(d<span class="sc">$</span>Marriage)</span>
-<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model</span></span>
-<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>m5<span class="fl">.2</span> <span class="ot">&lt;-</span> rethinking<span class="sc">::</span><span class="fu">map</span>(</span>
-<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a>    <span class="fu">alist</span>(</span>
-<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a>        Divorce <span class="sc">~</span> <span class="fu">dnorm</span>( mu , sigma ) ,</span>
-<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>        mu <span class="ot">&lt;-</span> a <span class="sc">+</span> bR <span class="sc">*</span> Marriage.s ,</span>
-<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>        a <span class="sc">~</span> <span class="fu">dnorm</span>( <span class="dv">10</span> , <span class="dv">10</span> ) ,</span>
-<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a>        bR <span class="sc">~</span> <span class="fu">dnorm</span>( <span class="dv">0</span> , <span class="dv">1</span> ) ,</span>
-<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a>    sigma <span class="sc">~</span> <span class="fu">dunif</span>( <span class="dv">0</span> , <span class="dv">10</span> )</span>
-<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>) , <span class="at">data =</span> d )</span>
-<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a><span class="co"># check precis output</span></span>
-<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(m5<span class="fl">.2</span>)</span>
-<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a><span class="co"># This shows an increase of 0.6 divorces for every additional standard deviation </span></span>
-<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a><span class="co"># of marriage rate (3.8). this relationship isn’t as strong as the previous one.</span></span>
-<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a><span class="co"># compute percentile interval of mean</span></span>
-<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a>MAM.seq <span class="ot">&lt;-</span> <span class="fu">seq</span>( <span class="at">from=</span><span class="sc">-</span><span class="dv">3</span> , <span class="at">to=</span><span class="dv">3</span> , <span class="at">length.out=</span><span class="dv">30</span> )</span>
-<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">link</span>( m5<span class="fl">.2</span> , <span class="at">data=</span><span class="fu">data.frame</span>(<span class="at">Marriage.s=</span>MAM.seq) )</span>
-<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>mu.PI <span class="ot">&lt;-</span> <span class="fu">apply</span>( mu , <span class="dv">2</span> , PI )</span>
-<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a><span class="co"># plot it all</span></span>
-<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( Divorce <span class="sc">~</span> Marriage.s , <span class="at">data=</span>d , <span class="at">col=</span>rangi2 )</span>
-<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( m5<span class="fl">.2</span> )</span>
-<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a><span class="fu">shade</span>( mu.PI , MAM.seq )</span>
-<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to natural scale</span></span>
-<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( Divorce <span class="sc">~</span> Marriage.s , <span class="at">data=</span>d , <span class="at">col=</span>rangi2, <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
-<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span><span class="st">"Marriage"</span>)</span>
-<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a>at <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> at<span class="sc">*</span><span class="fu">sd</span>(d<span class="sc">$</span>Marriage) <span class="sc">+</span> <span class="fu">mean</span>(d<span class="sc">$</span>Marriage)</span>
-<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="at">side =</span> <span class="dv">1</span> , <span class="at">at =</span> at , <span class="at">labels =</span> <span class="fu">round</span>(labels,<span class="dv">2</span>))</span>
-<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( m5<span class="fl">.2</span> )</span>
-<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a><span class="fu">shade</span>( mu.PI , MAM.seq )</span>
-<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a>Merely comparing parameter means between different bivariate regressions is no way to decide which predictor is better. Both of these predictors could provide independent value, or they could be redundant, or one could eliminate the value of the other. So we’ll build a multivariate model with the goal of measuring the partial value of each predictor. The question we want answered is:</span>
-<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a>  ***What is the predictive value of a variable, once I already know all of the other predictor variables?***</span>
-<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a>So for example once you fit a multivariate regression to predict divorce using both marriage rate and age at marriage, the model answers the questions:</span>
-<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a>  (1) After I already know marriage rate, what additional value is there in also knowing age at marriage?</span>
-<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a>  (2) After I already know age at marriage, what additional value is there in also knowing marriage rate?</span>
-<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a>The parameter estimates corresponding to each predictor are the (often opaque) answers to these questions.</span>
-<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multivariate notation</span></span>
-<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a>Multivariate regression formulas look a lot like the polynomial models- they add more parameters and variables to the definition of $\mu_i$. The strategy is straightforward:</span>
-<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a>(1) Nominate the predictor variables you want in the linear model of the mean.</span>
-<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a>(2) For each predictor, make a parameter that will measure its association with the outcome.</span>
-<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a>(3) Multiply the parameter by the variable and add that term to the linear model.</span>
-<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a>Example model that predicts divorce rate, using both marriage rate and age at marriage:</span>
-<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a>\begin{matrix}</span>
-<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a>\text{D}_i &amp;\sim \text{Normal}(\mu, \sigma)\ &amp;&amp;&amp;  \text{<span class="co">[</span><span class="ot">likelihood</span><span class="co">]</span>}<span class="sc">\\</span></span>
-<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a>\mu_i &amp;= \alpha + \beta_R R_i + \beta_A A_i\ &amp;&amp;&amp;  \text{<span class="co">[</span><span class="ot">linear model</span><span class="co">]</span>}<span class="sc">\\</span></span>
-<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a>\alpha &amp;\sim \text{Normal}(10, 10)\ &amp;&amp;&amp;           \text{<span class="co">[</span><span class="ot">prior for }\alpha</span><span class="co">]</span><span class="sc">\\</span></span>
-<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a>\beta_R &amp;\sim \text{Normal}(0, 1)\ &amp;&amp;&amp;            \text{<span class="co">[</span><span class="ot">prior for }\beta_R</span><span class="co">]</span><span class="sc">\\</span></span>
-<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>\beta_A &amp;\sim \text{Normal}(0, 1)\ &amp;&amp;&amp;            \text{<span class="co">[</span><span class="ot">prior for }\beta_A</span><span class="co">]</span><span class="sc">\\</span></span>
-<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a>\sigma &amp;\sim \text{Uniform}(0, 10)\ &amp;&amp;&amp;           \text{<span class="co">[</span><span class="ot">prior for }\sigma</span><span class="co">]</span></span>
-<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a>\end{matrix}</span>
-<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a><span class="in">R = marriage rate </span></span>
-<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a><span class="in">A = age at marriage</span></span>
-<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"color:brown"</span><span class="kw">&gt;&lt;span</span> <span class="er">style</span><span class="ot">=</span><span class="st">"text-decoration:underline"</span><span class="kw">&gt;</span>**Compact notation and the design matrix**<span class="kw">&lt;/span&gt;&lt;/span&gt;</span></span>
-<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a>Linear model with n number of predictor variables:</span>
-<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a>$$\mu_i = \alpha + \beta_1 \text{x}_{1i} + \beta_2 \text{x}_{2i} + ... + \beta_n \text{x}_{ni}$$</span>
-<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a><span class="fu">## R Markdown</span></span>
-<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <span class="ot">&lt;http://rmarkdown.rstudio.com&gt;</span>.</span>
-<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a>When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</span>
-<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{r cars}</span></span>
-<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span>
-<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a><span class="fu">## Including Plots</span></span>
-<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a>You can also embed plots, for example:</span>
-<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a><span class="in">```{r pressure, echo=FALSE}</span></span>
-<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pressure)</span>
-<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a>Note that the <span class="in">`echo = FALSE`</span> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</span>
-<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a><span class="al">![\large \frac{-b\pm\sqrt{b^2-4ac}}{2a}](https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D)</span></span>
-<span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a>wrong</span>
-<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">\large </span><span class="co">]</span>(https://latex.codecogs.com/svg.latex?\boldsymbol{\gamma = \beta_R + \beta_{AR}(1) = -0.18 + 0.35 = 0.17})</span>
-<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\dpi{220}\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"</span><span class="er">title</span><span class="ot">=</span><span class="st">"\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"</span><span class="kw">/&gt;</span></span>
-<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\dpi{110}\text{Posterior} = \frac{\textbf{Likelihood} \times \textbf{Prior}}{\text{Average Likelihood}}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">"\text{Posterior} = \frac{\textbf{Likelihood} \times \textbf{Prior}}{\text{Average Likelihood}}"</span><span class="kw">/&gt;</span></span>
-<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a>test</span>
-<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\inline</span><span class="dv">&amp;space;</span><span class="st">\dpi{110}\boldsymbol{\begin{align*}h_i </span><span class="er">&amp;</span><span class="st">\sim Normal(\mu_i, \sigma) \ </span><span class="er">&amp;&amp;&amp;</span><span class="st"> height </span><span class="er">&amp;</span><span class="st">\sim dnorm(mu, sigma) \\\mu_i </span><span class="er">&amp;</span><span class="st">= \alpha + \beta x_i \ </span><span class="er">&amp;&amp;&amp;</span><span class="st"> mu </span><span class="er">&amp;</span><span class="st">\leftarrow a + b \times weight \\\alpha </span><span class="er">&amp;</span><span class="st">\sim Normal(178, 100) \ </span><span class="er">&amp;&amp;&amp;</span><span class="st"> a </span><span class="er">&amp;</span><span class="st">\sim dnorm(178, 100)\\\beta </span><span class="er">&amp;</span><span class="st">\sim Normal(0, 10) \ </span><span class="er">&amp;&amp;&amp;</span><span class="st"> b </span><span class="er">&amp;</span><span class="st">\sim dnorm(0, 10)\\\sigma </span><span class="er">&amp;</span><span class="st">\sim Uniform(0, 50) \ </span><span class="er">&amp;&amp;&amp;</span><span class="st"> sigma </span><span class="er">&amp;</span><span class="st">\sim dunif(0, 50)\\\end{align*}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">""</span> <span class="kw">/&gt;</span></span>
-<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a>new</span>
-<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\dpi{110}\inline</span><span class="dv">&amp;space;</span><span class="st">\dpi{110}\boldsymbol{\begin{align*}Pr(p|w,n) = \frac{Binomial(w|n,p) ~ Uniform(p|0,1)}{\int Binomial(w|n,p) ~ Uniform(p|0,1)dp}\\ \end{align*}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">""</span> <span class="kw">/&gt;</span></span>
-<span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-253"><a href="#cb10-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-254"><a href="#cb10-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-255"><a href="#cb10-255" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\dpi{110}\mathbf{Posterior} = \frac{\mathbf{Likelihood} \times \mathbf{Prior}}{\mathbf{Average\ Likelihood}}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">"\mathbf{Posterior} = \frac{\mathbf{Likelihood} \times \mathbf{Prior}}{\mathbf{Average\ Likelihood}}"</span><span class="kw">/&gt;</span></span>
-<span id="cb10-256"><a href="#cb10-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-257"><a href="#cb10-257" aria-hidden="true" tabindex="-1"></a>Now since both right-hand sides are equal to the same thing, we can set them equal to one another and solve for the posterior probability: ![](https://latex.codecogs.com/svg.latex?\mathbf{Pr(s|y)} = \frac{\mathbf{Pr(y|s)~Pr(s)}}{\mathbf{Pr(y)}})</span>
-<span id="cb10-258"><a href="#cb10-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-259"><a href="#cb10-259" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">\large</span><span class="co">]</span>(https://latex.codecogs.com/svg.latex?\mathbf{w_i = \frac{exp \left(- \frac{1}{2}dWAIC_i \right)}{\sum_{j=1}^m exp\left(- \frac{1}{2}dWAIC_j \right)}})</span>
-<span id="cb10-260"><a href="#cb10-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-261"><a href="#cb10-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-262"><a href="#cb10-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-263"><a href="#cb10-263" aria-hidden="true" tabindex="-1"></a>mu, sigma symbol</span>
-<span id="cb10-264"><a href="#cb10-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-265"><a href="#cb10-265" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">""</span> <span class="kw">/&gt;</span></span>
-<span id="cb10-266"><a href="#cb10-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-267"><a href="#cb10-267" aria-hidden="true" tabindex="-1"></a>take</span>
-<span id="cb10-268"><a href="#cb10-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-269"><a href="#cb10-269" aria-hidden="true" tabindex="-1"></a><span class="al">![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta_x x_i + \beta_z Z_i})</span></span>
-<span id="cb10-270"><a href="#cb10-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-271"><a href="#cb10-271" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\dpi{110}\textbf{plausibility of p after D}_{\textbf{new}} \boldsymbol{=} \frac{\textbf{ways p can produce D}_{\textbf{new}} \boldsymbol{\times} \textbf{prior plausibility p}}{\textbf{sum of products}}"</span><span class="er">title</span><span class="ot">=</span><span class="st">""</span> <span class="kw">/&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Statistical_Rethinking_RM"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "SM"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "`r format(Sys.time(), '%B %d, %Y')`"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc_float: true</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Contents"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 5</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    number_sections: true</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">    fig_caption: true</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">    code-summary: 'Show code'</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">    code-link: true</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">    code_highlight: tango</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">    code_download: true</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: sandstone</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight: tango</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">    smooth-scroll: true</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">    mathjax: local</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">    self_contained: false</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>Linear model with n number of predictor variables:</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>$$\mu_i = \alpha + \beta_1 \text{x}_{1i} + \beta_2 \text{x}_{2i} + ... + \beta_n \text{x}_{ni}$$</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="al">![\large \frac{-b\pm\sqrt{b^2-4ac}}{2a}](https://latex.codecogs.com/svg.latex?x%3D%5Cfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D)</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>wrong</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">\large </span><span class="co">]</span>(https://latex.codecogs.com/svg.latex?\boldsymbol{\gamma = \beta_R + \beta_{AR}(1) = -0.18 + 0.35 = 0.17})</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\dpi{220}\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"</span><span class="er">title</span><span class="ot">=</span><span class="st">"\text{Posterior =}\frac{\text{Likelihood x Prior}}{\text{Average Likelihood}}"</span><span class="kw">/&gt;</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\dpi{110}\text{Posterior} = \frac{\textbf{Likelihood} \times \textbf{Prior}}{\text{Average Likelihood}}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">"\text{Posterior} = \frac{\textbf{Likelihood} \times \textbf{Prior}}{\text{Average Likelihood}}"</span><span class="kw">/&gt;</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>test</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\inline</span><span class="dv">&amp;space;</span><span class="st">\dpi{110}\boldsymbol{\begin{align*}h_i </span><span class="er">&amp;</span><span class="st">\sim Normal(\mu_i, \sigma) \ </span><span class="er">&amp;&amp;&amp;</span><span class="st"> height </span><span class="er">&amp;</span><span class="st">\sim dnorm(mu, sigma) \\\mu_i </span><span class="er">&amp;</span><span class="st">= \alpha + \beta x_i \ </span><span class="er">&amp;&amp;&amp;</span><span class="st"> mu </span><span class="er">&amp;</span><span class="st">\leftarrow a + b \times weight \\\alpha </span><span class="er">&amp;</span><span class="st">\sim Normal(178, 100) \ </span><span class="er">&amp;&amp;&amp;</span><span class="st"> a </span><span class="er">&amp;</span><span class="st">\sim dnorm(178, 100)\\\beta </span><span class="er">&amp;</span><span class="st">\sim Normal(0, 10) \ </span><span class="er">&amp;&amp;&amp;</span><span class="st"> b </span><span class="er">&amp;</span><span class="st">\sim dnorm(0, 10)\\\sigma </span><span class="er">&amp;</span><span class="st">\sim Uniform(0, 50) \ </span><span class="er">&amp;&amp;&amp;</span><span class="st"> sigma </span><span class="er">&amp;</span><span class="st">\sim dunif(0, 50)\\\end{align*}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">""</span> <span class="kw">/&gt;</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>new</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\dpi{110}\inline</span><span class="dv">&amp;space;</span><span class="st">\dpi{110}\boldsymbol{\begin{align*}Pr(p|w,n) = \frac{Binomial(w|n,p) ~ Uniform(p|0,1)}{\int Binomial(w|n,p) ~ Uniform(p|0,1)dp}\\ \end{align*}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">""</span> <span class="kw">/&gt;</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\dpi{110}\mathbf{Posterior} = \frac{\mathbf{Likelihood} \times \mathbf{Prior}}{\mathbf{Average\ Likelihood}}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">"\mathbf{Posterior} = \frac{\mathbf{Likelihood} \times \mathbf{Prior}}{\mathbf{Average\ Likelihood}}"</span><span class="kw">/&gt;</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>Now since both right-hand sides are equal to the same thing, we can set them equal to one another and solve for the posterior probability: ![](https://latex.codecogs.com/svg.latex?\mathbf{Pr(s|y)} = \frac{\mathbf{Pr(y|s)~Pr(s)}}{\mathbf{Pr(y)}})</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">\large</span><span class="co">]</span>(https://latex.codecogs.com/svg.latex?\mathbf{w_i = \frac{exp \left(- \frac{1}{2}dWAIC_i \right)}{\sum_{j=1}^m exp\left(- \frac{1}{2}dWAIC_j \right)}})</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>mu, sigma symbol</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.image?\boldsymbol{\gamma}"</span> <span class="er">title</span><span class="ot">=</span><span class="st">""</span> <span class="kw">/&gt;</span></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>take</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="al">![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta_x x_i + \beta_z Z_i})</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://latex.codecogs.com/svg.latex?\dpi{110}\textbf{plausibility of p after D}_{\textbf{new}} \boldsymbol{=} \frac{\textbf{ways p can produce D}_{\textbf{new}} \boldsymbol{\times} \textbf{prior plausibility p}}{\textbf{sum of products}}"</span><span class="er">title</span><span class="ot">=</span><span class="st">""</span> <span class="kw">/&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
