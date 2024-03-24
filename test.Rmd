@@ -81,10 +81,12 @@ Now since both right-hand sides are equal to the same thing, we can set them equ
 
 mu, sigma symbol
 
-<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\gamma}" title="" />
+<img src="https://latex.codecogs.com/svg.image?\boldsymbol{\sigma}" title="" />
 
 take
 
 ![](https://latex.codecogs.com/svg.latex?\boldsymbol{\mu_i = \alpha + \beta_x x_i + \beta_z Z_i})
 
 <img src="https://latex.codecogs.com/svg.latex?\dpi{110}\textbf{plausibility of p after D}_{\textbf{new}} \boldsymbol{=} \frac{\textbf{ways p can produce D}_{\textbf{new}} \boldsymbol{\times} \textbf{prior plausibility p}}{\textbf{sum of products}}"title="" />
+
+test deployment
