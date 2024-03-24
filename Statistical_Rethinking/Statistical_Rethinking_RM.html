@@ -964,7 +964,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="fu">precis</span><span class="op">(</span> <span class="va">globe.qa</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>       mean        sd      5.5%     94.5%
-p 0.6666671 0.1571337 0.4155371 0.9177971</code></pre>
+p 0.6666663 0.1571339 0.4155361 0.9177966</code></pre>
 </div>
 </div>
 <p><em>To use map, you provide a formula, a list of data, and a list of start values for the parameters. The formula defines the likelihood and prior.</em></p>
@@ -1022,8 +1022,8 @@ p 0.6666662 0.1111104 0.4890902 0.8442421</code></pre>
 <span><span class="co"># display summary of quadratic approximation</span></span>
 <span><span class="fu">precis</span><span class="op">(</span> <span class="va">globe.qa2</span> <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>       mean        sd      5.5%     94.5%
-p 0.6666666 0.0785669 0.5411015 0.7922317</code></pre>
+<pre><code>       mean         sd      5.5%     94.5%
+p 0.6666667 0.07856689 0.5411016 0.7922317</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -1657,7 +1657,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">samples</span> <span class="op">&lt;</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">/</span> <span class="fl">1e4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 17.1489</code></pre>
+<pre><code>[1] 17.2103</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The answer is the posterior probability below a parameter value of 0.5.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1667,7 +1667,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">samples</span> <span class="op">&gt;</span> <span class="fl">0.5</span> <span class="op">&amp;</span> <span class="va">samples</span> <span class="op">&lt;</span> <span class="fl">0.75</span><span class="op">)</span><span class="op">/</span> <span class="fl">1e4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 60.564</code></pre>
+<pre><code>[1] 60.493</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># So about 61% of the posterior probability lies between 0.5 and 0.75.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1685,7 +1685,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">samples</span>, <span class="fl">0.8</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      80% 
-0.7597598 </code></pre>
+0.7607608 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Lower 80% posterior probability exists below a parameter value of about 0.75. </span></span>
 <span></span>
@@ -1693,7 +1693,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">samples</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      10%       90% 
-0.4484484 0.8118118 </code></pre>
+0.4484484 0.8128128 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Intervals of this sort are called percentile intervals (PI).</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1721,7 +1721,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu">PI</span><span class="op">(</span><span class="va">samples2</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      25%       75% 
-0.7067067 0.9301802 </code></pre>
+0.7067067 0.9329329 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This interval assigns 25% of the probability mass above and below the interval. </span></span>
 <span><span class="co"># So it provides the central 50% probability. But in this example, it ends up excluding </span></span>
@@ -1771,7 +1771,7 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu">HPDI</span><span class="op">(</span><span class="va">samples2</span>, prob <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>     |0.5      0.5| 
-0.8408408 0.9989990 </code></pre>
+0.8418418 1.0000000 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># This interval captures the parameters with highest posterior probability, </span></span>
 <span><span class="co"># as well as being noticeably narrower: </span></span>
@@ -1825,23 +1825,23 @@ Pr(SpA|correct_A) = (Pr(correct_A|SpA) * Pr(SpA))/ Pr(correct_A)
 <span><span class="fu">HPDI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>     |0.8      0.8| 
-0.4744745 0.8338338 </code></pre>
+0.4694695 0.8338338 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">PI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      10%       90% 
-0.4524525 0.8168168 </code></pre>
+0.4464464 0.8158158 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute 95% HPDI and PI from samples</span></span>
 <span><span class="fu">HPDI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>    |0.95     0.95| 
-0.3643644 0.8888889 </code></pre>
+0.3613614 0.8908909 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">PI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>       3%       98% 
-0.3493493 0.8798799 </code></pre>
+0.3493493 0.8808809 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Add name for 80% HPDI and PI</span></span>
 <span><span class="va">hpdi_80</span> <span class="op">&lt;-</span> <span class="fu">HPDI</span><span class="op">(</span><span class="va">samples3</span>, prob <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
@@ -1927,14 +1927,14 @@ inferences, then you’d be better off just plotting the entire posterior distri
 <details><summary>Code</summary><div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute MAP using samples from posterior</span></span>
 <span><span class="fu">chainmode</span><span class="op">(</span> <span class="va">samples2</span>, adj <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span> <span class="co"># rethinking</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9748489</code></pre>
+<pre><code>[1] 0.9919231</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">map_value</span> <span class="op">&lt;-</span> <span class="va">p_grid</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span> <span class="op">]</span></span>
 <span></span>
 <span><span class="co"># mean of the samples</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">samples2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8018405</code></pre>
+<pre><code>[1] 0.7994427</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mean_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">samples2</span><span class="op">)</span></span>
 <span></span>
@@ -2093,7 +2093,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">10</span>, size <span class="op">=</span> <span class="fl">2</span>, prob <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code> [1] 1 2 2 1 0 1 1 1 1 1</code></pre>
+<pre><code> [1] 2 1 2 1 0 2 1 2 2 0</code></pre>
 </div>
 </div>
 <p>Let’s generate 100,000 dummy observations, just to verify that each value (0, 1, or 2) appears in proportion to its likelihood:</p>
@@ -2104,7 +2104,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 </details><div class="cell-output cell-output-stdout">
 <pre><code>dummy_w
       0       1       2 
-0.08963 0.41792 0.49245 </code></pre>
+0.08988 0.42128 0.48884 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb104"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># values are very close to the likelihood values calculated above</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -2116,7 +2116,7 @@ the posterior distribution is symmetrical and normal-looking, then the median an
 </details><div class="cell-output cell-output-stdout">
 <pre><code>dummy_w_9
       0       1       2       3       4       5       6       7       8       9 
-0.00004 0.00044 0.00370 0.02118 0.07489 0.17109 0.26656 0.26582 0.15580 0.04048 </code></pre>
+0.00001 0.00044 0.00402 0.02101 0.07384 0.17137 0.26558 0.26864 0.15557 0.03952 </code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">simplehist</span><span class="op">(</span><span class="va">dummy_w_9</span>, xlab <span class="op">=</span> <span class="st">"dummy water count"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
@@ -10484,14 +10484,14 @@ Formula: log_gdp ~ 1 + rugged + cont_africa + rugged:cont_africa
 
 Population-Level Effects: 
                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept              9.22      0.14     8.96     9.51 1.00     2918     2991
-rugged                -0.20      0.08    -0.36    -0.05 1.00     2535     2940
-cont_africa           -1.95      0.23    -2.39    -1.52 1.00     2471     2847
-rugged:cont_africa     0.39      0.13     0.14     0.65 1.00     2302     2598
+Intercept              9.22      0.14     8.95     9.51 1.00     2991     2806
+rugged                -0.20      0.08    -0.36    -0.05 1.00     2876     3064
+cont_africa           -1.95      0.23    -2.39    -1.50 1.00     2466     2905
+rugged:cont_africa     0.40      0.13     0.14     0.65 1.00     2380     2402
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     0.95      0.05     0.86     1.06 1.00     4260     2596
+sigma     0.95      0.05     0.85     1.06 1.00     4456     2948
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -11632,6 +11632,10 @@ lp__         8.221878 1178.211 1192.542 1171.055 1184.733  910.6791</code></pre>
 </section><section id="hard-4" class="level3"><h3 class="anchored" data-anchor-id="hard-4">Hard</h3>
 <blockquote class="blockquote">
 <p>8H1. Run the model below and then inspect the posterior distribution and explain what it is accomplishing. Compare the samples for the parameters a and b. Can you explain the different trace plots, using what you know about the Cauchy distribution?</p>
+</blockquote>
+<p><br></p>
+<blockquote class="blockquote">
+<p>8H2. Recall the divorce rate example from Chapter 5. Repeat that analysis, using map2stan this time, fitting models m5.1, m5.2, and m5.3. Use compare to compare the models on the basis of WAIC. Explain the results.</p>
 </blockquote>
 <hr>
 <!-- -->
@@ -22705,8 +22709,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb855-10788"><a href="#cb855-10788" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb855-10789"><a href="#cb855-10789" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb855-10790"><a href="#cb855-10790" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb855-10791"><a href="#cb855-10791" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb855-10792"><a href="#cb855-10792" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb855-10791"><a href="#cb855-10791" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb855-10792"><a href="#cb855-10792" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb855-10793"><a href="#cb855-10793" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb855-10794"><a href="#cb855-10794" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb855-10795"><a href="#cb855-10795" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 8H2. Recall the divorce rate example from Chapter 5. Repeat that analysis, using map2stan this time, fitting models m5.1, m5.2, and m5.3. Use compare to compare the models on the basis of WAIC. Explain the results.</span></span>
+<span id="cb855-10796"><a href="#cb855-10796" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb855-10797"><a href="#cb855-10797" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb855-10798"><a href="#cb855-10798" aria-hidden="true" tabindex="-1"></a>---</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

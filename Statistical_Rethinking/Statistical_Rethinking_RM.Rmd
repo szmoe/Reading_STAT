@@ -10786,5 +10786,11 @@ ess_values
 
 
 
+```
+
+<br>
+
+> 8H2. Recall the divorce rate example from Chapter 5. Repeat that analysis, using map2stan this time, fitting models m5.1, m5.2, and m5.3. Use compare to compare the models on the basis of WAIC. Explain the results.
+
 
 ---
