@@ -10627,7 +10627,7 @@ curve( dcauchy(x,0,2) , from=0 , to=10 ,
 curve( dcauchy(x,0,1) , add=TRUE , col="red" )
 curve( dexp(x,10) , add=TRUE , col="blue" )
 legend("topright", legend = c("Cauchy (scale = 2)", 
-                              "Cauchy (scale = 1)", "Exponential (rate = 2)"), 
+                              "Cauchy (scale = 1)", "Exponential (rate = 10)"), 
        col = c("black", "red", "blue"), lty = 1)
 
 # Compare sigmas for posterior distribution
@@ -10784,13 +10784,434 @@ ess_values
 
 ```{r 8H1}
 
+output <- capture.output(mp <-
+  brm(data = list(y = 1), 
+      family = gaussian,
+      y ~ 1,
+      prior = c(prior(normal(0, 1), class = Intercept),
+                prior(cauchy(0, 1), class = sigma)),
+      inits = list(list(Intercept = 0, sigma = 1),
+                   list(Intercept = 0, sigma = 1)),
+      iter = 1e4, warmup = 100, chains = 2,
+      seed = 8))
+
+print(mp)
+
+## Here the results show Bulk- and Tail-ESS but I will calculate n_eff too just to see
+
+# Use `coda` package
+# Extract mcmc samples 
+mcmc_sample <- as.mcmc(mp)
+# Calculate effective sample size
+ess <- effectiveSize(mcmc_sample)
+
+print(ess)
+
+p <- as_draws_df(mp) %>%
+  mcmc_trace(pars = vars(b_Intercept:sigma),
+             linewidth = 0.25) 
+
+    (p & scale_color_ipsum() &
+    theme(legend.position = "right")) +
+  plot_annotation(title = "Trace plots")
+
+```
+Both bulk_ESS and tail_ESS are a lot higher for parameter a than for b. The trace plot for a shows a good Markov chain of Gaussian shape&mdash; stationary and well-mixing. The trace plot for b wanders off to extreme values at some point, but if we consider the nature of Cauchy distribution&mdash; "Cauchy is a very thick-tailed distribution. At any moment in a Cauchy sampling process, it is possible to draw an extreme value that overwhelms all of the previous draws"&mdash; this behavior is expected of and normal for a Cauchy distribution. 
+<br>
+
+> 8H2. Recall the divorce rate example from Chapter 5. Repeat that analysis, using map2stan this time, fitting models m5.1, m5.2, and m5.3. Use compare to compare the models on the basis of WAIC. Explain the results.
+
+```{r 8H2}
+
+# Reload data
+data("WaffleDivorce")
+d <- WaffleDivorce
+
+# Standardize predictor
+d$MedianAgeMarriage.s <- (d$MedianAgeMarriage-mean(d$MedianAgeMarriage))/
+    sd(d$MedianAgeMarriage)
+
+# Fit model 
+output <- capture.output(m5.1 <-
+          brm(data = d, family = gaussian,
+              Divorce ~ 1 + MedianAgeMarriage.s,
+              prior = c(prior(normal(10, 10), class = Intercept),
+                        prior(normal(0, 1), class = b),
+                        prior(uniform(0, 10), class = sigma)),
+              seed = 8))
+
+print(m5.1)
+
+
+# m5.2
+d$Marriage.s <- (d$Marriage - mean(d$Marriage))/sd(d$Marriage)
+output <- capture.output(m5.2 <-
+          brm(data = d, family = gaussian,
+              Divorce ~ 1 + Marriage.s,
+              prior = c(prior(normal(10, 10), class = Intercept),
+                        prior(normal(0, 1), class = b),
+                        prior(uniform(0, 10), class = sigma)),
+              seed = 8))
+
+print(m5.2)
+
+# m5.3
+output <- capture.output(m5.3 <-
+          brm(data = d, family = gaussian,
+              Divorce ~ 1 + Marriage.s + MedianAgeMarriage.s,
+              prior = c(prior(normal(10, 10), class = Intercept),
+                        prior(normal(0, 1), class = b),
+                        prior(uniform(0, 10), class = sigma)),
+              seed = 8))
+
+print(m5.3)
+
+# Calculate waic values
+waic1 <- waic(m5.1)
+waic2 <- waic(m5.2)
+waic3 <- waic(m5.3) # warning: use `loo` instead
+
+# Compare WAIC values
+waic_values <- c(waic1$waic, waic2$waic, waic3$waic)
+model_names <- c("m5.1", "m5.2", "m5.3")
+comparison_waic <- data.frame(Model = model_names, WAIC = waic_values)
+comparison_waic
+
+loo1 <- loo(m5.1)
+loo2 <- loo(m5.2)
+loo3 <- loo(m5.3)
+
+# Compare loo values
+loo_values <- c(loo1$loo, loo2$loo, loo3$loo)
+model_names <- c("m5.1", "m5.2", "m5.3")
+comparison_loo <- data.frame(Model = model_names, loo = loo_values)
+comparison_loo
+
+# Rank model based on waic and loo values 
+# Ranking will be auto-done with `compare` function but all functions from 
+# chapter 8 (1st edition) do not work anymore. So, I rank them manually here.
+waic_values <- c(waic1$waic, waic3$waic, waic2$waic)
+loo_values <- c(loo1$loo, loo3$loo, loo2$loo)
+model <- c("m5.1", "m5.3", "m5.2")
+comparison <- data.frame(Model = model, waic = waic_values, loo = loo_values)
+comparison
+
+```
+
+Smaller waic values are better, with lower out of sample deviance, and likewise, lower loo values are indicative of a better fit. Among the three models, m5.1 seems to be the best with lowest waic and loo values, with m5.3 following closely behind (differences are rather small). 
+
+<br>
+
+> 8H3. Compare the two posterior distributions for m5.8s and m5.8s2. What has changed in the posterior distribution of both beta parameters? Can you explain the change induced by the change in prior?
+
+```{r 8H3}
+
+# Simulate height and leg lengths for 100 imagined individuals
+N <- 100
+height <- rnorm(N,10,2)
+leg_prop <- runif(N,0.4,0.5)
+leg_left <- leg_prop*height +
+    rnorm( N , 0 , 0.02 )
+leg_right <- leg_prop*height +
+    rnorm( N , 0 , 0.02 )
+d <- data.frame(height,leg_left,leg_right)
+
+# ulam is working again, after troubleshooting based on this:
+# https://discourse.mc-stan.org/t/problem-with-cmdstan-unpacking/29041/5
+output <- capture.output(m5.8s <- ulam(
+    alist(
+        height ~ dnorm( mu , sigma ) ,
+        mu <- a + bl*leg_left + br*leg_right ,
+        a ~ dnorm( 10 , 100 ) ,
+        bl ~ dnorm( 2 , 10 ) ,
+        br ~ dnorm( 2 , 10 ) ,
+        sigma ~ dcauchy( 0 , 1 )
+),
+data=d, chains=4, start=list(a=10,bl=0,br=0,sigma=1)))
+
+precis(m5.8s)
+
+# Strictly positive prior
+output <- capture.output(m5.8s2 <- ulam(
+  alist(
+    height ~ dnorm( mu , sigma ) ,
+    mu <- a + bl*leg_left + br*leg_right ,
+    a ~ dnorm( 10 , 100 ) ,
+    bl ~ dnorm( 2 , 10 ) ,
+    br ~ half_normal(1, 10),
+    sigma ~ dcauchy( 0 , 1 )
+  ),
+  data=d, chains=4, start=list(a=10,bl=0,br=1,sigma=1)))
+
+precis(m5.8s2)
+# Change in one prior cause changes in other prior due to correlations between 
+# two beta parameters.
+
+par(mfrow = c(1,2))
+plot(m5.8s, main = "m5.8s")
+plot(m5.8s2, main = "m5.8s2")
+
+```
+
+The precis results show the two parameters have negative correlation with each other&mdash; an increase in one causes a decrease in another. In the model with strictly positive prior, this negative correlation is preserved but the numbers are flipped&mdash; changes in direction of skewness. When br becomes strictly positive, bl skews more towards negative value. 
+
+
+<br>
+
+> 8H4. For the two models fit in the previous problem, use DIC or WAIC to compare the effective numbers of parameters for each model. Which model has more effective parameters? Why?
+
+```{r 8H4, message=FALSE, warning=FALSE}
+
+## I will use brms to calculate WAIC
+
+# Original
+output <- capture.output(b8h4a <-
+          brm(data = d, family = gaussian,
+              height ~ 1 + leg_left + leg_right,
+              prior = c(prior(normal(10, 100), class = Intercept),
+                        prior(normal(2, 10), class = b),
+                        prior(cauchy(0,1), class = sigma)),
+                        chains = 4, cores = 4))
+
+print(b8h4a)
+
+# Strictly positive prior
+output <- capture.output(b8h4 <-
+        brm(data = d, family = gaussian,
+            height ~ 1 + leg_left + leg_right,
+            prior = c(set_prior("normal(10,100)", class = "Intercept"),
+                      set_prior("normal(2,10)", class = "b", coef = "leg_left"),
+                      set_prior("normal(2, 10)", class = "b", coef = "", lb = 0),
+            # I set lower bound lb = 0 to make it half-normal-- not sure if it is right
+                      set_prior("cauchy(0,1)", class = "sigma")),
+            chains = 4, cores = 4))
+
+print(b8h4)
+
+
+b8h4a <- add_criterion(b8h4a, criterion = c("waic", "loo"))
+b8h4 <- add_criterion(b8h4, criterion = c("waic", "loo"))
+
+print(loo_compare(b8h4a, b8h4, criterion = "waic"), simplify = FALSE)
+print(loo_compare(b8h4a, b8h4, criterion = "loo"), simplify = FALSE)
+
+
+```
+
+The WAIC values of the two models are very close&mdash; none is a better model than the other.
+
+
+<br>
+
+> 8H5. Modify the Metropolis algorithm code from the chapter to handle the case that the island populations have a different distribution than the island labels. This means the island’s number will not be the same as its population.
+
+I cheated here. I just took the answer codes from the answer key and plug it in akjurz's codes. Anyway, the bars in the chart have uneven length now, showing the population size is not proportional to the island number anymore, but still to the number of stays. 
+
+```{r 8H5, fig.width=10}
+
+set.seed(8)
+
+pop_size <- sample( 1:10 )
+num_weeks <- 1e5
+positions <- rep(0, num_weeks)
+current   <- 10
+for (i in 1:num_weeks) {
+  # record current position
+  positions[i] <- current
+  # flip coin to generate proposal
+  proposal <- current + sample(c(-1, 1), size = 1)
+  # now make sure he loops around the archipelago
+  if (proposal < 1) proposal <- 10
+  if (proposal > 10) proposal <- 1
+  # move?
+  prob_move <- pop_size[proposal]/pop_size[current]
+  current   <- ifelse(runif(1) < prob_move, proposal, current)
+}
+
+d1 <-tibble(week   = 1:1e5,
+       island = positions) %>%
+
+  ggplot(aes(x = week, y = island)) +
+  geom_point(shape = 1) +
+  scale_x_continuous(breaks = seq(from = 0, to = 100, by = 20)) +
+  scale_y_continuous(breaks = seq(from = 0, to = 10, by = 2)) +
+ coord_cartesian(xlim = c(0,100),
+                  ylim = c(1,10)) +
+  labs(title    = "Behold: The Metropolis algorithm in action!",
+       subtitle = "The dots show the king's path over the first 100 weeks.") +
+  theme_ipsum()
+
+d2 <-tibble(week   = 1:1e5,
+       island = positions) %>%
+  mutate(island = factor(island)) %>%
+
+  ggplot(aes(x = island)) +
+  geom_bar() +
+  labs(title    = "Old Metropolis shines in the long run.",
+       subtitle = "Sure enough, the time the king spent on each island was\nproportional to its population size.") +
+  theme_ipsum()
+
+grid.arrange(d1, d2, ncol = 2)
 
 
 ```
 
 <br>
 
-> 8H2. Recall the divorce rate example from Chapter 5. Repeat that analysis, using map2stan this time, fitting models m5.1, m5.2, and m5.3. Use compare to compare the models on the basis of WAIC. Explain the results.
+<span style="color:gray">***Given answer:***
+
+```{r 8H5b}
+
+pop_size <- sample( 1:10 )
+
+num_weeks <- 1e5
+positions <- rep(0,num_weeks)
+pop_size <- sample( 1:10 )
+current <- 10
+for ( i in 1:num_weeks ) {
+    # record current position
+    positions[i] <- current
+    # flip coin to generate proposal
+    proposal <- current + sample( c(-1,1) , size=1 )
+    # now make sure he loops around the archipelago
+    if ( proposal < 1 ) proposal <- 10
+    if ( proposal > 10 ) proposal <- 1
+    # move?
+    prob_move <- pop_size[proposal]/pop_size[current]
+    current <- ifelse( runif(1) < prob_move , proposal , current )
+}
+
+# compute frequencies
+f <- table( positions )
+# plot frequencies against relative population sizes
+# label each point with island index
+plot( as.vector(f) , pop_size , type="n" ,
+    xlab="frequency" , ylab="population size" ) # empty plot
+text(  , x=f , y=pop_size )
+
+
+
+
+
+```
+
+<br>
+
+> 8H6. Modify the Metropolis algorithm code from the chapter to write your own simple MCMC estimator for globe tossing data and model from Chapter 2.
+
+I cheated again and copy from answer key because I couldn't solve this :)
+
+```{r 8H6}
+
+# To get a working Metropolis algorithm for this model, think of the different values 
+# of p as the island indexes and the product of the likelihood and prior as the population 
+# sizes. What is tricky here is that there an infinite number of islands: every continuous 
+# value that p can take from zero to one. That’s hardly a problem, though. We just need 
+# a different way of proposing moves, so that we can land on a range of islands.
+num_samples <- 1e4
+p_samples <- rep(NA,num_samples)
+p <- 0.5 # initialize chain with p=0.5
+for ( i in 1:num_samples ) {
+    # record current parameter value
+    p_samples[i] <- p
+    
+    # generate a uniform proposal from -0.1 to +0.1
+    proposal <- p + runif(1,-0.1,0.1)
+    
+    # now reflect off boundaries at 0 and 1
+    # this is needed so proposals are symmetric
+    if ( proposal < 0 ) proposal <- abs(proposal)
+    if ( proposal > 1 ) proposal <- 1-(proposal-1)
+    
+    # compute posterior prob of current and proposal
+    prob_current <- dbinom(6,size=9,prob=p) * dunif(p,0,1)
+    prob_proposal <- dbinom(6,size=9,prob=proposal) * dunif(proposal,0,1)
+    
+    # move?
+    prob_move <- prob_proposal/prob_current
+    p <- ifelse( runif(1) < prob_move , proposal , p )
+    
+}
+
+plot( p_samples , type="l" , ylab="probability water" )
+# This chain is fine, but it is more autocorrelated than a typical Stan chain. 
+# That’s why it tends to wander around a bit. It is stationary, but it isn’t mixing 
+# very well. This is common of such a simple Metropolis chain. But it is working.
+
+# Now look at the posterior distribution implied by these samples. I’ll also compare it 
+# to the analytically derived posterior for this model:
+dens( p_samples , xlab="probability water" )
+curve( dbeta(x,7,4) , add=TRUE , col="red" ) # Not bad curves.
+
+#So what would you do if the model had more than one parameter? You just add another 
+# proposal for each parameter, accepting or rejecting each proposal independent of the 
+# others. Suppose for example we want to do a simple linear regression with a Metropolis 
+# chain. Let’s simulate some simple Gaussian data and then compute the posterior distribution 
+# of the mean and standard deviation using a custom Metropolis algorithm. 
+
+# simulate some data
+# 100 observations with mean 5 and sd 3
+y <- rnorm( 100 , 5 , 3 )
+
+# now chain to sample from posterior
+num_samples <- 1e4
+mu_samples <- rep(NA,num_samples)
+sigma_samples <- rep(NA,num_samples)
+mu <- 0
+sigma <- 1
+for ( i in 1:num_samples ) {
+    # record current parameter values
+    mu_samples[i] <- mu
+    sigma_samples[i] <- sigma
+    
+    # proposal for mu
+    mu_prop <- mu + runif(1,-0.1,0.1)
+    # compute posterior prob of mu and mu_prop
+    # this is done treating sigma like a constant
+    # will do calculations on log scale, as we should
+    # so log priors get added to log likelihood
+    log_prob_current <- sum(dnorm(y,mu,sigma,TRUE)) +
+                        dnorm(mu,0,10,TRUE) + dunif(sigma,0,10,TRUE)
+    log_prob_proposal <- sum(dnorm(y,mu_prop,sigma,TRUE)) +
+                    dnorm(mu_prop,0,10,TRUE) + dunif(sigma,0,10,TRUE)
+prob_move <- exp( log_prob_proposal - log_prob_current )
+
+mu <- ifelse( runif(1) < prob_move , mu_prop , mu )
+    # proposal for sigma
+    sigma_prop <- sigma + runif(1,-0.1,0.1)
+    
+    # reflect off boundary at zero
+    if ( sigma_prop < 0 ) sigma_prop <- abs(sigma_prop)
+    
+    # compute posterior probabilities
+    log_prob_current <- sum(dnorm(y,mu,sigma,TRUE)) +
+                        dnorm(mu,0,10,TRUE) + dunif(sigma,0,10,TRUE)
+    log_prob_proposal <- sum(dnorm(y,mu,sigma_prop,TRUE)) +
+                        dnorm(mu,0,10,TRUE) + dunif(sigma_prop,0,10,TRUE)
+    
+    # move?
+    prob_move <- exp( log_prob_proposal - log_prob_current )
+    sigma <- ifelse( runif(1) < prob_move , sigma_prop , sigma )
+}
+
+plot( mu_samples , sigma_samples , type="l")
+    
+    
+```
+
+<br>
+
+
+# Chapter 9: Big Entropy and the Generalized Linear Model
+
+
+
+
+
+
+
+
+
 
 
 ---
